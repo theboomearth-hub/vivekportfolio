@@ -139,17 +139,17 @@ export default function AboutPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7 }}
           >
-            <p className="text-accent font-mono text-sm uppercase tracking-widest mb-4">
+            <p className="text-accent font-mono text-xs uppercase tracking-[0.06em] mb-4">
               Senior UI/UX Designer · AI Product Designer · Bengaluru
             </p>
-            <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
+            <h1 className="mb-6">
               UI/UX Designer.
               <br />
               <span className="text-accent">AI Product Designer.</span>
             </h1>
             <div className="space-y-4 text-base md:text-lg text-muted leading-relaxed">
               <p>
-                I&apos;m a <span className="text-foreground font-medium">design leader</span> with
+                I&apos;m a <span className="text-foreground font-medium">design leader</span>{" "}with
                 9+ years building B2B SaaS and AI platforms used by over a million
                 people across AdTech, Construction Cloud, Healthcare, AIOps, IIoT, and Big&nbsp;Data.
               </p>
@@ -161,7 +161,7 @@ export default function AboutPage() {
                 mentoring 9+ designers, with an AI-augmented practice spanning Claude, Figma Make, and Cursor.
               </p>
             </div>
-            <div className="mt-8 flex flex-wrap items-center justify-center gap-3 text-[11px] font-mono">
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-3 text-xs font-mono">
               <span className="px-3 py-1.5 rounded-full border border-border text-muted">
                 Cert · Human Factor Interaction
               </span>
@@ -175,7 +175,7 @@ export default function AboutPage() {
             <div className="mt-8 flex justify-center gap-4">
               <Link
                 href="/contact"
-                className="px-6 py-3 bg-accent text-accent-foreground font-semibold rounded-xl hover:bg-accent/90 transition-all"
+                className="px-6 py-3 bg-accent text-accent-foreground font-medium rounded-xl hover:bg-accent/90 transition-all"
               >
                 Get in Touch
               </Link>
@@ -209,7 +209,7 @@ export default function AboutPage() {
                 </svg>
               </div>
               <div>
-                <h3 className="text-lg font-bold text-foreground">As a Design Leader</h3>
+                <h3 className="text-lg text-foreground">As a Design Leader</h3>
                 <p className="text-xs font-mono text-accent">Strategic & Organizational</p>
               </div>
             </div>
@@ -224,8 +224,8 @@ export default function AboutPage() {
                 <div key={item.title} className="flex gap-3">
                   <div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-accent shrink-0" />
                   <div>
-                    <h4 className="text-sm font-semibold text-foreground">{item.title}</h4>
-                    <p className="text-xs text-muted leading-relaxed mt-0.5">{item.desc}</p>
+                    <h4 className="text-sm text-foreground">{item.title}</h4>
+                    <p className="text-sm text-muted leading-relaxed mt-0.5">{item.desc}</p>
                   </div>
                 </div>
               ))}
@@ -241,15 +241,15 @@ export default function AboutPage() {
             className="p-6 sm:p-8 rounded-2xl bg-surface border border-border"
           >
             <div className="flex items-center gap-3 mb-6">
-              <div className="w-10 h-10 rounded-xl bg-accent-coral/10 border border-accent-coral/20 flex items-center justify-center">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-accent-coral">
+              <div className="w-10 h-10 rounded-xl bg-accent/10 border border-accent/20 flex items-center justify-center">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-accent">
                   <polyline points="16 18 22 12 16 6" />
                   <polyline points="8 6 2 12 8 18" />
                 </svg>
               </div>
               <div>
-                <h3 className="text-lg font-bold text-foreground">As a Practitioner</h3>
-                <p className="text-xs font-mono text-accent-coral">Hands-on & Technical</p>
+                <h3 className="text-lg text-foreground">As a Practitioner</h3>
+                <p className="text-xs font-mono text-accent">Hands-on & Technical</p>
               </div>
             </div>
             <div className="space-y-4">
@@ -261,10 +261,10 @@ export default function AboutPage() {
                 { title: "Design-to-Code Bridge", desc: "Close the gap between design and engineering with pixel-perfect fidelity." },
               ].map((item) => (
                 <div key={item.title} className="flex gap-3">
-                  <div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-accent-coral shrink-0" />
+                  <div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-accent shrink-0" />
                   <div>
-                    <h4 className="text-sm font-semibold text-foreground">{item.title}</h4>
-                    <p className="text-xs text-muted leading-relaxed mt-0.5">{item.desc}</p>
+                    <h4 className="text-sm text-foreground">{item.title}</h4>
+                    <p className="text-sm text-muted leading-relaxed mt-0.5">{item.desc}</p>
                   </div>
                 </div>
               ))}
@@ -291,7 +291,7 @@ export default function AboutPage() {
               className="p-5 sm:p-8 rounded-2xl bg-surface border border-border hover:border-accent/20 transition-all"
             >
               <div className="text-accent mb-6">{p.icon}</div>
-              <h3 className="text-xl font-bold mb-3">{p.title}</h3>
+              <h3 className="text-xl mb-3">{p.title}</h3>
               <p className="text-muted leading-relaxed">{p.description}</p>
             </motion.div>
           ))}
@@ -344,7 +344,7 @@ export default function AboutPage() {
                 <div className={`w-12 h-12 rounded-xl ${item.iconBg} flex items-center justify-center`}>
                   {item.icon}
                 </div>
-                <h3 className="text-xl font-bold">{item.title}</h3>
+                <h3 className="text-xl">{item.title}</h3>
               </div>
               <p className="text-muted leading-relaxed">{item.desc}</p>
             </motion.div>
@@ -369,9 +369,9 @@ export default function AboutPage() {
               transition={{ delay: i * 0.05 }}
               className="p-5 rounded-2xl bg-surface border border-border"
             >
-              <h4 className="text-sm font-semibold mb-3" style={{ color: tintText(cat.color) }}>
+              <h3 className="text-sm mb-3" style={{ color: tintText(cat.color) }}>
                 {cat.category}
-              </h4>
+              </h3>
               <div className="flex flex-wrap gap-1.5">
                 {cat.items.map((item) => (
                   <span
@@ -442,14 +442,14 @@ export default function AboutPage() {
                 </div>
                 <div className="min-w-0">
                   <div className="flex items-center gap-2 mb-1">
-                    <span className="text-xs font-mono text-accent uppercase">
+                    <span className="text-xs font-mono text-accent uppercase tracking-[0.06em]">
                       {item.type}
                     </span>
                     <span className="text-xs text-muted">{item.date}</span>
                   </div>
-                  <h4 className="font-semibold group-hover:text-accent transition-colors leading-snug">
+                  <h3 className="text-lg group-hover:text-accent transition-colors leading-snug">
                     {item.title}
-                  </h4>
+                  </h3>
                   <p className="text-xs text-muted mt-1">{item.venue}</p>
                 </div>
               </Link>
@@ -474,7 +474,7 @@ export default function AboutPage() {
               viewport={{ once: true }}
               transition={{ delay: catIdx * 0.08 }}
             >
-              <h3 className="text-lg font-bold mb-1">{cat.title}</h3>
+              <h3 className="text-lg mb-1">{cat.title}</h3>
               <p className="text-sm text-muted mb-4">{cat.desc}</p>
               <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
                 {cat.tools.map((tool) => (
@@ -483,13 +483,13 @@ export default function AboutPage() {
                     className="flex items-center gap-3 p-3 rounded-xl bg-surface border border-border"
                   >
                     <div
-                      className="w-9 h-9 rounded-lg flex items-center justify-center text-xs font-bold border shrink-0"
+                      className="w-9 h-9 rounded-lg flex items-center justify-center text-xs font-medium border shrink-0"
                       style={{ backgroundColor: tool.color + "12", borderColor: tool.color + "30", color: tintText(tool.color) }}
                     >
                       {tool.abbr}
                     </div>
                     <div className="min-w-0">
-                      <p className="text-sm font-semibold text-foreground truncate">{tool.name}</p>
+                      <p className="text-sm font-medium text-foreground truncate">{tool.name}</p>
                       <p className="text-xs text-muted truncate">{tool.desc}</p>
                     </div>
                   </div>
@@ -508,7 +508,7 @@ export default function AboutPage() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-2xl sm:text-3xl font-bold mb-6">
+            <h2 className="mb-6">
               How I Think About <span className="text-accent">AI</span>
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-left">
@@ -521,7 +521,7 @@ export default function AboutPage() {
                 {
                   title: "Automate the Mundane",
                   desc: "If I do it more than twice, I build a pipeline — n8n, Make, and Zapier handle the repetitive.",
-                  icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-accent-coral"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/><line x1="4" y1="4" x2="9" y2="9"/></svg>,
+                  icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-accent"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/><line x1="4" y1="4" x2="9" y2="9"/></svg>,
                 },
                 {
                   title: "Stay Tool-Agnostic",
@@ -537,8 +537,8 @@ export default function AboutPage() {
                   className="p-5 rounded-2xl bg-surface border border-border"
                 >
                   <div className="mb-3">{principle.icon}</div>
-                  <h4 className="text-sm font-semibold mb-2 text-foreground">{principle.title}</h4>
-                  <p className="text-xs text-muted leading-relaxed">{principle.desc}</p>
+                  <h3 className="text-sm mb-2 text-foreground">{principle.title}</h3>
+                  <p className="text-sm text-muted leading-relaxed">{principle.desc}</p>
                 </motion.div>
               ))}
             </div>
@@ -553,7 +553,7 @@ export default function AboutPage() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-3xl md:text-5xl font-bold mb-6"
+            className="text-display mb-6"
           >
             Want to work together?
           </motion.h2>
@@ -575,7 +575,7 @@ export default function AboutPage() {
           >
             <Link
               href="/contact"
-              className="inline-block px-6 py-3 sm:px-8 sm:py-4 bg-accent text-accent-foreground font-semibold rounded-xl hover:bg-accent/90 transition-all hover:shadow-lg hover:shadow-accent/20"
+              className="inline-block px-6 py-3 sm:px-8 sm:py-4 bg-accent text-accent-foreground font-medium rounded-xl hover:bg-accent/90 transition-all hover:shadow-lg hover:shadow-accent/20"
             >
               Let&apos;s Talk
             </Link>

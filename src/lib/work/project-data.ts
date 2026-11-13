@@ -929,7 +929,7 @@ export const projectData: Record<string, ProjectDetail> = {
   },
   "ott-platform": {
     title: "OTT Streaming Platform",
-    category: "Entertainment / BigData",
+    category: "Entertainment / BigData (Use case)",
     heroDesc:
       "Scaled UI for millions of data points in a video-on-demand platform, balancing content discovery with performance.",
     tags: ["OTT", "BigData", "Content Strategy", "Performance"],

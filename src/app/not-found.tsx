@@ -6,10 +6,10 @@ export default function NotFound() {
     <div className="pt-24">
       <Section>
         <div className="max-w-2xl mx-auto text-center rounded-2xl border border-border bg-surface p-8 sm:p-12">
-          <p className="text-accent font-mono text-sm uppercase tracking-widest mb-4">
+          <p className="text-accent font-mono text-xs uppercase tracking-[0.06em] mb-4">
             404
           </p>
-          <h1 className="text-3xl sm:text-5xl font-bold tracking-tight mb-4">
+          <h1 className="mb-4">
             Page not found.
           </h1>
           <p className="text-muted text-base sm:text-lg leading-relaxed mb-8">
@@ -19,13 +19,13 @@ export default function NotFound() {
           <div className="flex flex-wrap items-center justify-center gap-3">
             <Link
               href="/"
-              className="inline-flex items-center justify-center px-5 py-3 rounded-xl bg-accent text-accent-foreground font-semibold hover:bg-accent/90 transition-colors"
+              className="inline-flex items-center justify-center px-5 py-3 rounded-xl bg-accent text-accent-foreground font-medium hover:bg-accent/90 transition-colors"
             >
               Go to homepage
             </Link>
             <Link
               href="/work"
-              className="inline-flex items-center justify-center px-5 py-3 rounded-xl border border-border bg-background text-foreground font-semibold hover:border-accent/30 transition-colors"
+              className="inline-flex items-center justify-center px-5 py-3 rounded-xl border border-border bg-background text-foreground font-medium hover:border-accent/30 transition-colors"
             >
               Explore work
             </Link>

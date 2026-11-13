@@ -60,8 +60,8 @@ export default function BlogPostClient({ slug }: { slug: string }) {
   if (!post) {
     return (
       <div className="pt-32 text-center">
-        <h1 className="text-4xl font-bold mb-4">Post not found</h1>
-        <Link href="/blog" className="text-accent hover:text-accent/80">
+        <h1 className="mb-4">Post not found</h1>
+        <Link href="/blog" className="text-accent hover:text-accent">
           ← Back to Blog
         </Link>
       </div>
@@ -104,10 +104,10 @@ export default function BlogPostClient({ slug }: { slug: string }) {
           .toLowerCase()
           .replaceAll(/[^a-z0-9]+/g, "-")
           .replaceAll(/^-|-$/g, "");
-        return `<h2 id="${id}" class="text-2xl md:text-3xl font-bold mt-12 mb-4 scroll-mt-24">${heading}</h2>`;
+        return `<h2 id="${id}" class="mt-12 mb-4 scroll-mt-24">${heading}</h2>`;
       }
     )
-    .replaceAll(/^### (.+)$/gm, '<h3 class="text-xl md:text-2xl font-bold mt-8 mb-3">$1</h3>')
+    .replaceAll(/^### (.+)$/gm, '<h3 class="mt-8 mb-3">$1</h3>')
     .replaceAll(/^\*\*(.+?)\*\*/gm, "<strong>$1</strong>")
     .replaceAll(
       /```(\w*)\n([\s\S]*?)```/g,
@@ -127,7 +127,7 @@ export default function BlogPostClient({ slug }: { slug: string }) {
     .replaceAll("---", '<hr class="border-border my-8" />')
     .replaceAll(
       /`([^`]+)`/g,
-      '<code class="text-accent-coral bg-surface px-1.5 py-0.5 rounded text-sm">$1</code>'
+      '<code class="text-accent bg-surface px-1.5 py-0.5 rounded text-sm">$1</code>'
     );
 
   return (
@@ -159,10 +159,10 @@ export default function BlogPostClient({ slug }: { slug: string }) {
           transition={{ duration: 0.7 }}
           className="max-w-3xl"
         >
-          <p className="text-accent font-mono text-sm uppercase tracking-widest mb-4">
+          <p className="text-accent font-mono text-xs uppercase tracking-[0.06em] mb-4">
             {post.category}
           </p>
-          <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6 leading-tight">
+          <h1 className="mb-6">
             {post.title}
           </h1>
           <div className="flex items-center gap-4 text-muted mb-4">
@@ -226,17 +226,17 @@ export default function BlogPostClient({ slug }: { slug: string }) {
 
             {/* Table of Contents — desktop sidebar */}
             {headings.length > 2 && (
-              <aside className="hidden lg:block">
+              <div className="hidden lg:block">
                 <div className="sticky top-28">
-                  <p className="text-xs font-mono uppercase tracking-widest text-muted mb-4">
+                  <p className="text-xs font-mono uppercase tracking-[0.06em] text-muted mb-4">
                     On this page
                   </p>
-                  <nav className="flex flex-col gap-2">
+                  <nav aria-label="On this page" className="flex flex-col gap-0.5">
                     {headings.map((h) => (
                       <a
                         key={h.id}
                         href={`#${h.id}`}
-                        className={`text-sm transition-colors leading-snug ${
+                        className={`py-1.5 text-sm transition-colors leading-snug ${
                           activeHeading === h.id
                             ? "text-accent font-medium"
                             : "text-muted hover:text-foreground"
@@ -247,7 +247,7 @@ export default function BlogPostClient({ slug }: { slug: string }) {
                     ))}
                   </nav>
                 </div>
-              </aside>
+              </div>
             )}
           </div>
         </div>
@@ -292,7 +292,7 @@ export default function BlogPostClient({ slug }: { slug: string }) {
               <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
             </div>
             <div>
-              <p className="font-bold">Designer. Builder. Product Scaler.</p>
+              <p className="font-medium">Designer. Builder. Product Scaler.</p>
               <p className="text-muted text-sm">
                 Lead Design Engineer specializing in AdTech
               </p>
@@ -306,7 +306,7 @@ export default function BlogPostClient({ slug }: { slug: string }) {
               className="group block p-6 rounded-2xl bg-surface border border-border hover:border-accent/20 transition-all"
             >
               <p className="text-muted text-sm mb-2">Next Article →</p>
-              <h3 className="text-xl font-bold group-hover:text-accent transition-colors">
+              <h3 className="text-xl group-hover:text-accent transition-colors">
                 {nextPost.title}
               </h3>
             </Link>

@@ -1,35 +1,22 @@
 import type { Metadata } from "next";
-import { Fraunces, Inter, JetBrains_Mono, Syne } from "next/font/google";
+import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import PageTransition from "@/components/PageTransition";
 import ScrollProgress from "@/components/ScrollProgress";
 import SmoothScroll from "@/components/SmoothScroll";
-import StatusBar from "@/components/StatusBar";
 import BackToTop from "@/components/BackToTop";
 import MotionProvider from "@/components/MotionProvider";
 import { SITE_URL } from "@/lib/site";
 
+// Two families total (Nov 2026 "Calm" redesign): Inter for everything, with its
+// optical-size axis so display headings tighten automatically, and JetBrains Mono
+// for small labels and metadata. Fraunces (serif headings) and Syne were dropped.
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
-});
-
-// Fraunces: Display serif for hero headlines
-const fraunces = Fraunces({
-  variable: "--font-fraunces",
-  subsets: ["latin"],
-  weight: ["300", "400", "600", "700"],
-  display: "swap",
-});
-
-// Syne: Geometric sans for labels/metadata
-const syne = Syne({
-  variable: "--font-syne",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  display: "swap",
+  axes: ["opsz"],
 });
 
 const jetbrainsMono = JetBrains_Mono({
@@ -334,18 +321,23 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${fraunces.variable} ${syne.variable} ${jetbrainsMono.variable} h-full antialiased`}
+      className={`${inter.variable} ${jetbrainsMono.variable} h-full antialiased`}
+      // Browser extensions (e.g. Scribe's data-scribe-recorder-ready) write attributes
+      // onto <html> before React hydrates. This only silences mismatches in <html>'s
+      // own attributes — real mismatches in the page below are still reported.
+      suppressHydrationWarning
     >
       <head>
-        {/* Verification tags for search consoles */}
-        <meta name="google-site-verification" content="your-google-verification-code" />
+        {/* Search-console verification: add the real token here (or via
+            metadata.verification.google) once the property is set up — a
+            placeholder value verifies nothing. */}
         {/* Geo-targeting for local search */}
         <meta name="geo.region" content="IN-KA" />
         <meta name="geo.placename" content="Bengaluru" />
         <meta name="geo.position" content="12.9716;77.5946" />
         <meta name="ICBM" content="12.9716, 77.5946" />
       </head>
-      <body className="min-h-full flex flex-col grain">
+      <body className="min-h-full flex flex-col">
         {/* Multiple JSON-LD schemas for comprehensive SEO */}
         <script
           type="application/ld+json"
@@ -372,7 +364,6 @@ export default function RootLayout({
             </main>
             <Footer />
             <BackToTop />
-            <StatusBar />
           </div>
         </MotionProvider>
       </body>

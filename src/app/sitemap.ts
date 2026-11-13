@@ -7,6 +7,9 @@ export const dynamic = "force-static";
 const BASE_URL = SITE_URL;
 
 const caseStudySlugs = [
+  "agentic-inventory",
+  "hosamane",
+  "healthai",
   "mw-activate",
   "mw-cinema",
   "mw-posterops",

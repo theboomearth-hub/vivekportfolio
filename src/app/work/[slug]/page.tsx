@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import { projectData } from "@/lib/work/project-data";
 import CaseStudyClient from "./CaseStudyClient";
 
@@ -56,5 +57,8 @@ export default async function CaseStudyPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
+  // Unknown slugs must be a real 404 (status + noindex), not a 200 page that
+  // says "Project not found" — search engines index those as soft 404s.
+  if (!projectData[slug]) notFound();
   return <CaseStudyClient slug={slug} />;
 }

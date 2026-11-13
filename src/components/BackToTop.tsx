@@ -1,42 +1,32 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 import { usePathname } from "next/navigation";
+
+function subscribeToScroll(onScroll: () => void) {
+  window.addEventListener("scroll", onScroll, { passive: true });
+  return () => window.removeEventListener("scroll", onScroll);
+}
+const isScrolledPastFold = () => window.scrollY > 360;
+const notScrolledOnServer = () => false;
 
 export default function BackToTop() {
   const pathname = usePathname();
-  const [isVisible, setIsVisible] = useState(false);
+  const isVisible = useSyncExternalStore(subscribeToScroll, isScrolledPastFold, notScrolledOnServer);
 
   const shouldShowOnRoute =
     pathname === "/about" || pathname === "/blog" || pathname.startsWith("/blog/");
-
-  useEffect(() => {
-    if (!shouldShowOnRoute) {
-      setIsVisible(false);
-      return;
-    }
-
-    const onScroll = () => {
-      setIsVisible(window.scrollY > 360);
-    };
-
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-
-    return () => window.removeEventListener("scroll", onScroll);
-  }, [shouldShowOnRoute]);
-
-  const handleClick = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
 
   if (!shouldShowOnRoute) return null;
 
   return (
     <button
       type="button"
-      onClick={handleClick}
+      onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
       aria-label="Back to top"
+      // Hidden buttons leave the tab order too, not just the screen.
+      tabIndex={isVisible ? 0 : -1}
+      aria-hidden={!isVisible}
       className={`fixed bottom-24 right-5 sm:right-8 z-40 w-11 h-11 rounded-full bg-surface border border-border text-muted hover:text-foreground hover:border-accent/40 transition-all duration-300 ${
         isVisible
           ? "opacity-100 translate-y-0 pointer-events-auto"
@@ -53,6 +43,7 @@ export default function BackToTop() {
         strokeLinecap="round"
         strokeLinejoin="round"
         className="mx-auto"
+        aria-hidden="true"
       >
         <path d="M12 19V5" />
         <path d="m5 12 7-7 7 7" />

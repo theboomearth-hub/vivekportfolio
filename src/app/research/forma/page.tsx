@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, Fragment } from "react";
 import { Section, SectionHeader } from "@/components/Section";
@@ -132,18 +133,18 @@ export default function FormaResearchPage() {
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-10">
             <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
-              <p className="text-accent font-mono text-sm uppercase tracking-widest mb-4">Research · Architecture · Design</p>
-              <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-6">
+              <p className="text-accent font-mono text-xs uppercase tracking-[0.06em] mb-4">Research · Architecture · Design</p>
+              <h1 className="mb-6">
                 The <span className="text-accent">Forma</span> Project.
               </h1>
-              <p className="text-lg md:text-xl text-muted leading-relaxed max-w-2xl mx-auto mb-8">
+              <p className="text-lg text-muted leading-relaxed max-w-2xl mx-auto mb-8">
                 Infrastructure for malleable software — the full-stack platform that lets SaaS companies ship one product that feels custom-built for every user.
               </p>
             </motion.div>
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-px bg-border rounded-2xl overflow-hidden max-w-3xl mx-auto">
               {[{ value: "16", label: "Packages" }, { value: "1,600+", label: "Components" }, { value: "360", label: "Domains Researched" }, { value: "5", label: "Architecture Layers" }].map((s) => (
                 <div key={s.label} className="bg-background p-6">
-                  <div className="text-2xl md:text-3xl font-heading font-bold">{s.value}</div>
+                  <div className="text-2xl md:text-3xl font-display font-medium">{s.value}</div>
                   <p className="text-xs font-mono text-muted mt-1">{s.label}</p>
                 </div>
               ))}
@@ -156,12 +157,12 @@ export default function FormaResearchPage() {
               {[{ name: "Manifest", color: "#6366F1", desc: "Contract" }, { name: "Compiler", color: "#8B5CF6", desc: "Intent→Config" }, { name: "Runtime", color: "#EC4899", desc: "Sandboxed Render" }, { name: "Hooks", color: "#F59E0B", desc: "Middleware" }, { name: "Contract", color: "#10B981", desc: "Migration" }].map((layer) => (
                 <div key={layer.name} className="text-center">
                   <div className="h-1.5 sm:h-2 rounded-full mb-1.5 sm:mb-2" style={{ backgroundColor: layer.color }} />
-                  <p className="text-[9px] sm:text-[11px] font-bold text-foreground leading-tight">{layer.name}</p>
-                  <p className="text-[7px] sm:text-[9px] font-mono text-muted">{layer.desc}</p>
+                  <p className="text-xs font-medium text-foreground leading-tight">{layer.name}</p>
+                  <p className="text-xs font-mono text-muted">{layer.desc}</p>
                 </div>
               ))}
             </div>
-            <div className="flex items-center justify-center gap-3 sm:gap-6 text-[9px] sm:text-xs font-mono">
+            <div className="flex items-center justify-center gap-3 sm:gap-6 text-xs font-mono">
               <div className="flex items-center gap-1.5 sm:gap-2">
                 <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-sm bg-[#10B981]" />
                 <span className="text-muted">OSS (MIT)</span><span className="text-muted">·</span><span className="text-foreground">12 packages</span>
@@ -173,13 +174,13 @@ export default function FormaResearchPage() {
               </div>
               <div className="w-px h-4 bg-border" />
               <div className="flex items-center gap-1.5 sm:gap-2">
-                <span className="text-accent font-semibold">360</span><span className="text-muted">domains</span>
+                <span className="text-accent font-medium">360</span><span className="text-muted">domains</span>
               </div>
             </div>
           </motion.div>
 
           {/* End-to-End Flow */}
-          <div className="flex items-center justify-center gap-1 sm:gap-3 mb-6 flex-wrap text-[10px] sm:text-xs font-mono">
+          <div className="flex items-center justify-center gap-1 sm:gap-3 mb-6 flex-wrap text-xs font-mono">
             {[
               { label: "Developer", icon: ChevronLeft, color: "#6366F1" },
               { label: "Manifest", icon: Code, color: "#8B5CF6" },
@@ -190,7 +191,7 @@ export default function FormaResearchPage() {
               <div key={step.label} className="flex items-center gap-1 sm:gap-3 whitespace-nowrap">
                 <div className="flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-lg border" style={{ borderColor: step.color + "30", backgroundColor: step.color + "08" }}>
                   <step.icon size={12} style={{ color: tintText(step.color) }} />
-                  <span className="text-foreground font-semibold text-[10px] sm:text-xs">{step.label}</span>
+                  <span className="text-foreground font-medium text-xs">{step.label}</span>
                 </div>
                 {i < arr.length - 1 && <ArrowRight size={14} className="text-muted shrink-0" />}
               </div>
@@ -206,9 +207,9 @@ export default function FormaResearchPage() {
         <div className="max-w-5xl mx-auto">
           <SectionHeader eyebrow="Architecture Flow" title="From intent to interface." description="How Forma's 5-layer stack processes a developer's manifest and user intent into a secure, personalized interface — recompiled continuously as either one changes." />
 
-          <div className="flex items-center justify-between mb-4 px-1 text-[11px] sm:text-xs font-mono">
-            <span className="text-foreground font-semibold">User intent</span>
-            <span className="text-foreground font-semibold text-right">Personalized interface</span>
+          <div className="flex items-center justify-between mb-4 px-1 text-xs font-mono">
+            <span className="text-foreground font-medium">User intent</span>
+            <span className="text-foreground font-medium text-right">Personalized interface</span>
           </div>
 
           <div className="flex flex-col lg:flex-row items-stretch gap-3 lg:gap-2">
@@ -224,7 +225,7 @@ export default function FormaResearchPage() {
                 >
                   <div className="flex items-center gap-3 mb-3">
                     <span
-                      className="text-[10px] font-mono px-1.5 py-0.5 rounded-full border shrink-0"
+                      className="text-xs font-mono px-1.5 py-0.5 rounded-full border shrink-0"
                       style={{ borderColor: step.color + "30", color: tintText(step.color), backgroundColor: step.color + "10" }}
                     >
                       0{i + 1}
@@ -233,8 +234,8 @@ export default function FormaResearchPage() {
                       <step.icon size={16} style={{ color: tintText(step.color) }} />
                     </div>
                   </div>
-                  <h4 className="text-sm font-bold text-foreground mb-1">{step.label}</h4>
-                  <p className="text-[11px] font-mono text-muted leading-relaxed">{step.tagline}</p>
+                  <h3 className="text-sm text-foreground mb-1">{step.label}</h3>
+                  <p className="text-xs font-mono text-muted leading-relaxed">{step.tagline}</p>
                 </motion.div>
                 {i < archFlowSteps.length - 1 && (
                   <ChevronRight size={18} className="text-muted shrink-0 self-center rotate-90 lg:rotate-0" />
@@ -248,7 +249,7 @@ export default function FormaResearchPage() {
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ delay: 0.5 }}
-            className="flex items-center justify-center gap-2 mt-6 text-[11px] sm:text-xs font-mono text-muted"
+            className="flex items-center justify-center gap-2 mt-6 text-xs font-mono text-muted"
           >
             <RefreshCw size={12} className="text-accent" />
             <span>360° continuous — recompiles automatically on every manifest change</span>
@@ -264,7 +265,7 @@ export default function FormaResearchPage() {
           <SectionHeader eyebrow="The Genesis" title="Software should take your shape." description="Before AI, every user got the same interface. Enterprise software required forward-deployed engineers at enormous cost. Forma changes that." />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
             <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="p-6 rounded-2xl bg-surface border border-border">
-              <h3 className="text-lg font-bold mb-3 text-foreground">The One-Size-Fits-All Trap</h3>
+              <h3 className="text-lg mb-3 text-foreground">The One-Size-Fits-All Trap</h3>
               <ul className="space-y-3 text-sm text-muted">
                 <li className="flex gap-3"><ArrowRight size={14} className="text-accent shrink-0 mt-0.5" /><span>Every B2B SaaS company builds role-based views from scratch, badly, forever.</span></li>
                 <li className="flex gap-3"><ArrowRight size={14} className="text-accent shrink-0 mt-0.5" /><span>#1 churn reason in B2B SaaS: &ldquo;Doesn&apos;t fit our workflow&rdquo; — not price, not bugs.</span></li>
@@ -272,7 +273,7 @@ export default function FormaResearchPage() {
               </ul>
             </motion.div>
             <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="p-6 rounded-2xl bg-surface border border-border">
-              <h3 className="text-lg font-bold mb-3" style={{ color: tintText("#10B981") }}>The Forma Thesis</h3>
+              <h3 className="text-lg mb-3" style={{ color: tintText("#10B981") }}>The Forma Thesis</h3>
               <ul className="space-y-3 text-sm text-muted">
                 <li className="flex gap-3"><Check size={14} className="text-hue-green shrink-0 mt-0.5" /><span>Software companies ship capabilities (manifests), not fixed interfaces.</span></li>
                 <li className="flex gap-3"><Check size={14} className="text-hue-green shrink-0 mt-0.5" /><span>Users describe their workflow once. The AI compiler produces a stable, versioned config.</span></li>
@@ -281,7 +282,7 @@ export default function FormaResearchPage() {
             </motion.div>
           </div>
           <motion.blockquote initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mt-12 p-8 rounded-2xl border-l-4 border-accent bg-surface/50" style={{ borderLeftColor: "var(--color-accent)" }}>
-            <p className="text-lg md:text-xl italic text-muted leading-relaxed">&ldquo;In the future, software companies will ship shared primitives with the full intention that users will heavily modify the final interfaces. Coding agents have reached the quality threshold where every user can be their own forward-deployed engineer.&rdquo;</p>
+            <p className="text-lg italic text-muted leading-relaxed">&ldquo;In the future, software companies will ship shared primitives with the full intention that users will heavily modify the final interfaces. Coding agents have reached the quality threshold where every user can be their own forward-deployed engineer.&rdquo;</p>
             <p className="mt-4 text-sm font-mono text-accent">— Y Combinator Research Thesis, 2026</p>
           </motion.blockquote>
         </div>
@@ -299,11 +300,11 @@ export default function FormaResearchPage() {
               return (
                 <motion.div key={layer.name} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08 }} className="rounded-2xl border overflow-hidden transition-all duration-300 cursor-pointer" style={{ borderColor: isActive ? layer.color + "50" : "var(--color-border)", backgroundColor: isActive ? layer.color + "06" : "var(--color-surface)" }} onClick={() => setActiveLayer(isActive ? null : i)}>
                   <div className="p-5 sm:p-6 flex items-center gap-4">
-                    <div className="w-10 h-10 rounded-xl flex items-center justify-center text-sm font-bold shrink-0" style={{ backgroundColor: layer.color + "20", color: tintText(layer.color) }}>{layer.level}</div>
+                    <div className="w-10 h-10 rounded-xl flex items-center justify-center text-sm font-medium shrink-0" style={{ backgroundColor: layer.color + "20", color: tintText(layer.color) }}>{layer.level}</div>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-3">
-                        <h3 className="text-lg font-bold text-foreground">{layer.name}</h3>
-                        <span className="text-[10px] font-mono px-2 py-0.5 rounded-full border" style={{ borderColor: layer.color + "30", color: tintText(layer.color), backgroundColor: layer.color + "10" }}>{layer.short}</span>
+                        <h3 className="text-lg text-foreground">{layer.name}</h3>
+                        <span className="text-xs font-mono px-2 py-0.5 rounded-full border" style={{ borderColor: layer.color + "30", color: tintText(layer.color), backgroundColor: layer.color + "10" }}>{layer.short}</span>
                       </div>
                       <p className="text-sm text-muted mt-1">{layer.desc}</p>
                     </div>
@@ -334,7 +335,7 @@ export default function FormaResearchPage() {
 
           {/* Package Graph — tiered dependency stack */}
           <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mt-12">
-            <h3 className="text-2xl font-bold mb-4">Package Architecture</h3>
+            <h3 className="text-2xl mb-4">Package Architecture</h3>
             <p className="text-muted mb-6 max-w-2xl">16 packages across 4 tiers — open-core with MIT-licensed schema/runtime and closed-source compiler/flagship packs. Each tier only depends on the one below it.</p>
             <div className="space-y-0">
               {packageTiers.map((band, bandIndex) => {
@@ -343,8 +344,8 @@ export default function FormaResearchPage() {
                   <Fragment key={band.tier}>
                     <motion.div initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: bandIndex * 0.1 }} className="rounded-2xl border border-border bg-surface p-5 sm:p-6">
                       <div className="flex items-center gap-3 mb-4">
-                        <span className="text-[10px] font-mono px-2 py-0.5 rounded-full border border-border text-muted shrink-0">Tier {band.tier}</span>
-                        <h4 className="text-sm font-bold text-foreground">{band.label}</h4>
+                        <span className="text-xs font-mono px-2 py-0.5 rounded-full border border-border text-muted shrink-0">Tier {band.tier}</span>
+                        <h4 className="text-sm text-foreground">{band.label}</h4>
                         <span className="text-xs text-muted font-mono ml-auto shrink-0">{items.length} pkgs</span>
                       </div>
                       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
@@ -352,14 +353,14 @@ export default function FormaResearchPage() {
                           <div key={pkg.name} className="p-3 rounded-xl border text-sm" style={{ borderColor: pkg.color + "25", backgroundColor: pkg.color + "06" }}>
                             <div className="flex items-center gap-2 mb-1">
                               <div className="w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: pkg.color }} />
-                              <span className="font-mono text-xs font-semibold text-foreground">{pkg.name}</span>
+                              <span className="font-mono text-xs font-medium text-foreground">{pkg.name}</span>
                             </div>
-                            <p className="text-[11px] text-muted">{pkg.desc}</p>
-                            {pkg.deps.length > 0 && <p className="text-[10px] text-muted mt-1 font-mono">depends on: {pkg.deps.join(", ")}</p>}
+                            <p className="text-sm text-muted">{pkg.desc}</p>
+                            {pkg.deps.length > 0 && <p className="text-sm text-muted mt-1 font-mono">depends on: {pkg.deps.join(", ")}</p>}
                           </div>
                         ))}
                       </div>
-                      <p className="text-[10px] text-muted font-mono mt-4">{band.note}</p>
+                      <p className="text-sm text-muted font-mono mt-4">{band.note}</p>
                     </motion.div>
                     {bandIndex < packageTiers.length - 1 && (
                       <div className="flex justify-center py-1.5">
@@ -383,8 +384,8 @@ export default function FormaResearchPage() {
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3">
             {domainCategories.map((cat) => (
               <motion.div key={cat.name} initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="p-3 rounded-xl border border-border bg-surface text-center">
-                <div className="text-lg font-bold" style={{ color: tintText(cat.color) }}>{cat.count}</div>
-                <p className="text-xs text-muted mt-1">{cat.name}</p>
+                <div className="text-lg font-medium" style={{ color: tintText(cat.color) }}>{cat.count}</div>
+                <p className="text-sm text-muted mt-1">{cat.name}</p>
               </motion.div>
             ))}
           </div>
@@ -394,9 +395,9 @@ export default function FormaResearchPage() {
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><polyline points="16 18 22 12 16 6" /><polyline points="8 6 2 12 8 18" /></svg>
               </div>
               <div>
-                <h4 className="text-sm font-bold text-foreground mb-1">Per-Component Deep Imports</h4>
-                <p className="text-xs text-muted leading-relaxed">
-                  Every component is individually importable via <code className="text-accent text-[10px]">@forma/react/table</code>, <code className="text-accent text-[10px]">@forma/react/kanban</code>, etc. 879 deep-import paths configured. Bundle-size CI gate on every PR — target: &lt;60KB gzipped per view.
+                <h3 className="text-sm text-foreground mb-1">Per-Component Deep Imports</h3>
+                <p className="text-sm text-muted leading-relaxed">
+                  Every component is individually importable via <code className="text-accent text-xs">@forma/react/table</code>, <code className="text-accent text-xs">@forma/react/kanban</code>, etc. 879 deep-import paths configured. Bundle-size CI gate on every PR — target: &lt;60KB gzipped per view.
                 </p>
               </div>
             </div>
@@ -417,8 +418,8 @@ export default function FormaResearchPage() {
                   <div className="w-2 h-2 rounded-full mt-2 shrink-0" style={{ backgroundColor: d.color }} />
                   <div>
                     <div className="flex items-center gap-3 mb-1 flex-wrap">
-                      <h3 className="text-base font-bold text-foreground">{d.decision}</h3>
-                      <span className="text-[10px] font-mono px-2 py-0.5 rounded" style={{ backgroundColor: d.color + "15", color: tintText(d.color) }}>{d.choice}</span>
+                      <h3 className="text-base text-foreground">{d.decision}</h3>
+                      <span className="text-xs font-mono px-2 py-0.5 rounded" style={{ backgroundColor: d.color + "15", color: tintText(d.color) }}>{d.choice}</span>
                     </div>
                     <p className="text-sm text-muted leading-relaxed">{d.why}</p>
                   </div>
@@ -445,7 +446,7 @@ export default function FormaResearchPage() {
           <AnimatePresence mode="wait">
             <motion.div key={currentUseCase.id} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.3 }}>
               <div className="p-6 sm:p-8 rounded-2xl border mb-6" style={{ borderColor: currentUseCase.color + "25", backgroundColor: currentUseCase.color + "04" }}>
-                <h3 className="text-xl font-bold mb-3" style={{ color: tintText(currentUseCase.color) }}>{currentUseCase.title}</h3>
+                <h3 className="text-xl mb-3" style={{ color: tintText(currentUseCase.color) }}>{currentUseCase.title}</h3>
                 <p className="text-sm text-muted leading-relaxed max-w-3xl">{currentUseCase.summary}</p>
               </div>
               <div className="space-y-2 mb-6">
@@ -454,15 +455,15 @@ export default function FormaResearchPage() {
                     <span className="shrink-0 mt-0.5" style={{ color: tintText(currentUseCase.color) }}>
                       {t.startsWith("Before") ? <ChevronLeft size={14} /> : t.startsWith("After") ? <ChevronRight size={14} /> : <Dot size={14} />}
                     </span>
-                    <span className="text-xs text-muted">{t}</span>
+                    <span className="text-sm text-muted">{t}</span>
                   </div>
                 ))}
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 {currentUseCase.metrics.map((m) => (
                   <div key={m.label} className="p-4 rounded-xl text-center border" style={{ borderColor: currentUseCase.color + "20", backgroundColor: currentUseCase.color + "06" }}>
-                    <div className="text-xl font-heading font-bold" style={{ color: tintText(currentUseCase.color) }}>{m.value}</div>
-                    <p className="text-[10px] text-muted mt-1">{m.label}</p>
+                    <div className="text-xl font-display font-medium" style={{ color: tintText(currentUseCase.color) }}>{m.value}</div>
+                    <p className="text-sm text-muted mt-1">{m.label}</p>
                   </div>
                 ))}
               </div>
@@ -477,24 +478,24 @@ export default function FormaResearchPage() {
                 <motion.div key={circle.name} initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }} className="relative p-6 rounded-2xl border border-border bg-surface text-center overflow-hidden">
                   <div className="absolute -top-10 -right-10 w-32 h-32 rounded-full opacity-10" style={{ backgroundColor: i === 0 ? "#6366F1" : i === 1 ? "#8B5CF6" : "#EC4899" }} />
                   <div className="relative">
-                    <p className="text-[10px] font-mono uppercase tracking-widest mb-1" style={{ color: tintText(i === 0 ? "#6366F1" : i === 1 ? "#8B5CF6" : "#EC4899") }}>{circle.name}</p>
-                    <div className="text-xl font-bold text-foreground">{circle.value}</div>
-                    <div className="text-2xl font-heading font-bold mt-1" style={{ color: tintText(i === 0 ? "#6366F1" : i === 1 ? "#8B5CF6" : "#EC4899") }}>{circle.arr}</div>
-                    <p className="text-[10px] text-muted mt-2">{circle.desc}</p>
+                    <p className="text-xs font-mono uppercase tracking-[0.06em] mb-1" style={{ color: tintText(i === 0 ? "#6366F1" : i === 1 ? "#8B5CF6" : "#EC4899") }}>{circle.name}</p>
+                    <div className="text-xl font-medium text-foreground">{circle.value}</div>
+                    <div className="text-2xl font-display font-medium mt-1" style={{ color: tintText(i === 0 ? "#6366F1" : i === 1 ? "#8B5CF6" : "#EC4899") }}>{circle.arr}</div>
+                    <p className="text-sm text-muted mt-2">{circle.desc}</p>
                   </div>
                 </motion.div>
               ))}
             </div>
-            <h3 className="text-2xl font-bold mb-4">Pricing Model</h3>
+            <h3 className="text-2xl mb-4">Pricing Model</h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
               {pricingTiers.map((tier) => (
                 <motion.div key={tier.name} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="p-5 rounded-2xl border bg-surface" style={{ borderColor: tier.color + "25" }}>
-                  <h4 className="text-sm font-bold text-foreground">{tier.name}</h4>
-                  <div className="text-2xl font-heading font-bold my-2" style={{ color: tintText(tier.color) }}>{tier.price}</div>
-                  <p className="text-[10px] font-mono text-muted mb-3">/month · {tier.users}</p>
+                  <h4 className="text-sm text-foreground">{tier.name}</h4>
+                  <div className="text-2xl font-display font-medium my-2" style={{ color: tintText(tier.color) }}>{tier.price}</div>
+                  <p className="text-xs font-mono text-muted mb-3">/month · {tier.users}</p>
                   <ul className="space-y-1.5">
                     {tier.features.map((f) => (
-                      <li key={f} className="flex items-center gap-1.5 text-[11px] text-muted">
+                      <li key={f} className="flex items-center gap-1.5 text-xs text-muted">
                         <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="shrink-0" style={{ color: tintText(tier.color) }}><polyline points="20 6 9 17 4 12" /></svg>
                         {f}
                       </li>
@@ -515,18 +516,18 @@ export default function FormaResearchPage() {
           <SectionHeader eyebrow="Current Status" title="Where Forma is today." description="June 2026 snapshot: the monorepo is scaffolded with 16 packages, 6 apps, and a locked manifest v1 spec. Component library, domain packs, CLI, and devtools are live." />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-12">
             <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="p-5 rounded-2xl border border-[#10B981]/30 bg-[#10B981]/05">
-              <h4 className="text-sm font-bold text-hue-green mb-3 flex items-center gap-1.5"><Check size={14} /> Built</h4>
+              <h3 className="text-sm text-hue-green mb-3 flex items-center gap-1.5"><Check size={14} /> Built</h3>
               <ul className="space-y-2">
                 {["Manifest spec v1 LOCKED (June 3, 2026)", "16 packages scaffolded", "@forma/react: 536 components across 48 categories", "4 domain packs: CRM, Analytics, Helpdesk, Charts-D3", "6 apps: Website, Playground, Docs, Studio, Storybook, E2E", "CLI with 7 commands", "Devtools browser extension + React component", "Testing utilities: mock data, MSW handlers, ManifestBuilder", "879 deep-import paths configured", "100+ strategy documents"].map((item) => (
-                  <li key={item} className="flex gap-2 text-xs text-muted"><Check size={12} className="text-hue-green shrink-0 mt-0.5" />{item}</li>
+                  <li key={item} className="flex gap-2 text-sm text-muted"><Check size={12} className="text-hue-green shrink-0 mt-0.5" />{item}</li>
                 ))}
               </ul>
             </motion.div>
             <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }} className="p-5 rounded-2xl border border-[#F59E0B]/30 bg-[#F59E0B]/05">
-              <h4 className="text-sm font-bold text-hue-amber mb-3 flex items-center gap-1.5"><Circle size={14} /> In Progress / Next</h4>
+              <h3 className="text-sm text-hue-amber mb-3 flex items-center gap-1.5"><Circle size={14} /> In Progress / Next</h3>
               <ul className="space-y-2">
                 {["Manifest registry API (Go service)", "AI compiler service (Python/FastAPI)", "Version contract management dashboard", "Changesets + npm publishing pipeline", "Per-component build output", "Third-party security audit (NCC Group / Trail of Bits)", "E2E test suite completion", "3 design partner commitments", "First paying customer ($500/mo target)", "@forma/scientific package family"].map((item) => (
-                  <li key={item} className="flex gap-2 text-xs text-muted"><Circle size={12} className="text-hue-amber shrink-0 mt-0.5" />{item}</li>
+                  <li key={item} className="flex gap-2 text-sm text-muted"><Circle size={12} className="text-hue-amber shrink-0 mt-0.5" />{item}</li>
                 ))}
               </ul>
             </motion.div>
@@ -538,21 +539,21 @@ export default function FormaResearchPage() {
             {personas.map((p, i) => (
               <motion.div key={p.title} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.06 }} className="p-5 rounded-2xl border border-border bg-surface">
                 <div className="flex items-center gap-3 mb-3">
-                  <div className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold" style={{ backgroundColor: p.color + "20", color: tintText(p.color) }}>{p.title.split(" ").map((w) => w[0]).join("").slice(0, 2)}</div>
+                  <div className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-medium" style={{ backgroundColor: p.color + "20", color: tintText(p.color) }}>{p.title.split(" ").map((w) => w[0]).join("").slice(0, 2)}</div>
                   <div>
-                    <h3 className="text-sm font-bold text-foreground">{p.title}</h3>
-                    <p className="text-[10px] font-mono" style={{ color: tintText(p.color) }}>{p.role}</p>
+                    <h3 className="text-sm text-foreground">{p.title}</h3>
+                    <p className="text-xs font-mono" style={{ color: tintText(p.color) }}>{p.role}</p>
                   </div>
                 </div>
-                <p className="text-[10px] font-mono text-muted mb-2">{p.company}</p>
-                <p className="text-xs text-muted leading-relaxed">{p.pain}</p>
+                <p className="text-xs font-mono text-muted mb-2">{p.company}</p>
+                <p className="text-sm text-muted leading-relaxed">{p.pain}</p>
               </motion.div>
             ))}
           </div>
 
           {/* Links */}
           <div className="text-center">
-            <h2 className="text-2xl md:text-3xl font-bold mb-6">Dive into the <span className="text-accent">Forma ecosystem.</span></h2>
+            <h2 className="mb-6">Dive into the <span className="text-accent">Forma ecosystem.</span></h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-3xl mx-auto">
               {[
                 { label: "Live Website", href: "https://forma.dev", desc: "Marketing site with interactive demo", color: "#06B6D4" },
@@ -565,9 +566,9 @@ export default function FormaResearchPage() {
                 <motion.a key={link.label} href={link.href} target="_blank" rel="noopener noreferrer" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.06 }} className="group p-5 rounded-2xl border border-border bg-surface hover:border-accent/20 transition-all duration-300 text-left">
                   <div className="flex items-center gap-2 mb-2">
                     <div className="w-2 h-2 rounded-full" style={{ backgroundColor: link.color }} />
-                    <span className="text-sm font-bold text-foreground group-hover:text-accent transition-colors">{link.label}</span>
+                    <span className="text-sm font-medium text-foreground group-hover:text-accent transition-colors">{link.label}</span>
                   </div>
-                  <p className="text-xs text-muted">{link.desc}</p>
+                  <p className="text-sm text-muted">{link.desc}</p>
                 </motion.a>
               ))}
             </div>
@@ -584,18 +585,18 @@ export default function FormaResearchPage() {
                 Interested in multi-platform design systems?
               </p>
               <div className="flex flex-wrap items-center justify-center gap-3">
-                <a
+                <Link
                   href="/work"
-                  className="px-5 py-2.5 rounded-xl bg-accent text-accent-foreground text-sm font-semibold hover:bg-accent/90 transition-colors"
+                  className="px-5 py-2.5 rounded-xl bg-accent text-accent-foreground text-sm font-medium hover:bg-accent/90 transition-colors"
                 >
                   View Case Studies
-                </a>
-                <a
+                </Link>
+                <Link
                   href="/research/lokul"
                   className="px-5 py-2.5 rounded-xl bg-surface-hover border border-border text-sm font-medium text-foreground hover:border-accent/30 transition-colors"
                 >
                   Lokul.club Research
-                </a>
+                </Link>
               </div>
             </motion.div>
 

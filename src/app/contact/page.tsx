@@ -97,7 +97,7 @@ export default function ContactPage() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.7 }}
           >
-            <p className="text-accent font-mono text-sm uppercase tracking-widest mb-4">
+            <p className="text-accent font-mono text-xs uppercase tracking-[0.06em] mb-4">
               Get in Touch
             </p>
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-surface border border-border mb-6">
@@ -109,7 +109,7 @@ export default function ContactPage() {
                 Available for select engagements
               </span>
             </div>
-            <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
+            <h1 className="mb-6">
               Let&apos;s build
               <br />
               something{" "}
@@ -130,14 +130,14 @@ export default function ContactPage() {
               <div className="flex flex-col sm:flex-row sm:items-center gap-3">
                 <a
                   href={`mailto:${contactEmail}`}
-                  className="text-base sm:text-xl font-bold text-accent hover:text-accent/80 transition-colors break-all"
+                  className="text-base sm:text-xl font-medium text-accent hover:text-accent transition-colors break-all"
                 >
                   {contactEmail}
                 </a>
                 <button
                   type="button"
                   onClick={handleCopyEmail}
-                  className="inline-flex items-center justify-center gap-2 px-3 py-2 rounded-lg bg-surface border border-border text-xs font-semibold text-muted hover:text-foreground hover:border-accent/30 transition-colors w-fit"
+                  className="inline-flex items-center justify-center gap-2 px-3 py-2 rounded-lg bg-surface border border-border text-xs font-medium text-muted hover:text-foreground hover:border-accent/30 transition-colors w-fit"
                 >
                   <svg
                     width="14"
@@ -184,7 +184,7 @@ export default function ContactPage() {
               <a
                 href="/VIVEKANAND_CHOUDHARI_2026_New.pdf"
                 download="Vivekanand_Choudhari_Resume.pdf"
-                className="inline-flex items-center gap-2.5 px-5 py-3 rounded-xl bg-surface border border-border text-sm font-semibold text-foreground hover:border-accent/40 hover:text-accent transition-all duration-200 group"
+                className="inline-flex items-center gap-2.5 px-5 py-3 rounded-xl bg-surface border border-border text-sm font-medium text-foreground hover:border-accent/40 hover:text-accent transition-all duration-200 group"
               >
                 <svg
                   width="16"
@@ -326,7 +326,7 @@ export default function ContactPage() {
                 <button
                   type="submit"
                   disabled={sending || sent}
-                  className="w-full px-8 py-4 bg-accent text-accent-foreground font-semibold rounded-xl hover:bg-accent/90 transition-all hover:shadow-lg hover:shadow-accent/20 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full px-8 py-4 bg-accent text-accent-foreground font-medium rounded-xl hover:bg-accent/90 transition-all hover:shadow-lg hover:shadow-accent/20 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {sending ? "Sending..." : sent ? "Sent! I'll get back to you." : "Send Message"}
                 </button>

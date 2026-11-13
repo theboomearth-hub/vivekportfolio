@@ -1,20 +1,13 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Portfolio — Real Designs",
+  title: "Design gallery",
   description:
-    "Real screens from shipped work — select a project to browse the actual designs, pulled straight from Figma.",
+    "Real screens and case-study boards from shipped products and concept work: Quinnox’s AIOps platform, FlexEHR, SaaSworld.club, ShemarooMe streaming apps and two UX case studies, each with the thinking behind it.",
   openGraph: {
-    title: "Portfolio — Real Designs",
-    description: "Real screens from shipped work, browsable by project.",
-    images: [
-      {
-        url: "/api/og?title=Portfolio&category=Real%20Designs",
-        width: 1200,
-        height: 630,
-        alt: "Portfolio — Real Designs",
-      },
-    ],
+    title: "Design gallery — Vivekanand Choudhari",
+    description: "Real screens and case-study boards, each with the thinking behind it.",
+    images: [{ url: "/work/gallery/aiops/knowledge-graph.jpg", width: 1800, height: 2022, alt: "Enterprise Knowledge Graph screen from Quinnox’s AIOps platform" }],
   },
   alternates: { canonical: "/portfolio" },
 };

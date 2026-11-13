@@ -1,245 +1,98 @@
-"use client";
-
-import { Suspense, useCallback, useMemo, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
-import Image from "next/image";
 import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
-import { X, ChevronLeft, ChevronRight } from "lucide-react";
-import { Section } from "@/components/Section";
-import { projectData } from "@/lib/work/project-data";
+import GalleryGrid from "@/components/gallery/GalleryGrid";
+import { gallerySets, galleryScreenCount } from "@/lib/work/gallery";
 
-type GalleryImage = { src: string; alt: string; caption?: string };
+const label = "font-mono text-xs uppercase tracking-[0.06em] text-muted";
 
-function getProjectImages(slug: string): GalleryImage[] {
-  const project = projectData[slug];
-  if (!project) return [];
-  const images: GalleryImage[] = [];
-  if (project.heroImage) images.push({ src: project.heroImage, alt: project.title });
-  if (project.gallery) images.push(...project.gallery);
-  return images;
-}
-
-function EmptyState() {
+export default function DesignGalleryPage() {
   return (
-    <div className="pt-24">
-      <Section>
-        <div className="max-w-2xl mx-auto text-center">
-          <p className="text-accent font-mono text-sm uppercase tracking-widest mb-4">Portfolio</p>
-          <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4">
-            Real designs, coming soon.
-          </h1>
-          <p className="text-muted leading-relaxed mb-8">
-            This page will showcase real screens from shipped work as they&apos;re added.
-            In the meantime, explore the full case studies.
+    <div className="pb-24 pt-32 md:pt-40">
+      <div className="container-premium">
+        <header className="max-w-[60ch]">
+          <p className={label}>Design gallery</p>
+          <h1 className="mt-4">Real screens, with the thinking behind them.</h1>
+          <p className="mt-6 text-lg leading-relaxed text-muted">
+            {galleryScreenCount} screens and boards from shipped products and concept case studies. Each set explains what it is and what to look for. Select any
+            screen to see it full size.
           </p>
-          <Link
-            href="/work"
-            className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-xl bg-accent text-accent-foreground text-sm font-semibold hover:bg-accent/90 transition-colors"
-          >
-            View Case Studies
-          </Link>
-        </div>
-      </Section>
-    </div>
-  );
-}
-
-function PortfolioContent() {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-
-  const projects = useMemo(
-    () =>
-      Object.entries(projectData)
-        .filter(([, p]) => p.heroImage || (p.gallery && p.gallery.length > 0))
-        .map(([slug, p]) => ({ slug, title: p.title, category: p.category })),
-    []
-  );
-
-  const paramSlug = searchParams.get("project");
-  const initialSlug =
-    paramSlug && projects.some((p) => p.slug === paramSlug) ? paramSlug : projects[0]?.slug;
-
-  const [activeSlug, setActiveSlug] = useState<string | undefined>(initialSlug);
-  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
-
-  const images = activeSlug ? getProjectImages(activeSlug) : [];
-  const activeProject = activeSlug ? projectData[activeSlug] : undefined;
-
-  const selectProject = useCallback(
-    (slug: string) => {
-      setActiveSlug(slug);
-      setLightboxIndex(null);
-      router.replace(`/portfolio?project=${slug}`, { scroll: false });
-    },
-    [router]
-  );
-
-  const showLightbox = useCallback((index: number) => setLightboxIndex(index), []);
-  const closeLightbox = useCallback(() => setLightboxIndex(null), []);
-  const step = useCallback(
-    (delta: number) => {
-      setLightboxIndex((i) => {
-        if (i === null) return i;
-        return (i + delta + images.length) % images.length;
-      });
-    },
-    [images.length]
-  );
-
-  if (projects.length === 0) return <EmptyState />;
-
-  return (
-    <div className="pt-24">
-      <Section>
-        <div className="max-w-3xl mb-10">
-          <p className="text-accent font-mono text-sm uppercase tracking-widest mb-4">Portfolio</p>
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight mb-4">
-            Real designs, real products.
-          </h1>
-          <p className="text-muted leading-relaxed">
-            Select a project to see the actual screens — pulled straight from Figma.
+          <p className="mt-4 text-compact text-muted">
+            Looking for the full stories?{" "}
+            <Link href="/work" className="text-foreground underline decoration-border-strong underline-offset-4 hover:text-accent">
+              Read the case studies
+            </Link>
+            .
           </p>
-        </div>
+        </header>
 
-        {/* Project selector */}
-        <div className="flex flex-wrap gap-2 mb-10" role="tablist" aria-label="Select project">
-          {projects.map((p) => (
-            <button
-              key={p.slug}
-              role="tab"
-              aria-selected={activeSlug === p.slug}
-              onClick={() => selectProject(p.slug)}
-              className={`px-4 py-2 rounded-xl text-sm font-medium border transition-colors ${
-                activeSlug === p.slug
-                  ? "bg-accent/10 border-accent/40 text-foreground"
-                  : "bg-surface border-border text-muted hover:text-foreground"
-              }`}
-            >
-              {p.title}
-            </button>
-          ))}
-        </div>
+        <nav aria-label="Design sets" className="mt-10">
+          <ul className="flex flex-wrap gap-2">
+            {gallerySets.map((set) => (
+              <li key={set.slug}>
+                <a
+                  href={`#${set.slug}`}
+                  className="inline-flex min-h-9 items-center rounded-full px-3.5 text-sm text-muted ring-1 ring-border ring-inset transition-colors hover:bg-surface hover:text-foreground"
+                >
+                  {set.title.split(",")[0]}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </div>
 
-        {/* Viewer */}
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={activeSlug}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.2 }}
-          >
-            {activeProject && (
-              <p className="text-xs font-mono text-muted uppercase tracking-widest mb-4">
-                {activeProject.category}
+      {gallerySets.map((set) => (
+        <section key={set.slug} id={set.slug} aria-labelledby={`${set.slug}-title`} className="mt-20 scroll-mt-24 border-t border-border pt-14 md:mt-24 md:pt-16">
+          <div className="container-premium grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] lg:gap-14">
+            <div className="lg:sticky lg:top-28 lg:self-start">
+              <p className="flex flex-wrap gap-x-2 text-caption text-muted">
+                <span>{set.kind}</span>
+                <span aria-hidden="true">·</span>
+                <span>{set.when}</span>
               </p>
-            )}
-            {images.length === 0 ? (
-              <p className="text-sm text-muted">No screens added for this project yet.</p>
-            ) : (
-              <div className="space-y-4">
-                <button
-                  onClick={() => showLightbox(0)}
-                  className="block w-full rounded-2xl border border-border bg-surface overflow-hidden"
-                >
-                  <Image
-                    src={images[0].src}
-                    alt={images[0].alt}
-                    width={1600}
-                    height={1000}
-                    sizes="(min-width: 1024px) 1024px, 100vw"
-                    className="w-full h-auto"
-                    priority
-                  />
-                </button>
-                {images.length > 1 && (
-                  <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {images.slice(1).map((img, i) => (
-                      <button
-                        key={img.src}
-                        onClick={() => showLightbox(i + 1)}
-                        className="rounded-xl border border-border bg-surface overflow-hidden"
+              <h2 id={`${set.slug}-title`} className="mt-2">
+                {set.title}
+              </h2>
+              <p className="mt-1 text-sm text-muted">
+                {set.platforms}
+                {set.facts ? ` · ${set.facts}` : ""}
+              </p>
+              <p className="mt-5 leading-relaxed text-muted">{set.summary}</p>
+              <h3 className="mt-6 font-mono text-xs font-normal uppercase tracking-[0.06em] text-muted">What to look for</h3>
+              <ul className="mt-3 grid gap-2.5 text-compact leading-relaxed">
+                {set.highlights.map((h) => (
+                  <li key={h} className="flex gap-2.5">
+                    <span aria-hidden="true" className="mt-[0.6em] h-1 w-1 shrink-0 rounded-full bg-accent" />
+                    <span>{h}</span>
+                  </li>
+                ))}
+              </ul>
+              {(set.links?.length || set.note) && (
+                <div className="mt-6 grid gap-2 text-sm">
+                  {set.links?.map((l) => {
+                    const external = l.href.startsWith("http");
+                    return (
+                      <a
+                        key={l.href}
+                        href={l.href}
+                        {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                        className="inline-flex w-fit items-center gap-1.5 py-1.5 font-medium underline decoration-border-strong underline-offset-4 hover:text-accent"
                       >
-                        <Image
-                          src={img.src}
-                          alt={img.alt}
-                          width={800}
-                          height={600}
-                          sizes="(min-width: 1024px) 33vw, 100vw"
-                          className="w-full h-auto"
-                        />
-                      </button>
-                    ))}
-                  </div>
-                )}
-              </div>
-            )}
-          </motion.div>
-        </AnimatePresence>
-      </Section>
-
-      {/* Lightbox */}
-      <AnimatePresence>
-        {lightboxIndex !== null && images[lightboxIndex] && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-60 bg-black/90 flex items-center justify-center p-4 sm:p-8"
-            onClick={closeLightbox}
-          >
-            <button
-              onClick={closeLightbox}
-              aria-label="Close"
-              className="absolute top-4 right-4 sm:top-6 sm:right-6 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors"
-            >
-              <X className="w-5 h-5" />
-            </button>
-            {images.length > 1 && (
-              <>
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    step(-1);
-                  }}
-                  aria-label="Previous image"
-                  className="absolute left-2 sm:left-6 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors"
-                >
-                  <ChevronLeft className="w-5 h-5" />
-                </button>
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    step(1);
-                  }}
-                  aria-label="Next image"
-                  className="absolute right-2 sm:right-6 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors"
-                >
-                  <ChevronRight className="w-5 h-5" />
-                </button>
-              </>
-            )}
-            <Image
-              src={images[lightboxIndex].src}
-              alt={images[lightboxIndex].alt}
-              width={1800}
-              height={1200}
-              className="max-w-full max-h-full w-auto h-auto object-contain rounded-lg"
-              onClick={(e) => e.stopPropagation()}
-            />
-          </motion.div>
-        )}
-      </AnimatePresence>
+                        {l.label}
+                        {external && <span className="sr-only"> (opens in a new tab)</span>}
+                        <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                          <path d={external ? "M7 17L17 7M8 7h9v9" : "M5 12h14M13 6l6 6-6 6"} />
+                        </svg>
+                      </a>
+                    );
+                  })}
+                  {set.note && <p className="text-muted">{set.note}</p>}
+                </div>
+              )}
+            </div>
+            <GalleryGrid set={set} />
+          </div>
+        </section>
+      ))}
     </div>
-  );
-}
-
-export default function PortfolioPage() {
-  return (
-    <Suspense fallback={null}>
-      <PortfolioContent />
-    </Suspense>
   );
 }

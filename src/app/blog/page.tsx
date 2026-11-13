@@ -28,6 +28,7 @@ export default function BlogPage() {
     <div className="pt-24">
       <Section>
         <SectionHeader
+          as="h1"
           eyebrow="Blog"
           title="Insights & Ideas."
           description="Writing about design systems, AdTech, AI-powered workflows, system design, and the future of digital experiences."
@@ -58,6 +59,7 @@ export default function BlogPage() {
         {/* Featured Post */}
         {activeCategory === "All" && featuredPost && (
           <div className="mb-12">
+            <h2 className="sr-only">Featured post</h2>
             <BlogCard
               title={featuredPost.title}
               excerpt={featuredPost.excerpt}
@@ -72,6 +74,7 @@ export default function BlogPage() {
         )}
 
         {/* Posts Grid */}
+        <h2 className="sr-only">{activeCategory === "All" ? "All posts" : `${activeCategory} posts`}</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-8">
           {filteredPosts
             .filter((p) => !(activeCategory === "All" && p.featured))
@@ -103,16 +106,16 @@ export default function BlogPage() {
         <div className="relative overflow-hidden rounded-2xl bg-surface border border-border p-6 sm:p-10 md:p-16 text-center">
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-100 h-50 bg-accent/10 rounded-full blur-3xl" />
           <div className="relative z-10">
-            <h3 className="text-3xl md:text-4xl font-bold mb-4">
+            <h2 className="mb-4">
               Stay in the loop.
-            </h3>
+            </h2>
             <p className="text-muted text-lg max-w-md mx-auto mb-8">
               Get new posts delivered to your inbox. No spam, unsubscribe
               anytime.
             </p>
             <a
               href="mailto:vivekanand.design@gmail.com?subject=Newsletter%20Subscription"
-              className="inline-block px-8 py-4 bg-accent text-accent-foreground font-semibold rounded-xl hover:bg-accent/90 transition-all hover:shadow-lg hover:shadow-accent/20"
+              className="inline-block px-8 py-4 bg-accent text-accent-foreground font-medium rounded-xl hover:bg-accent/90 transition-all hover:shadow-lg hover:shadow-accent/20"
             >
               Subscribe via Email
             </a>

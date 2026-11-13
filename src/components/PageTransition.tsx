@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { usePathname } from "next/navigation";
 
@@ -28,23 +28,18 @@ export default function PageTransition({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
-  const [hasMounted, setHasMounted] = useState(false);
   // Captured once on first render — used to detect the very first page
   // (no entrance animation) vs. a subsequent client-side navigation
   // (animate in). Comparing against state avoids mutating refs during render.
   const [initialPathname] = useState(() => pathname);
 
-  useEffect(() => {
-    setHasMounted(true);
-  }, []);
-
-  // On the very first server render + hydration, render children
-  // without any motion wrapper to avoid hydration mismatch.
-  if (!hasMounted) {
-    return <div>{children}</div>;
-  }
-
   const isFirstPage = pathname === initialPathname;
+
+  // No "render a plain <div> until mounted" guard: swapping <div> for
+  // <motion.div> after hydration changes the element type, so React unmounted
+  // and remounted the entire page right after load. With initial={false} the
+  // first page renders its final "enter" styles on the server and the client
+  // alike, so there is nothing to mismatch.
 
   return (
     <motion.div

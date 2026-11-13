@@ -1,7 +1,17 @@
 "use client";
 
-import { useRef, useState, useCallback, useEffect } from "react";
+import { useRef, useState, useCallback, useSyncExternalStore } from "react";
 import { motion, useSpring, useMotionValue } from "framer-motion";
+
+const COARSE_POINTER = "(pointer: coarse)";
+
+function subscribeToPointer(onChange: () => void) {
+  const mq = window.matchMedia(COARSE_POINTER);
+  mq.addEventListener("change", onChange);
+  return () => mq.removeEventListener("change", onChange);
+}
+const isCoarsePointer = () => window.matchMedia(COARSE_POINTER).matches;
+const notCoarseOnServer = () => false;
 
 interface MagneticProps {
   children: React.ReactNode;
@@ -22,11 +32,8 @@ export default function Magnetic({
 }: MagneticProps) {
   const ref = useRef<HTMLDivElement>(null);
   const [isHovered, setIsHovered] = useState(false);
-  const [isTouch, setIsTouch] = useState(false);
-
-  useEffect(() => {
-    setIsTouch(window.matchMedia("(pointer: coarse)").matches);
-  }, []);
+  // Touch devices get no magnetic pull (there is no hover to pull toward).
+  const isTouch = useSyncExternalStore(subscribeToPointer, isCoarsePointer, notCoarseOnServer);
 
   const x = useMotionValue(0);
   const y = useMotionValue(0);

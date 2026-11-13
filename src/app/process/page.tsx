@@ -22,14 +22,14 @@ function StageSection({ stage }: Readonly<{ stage: (typeof stages)[number] }>) {
           <div className="w-10 h-10 rounded-xl bg-accent/10 border border-accent/20 flex items-center justify-center text-accent shrink-0">
             <Icon className="w-5 h-5" />
           </div>
-          <p className="text-xs font-mono text-accent uppercase tracking-widest">
+          <p className="text-xs font-mono text-accent uppercase tracking-[0.06em]">
             Stage {stage.num} — {stage.eyebrow}
           </p>
         </div>
 
-        <h2 className="text-2xl sm:text-3xl font-bold tracking-tight mb-1">{stage.title}</h2>
+        <h2 className="mb-1">{stage.title}</h2>
         <div className="flex flex-wrap items-center gap-2 mb-5">
-          <span className="text-sm text-primary font-semibold uppercase tracking-wide">
+          <span className="font-mono text-xs uppercase tracking-[0.06em] text-primary">
             {stage.industryLabel}
           </span>
           <span className="text-muted">·</span>
@@ -40,7 +40,7 @@ function StageSection({ stage }: Readonly<{ stage: (typeof stages)[number] }>) {
 
         {/* Psychology principles */}
         <div className="mb-6">
-          <p className="text-[10px] font-mono text-muted uppercase tracking-widest mb-2">
+          <p className="text-xs font-mono text-muted uppercase tracking-[0.06em] mb-2">
             Psychology applied
           </p>
           <div className="space-y-2">
@@ -48,7 +48,7 @@ function StageSection({ stage }: Readonly<{ stage: (typeof stages)[number] }>) {
               const p = getPrinciple(pid);
               return (
                 <div key={pid} className="text-sm">
-                  <span className="font-semibold text-foreground">{p.name}</span>
+                  <span className="font-medium text-foreground">{p.name}</span>
                   <span className="text-muted"> — {p.definition}</span>
                 </div>
               );
@@ -58,7 +58,7 @@ function StageSection({ stage }: Readonly<{ stage: (typeof stages)[number] }>) {
 
         {/* Exit gate */}
         <div className="rounded-2xl bg-surface border border-border p-5 mb-6">
-          <p className="text-[10px] font-mono text-muted uppercase tracking-widest mb-3">
+          <p className="text-xs font-mono text-muted uppercase tracking-[0.06em] mb-3">
             Exit gate — what must be true to proceed
           </p>
           <ul className="space-y-2">
@@ -74,10 +74,10 @@ function StageSection({ stage }: Readonly<{ stage: (typeof stages)[number] }>) {
         {/* Evidence */}
         <Link
           href={stage.caseStudy.href}
-          className="inline-flex items-center gap-1.5 text-sm font-medium text-accent hover:gap-2.5 transition-all"
+          className="inline-flex items-center gap-1.5 py-2.5 text-sm font-medium text-accent hover:gap-2.5 transition-all"
         >
           See it shipped — {stage.caseStudy.label}
-          <ArrowUpRight className="w-4 h-4" />
+          <ArrowUpRight className="w-4 h-4" aria-hidden="true" />
         </Link>
       </div>
     </Section>
@@ -90,10 +90,10 @@ export default function ProcessPage() {
       {/* Hero */}
       <Section>
         <div className="max-w-3xl">
-          <p className="text-accent font-mono text-sm uppercase tracking-widest mb-4">
+          <p className="text-accent font-mono text-xs uppercase tracking-[0.06em] mb-4">
             The Process
           </p>
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
+          <h1 className="mb-6">
             From idea to shipped.
           </h1>
           <p className="text-lg text-muted leading-relaxed mb-4">
@@ -115,14 +115,14 @@ export default function ProcessPage() {
       {/* Closing CTA */}
       <Section>
         <div className="max-w-2xl mx-auto text-center">
-          <h2 className="text-2xl sm:text-3xl font-bold mb-4">This is the method, applied.</h2>
+          <h2 className="mb-4">This is the method, applied.</h2>
           <p className="text-muted leading-relaxed mb-8">
             Every stage above is demonstrated in shipped, real-world work — not a hypothetical.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-3">
             <Link
               href="/work"
-              className="px-5 py-2.5 rounded-xl bg-accent text-accent-foreground text-sm font-semibold hover:bg-accent/90 transition-colors inline-flex items-center gap-1.5"
+              className="px-5 py-2.5 rounded-xl bg-accent text-accent-foreground text-sm font-medium hover:bg-accent/90 transition-colors inline-flex items-center gap-1.5"
             >
               View Case Studies
               <ArrowRight className="w-4 h-4" />

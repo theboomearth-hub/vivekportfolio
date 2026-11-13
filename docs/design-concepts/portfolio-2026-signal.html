@@ -1,0 +1,1024 @@
+<!doctype html>
+<html lang="en" data-accent="signal">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Signal — Portfolio Concept</title>
+<meta name="description" content="Design concept for the 2026 portfolio redesign: dark-first, grotesk display type, bento hero with a live AI agent, index-style work list, command menu.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400..600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<script>document.documentElement.classList.add("js");try{var t=localStorage.getItem("signal-theme");if(t)document.documentElement.dataset.theme=t;var a=localStorage.getItem("signal-accent");if(a)document.documentElement.dataset.accent=a}catch(e){}</script>
+<style>
+/* =========================================================================
+   TOKENS — dark-first. Every text/background pair below is >= 4.5:1.
+   ========================================================================= */
+:root {
+  --bg: #0A0A0B;
+  --bg-2: #0F0F11;
+  --surface: #121215;
+  --surface-2: #1A1A1F;
+  --line: rgba(255,255,255,.08);
+  --line-2: rgba(255,255,255,.16);
+  --text: #EDEDEF;
+  --muted: #A1A1AA;          /* 7.6:1 on --bg */
+  --grain: .06;
+
+  /* Accent options (dark values). Re-themed live by the token tile. */
+  --a-signal: #FF6A3D;       /* 7.0:1 on --bg */
+  --a-cobalt: #7B93FF;
+  --a-lime:   #C6F432;
+  --a-violet: #A78BFA;
+  --accent: var(--a-signal);
+  --accent-ink: #0A0A0B;     /* text on accent fills */
+
+  --font-sans: "Geist", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Instrument Serif", Georgia, serif;
+  --font-mono: "Geist Mono", ui-monospace, SFMono-Regular, monospace;
+  --radius: 22px;
+  --radius-sm: 12px;
+  --ease: cubic-bezier(.2,.8,.2,1);
+  --gutter: 24px;
+  color-scheme: dark;
+}
+:root[data-theme="light"] {
+  --bg: #F4F4F1;
+  --bg-2: #EDEDE9;
+  --surface: #FFFFFF;
+  --surface-2: #EFEFEB;
+  --line: rgba(10,10,11,.09);
+  --line-2: rgba(10,10,11,.18);
+  --text: #0A0A0B;
+  --muted: #55555D;          /* 6.6:1 on --bg */
+  --grain: .035;
+  --a-signal: #C2410C;       /* 4.8:1 on --bg, 5.2:1 under white */
+  --a-cobalt: #3451D1;
+  --a-lime:   #4D7C0F;
+  --a-violet: #6D28D9;
+  --accent-ink: #FFFFFF;
+  color-scheme: light;
+}
+:root[data-accent="cobalt"] { --accent: var(--a-cobalt); }
+:root[data-accent="lime"]   { --accent: var(--a-lime); }
+:root[data-accent="violet"] { --accent: var(--a-violet); }
+
+/* =========================================================================
+   BASE
+   ========================================================================= */
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: clip;
+  transition: background-color .4s var(--ease), color .4s var(--ease);
+}
+h1, h2, h3, h4, p { margin: 0; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; padding: 0; }
+img, svg { display: block; }
+ul, ol { margin: 0; padding: 0; list-style: none; }
+::selection { background: var(--accent); color: var(--accent-ink); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
+
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+.mono { font-family: var(--font-mono); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; }
+.muted { color: var(--muted); }
+.container { width: 100%; max-width: 1320px; margin: 0 auto; padding: 0 var(--gutter); }
+em { font-family: var(--font-serif); font-style: italic; font-weight: 400; letter-spacing: -.01em; color: var(--accent); padding-right: .04em; }
+
+.skip { position: fixed; left: 16px; top: -60px; z-index: 200; background: var(--accent); color: var(--accent-ink); padding: 10px 16px; border-radius: 10px; font-weight: 600; transition: top .15s; }
+.skip:focus { top: 16px; }
+
+/* Grain + Swiss column guides: texture without decoration noise */
+body::after {
+  content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 90; opacity: var(--grain);
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+.guides { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
+.guides .container { height: 100%; display: grid; grid-template-columns: repeat(12, 1fr); gap: var(--gutter); }
+.guides span { border-left: 1px solid var(--line); opacity: .45; }
+.guides span:last-child { border-right: 1px solid var(--line); }
+
+/* =========================================================================
+   BUTTONS & LINKS
+   ========================================================================= */
+.btn {
+  display: inline-flex; align-items: center; gap: 10px; min-height: 44px; padding: 0 20px;
+  border-radius: 999px; font-weight: 500; font-size: 15px; letter-spacing: -.01em; white-space: nowrap;
+  transition: transform .25s var(--ease), background-color .25s, border-color .25s, color .25s;
+}
+.btn svg { width: 16px; height: 16px; transition: transform .3s var(--ease); }
+.btn-accent { background: var(--accent); color: var(--accent-ink); }
+.btn-accent:hover { transform: translateY(-1px); }
+.btn-accent:hover svg { transform: translate(2px, 2px); }
+.btn-ghost { border: 1px solid var(--line-2); }
+.btn-ghost:hover { border-color: var(--text); }
+.btn-sm { min-height: 40px; padding: 0 16px; font-size: 14px; }
+.btn-lg { min-height: 56px; padding: 0 28px; font-size: 16px; }
+.link-u { display: inline-flex; align-items: center; gap: 8px; padding: 10px 0; font-weight: 500; background: linear-gradient(currentColor, currentColor) 0 calc(100% - 8px) / 0 1px no-repeat; transition: background-size .35s var(--ease); }
+.link-u:hover { background-size: 100% 1px; }
+.link-u svg { width: 14px; height: 14px; }
+
+/* =========================================================================
+   CONCEPT BAR + DESIGN NOTES (proposal chrome — not part of the site)
+   ========================================================================= */
+.concept-bar { position: relative; z-index: 60; display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 8px var(--gutter); background: var(--accent); color: var(--accent-ink); font-size: 11.5px; }
+.concept-bar b { font-weight: 600; }
+.concept-bar button { min-height: 32px; padding: 0 12px; border-radius: 999px; border: 1px solid currentColor; font-family: var(--font-mono); font-size: 11.5px; letter-spacing: .06em; text-transform: uppercase; }
+.note { display: none; margin: 20px 0 0; max-width: 640px; padding: 14px 16px 14px 14px; gap: 12px; border: 1px dashed color-mix(in srgb, var(--accent) 60%, transparent); border-radius: 14px; background: color-mix(in srgb, var(--accent) 7%, var(--bg)); font-size: 14px; line-height: 1.5; position: relative; z-index: 2; }
+.note-n { flex: none; width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; background: var(--accent); color: var(--accent-ink); font: 600 12px/1 var(--font-mono); }
+.note b { font-weight: 600; }
+.notes-on .note { display: flex; }
+
+/* =========================================================================
+   HEADER
+   ========================================================================= */
+.site-header { position: sticky; top: 0; z-index: 50; background: color-mix(in srgb, var(--bg) 72%, transparent); backdrop-filter: blur(16px) saturate(150%); -webkit-backdrop-filter: blur(16px) saturate(150%); border-bottom: 1px solid var(--line); }
+.nav { display: flex; align-items: center; justify-content: space-between; height: 68px; gap: 16px; }
+.brand { display: flex; align-items: center; gap: 12px; min-height: 44px; }
+.mark { width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; background: var(--text); color: var(--bg); font: 600 13px/1 var(--font-mono); letter-spacing: -.02em; }
+.brand-name { font-weight: 600; letter-spacing: -.02em; font-size: 15px; }
+.brand-role { color: var(--muted); font-weight: 400; }
+.nav-links { display: flex; gap: 2px; padding: 4px; border: 1px solid var(--line); border-radius: 999px; background: color-mix(in srgb, var(--surface) 60%, transparent); }
+.nav-links a { padding: 8px 16px; border-radius: 999px; font-size: 14px; color: var(--muted); transition: color .2s, background-color .2s; }
+.nav-links a:hover { color: var(--text); background: var(--surface-2); }
+.nav-links a[aria-current="true"] { color: var(--text); background: var(--surface-2); }
+.nav-actions { display: flex; align-items: center; gap: 8px; }
+.icon-btn { width: 40px; height: 40px; border-radius: 999px; display: grid; place-items: center; border: 1px solid var(--line); transition: border-color .2s; }
+.icon-btn:hover { border-color: var(--line-2); }
+.icon-btn svg { width: 17px; height: 17px; }
+.kbd-btn { display: inline-flex; align-items: center; gap: 10px; height: 40px; padding: 0 8px 0 14px; border-radius: 999px; border: 1px solid var(--line); color: var(--muted); font-size: 14px; transition: border-color .2s, color .2s; }
+.kbd-btn:hover { border-color: var(--line-2); color: var(--text); }
+.kbd-btn svg { width: 15px; height: 15px; }
+kbd { font: 500 11px/1 var(--font-mono); padding: 5px 7px; border-radius: 6px; border: 1px solid var(--line-2); color: var(--muted); background: var(--surface); }
+.menu-btn { display: none; }
+
+/* =========================================================================
+   HERO
+   ========================================================================= */
+.hero { position: relative; padding: 72px 0 40px; isolation: isolate; overflow-x: clip; }
+.aurora { position: absolute; z-index: -1; top: -260px; left: 50%; width: min(1400px, 140vw); height: 720px; transform: translateX(-50%); background: radial-gradient(closest-side, color-mix(in srgb, var(--accent) 16%, transparent), transparent 70%); filter: blur(30px); pointer-events: none; transition: background .6s; }
+.hero-meta { display: flex; flex-wrap: wrap; gap: 8px 28px; color: var(--muted); margin-bottom: 36px; }
+.hero-meta > span { display: inline-flex; align-items: center; gap: 10px; }
+.status { color: var(--text); }
+.pulse { position: relative; width: 8px; height: 8px; border-radius: 50%; background: #22C55E; }
+.pulse::after { content: ""; position: absolute; inset: 0; border-radius: 50%; background: inherit; animation: ping 2.2s var(--ease) infinite; }
+@keyframes ping { 0% { transform: scale(1); opacity: .7 } 80%, 100% { transform: scale(3); opacity: 0 } }
+
+.display { font-size: clamp(2.6rem, 7.6vw, 7.4rem); line-height: .95; letter-spacing: -.048em; font-weight: 500; max-width: 13.5ch; }
+.display .w { display: inline-block; overflow: hidden; vertical-align: top; padding: 0 .02em .12em; margin-bottom: -.12em; }
+.display .w > span { display: inline-block; }
+.js .display .w > span { transform: translateY(110%); animation: rise 1s var(--ease) forwards; animation-delay: calc(var(--i) * 55ms + 120ms); }
+@keyframes rise { to { transform: none; } }
+.display em { font-size: 1.06em; }
+
+.hero-foot { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: end; gap: 32px; margin-top: 40px; }
+.lede { font-size: clamp(1.05rem, 1.5vw, 1.3rem); line-height: 1.55; color: var(--muted); max-width: 46ch; letter-spacing: -.01em; }
+.lede strong { color: var(--text); font-weight: 500; }
+.hero-actions { display: flex; align-items: center; gap: 24px; flex-wrap: wrap; }
+
+/* =========================================================================
+   BENTO + TILES
+   ========================================================================= */
+.bento { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; margin-top: 64px; }
+.tile { position: relative; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 24px; overflow: hidden; isolation: isolate; transition: border-color .3s, background-color .4s; }
+.tile::before { content: ""; position: absolute; inset: 0; z-index: -1; opacity: 0; transition: opacity .35s; background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), color-mix(in srgb, var(--accent) 11%, transparent), transparent 45%); }
+.tile:hover { border-color: var(--line-2); }
+.tile:hover::before { opacity: 1; }
+.tile-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; color: var(--muted); }
+.tag { padding: 4px 8px; border: 1px solid var(--line-2); border-radius: 999px; font-size: 11px; }
+.tile h3 { font-size: 20px; font-weight: 500; letter-spacing: -.02em; line-height: 1.25; }
+
+/* Ask my portfolio */
+.ask { grid-column: 1 / 3; grid-row: 1 / 3; display: flex; flex-direction: column; gap: 16px; min-height: 460px; }
+.ask-eyebrow { display: inline-flex; gap: 10px; align-items: center; color: var(--text); }
+.spark { width: 16px; height: 16px; color: var(--accent); }
+.ask-log { flex: 1; display: flex; flex-direction: column; gap: 12px; overflow-y: auto; max-height: 300px; padding-right: 4px; scrollbar-width: thin; }
+.msg { max-width: 92%; padding: 12px 16px; border-radius: 16px; font-size: 15px; line-height: 1.55; }
+.msg.bot { background: var(--surface-2); border-top-left-radius: 6px; }
+.msg.user { align-self: flex-end; background: var(--accent); color: var(--accent-ink); border-top-right-radius: 6px; }
+.msg .src { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.msg .src a { font: 500 11px/1 var(--font-mono); text-transform: uppercase; letter-spacing: .05em; padding: 7px 9px; border: 1px solid var(--line-2); border-radius: 999px; color: var(--muted); }
+.msg .src a:hover { color: var(--text); border-color: var(--text); }
+.caret { display: inline-block; width: 7px; height: 1em; margin-left: 2px; vertical-align: -2px; background: var(--accent); animation: blink 1s steps(1) infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { min-height: 36px; padding: 0 14px; border-radius: 999px; border: 1px solid var(--line-2); font-size: 13.5px; color: var(--muted); transition: color .2s, border-color .2s, background-color .2s; }
+.chip:hover { color: var(--text); border-color: var(--text); }
+.ask-form { display: flex; align-items: center; gap: 8px; padding: 6px 6px 6px 18px; border-radius: 999px; background: var(--bg-2); border: 1px solid var(--line-2); transition: border-color .2s; }
+.ask-form:focus-within { border-color: var(--accent); }
+.ask-form input { flex: 1; min-width: 0; min-height: 40px; background: none; border: 0; outline: none; color: var(--text); font: inherit; font-size: 15px; }
+.ask-form input::placeholder { color: var(--muted); }
+.send { width: 40px; height: 40px; flex: none; border-radius: 50%; display: grid; place-items: center; background: var(--accent); color: var(--accent-ink); }
+.send svg { width: 16px; height: 16px; }
+
+/* Metric */
+.metric { grid-column: 3; display: flex; flex-direction: column; justify-content: space-between; gap: 18px; min-height: 222px; }
+.big { font-size: clamp(3.2rem, 5vw, 4.6rem); font-weight: 500; letter-spacing: -.06em; line-height: .9; }
+.big small { font-size: .45em; letter-spacing: -.02em; color: var(--muted); margin-left: 4px; }
+.metric p { color: var(--muted); font-size: 14px; line-height: 1.45; }
+.metric p b { color: var(--text); font-weight: 500; }
+.sparkline { width: 100%; height: 44px; color: var(--accent); }
+
+/* Tokens */
+.tokens { grid-column: 4; display: flex; flex-direction: column; gap: 14px; min-height: 222px; }
+.tokens p { font-size: 14px; color: var(--muted); line-height: 1.45; }
+.swatches { display: flex; gap: 10px; }
+.swatch { width: 44px; height: 44px; border-radius: 14px; border: 1px solid var(--line-2); position: relative; transition: transform .25s var(--ease), border-radius .3s var(--ease); }
+.swatch:hover { transform: translateY(-2px); }
+.swatch[aria-pressed="true"] { border-radius: 50%; box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px var(--text); }
+.readout { margin-top: auto; display: grid; gap: 4px; font-family: var(--font-mono); font-size: 12px; color: var(--muted); }
+.readout b { color: var(--text); font-weight: 500; }
+
+/* Now */
+.now { grid-column: 3 / 5; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 24px; align-items: center; min-height: 222px; }
+.now h3 { margin-top: 12px; }
+.now p { color: var(--muted); font-size: 14px; margin-top: 10px; }
+.screens { display: grid; grid-template-columns: repeat(8, 1fr); gap: 5px; }
+.screens i { aspect-ratio: 16 / 10; border-radius: 3px; background: var(--surface-2); animation: lightup 5.2s var(--ease) infinite; animation-delay: var(--d); }
+@keyframes lightup { 0%, 100% { background: var(--surface-2); } 6%, 26% { background: color-mix(in srgb, var(--accent) 75%, var(--surface-2)); } 34% { background: var(--surface-2); } }
+
+/* =========================================================================
+   SECTIONS
+   ========================================================================= */
+section { position: relative; z-index: 1; }
+.section { padding: 120px 0 0; scroll-margin-top: 72px; }
+.sec-head { display: grid; grid-template-columns: 220px minmax(0, 1fr) auto; gap: 24px; align-items: end; padding-bottom: 32px; border-bottom: 1px solid var(--line); }
+.eyebrow { color: var(--muted); display: flex; gap: 12px; align-self: start; padding-top: 10px; }
+.eyebrow span { color: var(--accent); }
+.sec-title { font-size: clamp(2rem, 4.6vw, 3.9rem); font-weight: 500; letter-spacing: -.04em; line-height: 1; max-width: 18ch; }
+
+/* Work index */
+.index li { border-bottom: 1px solid var(--line); }
+.row { display: grid; grid-template-columns: 220px minmax(0, 1.5fr) minmax(0, 1fr) minmax(0, 1fr) 44px; gap: 24px; align-items: center; padding: 28px 0; position: relative; transition: color .3s; }
+.row::before { content: ""; position: absolute; inset: 0 calc(var(--gutter) * -1); background: var(--surface); opacity: 0; transition: opacity .3s; z-index: -1; }
+.row:hover::before, .row:focus-visible::before { opacity: 1; }
+.row .t { font-size: clamp(1.35rem, 2.3vw, 2.1rem); font-weight: 500; letter-spacing: -.03em; line-height: 1.1; transition: transform .45s var(--ease); }
+.row:hover .t { transform: translateX(10px); }
+.row .n { color: var(--muted); }
+.row .d { color: var(--muted); }
+.row .m { font-size: 15px; }
+.row .m b { font-weight: 500; color: var(--accent); }
+.row .go { width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--line-2); display: grid; place-items: center; transition: background-color .3s, color .3s, transform .45s var(--ease), border-color .3s; }
+.row .go svg { width: 16px; height: 16px; }
+.row:hover .go { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); transform: rotate(-45deg); }
+.nda { margin-left: 8px; padding: 3px 7px; border-radius: 6px; border: 1px solid var(--line-2); font-size: 10.5px; vertical-align: 4px; color: var(--muted); }
+
+/* Hover preview that follows the cursor */
+.preview { position: fixed; left: 0; top: 0; z-index: 45; width: 340px; aspect-ratio: 4 / 3; pointer-events: none; opacity: 0; border-radius: 18px; overflow: hidden; border: 1px solid var(--line-2); background: var(--surface); box-shadow: 0 30px 80px -20px rgba(0,0,0,.5); transform: translate3d(var(--x, 0), var(--y, 0), 0) scale(.92) rotate(var(--r, 0deg)); transition: opacity .25s, scale .25s; }
+.preview.show { opacity: 1; scale: 1.087; }
+.pv { --p: #7B93FF; position: absolute; inset: 0; display: grid; grid-template-rows: 26px 1fr; background: linear-gradient(160deg, color-mix(in srgb, var(--p) 22%, var(--surface)), var(--surface) 60%); }
+.pv-top { display: flex; align-items: center; gap: 5px; padding: 0 10px; border-bottom: 1px solid var(--line); }
+.pv-top i { width: 7px; height: 7px; border-radius: 50%; background: var(--line-2); }
+.pv-top span { margin-left: auto; font: 500 9px/1 var(--font-mono); color: var(--muted); letter-spacing: .06em; }
+.pv-body { display: grid; grid-template-columns: 54px 1fr; }
+.pv-side { border-right: 1px solid var(--line); padding: 10px 8px; display: grid; gap: 6px; align-content: start; }
+.pv-side i { height: 6px; border-radius: 3px; background: var(--line-2); }
+.pv-side i:first-child { background: var(--p); width: 70%; }
+.pv-main { padding: 12px; display: grid; grid-template-rows: auto 1fr; gap: 10px; }
+.pv-kpis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+.pv-kpis i { height: 34px; border-radius: 8px; background: color-mix(in srgb, var(--text) 6%, transparent); border: 1px solid var(--line); }
+.pv-kpis i:first-child { background: color-mix(in srgb, var(--p) 30%, transparent); }
+.pv-chart { border-radius: 10px; border: 1px solid var(--line); display: flex; align-items: flex-end; gap: 5px; padding: 10px; }
+.pv-chart i { flex: 1; border-radius: 3px 3px 0 0; background: color-mix(in srgb, var(--p) 65%, transparent); }
+.pv-label { position: absolute; left: 12px; bottom: 12px; padding: 6px 10px; border-radius: 999px; background: var(--bg); border: 1px solid var(--line-2); font: 500 10.5px/1 var(--font-mono); letter-spacing: .05em; text-transform: uppercase; }
+
+/* Flagship */
+.flagship { margin-top: 48px; display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.4fr); gap: 0; padding: 0; scroll-margin-top: 90px; }
+.flag-copy { padding: 40px; display: flex; flex-direction: column; gap: 20px; border-right: 1px solid var(--line); }
+.flag-copy h3 { font-size: clamp(1.8rem, 3vw, 2.6rem); letter-spacing: -.04em; line-height: 1.02; }
+.flag-copy p { color: var(--muted); }
+.stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; margin-top: auto; }
+.stat { background: var(--surface); padding: 16px; }
+.stat b { display: block; font-size: 28px; font-weight: 500; letter-spacing: -.04em; line-height: 1.1; }
+.stat span { font-size: 13px; color: var(--muted); }
+.decisions { display: grid; gap: 8px; }
+.decision { display: flex; gap: 12px; align-items: baseline; font-size: 14px; }
+.decision .mono { color: var(--accent); flex: none; }
+
+/* Builder mock */
+.builder { margin: 24px; border-radius: 16px; border: 1px solid var(--line-2); background: var(--bg-2); overflow: hidden; display: grid; grid-template-rows: 36px 1fr; min-height: 420px; }
+.b-top { display: flex; align-items: center; gap: 6px; padding: 0 14px; border-bottom: 1px solid var(--line); }
+.b-top i { width: 9px; height: 9px; border-radius: 50%; background: var(--line-2); }
+.b-top span { margin-left: 12px; color: var(--muted); font-size: 11px; }
+.b-top .pub { margin-left: auto; padding: 4px 10px; border-radius: 999px; background: var(--accent); color: var(--accent-ink); font: 600 10.5px/1.2 var(--font-mono); text-transform: uppercase; letter-spacing: .05em; }
+.b-body { display: grid; grid-template-columns: 150px minmax(0, 1fr) 170px; }
+.b-pal { border-right: 1px solid var(--line); padding: 14px 12px; display: grid; gap: 8px; align-content: start; }
+.b-pal .lbl, .b-props .lbl { font: 500 10px/1 var(--font-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+.b-item { display: flex; align-items: center; gap: 8px; padding: 8px; border-radius: 8px; border: 1px solid var(--line); font-size: 12px; color: var(--muted); }
+.b-item i { width: 14px; height: 14px; border-radius: 4px; background: color-mix(in srgb, var(--accent) 35%, transparent); }
+.b-canvas { position: relative; padding: 22px; background-image: radial-gradient(var(--line-2) 1px, transparent 1px); background-size: 16px 16px; display: grid; gap: 12px; align-content: start; }
+.blk { border-radius: 10px; background: var(--surface); border: 1px solid var(--line); padding: 12px; display: grid; gap: 7px; }
+.blk i { height: 8px; border-radius: 4px; background: var(--line-2); }
+.blk .h { height: 12px; width: 45%; background: color-mix(in srgb, var(--text) 30%, transparent); }
+.blk .in { height: 28px; border-radius: 7px; background: var(--bg-2); border: 1px solid var(--line); }
+.blk .cta { height: 30px; width: 40%; border-radius: 999px; background: var(--accent); }
+.blk.sel { outline: 1.5px solid var(--accent); outline-offset: 3px; }
+.blk.drag { animation: drag 6s var(--ease) infinite; box-shadow: 0 20px 40px -12px rgba(0,0,0,.45); }
+@keyframes drag {
+  0%, 12% { transform: translate(-150px, 70px) rotate(-4deg); opacity: 0; }
+  20% { opacity: 1; transform: translate(-150px, 70px) rotate(-4deg); }
+  48%, 88% { transform: none; opacity: 1; }
+  100% { transform: none; opacity: 1; }
+}
+.b-props { border-left: 1px solid var(--line); padding: 14px 12px; display: grid; gap: 12px; align-content: start; }
+.prop { display: grid; gap: 6px; }
+.prop i { height: 26px; border-radius: 7px; border: 1px solid var(--line); background: var(--surface); }
+.tog { display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: var(--muted); }
+.tog i { width: 28px; height: 16px; border-radius: 999px; background: var(--accent); position: relative; }
+.tog i::after { content: ""; position: absolute; right: 2px; top: 2px; width: 12px; height: 12px; border-radius: 50%; background: var(--accent-ink); }
+.sw { display: flex; gap: 6px; }
+.sw i { width: 22px; height: 22px; border-radius: 6px; }
+
+/* Process pipeline */
+.pipeline { position: relative; display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 12px; margin-top: 48px; }
+.track { position: absolute; left: 10px; right: 10px; top: 9px; height: 1px; background: var(--line-2); }
+.track::after { content: ""; position: absolute; top: -2px; left: 0; width: 80px; height: 5px; border-radius: 4px; background: linear-gradient(90deg, transparent, var(--accent)); animation: travel 5s linear infinite; }
+@keyframes travel { from { left: 0; } to { left: calc(100% - 80px); } }
+.stage { position: relative; display: grid; gap: 8px; padding-top: 34px; }
+.node { position: absolute; top: 3px; left: 3px; width: 13px; height: 13px; border-radius: 50%; background: var(--bg); border: 1.5px solid var(--text); }
+.stage.gate .node { border-radius: 2px; transform: rotate(45deg); border-color: var(--accent); background: var(--accent); }
+.stage b { font-weight: 500; font-size: 17px; letter-spacing: -.02em; line-height: 1.2; }
+.stage small { color: var(--muted); font-size: 13.5px; line-height: 1.45; }
+.stage .mono { color: var(--muted); }
+.stage.gate .mono { color: var(--accent); }
+.kill { margin-top: 48px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px; padding: 22px 26px; border-radius: var(--radius); border: 1px solid var(--line); background: var(--surface); }
+.kill p { font-size: clamp(1.1rem, 1.8vw, 1.4rem); letter-spacing: -.02em; }
+
+/* About */
+.about-grid { display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 24px; margin-top: 40px; }
+.about-bio { font-size: clamp(1.3rem, 2.4vw, 2rem); line-height: 1.3; letter-spacing: -.03em; max-width: 30ch; }
+.about-bio .muted { color: var(--muted); }
+.roles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: 48px; grid-column: 2; }
+.role { padding: 24px; display: grid; gap: 12px; align-content: start; }
+.role .mono { color: var(--accent); }
+.role p { color: var(--muted); font-size: 15px; }
+
+/* Lab */
+.lab { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; margin-top: 40px; }
+.lab .tile { display: flex; flex-direction: column; gap: 12px; min-height: 240px; }
+.lab .tile p { color: var(--muted); font-size: 14.5px; }
+.lab .forma { grid-column: span 2; grid-row: span 2; }
+.lab .wide { grid-column: span 2; min-height: 0; }
+.lab .forma h3 { font-size: clamp(1.6rem, 2.6vw, 2.3rem); letter-spacing: -.04em; }
+.graph { flex: 1; min-height: 200px; color: var(--muted); }
+.graph .hub { fill: var(--accent); }
+.graph line { stroke: var(--line-2); }
+.graph circle { fill: var(--surface-2); stroke: var(--line-2); }
+.mini-stats { display: flex; flex-wrap: wrap; gap: 8px 24px; }
+.mini-stats div b { display: block; font-size: 24px; font-weight: 500; letter-spacing: -.04em; }
+.mini-stats div span { font-size: 12.5px; color: var(--muted); }
+.tile-link { margin-top: auto; display: inline-flex; align-items: center; gap: 8px; min-height: 44px; font-weight: 500; font-size: 14px; }
+.tile-link svg { width: 14px; height: 14px; transition: transform .3s var(--ease); }
+.tile:hover .tile-link svg { transform: translateX(4px); }
+
+/* Writing */
+.posts li { border-bottom: 1px solid var(--line); }
+.post { display: grid; grid-template-columns: 220px minmax(0, 1fr) 180px 110px; gap: 24px; align-items: baseline; padding: 26px 0; }
+.post h3 { font-size: clamp(1.15rem, 1.9vw, 1.55rem); font-weight: 500; letter-spacing: -.025em; line-height: 1.25; transition: color .25s; }
+.post:hover h3 { color: var(--accent); }
+.post .mono { color: var(--muted); }
+
+/* Contact + footer */
+.contact { padding: 160px 0 120px; text-align: left; }
+.contact h2 { font-size: clamp(2.6rem, 7vw, 6.6rem); font-weight: 500; letter-spacing: -.05em; line-height: .95; max-width: 14ch; margin-top: 24px; }
+.contact-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 48px; }
+.contact-meta { margin-top: 20px; color: var(--muted); }
+.copy svg { width: 16px; height: 16px; }
+.site-footer { position: relative; z-index: 1; border-top: 1px solid var(--line); overflow: hidden; }
+.foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px; padding-block: 28px; }
+.foot-links { display: flex; flex-wrap: wrap; gap: 4px 24px; }
+.foot-links a { padding: 10px 0; color: var(--muted); transition: color .2s; }
+.foot-links a:hover { color: var(--text); }
+.foot .mono { color: var(--muted); align-self: center; }
+.wordmark { font-size: min(19.4vw, 280px); font-weight: 600; letter-spacing: -.075em; line-height: .78; white-space: nowrap; text-align: center; padding-top: 12px; margin-bottom: -.04em; background: linear-gradient(180deg, var(--text) 10%, color-mix(in srgb, var(--text) 0%, transparent) 95%); -webkit-background-clip: text; background-clip: text; color: transparent; user-select: none; }
+
+/* =========================================================================
+   COMMAND MENU
+   ========================================================================= */
+.cmdk { position: fixed; inset: 0; z-index: 120; display: grid; place-items: start center; padding: 14vh 16px 16px; }
+.cmdk[hidden] { display: none; }
+.cmdk-backdrop { position: absolute; inset: 0; background: color-mix(in srgb, var(--bg) 60%, transparent); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); animation: fade .2s var(--ease); }
+.cmdk-panel { position: relative; width: min(620px, 100%); border-radius: 20px; background: var(--surface); border: 1px solid var(--line-2); box-shadow: 0 40px 120px -20px rgba(0,0,0,.6); overflow: hidden; animation: pop .25s var(--ease); }
+@keyframes fade { from { opacity: 0; } }
+@keyframes pop { from { opacity: 0; transform: translateY(8px) scale(.98); } }
+.cmdk-input { display: flex; align-items: center; gap: 12px; padding: 0 16px; border-bottom: 1px solid var(--line); }
+.cmdk-input svg { width: 18px; height: 18px; color: var(--muted); flex: none; }
+.cmdk-input input { flex: 1; min-width: 0; height: 58px; background: none; border: 0; outline: none; color: var(--text); font: inherit; font-size: 16px; }
+.cmdk-input input::placeholder { color: var(--muted); }
+.cmdk-list { max-height: min(420px, 55vh); overflow-y: auto; padding: 8px; }
+.cmdk-group { padding: 12px 10px 6px; color: var(--muted); font-size: 11px; }
+.cmdk-item { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 46px; padding: 0 12px; border-radius: 12px; cursor: pointer; font-size: 15px; }
+.cmdk-item .mono { color: var(--muted); font-size: 11px; }
+.cmdk-item[aria-selected="true"] { background: var(--surface-2); }
+.cmdk-item[aria-selected="true"] .mono { color: var(--accent); }
+.cmdk-empty { padding: 28px; text-align: center; color: var(--muted); }
+
+.toast { position: fixed; left: 50%; bottom: 24px; z-index: 130; transform: translate(-50%, 20px); opacity: 0; padding: 12px 18px; border-radius: 999px; background: var(--text); color: var(--bg); font-size: 14px; font-weight: 500; transition: opacity .25s, transform .25s var(--ease); pointer-events: none; }
+.toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+/* =========================================================================
+   REVEAL
+   ========================================================================= */
+.js .reveal { opacity: 0; transform: translateY(18px); transition: opacity .8s var(--ease), transform .8s var(--ease); transition-delay: var(--rd, 0ms); }
+.js .reveal.in { opacity: 1; transform: none; }
+
+/* =========================================================================
+   RESPONSIVE
+   ========================================================================= */
+@media (max-width: 1100px) {
+  .bento { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ask { grid-column: 1 / -1; grid-row: auto; min-height: 420px; }
+  .metric { grid-column: 1; } .tokens { grid-column: 2; }
+  .now { grid-column: 1 / -1; }
+  .sec-head, .row, .post, .about-grid { grid-template-columns: 120px minmax(0, 1fr) auto; }
+  .row { grid-template-columns: 64px minmax(0, 1.4fr) minmax(0, 1fr) 44px; }
+  .row .d { display: none; }
+  .post { grid-template-columns: 120px minmax(0, 1fr) 100px; }
+  .post .cat { display: none; }
+  .about-grid { grid-template-columns: 120px minmax(0, 1fr); }
+  .roles { grid-template-columns: 1fr; }
+  .flagship { grid-template-columns: 1fr; }
+  .flag-copy { border-right: 0; border-bottom: 1px solid var(--line); }
+  .pipeline { grid-template-columns: repeat(4, minmax(0, 1fr)); row-gap: 32px; }
+  .track { display: none; }
+  .lab { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 899px) {
+  .nav-links, .kbd-btn, .brand-role { display: none; }
+  .menu-btn { display: inline-flex; }
+  .guides { display: none; }
+}
+@media (max-width: 680px) {
+  :root { --gutter: 16px; }
+  .hero { padding-top: 44px; }
+  .hero-meta { gap: 8px 18px; margin-bottom: 28px; }
+  .hero-foot { grid-template-columns: 1fr; gap: 24px; }
+  .bento { grid-template-columns: 1fr; margin-top: 44px; }
+  .metric, .tokens, .now { grid-column: 1; }
+  .now { grid-template-columns: 1fr; }
+  .section { padding-top: 88px; }
+  .sec-head { grid-template-columns: 1fr; gap: 12px; }
+  .eyebrow { padding-top: 0; }
+  .row { grid-template-columns: 40px minmax(0, 1fr) 44px; gap: 12px; padding: 22px 0; }
+  .row .m { grid-column: 2; grid-row: 2; font-size: 14px; }
+  .row .go { grid-column: 3; grid-row: 1 / 3; }
+  .row:hover .t { transform: none; }
+  .post { grid-template-columns: 1fr; gap: 6px; }
+  .about-grid { grid-template-columns: 1fr; }
+  .roles { grid-column: 1; }
+  .pipeline { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .lab { grid-template-columns: 1fr; }
+  .lab .forma, .lab .wide { grid-column: auto; grid-row: auto; }
+  .flag-copy { padding: 24px; }
+  .builder { margin: 12px; min-height: 300px; }
+  .b-body { grid-template-columns: minmax(0, 1fr); }
+  .b-pal, .b-props { display: none; }
+  .blk.drag { animation: none; }
+  .contact { padding: 110px 0 80px; }
+  .tile { padding: 20px; }
+  .concept-bar span { max-width: 60%; }
+}
+@media (hover: none) { .preview { display: none; } }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+  .js .display .w > span { transform: none; animation: none; }
+  .js .reveal { opacity: 1; transform: none; }
+  .track::after, .blk.drag, .screens i { animation: none !important; }
+}
+</style>
+</head>
+<body class="notes-on">
+<a class="skip" href="#main">Skip to content</a>
+
+<div class="concept-bar mono" role="note">
+  <span><b>Design concept</b> · "Signal" direction · Nov 2026 · not live</span>
+  <button type="button" id="notesBtn" aria-pressed="true">Design notes: on</button>
+</div>
+
+<div class="guides" aria-hidden="true"><div class="container"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div></div>
+
+<header class="site-header">
+  <div class="container nav">
+    <a class="brand" href="#top" aria-label="Vivekanand Choudhari, home">
+      <span class="mark" aria-hidden="true">VC</span>
+      <span class="brand-name">Vivekanand <span class="brand-role">/ Product Designer</span></span>
+    </a>
+    <nav class="nav-links" aria-label="Main">
+      <a href="#work">Work</a>
+      <a href="#process">Process</a>
+      <a href="#about">About</a>
+      <a href="#lab">Lab</a>
+      <a href="#writing">Writing</a>
+    </nav>
+    <div class="nav-actions">
+      <button type="button" class="kbd-btn" data-open-cmdk aria-label="Open command menu (Command K)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <span>Search</span><kbd>⌘K</kbd>
+      </button>
+      <button type="button" class="icon-btn" id="themeBtn" aria-label="Switch to light theme">
+        <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+      </button>
+      <button type="button" class="icon-btn menu-btn" data-open-cmdk aria-label="Open menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 8h16M4 16h16"/></svg>
+      </button>
+      <a class="btn btn-accent btn-sm" href="#contact">Let's talk</a>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <!-- ================= HERO ================= -->
+  <section class="hero" id="top">
+    <div class="aurora" aria-hidden="true"></div>
+    <div class="container">
+      <div class="hero-meta mono">
+        <span class="status"><span class="pulse" aria-hidden="true"></span>Open to full-time &amp; consulting</span>
+        <span>Bengaluru · <time id="clock">--:--</time> IST</span>
+        <span>Senior UI/UX &amp; AI Product Designer · 9+ yrs</span>
+      </div>
+
+      <h1 class="display" aria-label="I architect design languages that make complexity feel simple.">
+        <span aria-hidden="true">
+          <span class="w"><span style="--i:0">I</span></span> <span class="w"><span style="--i:1">architect</span></span> <span class="w"><span style="--i:2">design</span></span> <span class="w"><span style="--i:3">languages</span></span> <span class="w"><span style="--i:4">that</span></span> <span class="w"><span style="--i:5">make</span></span> <span class="w"><span style="--i:6">complexity</span></span> <span class="w"><span style="--i:7">feel</span></span> <span class="w"><span style="--i:8"><em>simple.</em></span></span>
+        </span>
+      </h1>
+
+      <div class="hero-foot">
+        <p class="lede">Leading design across a <strong>7-product programmatic DOOH portfolio</strong>. I build the systems, frameworks and research behind B2B and AI products used by over a million people.</p>
+        <div class="hero-actions">
+          <a class="btn btn-accent btn-lg" href="#work">See selected work
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7l10 10M17 8v9H8"/></svg>
+          </a>
+          <a class="link-u" href="#">Résumé (PDF)</a>
+        </div>
+      </div>
+
+      <aside class="note" aria-label="Design note 1"><span class="note-n" aria-hidden="true">1</span><p><b>Poster-scale grotesk, left-aligned.</b> This replaces the centered serif headline, the three buttons and the phone number. There's one primary action now. The serif survives as a single italic accent word, which keeps some warmth without looking editorial-traditional.</p></aside>
+
+      <!-- Bento: proof, not promises -->
+      <div class="bento">
+        <div class="tile ask reveal" id="ask">
+          <div class="tile-head">
+            <span class="mono ask-eyebrow"><svg class="spark" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l1.9 6.1L20 10l-6.1 1.9L12 18l-1.9-6.1L4 10l6.1-1.9z"/></svg>Ask my portfolio</span>
+            <span class="mono tag">AI agent · beta</span>
+          </div>
+          <div class="ask-log" id="askLog" aria-live="polite">
+            <div class="msg bot">Hi! I'm an agent grounded in Vivekanand's case studies, process and writing. Ask me anything, or start with one of these.</div>
+          </div>
+          <div class="chips" id="chips">
+            <button type="button" class="chip" data-q="process">How do you approach a new product?</button>
+            <button type="button" class="chip" data-q="shipped">What have you shipped?</button>
+            <button type="button" class="chip" data-q="ai">How do you use AI?</button>
+            <button type="button" class="chip" data-q="available">Are you available?</button>
+          </div>
+          <form class="ask-form" id="askForm">
+            <label class="sr-only" for="askInput">Ask a question about Vivekanand's work</label>
+            <input id="askInput" autocomplete="off" placeholder="Ask about process, AI, DOOH…">
+            <button class="send" type="submit" aria-label="Send question">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+            </button>
+          </form>
+        </div>
+
+        <div class="tile metric reveal" style="--rd:80ms">
+          <div class="tile-head"><span class="mono">Impact · NoCode</span></div>
+          <div>
+            <div class="big">60<small>%</small></div>
+            <p><b>Less engineering dependency</b> after a visual builder let non-engineers ship apps.</p>
+          </div>
+          <svg class="sparkline" viewBox="0 0 200 44" preserveAspectRatio="none" aria-hidden="true">
+            <defs><linearGradient id="sg" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="currentColor" stop-opacity=".35"/><stop offset="1" stop-color="currentColor" stop-opacity="0"/></linearGradient></defs>
+            <path d="M0 8 L25 10 L50 9 L75 16 L100 19 L125 27 L150 31 L175 36 L200 38 L200 44 L0 44Z" fill="url(#sg)"/>
+            <path d="M0 8 L25 10 L50 9 L75 16 L100 19 L125 27 L150 31 L175 36 L200 38" fill="none" stroke="currentColor" stroke-width="2"/>
+          </svg>
+        </div>
+
+        <div class="tile tokens reveal" style="--rd:140ms">
+          <div class="tile-head"><span class="mono">Live tokens</span></div>
+          <p>This page runs on its own token system. Re-theme it:</p>
+          <div class="swatches" role="group" aria-label="Accent color">
+            <button type="button" class="swatch" data-accent="signal" aria-label="Signal orange" aria-pressed="true"></button>
+            <button type="button" class="swatch" data-accent="cobalt" aria-label="Cobalt blue" aria-pressed="false"></button>
+            <button type="button" class="swatch" data-accent="lime" aria-label="Acid lime" aria-pressed="false"></button>
+            <button type="button" class="swatch" data-accent="violet" aria-label="Violet" aria-pressed="false"></button>
+          </div>
+          <div class="readout" aria-live="polite"><span>--accent: <b id="tokHex">#FF6A3D</b></span><span>contrast <b id="tokRatio">7.0:1</b> · <b id="tokGrade">AAA</b></span></div>
+        </div>
+
+        <div class="tile now reveal" style="--rd:200ms">
+          <div>
+            <span class="mono muted">Now</span>
+            <h3>Designing agentic workflows for programmatic DOOH.</h3>
+            <p>7 products, one design language, screens in the physical world.</p>
+          </div>
+          <div class="screens" id="screens" aria-hidden="true"></div>
+        </div>
+      </div>
+      <aside class="note" aria-label="Design note 2"><span class="note-n" aria-hidden="true">2</span><p><b>The hero proves things instead of promising them.</b> It holds a working AI agent that cites its sources, a real metric, and a token switcher that re-themes the page with live WCAG contrast. Bento grids are the 2025–26 standard for dense, scannable product storytelling. They also show you're an <i>AI product designer</i>, rather than just saying it.</p></aside>
+    </div>
+  </section>
+
+  <!-- ================= WORK ================= -->
+  <section class="section" id="work" aria-labelledby="work-title">
+    <div class="container">
+      <div class="sec-head reveal">
+        <p class="eyebrow mono"><span>01</span> Selected work</p>
+        <h2 class="sec-title" id="work-title">Products that made a <em>measurable</em> difference.</h2>
+        <a class="link-u" href="#">All projects <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+      <ol class="index" id="index">
+        <li><a class="row" href="#flagship" data-hue="#7B93FF" data-label="Visual app builder"><span class="mono n">01</span><span class="t">NoCode / LowCode Platform</span><span class="mono d">Platform design</span><span class="m"><b>−60%</b> eng. dependency</span><span class="go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a></li>
+        <li><a class="row" href="#" data-hue="#34D399" data-label="Clinical workflows"><span class="mono n">02</span><span class="t">EHR Healthcare Platform</span><span class="mono d">Healthcare UX</span><span class="m"><b>2+ hrs</b> saved per clinician / day</span><span class="go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a></li>
+        <li><a class="row" href="#" data-hue="#F59E0B" data-label="Smart factory"><span class="mono n">03</span><span class="t">IIoT Smart Factory</span><span class="mono d">Industry 4.0</span><span class="m"><b>6</b> product experiences shipped</span><span class="go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a></li>
+        <li><a class="row" href="#" data-hue="#22D3EE" data-label="Enterprise analytics"><span class="mono n">04</span><span class="t">Big Data Analytics</span><span class="mono d">Enterprise analytics</span><span class="m"><b>A11y</b> baseline from screen one</span><span class="go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a></li>
+        <li><a class="row" href="#" data-hue="#C6F432" data-label="OEM + D2C + EMI"><span class="mono n">05</span><span class="t">EV Bike OEM &amp; Sales<span class="mono nda">NDA</span></span><span class="mono d">OEM platform</span><span class="m"><b>MES + D2C + EMI</b> in one platform</span><span class="go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a></li>
+        <li><a class="row" href="#" data-hue="#F472B6" data-label="Video on demand"><span class="mono n">06</span><span class="t">OTT Streaming Platform</span><span class="mono d">Entertainment</span><span class="m"><b>Millions</b> of data points, fast</span><span class="go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a></li>
+      </ol>
+      <aside class="note" aria-label="Design note 3"><span class="note-n" aria-hidden="true">3</span><p><b>An index list instead of a card grid.</b> It's faster to scan, and each row leads with its outcome. Hovering a row brings up a preview that follows the cursor. The previews are placeholders for now; your real screenshots go there in step 4.</p></aside>
+
+      <article class="tile flagship reveal" id="flagship" aria-labelledby="flag-title">
+        <div class="flag-copy">
+          <span class="mono muted">Flagship case study · 01</span>
+          <h3 id="flag-title">A visual builder that let non-engineers ship <em>real</em> apps.</h3>
+          <p>40+ interviews, 5 personas and 23 friction points became a 120+ component system with one source of truth for the builder and every app it generates.</p>
+          <div class="decisions">
+            <div class="decision"><span class="mono">DR-01</span><span>One component library for builder and output</span></div>
+            <div class="decision"><span class="mono">DR-02</span><span>Progressive disclosure over power-user panels</span></div>
+            <div class="decision"><span class="mono">DR-03</span><span>Tree-tested IA before any UI</span></div>
+          </div>
+          <div class="stats">
+            <div class="stat"><b>3×</b><span>faster go-to-market</span></div>
+            <div class="stat"><b>89%</b><span>tree-test success</span></div>
+          </div>
+          <a class="btn btn-ghost" href="#" style="align-self:flex-start">Read the case study <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
+        <div class="builder" aria-hidden="true">
+          <div class="b-top"><i></i><i></i><i></i><span class="mono">app-builder / onboarding-flow</span><span class="pub">Publish</span></div>
+          <div class="b-body">
+            <div class="b-pal"><span class="lbl">Components</span>
+              <div class="b-item"><i></i>Header</div><div class="b-item"><i></i>Form field</div><div class="b-item"><i></i>Data table</div><div class="b-item"><i></i>Chart</div><div class="b-item"><i></i>Button</div><div class="b-item"><i></i>Stepper</div>
+            </div>
+            <div class="b-canvas">
+              <div class="blk"><i class="h"></i><i style="width:70%"></i></div>
+              <div class="blk sel"><i style="width:30%"></i><i class="in"></i><i style="width:30%"></i><i class="in"></i></div>
+              <div class="blk drag"><i style="width:55%"></i><i class="cta"></i></div>
+            </div>
+            <div class="b-props"><span class="lbl">Properties</span>
+              <div class="prop"><span class="lbl">Label</span><i></i></div>
+              <div class="prop"><span class="lbl">Validation</span><i></i></div>
+              <div class="tog">Required<i></i></div>
+              <div class="prop"><span class="lbl">Token</span><div class="sw"><i style="background:var(--accent)"></i><i style="background:var(--text)"></i><i style="background:var(--surface-2);border:1px solid var(--line-2)"></i></div></div>
+            </div>
+          </div>
+        </div>
+      </article>
+      <aside class="note" aria-label="Design note 4"><span class="note-n" aria-hidden="true">4</span><p><b>One case study gets the full stage.</b> Its decision records and numbers are visible before anyone clicks. The animated builder stands in until real screens arrive.</p></aside>
+    </div>
+  </section>
+
+  <!-- ================= PROCESS ================= -->
+  <section class="section" id="process" aria-labelledby="process-title">
+    <div class="container">
+      <div class="sec-head reveal">
+        <p class="eyebrow mono"><span>02</span> Process</p>
+        <h2 class="sec-title" id="process-title">I run design like an <em>engineering</em> discipline.</h2>
+        <a class="link-u" href="#">Full method <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+      <ol class="pipeline reveal">
+        <li class="track" aria-hidden="true"></li>
+        <li class="stage"><span class="node" aria-hidden="true"></span><span class="mono">00</span><b>Signal</b><small>Is the problem real and worth solving?</small></li>
+        <li class="stage"><span class="node" aria-hidden="true"></span><span class="mono">01</span><b>Design brief</b><small>Goals, metrics, kill criteria.</small></li>
+        <li class="stage"><span class="node" aria-hidden="true"></span><span class="mono">02</span><b>Research</b><small>Interviews into affinity clusters.</small></li>
+        <li class="stage"><span class="node" aria-hidden="true"></span><span class="mono">03</span><b>Psychology</b><small>Finding, principle, constraint, decision.</small></li>
+        <li class="stage gate"><span class="node" aria-hidden="true"></span><span class="mono">04 · Gate</span><b>Paradigm</b><small>Agentic, hybrid, traditional or zero-UI.</small></li>
+        <li class="stage"><span class="node" aria-hidden="true"></span><span class="mono">05</span><b>Flows</b><small>Wireflows, including failure paths.</small></li>
+        <li class="stage"><span class="node" aria-hidden="true"></span><span class="mono">06</span><b>Interface</b><small>Built on the token system.</small></li>
+        <li class="stage"><span class="node" aria-hidden="true"></span><span class="mono">07</span><b>Ship</b><small>Goodhart-resistant metrics.</small></li>
+      </ol>
+      <div class="kill reveal">
+        <p>Every stage has kill criteria. Nothing advances on vibes.</p>
+        <a class="btn btn-ghost" href="#">Explore the method <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+      <aside class="note" aria-label="Design note 5"><span class="note-n" aria-hidden="true">5</span><p><b>Your 8-stage method becomes a pipeline diagram.</b> The pulse moving along the line tells visitors this is a system, not a list. The diamond marks the paradigm gate, which is your real differentiator.</p></aside>
+    </div>
+  </section>
+
+  <!-- ================= ABOUT ================= -->
+  <section class="section" id="about" aria-labelledby="about-title">
+    <div class="container">
+      <div class="sec-head reveal">
+        <p class="eyebrow mono"><span>03</span> About</p>
+        <h2 class="sec-title" id="about-title">Designer. Builder. <em>Product scaler.</em></h2>
+        <a class="link-u" href="#">Full story <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+      <div class="about-grid reveal">
+        <span aria-hidden="true"></span>
+        <p class="about-bio">9+ years building B2B SaaS and AI platforms <span class="muted">used by over a million people across AdTech, Construction Cloud, Healthcare, AIOps, IIoT and Big Data.</span></p>
+        <div class="roles">
+          <div class="tile role"><span class="mono">Designer</span><h3>Decisions backed by evidence</h3><p>500+ tokens, psychology principles and multi-platform constraints, in frameworks engineers trust.</p></div>
+          <div class="tile role"><span class="mono">Builder</span><h3>Pixels to production, same sprint</h3><p>React, TypeScript and Next.js. Real code that ships, not throwaway prototypes.</p></div>
+          <div class="tile role"><span class="mono">Scaler</span><h3>From 100 users to 2 million</h3><p>I connect user problems to business outcomes and find the 20% of work that drives 80% of growth.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= LAB ================= -->
+  <section class="section" id="lab" aria-labelledby="lab-title">
+    <div class="container">
+      <div class="sec-head reveal">
+        <p class="eyebrow mono"><span>04</span> Lab</p>
+        <h2 class="sec-title" id="lab-title">Research, craft and <em>experiments</em>.</h2>
+        <span></span>
+      </div>
+      <div class="lab">
+        <a class="tile forma reveal" href="#">
+          <span class="mono muted">Research · Forma</span>
+          <h3>A design-platform deep dive, from packages to personas.</h3>
+          <svg class="graph" viewBox="0 0 400 200" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+            <g stroke-width="1">
+              <line x1="200" y1="100" x2="80" y2="40"/><line x1="200" y1="100" x2="60" y2="130"/><line x1="200" y1="100" x2="140" y2="175"/><line x1="200" y1="100" x2="270" y2="30"/><line x1="200" y1="100" x2="340" y2="70"/><line x1="200" y1="100" x2="330" y2="160"/><line x1="200" y1="100" x2="240" y2="180"/><line x1="80" y1="40" x2="30" y2="70"/><line x1="340" y1="70" x2="385" y2="40"/><line x1="330" y1="160" x2="385" y2="185"/><line x1="60" y1="130" x2="20" y2="170"/><line x1="270" y1="30" x2="215" y2="12"/>
+            </g>
+            <circle cx="80" cy="40" r="9"/><circle cx="60" cy="130" r="11"/><circle cx="140" cy="175" r="7"/><circle cx="270" cy="30" r="10"/><circle cx="340" cy="70" r="12"/><circle cx="330" cy="160" r="9"/><circle cx="240" cy="180" r="6"/><circle cx="30" cy="70" r="5"/><circle cx="385" cy="40" r="5"/><circle cx="385" cy="185" r="5"/><circle cx="20" cy="170" r="5"/><circle cx="215" cy="12" r="5"/>
+            <circle class="hub" cx="200" cy="100" r="16"/>
+          </svg>
+          <div class="mini-stats">
+            <div><b>16</b><span>packages</span></div><div><b>1,600+</b><span>components</span></div><div><b>360</b><span>domains researched</span></div>
+          </div>
+          <span class="tile-link">Open research <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </a>
+        <a class="tile reveal" href="#" style="--rd:60ms">
+          <span class="mono muted">Research · Lokul.club</span>
+          <h3>Making 200 meters the most valuable radius in Indian commerce.</h3>
+          <p>A hyperlocal neighborhood economy platform for urban India.</p>
+          <span class="tile-link">Open research <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </a>
+        <a class="tile reveal" href="#" style="--rd:120ms">
+          <span class="mono muted">Craft</span>
+          <h3>5 interaction studies</h3>
+          <p>Each pairs a micro-interaction with its psychology principle and code.</p>
+          <span class="tile-link">Play with them <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </a>
+        <a class="tile wide reveal" href="#" style="--rd:180ms">
+          <span class="mono muted">Experiments</span>
+          <h3>16 experiments across 4 categories</h3>
+          <p>Prototypes, tools and AI workflows I build to learn in public.</p>
+          <span class="tile-link">Browse experiments <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </a>
+      </div>
+      <aside class="note" aria-label="Design note 6"><span class="note-n" aria-hidden="true">6</span><p><b>Research, Craft and Experiments merge into one "Lab".</b> That's how the nav goes from 8 items to 5 (step 3 of the plan), and the side projects stop competing with client work.</p></aside>
+    </div>
+  </section>
+
+  <!-- ================= WRITING ================= -->
+  <section class="section" id="writing" aria-labelledby="writing-title">
+    <div class="container">
+      <div class="sec-head reveal">
+        <p class="eyebrow mono"><span>05</span> Writing</p>
+        <h2 class="sec-title" id="writing-title">Notes from the <em>work</em>.</h2>
+        <a class="link-u" href="#">All posts <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+      <ul class="posts">
+        <li class="reveal"><a class="post" href="#"><span class="mono">Jul 2026</span><h3>The Psychology Behind My Design Tokens: 8 Decisions, Explained</h3><span class="mono cat">Design systems</span><span class="mono">10 min</span></a></li>
+        <li class="reveal"><a class="post" href="#"><span class="mono">Mar 2026</span><h3>Design Thinking in AdTech: How OOH is Going Digital</h3><span class="mono cat">Industry</span><span class="mono">8 min</span></a></li>
+        <li class="reveal"><a class="post" href="#"><span class="mono">Jan 2026</span><h3>How I Use 20+ AI Tools to 10x My Design Output</h3><span class="mono cat">AI × Design</span><span class="mono">12 min</span></a></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ================= CONTACT ================= -->
+  <section class="contact" id="contact" aria-labelledby="contact-title">
+    <div class="container">
+      <p class="eyebrow mono"><span>06</span> Contact</p>
+      <h2 id="contact-title" class="reveal">Let's build the <em>system</em> behind your product.</h2>
+      <div class="contact-actions reveal">
+        <a class="btn btn-accent btn-lg" href="mailto:vivekanand.design@gmail.com">Start a conversation <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 7l10 10M17 8v9H8"/></svg></a>
+        <button type="button" class="btn btn-ghost btn-lg copy" id="copyEmail">vivekanand.design@gmail.com <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><span class="sr-only">Copy email address</span></button>
+      </div>
+      <p class="contact-meta mono">Replies within 24 hours · Full-time and consulting</p>
+      <aside class="note" aria-label="Design note 7"><span class="note-n" aria-hidden="true">7</span><p><b>The page ends on a high note.</b> One big line, one primary action, and copy-to-clipboard instead of a mailto-only link. The giant wordmark footer and the ⌘K command menu (try it) are two signature patterns of 2025–26 product sites.</p></aside>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container foot">
+    <nav class="foot-links" aria-label="Elsewhere">
+      <a href="#">LinkedIn</a><a href="#">Dribbble</a><a href="#">GitHub</a><a href="#">Résumé (PDF)</a>
+    </nav>
+    <span class="mono">© 2026 Vivekanand Choudhari · Built in Next.js</span>
+  </div>
+  <div class="wordmark" aria-hidden="true">Vivekanand</div>
+</footer>
+
+<!-- Cursor-follow preview for the work index -->
+<div class="preview" id="preview" aria-hidden="true">
+  <div class="pv" id="pv">
+    <div class="pv-top"><i></i><i></i><i></i><span id="pvLabel">Preview</span></div>
+    <div class="pv-body">
+      <div class="pv-side"><i></i><i></i><i></i><i></i><i></i></div>
+      <div class="pv-main"><div class="pv-kpis"><i></i><i></i><i></i></div><div class="pv-chart" id="pvChart"></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- Command menu -->
+<div class="cmdk" id="cmdk" hidden>
+  <div class="cmdk-backdrop" data-close></div>
+  <div class="cmdk-panel" role="dialog" aria-modal="true" aria-label="Command menu">
+    <div class="cmdk-input">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input id="cmdkInput" role="combobox" aria-expanded="true" aria-controls="cmdkList" aria-autocomplete="list" autocomplete="off" placeholder="Jump to a page or run an action…">
+      <kbd>esc</kbd>
+    </div>
+    <div class="cmdk-list" id="cmdkList" role="listbox" aria-label="Results"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+(function () {
+  const root = document.documentElement;
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const $ = (s, el = document) => el.querySelector(s);
+  const $$ = (s, el = document) => [...el.querySelectorAll(s)];
+  const store = { get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }, set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} } };
+
+  /* ---------- toast ---------- */
+  const toast = $("#toast"); let toastT;
+  function say(msg) { toast.textContent = msg; toast.classList.add("show"); clearTimeout(toastT); toastT = setTimeout(() => toast.classList.remove("show"), 1800); }
+
+  /* ---------- clock (always India time) ---------- */
+  const clock = $("#clock");
+  const fmt = new Intl.DateTimeFormat("en-GB", { hour: "2-digit", minute: "2-digit", timeZone: "Asia/Kolkata" });
+  const tick = () => { clock.textContent = fmt.format(new Date()); };
+  tick(); setInterval(tick, 15000);
+
+  /* ---------- theme ---------- */
+  const themeBtn = $("#themeBtn"), themeIcon = $("#themeIcon");
+  const SUN = '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>';
+  const MOON = '<path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>';
+  function paintTheme() {
+    const light = root.dataset.theme === "light";
+    themeIcon.innerHTML = light ? MOON : SUN;
+    themeBtn.setAttribute("aria-label", light ? "Switch to dark theme" : "Switch to light theme");
+    paintTokens();
+  }
+  function toggleTheme() { root.dataset.theme = root.dataset.theme === "light" ? "dark" : "light"; store.set("signal-theme", root.dataset.theme); paintTheme(); }
+  themeBtn.addEventListener("click", toggleTheme);
+
+  /* ---------- live tokens + WCAG contrast ---------- */
+  function lum(hex) {
+    const n = parseInt(hex.slice(1), 16), c = [n >> 16, (n >> 8) & 255, n & 255].map(v => { v /= 255; return v <= .03928 ? v / 12.92 : Math.pow((v + .055) / 1.055, 2.4); });
+    return .2126 * c[0] + .7152 * c[1] + .0722 * c[2];
+  }
+  const ratio = (a, b) => { const [x, y] = [lum(a), lum(b)].sort((p, q) => q - p); return (x + .05) / (y + .05); };
+  const swatches = $$(".swatch");
+  function paintTokens() {
+    const cs = getComputedStyle(root);
+    swatches.forEach(s => { s.style.background = cs.getPropertyValue("--a-" + s.dataset.accent).trim(); s.setAttribute("aria-pressed", String(s.dataset.accent === (root.dataset.accent || "signal"))); });
+    const hex = cs.getPropertyValue("--a-" + (root.dataset.accent || "signal")).trim().toUpperCase();
+    const bg = cs.getPropertyValue("--bg").trim();
+    const r = ratio(hex, bg);
+    $("#tokHex").textContent = hex;
+    $("#tokRatio").textContent = r.toFixed(1) + ":1";
+    $("#tokGrade").textContent = r >= 7 ? "AAA" : r >= 4.5 ? "AA" : r >= 3 ? "AA large" : "Fail";
+  }
+  swatches.forEach(s => s.addEventListener("click", () => { root.dataset.accent = s.dataset.accent; store.set("signal-accent", s.dataset.accent); paintTokens(); }));
+  paintTheme();
+
+  /* ---------- DOOH screens ---------- */
+  const screens = $("#screens");
+  for (let i = 0; i < 32; i++) { const el = document.createElement("i"); el.style.setProperty("--d", ((i * 7919) % 5200) / 1000 + "s"); screens.appendChild(el); }
+
+  /* ---------- Ask my portfolio (scripted in the concept; an AI agent in the build) ---------- */
+  const ANSWERS = {
+    process: { q: "How do you approach a new product?", a: "I run design like an engineering discipline: an 8-stage method from Signal to Ship, and every stage has kill criteria. At stage 04, the Paradigm Gate, agentic, hybrid, traditional and zero-UI options get scored against 6 criteria before any UI is drawn.", src: [["Process", "#process"], ["8 stages", "#process"]] },
+    shipped: { q: "What have you shipped?", a: "Six platforms across DOOH, healthcare, Industry 4.0, big data, EV and OTT. Two highlights: a NoCode builder that cut engineering dependency by 60% and tripled go-to-market speed, and EHR workflows that save clinicians 2+ hours a day.", src: [["NoCode case study", "#flagship"], ["All work", "#work"]] },
+    ai: { q: "How do you use AI?", a: "In two ways. I use 20+ AI tools across research, exploration and production code. And I design AI products: right now that's agentic workflows for a 7-product programmatic DOOH portfolio.", src: [["Blog: 20+ AI tools", "#writing"], ["Now", "#top"]] },
+    available: { q: "Are you available?", a: "Yes. I'm open to full-time roles and consulting, and I reply within 24 hours.", src: [["Contact", "#contact"]] },
+  };
+  const FALLBACK = "In the live build an AI agent grounded in the case studies answers this. In this concept, try one of the suggested questions.";
+  const log = $("#askLog"); let busy = false;
+  function bubble(cls, text) { const d = document.createElement("div"); d.className = "msg " + cls; d.textContent = text; log.appendChild(d); log.scrollTop = log.scrollHeight; return d; }
+  function ask(key, typed) {
+    if (busy) return; busy = true;
+    const item = ANSWERS[key];
+    bubble("user", typed || item.q);
+    const out = bubble("bot", ""); log.setAttribute("aria-busy", "true");
+    const text = item ? item.a : FALLBACK;
+    const done = () => {
+      out.textContent = text;
+      if (item) { const s = document.createElement("div"); s.className = "src"; item.src.forEach(([l, h]) => { const a = document.createElement("a"); a.href = h; a.textContent = l; s.appendChild(a); }); out.appendChild(s); }
+      log.setAttribute("aria-busy", "false"); log.scrollTop = log.scrollHeight; busy = false;
+      while (log.children.length > 7) log.removeChild(log.children[1]);
+    };
+    if (reduce) return done();
+    let i = 0; const caret = '<span class="caret" aria-hidden="true"></span>';
+    const step = () => { i = Math.min(text.length, i + 3); out.innerHTML = ""; out.textContent = text.slice(0, i); out.insertAdjacentHTML("beforeend", caret); log.scrollTop = log.scrollHeight; i < text.length ? setTimeout(step, 18) : done(); };
+    setTimeout(step, 380);
+  }
+  $$(".chip").forEach(c => c.addEventListener("click", () => ask(c.dataset.q)));
+  $("#askForm").addEventListener("submit", e => {
+    e.preventDefault(); const v = $("#askInput").value.trim(); if (!v) return; $("#askInput").value = "";
+    const t = v.toLowerCase();
+    const key = /process|approach|method|start|stage/.test(t) ? "process" : /ship|work|project|case|built|portfolio/.test(t) ? "shipped" : /\bai\b|tool|agent|llm|gpt|claude/.test(t) ? "ai" : /avail|hire|contact|freelance|consult|job/.test(t) ? "available" : null;
+    ask(key, v);
+  });
+
+  /* ---------- tile spotlight ---------- */
+  document.addEventListener("pointermove", e => {
+    const t = e.target.closest && e.target.closest(".tile"); if (!t) return;
+    const r = t.getBoundingClientRect(); t.style.setProperty("--mx", e.clientX - r.left + "px"); t.style.setProperty("--my", e.clientY - r.top + "px");
+  }, { passive: true });
+
+  /* ---------- work index preview ---------- */
+  const pv = $("#preview"), pvInner = $("#pv"), pvLabel = $("#pvLabel"), pvChart = $("#pvChart");
+  let tx = 0, ty = 0, cx = 0, cy = 0, raf = 0;
+  function loop() { cx += (tx - cx) * .18; cy += (ty - cy) * .18; const rot = Math.max(-6, Math.min(6, (tx - cx) * .04)); pv.style.setProperty("--x", cx + "px"); pv.style.setProperty("--y", cy + "px"); pv.style.setProperty("--r", rot + "deg"); raf = requestAnimationFrame(loop); }
+  $$(".row").forEach((row, i) => {
+    row.addEventListener("pointerenter", e => {
+      if (e.pointerType === "touch") return;
+      pvInner.style.setProperty("--p", row.dataset.hue); pvLabel.textContent = row.dataset.label;
+      pvChart.innerHTML = Array.from({ length: 12 }, (_, k) => `<i style="height:${20 + ((k * 37 + i * 53) % 75)}%"></i>`).join("");
+      tx = cx = e.clientX + 28; ty = cy = e.clientY - 120; pv.classList.add("show"); if (!raf) raf = requestAnimationFrame(loop);
+    });
+    row.addEventListener("pointermove", e => { tx = Math.min(e.clientX + 28, innerWidth - 360); ty = e.clientY - 120; });
+    row.addEventListener("pointerleave", () => { pv.classList.remove("show"); cancelAnimationFrame(raf); raf = 0; });
+  });
+
+  /* ---------- reveal on scroll ---------- */
+  const io = new IntersectionObserver(es => es.forEach(en => { if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); } }), { rootMargin: "0px 0px -8% 0px" });
+  $$(".reveal").forEach(el => io.observe(el));
+
+  /* ---------- scroll-spy for nav ---------- */
+  const navLinks = $$(".nav-links a");
+  const spy = new IntersectionObserver(es => es.forEach(en => { if (en.isIntersecting) navLinks.forEach(a => a.setAttribute("aria-current", String(a.getAttribute("href") === "#" + en.target.id))); }), { rootMargin: "-45% 0px -50% 0px" });
+  // Hero and contact are observed too, so the highlight clears when neither nav section is in view.
+  ["top", "work", "process", "about", "lab", "writing", "contact"].forEach(id => spy.observe(document.getElementById(id)));
+
+  /* ---------- copy email ---------- */
+  async function copyEmail() { try { await navigator.clipboard.writeText("vivekanand.design@gmail.com"); say("Email copied"); } catch (e) { say("vivekanand.design@gmail.com"); } }
+  $("#copyEmail").addEventListener("click", copyEmail);
+
+  /* ---------- design notes toggle ---------- */
+  const notesBtn = $("#notesBtn");
+  notesBtn.addEventListener("click", () => { const on = document.body.classList.toggle("notes-on"); notesBtn.setAttribute("aria-pressed", String(on)); notesBtn.textContent = "Design notes: " + (on ? "on" : "off"); });
+
+  /* ---------- command menu ---------- */
+  const go = id => () => document.getElementById(id).scrollIntoView({ behavior: reduce ? "auto" : "smooth" });
+  const CMDS = [
+    { g: "Navigate", l: "Selected work", h: "01", run: go("work") },
+    { g: "Navigate", l: "Flagship case study: NoCode", h: "01", run: go("flagship") },
+    { g: "Navigate", l: "Process", h: "02", run: go("process") },
+    { g: "Navigate", l: "About", h: "03", run: go("about") },
+    { g: "Navigate", l: "Lab: research, craft, experiments", h: "04", run: go("lab") },
+    { g: "Navigate", l: "Writing", h: "05", run: go("writing") },
+    { g: "Navigate", l: "Contact", h: "06", run: go("contact") },
+    { g: "Actions", l: "Ask my portfolio", h: "AI", run: () => { go("top")(); setTimeout(() => $("#askInput").focus({ preventScroll: true }), reduce ? 0 : 500); } },
+    { g: "Actions", l: "Toggle light / dark theme", h: "T", run: toggleTheme },
+    { g: "Actions", l: "Copy email address", h: "C", run: copyEmail },
+    { g: "Actions", l: "Download résumé (PDF)", h: "R", run: () => say("Résumé download (wired in the build)") },
+  ];
+  const cmdk = $("#cmdk"), cIn = $("#cmdkInput"), cList = $("#cmdkList");
+  let results = CMDS, active = 0, lastFocus = null;
+  function render() {
+    const q = cIn.value.trim().toLowerCase();
+    results = CMDS.filter(c => c.l.toLowerCase().includes(q) || c.g.toLowerCase().includes(q));
+    active = Math.min(active, Math.max(0, results.length - 1));
+    if (!results.length) { cList.innerHTML = '<div class="cmdk-empty">No results</div>'; cIn.removeAttribute("aria-activedescendant"); return; }
+    let html = "", g = "";
+    results.forEach((c, i) => { if (c.g !== g) { g = c.g; html += `<div class="cmdk-group mono" role="presentation">${g}</div>`; } html += `<div class="cmdk-item" role="option" id="opt${i}" data-i="${i}" aria-selected="${i === active}"><span>${c.l}</span><span class="mono">${c.h}</span></div>`; });
+    cList.innerHTML = html; cIn.setAttribute("aria-activedescendant", "opt" + active);
+    const el = $("#opt" + active); el && el.scrollIntoView({ block: "nearest" });
+  }
+  function openCmdk() { lastFocus = document.activeElement; cmdk.hidden = false; cIn.value = ""; active = 0; render(); cIn.focus(); }
+  function closeCmdk() { cmdk.hidden = true; lastFocus && lastFocus.focus && lastFocus.focus(); }
+  function runActive() { const c = results[active]; if (!c) return; closeCmdk(); c.run(); }
+  $$("[data-open-cmdk]").forEach(b => b.addEventListener("click", openCmdk));
+  cIn.addEventListener("input", () => { active = 0; render(); });
+  cList.addEventListener("pointermove", e => { const it = e.target.closest(".cmdk-item"); if (it && +it.dataset.i !== active) { active = +it.dataset.i; render(); } });
+  cList.addEventListener("click", e => { const it = e.target.closest(".cmdk-item"); if (it) { active = +it.dataset.i; runActive(); } });
+  cmdk.addEventListener("click", e => { if (e.target.hasAttribute("data-close")) closeCmdk(); });
+  document.addEventListener("keydown", e => {
+    if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") { e.preventDefault(); cmdk.hidden ? openCmdk() : closeCmdk(); return; }
+    if (cmdk.hidden) return;
+    if (e.key === "Escape") { e.preventDefault(); closeCmdk(); }
+    else if (e.key === "ArrowDown") { e.preventDefault(); active = (active + 1) % Math.max(1, results.length); render(); }
+    else if (e.key === "ArrowUp") { e.preventDefault(); active = (active - 1 + results.length) % Math.max(1, results.length); render(); }
+    else if (e.key === "Enter") { e.preventDefault(); runActive(); }
+    else if (e.key === "Tab") { e.preventDefault(); cIn.focus(); }
+  });
+})();
+</script>
+</body>
+</html>

@@ -2,9 +2,12 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useMemo } from "react";
-import { Section, SectionHeader } from "@/components/Section";
+import { Section } from "@/components/Section";
 import { tintText } from "@/lib/tint";
 import Link from "next/link";
+
+// Source files live in the public repo, not on the site.
+const REPO = "https://github.com/VivekcMW/MyPortfolio/blob/main";
 
 interface Experiment {
   title: string;
@@ -26,7 +29,7 @@ const experiments: Experiment[] = [
     tags: ["Cursor", "AI Agents", "TypeScript", "Design Tokens"],
     status: "active",
     links: [
-      { label: "AGENTS.md", href: "/AGENTS.md" },
+      { label: "AGENTS.md", href: `${REPO}/AGENTS.md` },
     ],
     icon: (
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -97,7 +100,7 @@ const experiments: Experiment[] = [
     tags: ["Framer Motion", "Interaction Design", "React", "Animations"],
     status: "active",
     links: [
-      { label: "Component", href: "/src/components/Magnetic.tsx" },
+      { label: "Component", href: `${REPO}/src/components/Magnetic.tsx` },
     ],
     icon: (
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -155,7 +158,7 @@ const experiments: Experiment[] = [
     status: "active",
     links: [
       { label: "Blog", href: "/blog" },
-      { label: "Source", href: "/src/lib/blog.ts" },
+      { label: "Source", href: `${REPO}/src/lib/blog.ts` },
     ],
     icon: (
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -307,11 +310,11 @@ function ExperimentCard({
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-start justify-between gap-3 flex-wrap">
-            <h3 className="text-lg font-bold text-foreground group-hover:text-accent transition-colors">
+            <h3 className="text-lg text-foreground group-hover:text-accent transition-colors">
               {experiment.title}
             </h3>
             <span
-              className="shrink-0 text-[10px] font-mono font-medium px-2.5 py-0.5 rounded-full border whitespace-nowrap"
+              className="shrink-0 text-xs font-mono font-medium px-2.5 py-0.5 rounded-full border whitespace-nowrap"
               style={{
                 backgroundColor: status.bg,
                 borderColor: status.color + "30",
@@ -328,7 +331,7 @@ function ExperimentCard({
             {experiment.tags.map((tag) => (
               <span
                 key={tag}
-                className="px-2 py-0.5 rounded-md text-[10px] font-mono border"
+                className="px-2 py-0.5 rounded-md text-xs font-mono border"
                 style={{
                   borderColor: catColor + "18",
                   color: tintText(catColor),
@@ -341,14 +344,19 @@ function ExperimentCard({
           </div>
           {experiment.links && experiment.links.length > 0 && (
             <div className="mt-4 flex flex-wrap gap-3">
-              {experiment.links.map((link) => (
-                <Link
+              {experiment.links.map((link) => {
+                const external = link.href.startsWith("http");
+                const LinkTag = external ? "a" : Link;
+                return (
+                <LinkTag
                   key={link.label}
                   href={link.href}
-                  className="inline-flex items-center gap-1 text-xs font-mono font-medium transition-colors"
+                  {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                  className="inline-flex items-center gap-1 py-1.5 text-xs font-mono font-medium transition-colors"
                   style={{ color: tintText(catColor) }}
                 >
                   {link.label}
+                  {external && <span className="sr-only"> (opens GitHub in a new tab)</span>}
                   <svg
                     width="12"
                     height="12"
@@ -358,11 +366,13 @@ function ExperimentCard({
                     strokeWidth="2"
                     strokeLinecap="round"
                     strokeLinejoin="round"
+                    aria-hidden="true"
                   >
                     <path d="M7 17l9.2-9.2M17 17V7H7" />
                   </svg>
-                </Link>
-              ))}
+                </LinkTag>
+                );
+              })}
             </div>
           )}
         </div>
@@ -392,10 +402,10 @@ export default function ExperimentsPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7 }}
           >
-            <p className="text-accent font-mono text-sm uppercase tracking-widest mb-4">
+            <p className="text-accent font-mono text-xs uppercase tracking-[0.06em] mb-4">
               The Lab
             </p>
-            <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
+            <h1 className="mb-6">
               Experiments &{" "}
               <span className="text-accent">Use Cases.</span>
             </h1>
@@ -449,6 +459,7 @@ export default function ExperimentsPage() {
       {/* Grid */}
       <section className="pb-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="sr-only">{activeCategory === "All" ? "All experiments" : `${activeCategory} experiments`}</h2>
           <AnimatePresence mode="wait">
             <motion.div
               key={activeCategory}

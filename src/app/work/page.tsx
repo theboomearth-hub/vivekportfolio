@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { Section, SectionHeader } from "@/components/Section";
 import ProjectCard from "@/components/ProjectCard";
@@ -14,6 +15,7 @@ import { tintText } from "@/lib/tint";
 
 type Domain =
   | "AdTech"
+  | "PropTech"
   | "Design Systems"
   | "Construction"
   | "Healthcare"
@@ -26,6 +28,7 @@ type Domain =
 /* Domain hues double as filter-pill colors and per-card accent chips. */
 const domainColors: Record<Domain, string> = {
   AdTech: "#6366F1",
+  PropTech: "#0F766E",
   "Design Systems": "#8B5CF6",
   Construction: "#EAB308",
   Healthcare: "#10B981",
@@ -47,11 +50,85 @@ const caseStudies: Array<{
   tags: string[];
   timeline: string;
   role: string;
-  status?: "in-flight" | "shipped";
+  status?: "in-flight" | "shipped" | "use-case";
   featured?: boolean;
   metrics?: { label: string; value: string }[];
   image: React.ReactNode;
 }> = [
+  {
+    slug: "agentic-inventory",
+    title: "MW-Inventory: an agent from search to debrief",
+    category: "Agentic AI · Design and build (Use case)",
+    domain: "AdTech",
+    description:
+      "A DOOH planning agent I designed and built end to end: plain-language requests, 18 typed tools, and an interactive view for every answer, from finding screens to the post-campaign debrief.",
+    tags: ["Agentic UI", "Conversation Design", "Next.js", "AI SDK"],
+    timeline: "Live prototype",
+    role: "Sole designer and engineer",
+    status: "use-case",
+    featured: true,
+    metrics: [
+      { label: "Agent tools", value: "18" },
+      { label: "Campaign stages", value: "6" },
+      { label: "Design + build", value: "Solo" },
+    ],
+    image: (
+      <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+        <path d="M8 9h8" />
+        <path d="M8 13h5" />
+      </svg>
+    ),
+  },
+  {
+    slug: "hosamane",
+    title: "Hosamane: an agent that does a good broker's legwork",
+    category: "Agentic AI · Research to working prototype (Use case)",
+    domain: "PropTech",
+    description:
+      "An agentic-first home search for Bengaluru, for renting and buying: 300 coded reviews, 19 typed tools with server-checked approvals, a working prototype at four sizes, and 30 of 30 agent tests passing.",
+    tags: ["Agentic UI", "AI Product Design", "Research", "Prototype"],
+    timeline: "Design concept",
+    role: "Designer and builder, end to end",
+    status: "use-case",
+    featured: true,
+    metrics: [
+      { label: "Reviews coded", value: "300" },
+      { label: "Typed tools", value: "19" },
+      { label: "Agent tests", value: "30/30" },
+    ],
+    image: (
+      <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M3.5 11.2 12 4l8.5 7.2" />
+        <path d="M5.5 9.8V20h13V9.8" />
+        <path d="M12 11.2v4.6M9.7 13.5h4.6" />
+      </svg>
+    ),
+  },
+  {
+    slug: "healthai",
+    title: "HealthAI: from symptoms to a doctor’s plan",
+    category: "Healthcare · AI product design (Use case)",
+    domain: "Healthcare",
+    description:
+      "An AI-first patient app for India, designed end to end: symptom check and triage, booking, UPI payment, video consultation and records, with the user flow, service blueprint, card sort and 50 screens across phone, tablet and web.",
+    tags: ["AI Product Design", "Healthcare", "Information Architecture", "Responsive"],
+    timeline: "Design concept",
+    role: "Designer, end to end",
+    status: "use-case",
+    featured: true,
+    metrics: [
+      { label: "Screens", value: "50" },
+      { label: "Screen sizes", value: "4" },
+      { label: "Journey stages", value: "8" },
+    ],
+    image: (
+      <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
+        <path d="M3.22 12H9.5l.5-1 2 4.5 2-7 1.5 3.5h5.27" />
+      </svg>
+    ),
+  },
   {
     slug: "mw-activate",
     title: "Agentic Layer for a pDOOH DSP",
@@ -322,14 +399,14 @@ const caseStudies: Array<{
   {
     slug: "ott-platform",
     title: "OTT Streaming Platform",
-    category: "Entertainment / BigData",
+    category: "Entertainment / BigData (Use case)",
     domain: "Entertainment",
     description:
       "Redesigned content discovery for a video-on-demand platform with 50K+ titles — 40% faster time-to-play, 25% engagement lift.",
     tags: ["OTT", "BigData", "Content Strategy", "Performance"],
     timeline: "2022 — 2023",
     role: "Senior Product Designer",
-    status: "shipped",
+    status: "use-case",
     image: (
       <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
         <polygon points="5 3 19 12 5 21 5 3" />
@@ -337,6 +414,17 @@ const caseStudies: Array<{
     ),
   },
 ];
+
+/** "In flight" (live work) or "Use case" (a self-initiated study) — shipped work has no badge. */
+function StatusBadge({ status }: { status?: "in-flight" | "shipped" | "use-case" }) {
+  if (status !== "in-flight" && status !== "use-case") return null;
+  return (
+    <span className="absolute top-3 left-3 z-10 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-background/90 border border-border text-xs font-mono uppercase tracking-[0.06em] text-accent">
+      {status === "in-flight" && <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />}
+      {status === "in-flight" ? " In flight" : "Use case"}
+    </span>
+  );
+}
 
 export default function WorkIndexPage() {
   const [activeDomain, setActiveDomain] = useState<Domain | "All">("All");
@@ -350,17 +438,17 @@ export default function WorkIndexPage() {
   const gridItems = showSpotlight ? filtered.filter((cs) => !cs.featured) : filtered;
 
   return (
-    <main className="min-h-screen pt-24 sm:pt-32">
+    <div className="min-h-screen pt-24 sm:pt-32">
       <Section>
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           className="max-w-3xl mb-12"
         >
-          <p className="text-accent font-mono text-sm uppercase tracking-widest mb-4">
+          <p className="text-accent font-mono text-xs uppercase tracking-[0.06em] mb-4">
             Selected Work
           </p>
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
+          <h1 className="mb-6">
             Case studies, in depth.
           </h1>
           <p className="text-lg text-muted leading-relaxed">
@@ -371,6 +459,13 @@ export default function WorkIndexPage() {
             shaped it, and what I&apos;d do differently. Client work under NDA is
             labeled and shown as stylised recreations.
           </p>
+          <p className="mt-4 text-compact text-muted">
+            Want the actual screens?{" "}
+            <Link href="/portfolio" className="text-foreground underline decoration-border-strong underline-offset-4 hover:text-accent">
+              Browse the design gallery
+            </Link>
+            .
+          </p>
         </motion.div>
 
         {/* Domain filter — single-select pills, colored per domain */}
@@ -378,13 +473,13 @@ export default function WorkIndexPage() {
           <button
             type="button"
             onClick={() => setActiveDomain("All")}
-            className={`px-4 py-2 rounded-full text-xs font-mono uppercase tracking-wider border transition-colors cursor-pointer ${
+            className={`px-4 py-2 rounded-full text-xs font-mono uppercase tracking-[0.06em] border transition-colors cursor-pointer ${
               activeDomain === "All"
                 ? "bg-primary/10 border-primary/30 text-primary"
                 : "bg-surface border-border text-muted hover:border-primary/30"
             }`}
           >
-            All <span className="opacity-60">({caseStudies.length})</span>
+            All <span className="font-normal">({caseStudies.length})</span>
           </button>
           {domainList.map((d) => {
             const active = activeDomain === d;
@@ -395,14 +490,14 @@ export default function WorkIndexPage() {
                 type="button"
                 key={d}
                 onClick={() => setActiveDomain(d)}
-                className="px-4 py-2 rounded-full text-xs font-mono uppercase tracking-wider border transition-colors cursor-pointer"
+                className="px-4 py-2 rounded-full text-xs font-mono uppercase tracking-[0.06em] border transition-colors cursor-pointer"
                 style={{
                   backgroundColor: active ? `${color}1F` : "var(--color-surface)",
                   borderColor: active ? color : "var(--color-border)",
                   color: active ? tintText(color) : "var(--color-muted)",
                 }}
               >
-                {d} <span className="opacity-60">({count})</span>
+                {d} <span className="font-normal">({count})</span>
               </button>
             );
           })}
@@ -411,17 +506,12 @@ export default function WorkIndexPage() {
         {/* Flagship spotlight — hidden while a domain filter narrows the grid */}
         {showSpotlight && featuredItems.length > 0 && (
           <div className="mb-16 space-y-8">
-            <p className="text-[10px] font-mono text-muted uppercase tracking-widest">
+            <h2 className="text-xs font-mono font-normal text-muted uppercase tracking-[0.06em]">
               Flagship Case Studies
-            </p>
+            </h2>
             {featuredItems.map((cs, i) => (
               <div key={cs.slug} className="relative">
-                {cs.status === "in-flight" && (
-                  <span className="absolute top-3 left-3 z-10 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-background/90 border border-border text-[10px] font-mono text-accent uppercase tracking-wider">
-                    <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />{" "}
-                    In flight
-                  </span>
-                )}
+                <StatusBadge status={cs.status} />
                 <ProjectCard
                   title={cs.title}
                   category={cs.category}
@@ -453,12 +543,7 @@ export default function WorkIndexPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
           {gridItems.map((cs, i) => (
             <div key={cs.slug} className="relative">
-              {cs.status === "in-flight" && (
-                <span className="absolute top-3 left-3 z-10 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-background/90 border border-border text-[10px] font-mono text-accent uppercase tracking-wider">
-                  <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />{" "}
-                  In flight
-                </span>
-              )}
+              <StatusBadge status={cs.status} />
               <ProjectCard
                 title={cs.title}
                 category={cs.category}
@@ -485,6 +570,6 @@ export default function WorkIndexPage() {
           </p>
         )}
       </Section>
-    </main>
+    </div>
   );
 }

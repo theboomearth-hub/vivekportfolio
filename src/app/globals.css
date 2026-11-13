@@ -1,49 +1,78 @@
 @import "tailwindcss";
 
-/* ── Design as Narrative Canvas Theme ──
-   Light-first, warm, sophisticated palette for UI/UX designer portfolio.
-   Deep indigo + burnt sienna accent system with premium spacing. */
+/* ── "Calm" theme (Nov 2026 redesign, Ink palette) ──
+   White paper, near-black type, one quiet cobalt accent used only on things you
+   can act on. Every text pair clears WCAG AA: muted 6.4:1, accent 7.4:1 on the
+   background and 7.4:1 under white button text. */
 @theme static {
-  /* ── Core: Warm neutrals ── */
-  --color-background: #FAFAF8;      /* Warm off-white with cream tint */
-  --color-foreground: #2B2B2B;      /* Charcoal for text */
-  --color-surface: #FFFFFF;         /* Pure white cards */
-  --color-surface-hover: #F5F5F3;   /* Warm hover state */
-  --color-border: #E8E6E1;          /* Soft gray dividers */
-  --color-muted: #6B6B6B;           /* Muted text, 5.8:1 contrast */
+  /* ── Core neutrals ── */
+  --color-background: #FFFFFF;
+  --color-foreground: #0F0F10;
+  --color-surface: #F6F6F7;         /* Tiles, frames, quiet fills */
+  --color-surface-hover: #EFEFF1;
+  --color-border: #EAEAEC;          /* Hairlines */
+  --color-border-strong: #D4D4D8;   /* Input outlines, chips */
+  --color-muted: #5E5E66;           /* Secondary text, 6.4:1 */
 
-  /* ── Primary: Deep Indigo (gravitas) ── */
-  --color-primary: #2D3561;         /* Deep indigo for headings */
-  --color-primary-hover: #1F2543;   /* Darker hover */
-  --color-primary-light: #4A5080;   /* Lighter variant */
+  /* ── Primary: ink (headings) ── */
+  --color-primary: #0F0F10;
+  --color-primary-hover: #000000;
+  --color-primary-light: #3F3F46;
 
-  /* ── Accent: Burnt Sienna (energy) ── */
-  --color-accent: #D4663E;          /* Burnt sienna for CTAs */
+  /* ── Accent: cobalt ── */
+  --color-accent: #2F48C2;
   --color-accent-foreground: #FFFFFF;
-  --color-accent-hover: #B85330;    /* Darker hover */
-  --color-accent-light: #E8977A;    /* Light variant */
+  --color-accent-hover: #263A9E;
+  --color-accent-light: #C7CEF0;    /* Decorative only */
+  --color-accent-decor: #4A62D6;    /* Non-text marks only */
 
-  /* ── Glow: Amber (hover effects) ── */
-  --color-glow-from: #FFB84D;       /* Warm amber */
-  --color-glow-to: #FF8A4D;         /* Orange amber */
+  /* ── Glow (legacy hover effects on inner pages) ── */
+  --color-glow-from: #4A62D6;
+  --color-glow-to: #2F48C2;
 
   /* ── Semantic status ── */
   --color-success: #047857;
   --color-danger: #DC2626;
-  --color-warning: #D97706;
+  --color-warning: #B45309;
 
   /* ── Prose ── */
-  --color-prose-heading: #2B2B2B;
-  --color-prose-body: #4B4B4B;
-  --color-prose-code-bg: #F0F0F0;
+  --color-prose-heading: #0F0F10;
+  --color-prose-body: #3F3F46;
+  --color-prose-code-bg: #F4F4F5;
 }
 
-/* Fonts stay `inline` — they reference other custom properties, which `inline` resolves. */
+/* Fonts stay `inline` — they reference other custom properties, which `inline` resolves.
+   One family for everything (Inter, with optical sizing), mono for small labels.
+   --font-display is kept as an alias so existing `font-display` classes render Inter. */
 @theme inline {
   --font-sans: var(--font-inter);
-  --font-display: var(--font-fraunces);  /* Serif for hero headlines */
-  --font-accent: var(--font-syne);       /* Geometric sans for labels */
+  --font-display: var(--font-inter);
   --font-mono: var(--font-jetbrains-mono);
+}
+
+/* ── Type scale ──
+   One family (Inter) at two weights: 400 for text, 500 for headings and emphasis.
+   JetBrains Mono only for labels, codes and numbers in tables. Use these roles, not
+   pixel values; 12px is the floor, and sentences are never smaller than 14px.
+
+     h1          36→60px  base h1 style (no size classes on h1)
+     display     32→48px  text-display   closing calls to action, pull quotes
+     h2          26→32px  base h2 style  section titles
+     h3          20→24px  base h3 style, or text-lg for card titles
+     lead        18px     text-lg
+     body        16px     text-base
+     compact     15px     text-compact   dense body: cards, lists, tables
+     ui          14px     text-sm        secondary text, controls
+     caption     13px     text-caption   captions, metadata
+     label       12px     text-xs        mono uppercase labels (tracking 0.06em), codes, chips */
+@theme {
+  --text-display: clamp(2rem, 4.2vw, 3rem);
+  --text-display--line-height: 1.1;
+  --text-display--letter-spacing: -0.03em;
+  --text-compact: 0.9375rem;
+  --text-compact--line-height: 1.6;
+  --text-caption: 0.8125rem;
+  --text-caption--line-height: 1.5;
 }
 
 :root {
@@ -64,22 +93,16 @@
   color-scheme: light;
 }
 
-/* Smooth theme transitions */
 html {
   /* framer-motion's useScroll({ target }) measures the target's offset inside its
      scroll container — <html> for window scroll — and warns when that container is
      position: static, because static containers make the offset math unreliable. */
   position: relative;
-  transition: background-color var(--motion-base) var(--ease-in-out-soft),
-              color var(--motion-base) var(--ease-in-out-soft);
 }
 
-html body,
-html * {
-  transition: background-color var(--motion-base) var(--ease-in-out-soft),
-              border-color var(--motion-base) var(--ease-in-out-soft),
-              color var(--motion-base) var(--ease-in-out-soft) !important;
-}
+/* No global `* { transition: … !important }` here: it overrode every component's
+   own transition (hover lifts, fades, slide-ins) and put a transition on every
+   element on the page. Components declare the transitions they need. */
 
 
 /* ── Scrolling ──
@@ -110,7 +133,7 @@ html.lenis body {
   padding: 0.75rem 1.25rem;
   background: var(--color-accent);
   color: var(--color-accent-foreground);
-  font-weight: 600;
+  font-weight: 500;
   font-size: 0.875rem;
   border-radius: 0 0 8px 8px;
   transition: top var(--motion-fast) ease;
@@ -137,58 +160,75 @@ html.lenis body {
   perspective: 1000px;
 }
 
-body {
-  background: var(--color-background);
-  color: var(--color-foreground);
-  font-family: var(--font-sans), system-ui, sans-serif;
-  font-size: 16px;
-  line-height: 1.6;
-}
+/* Element defaults live in the base layer so Tailwind utilities can override them.
+   Unlayered, these rules beat every `text-*`, `font-*` and `leading-*` class on a
+   heading (Tailwind v4 puts utilities in @layer utilities, and unlayered CSS wins
+   over any layer) — a `text-xs` footer label was rendering at 28px. */
+@layer base {
+  body {
+    background: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans), system-ui, sans-serif;
+    font-size: 16px;
+    line-height: 1.65;
+    font-optical-sizing: auto;
+    -webkit-font-smoothing: antialiased;
+  }
 
-/* Display font (Fraunces) for hero headlines */
-h1 {
-  font-family: var(--font-display), Georgia, serif;
-  font-size: clamp(2.5rem, 8vw, 5rem);
-  font-weight: 700;
-  line-height: 1.1;
-  letter-spacing: -0.02em;
-}
+  /* Calm type scale: one family, medium weight, tight tracking at display sizes.
+     Pages that set their own size/weight classes still win (utilities layer). */
+  h1 {
+    font-family: var(--font-display), system-ui, sans-serif;
+    font-size: clamp(2.25rem, 5vw, 3.75rem);
+    font-weight: 500;
+    line-height: 1.08;
+    letter-spacing: -0.035em;
+  }
 
-h2 {
-  font-size: clamp(2rem, 5vw, 3.5rem);
-}
+  h2 {
+    font-size: clamp(1.6rem, 2.6vw, 2rem);
+  }
 
-h3 {
-  font-size: clamp(1.5rem, 4vw, 2.25rem);
-}
+  h3 {
+    font-size: clamp(1.25rem, 2vw, 1.5rem);
+  }
 
-h4 {
-  font-size: clamp(1.25rem, 3vw, 1.75rem);
-}
+  h4 {
+    font-size: 1.125rem;
+  }
 
-h5 {
-  font-size: 1.125rem;
-}
+  h5 {
+    font-size: 1rem;
+  }
 
-h6 {
-  font-size: 1rem;
-}
+  h6 {
+    font-size: 0.9375rem;
+  }
 
-/* Body headings (h2–h6) share the display font at smaller sizes than h1 */
-h2, h3, h4, h5, h6 {
-  font-family: var(--font-display), Georgia, serif;
-  font-weight: 600;
-  line-height: 1.2;
-  letter-spacing: -0.01em;
+  h2, h3, h4, h5, h6 {
+    font-family: var(--font-display), system-ui, sans-serif;
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+  }
+
+  h2 {
+    letter-spacing: -0.025em;
+  }
+
+  h1, h2, h3 {
+    text-wrap: balance;
+  }
+
+  /* Inline emphasis uses the heading weight, not browser bold. */
+  b, strong {
+    font-weight: 500;
+  }
 }
 
 /* Utility classes for font families */
 .font-display {
-  font-family: var(--font-display), Georgia, serif;
-}
-
-.font-accent {
-  font-family: var(--font-accent), system-ui, sans-serif;
+  font-family: var(--font-display), system-ui, sans-serif;
 }
 
 .font-sans {
@@ -200,8 +240,8 @@ h2, h3, h4, h5, h6 {
 }
 
 ::selection {
-  background: var(--color-accent);
-  color: var(--color-accent-foreground);
+  background: var(--color-foreground);
+  color: var(--color-background);
 }
 
 ::-webkit-scrollbar {
@@ -282,6 +322,19 @@ h2, h3, h4, h5, h6 {
   opacity: 0;
 }
 
+/* Below desktop the cards stack in one or two columns: a tilt there only eats
+   width and makes text look crooked, so lay them flat. */
+@media (max-width: 1023px) {
+  .card-paper-stack,
+  .card-paper-stack:hover {
+    transform: none;
+  }
+  .card-paper-stack::before,
+  .card-paper-stack::after {
+    display: none;
+  }
+}
+
 /* ─────────────────────────────────────────────────────────────────
    INK SPREAD DIVIDER
    Accent color bleeds across screen when entering viewport
@@ -346,7 +399,8 @@ h2, h3, h4, h5, h6 {
   gap: 24px;
 }
 
-@media (max-width: 768px) {
+/* 767px, not 768: Tailwind's md: starts at 768px, and card spans switch there. */
+@media (max-width: 767px) {
   .bento-grid {
     grid-template-columns: repeat(4, 1fr);
     gap: 16px;
@@ -385,7 +439,7 @@ h2, h3, h4, h5, h6 {
 
 .prose h1, .prose h2, .prose h3 {
   color: var(--color-prose-heading);
-  font-weight: 700;
+  font-weight: 500;
 }
 .prose p {
   color: var(--color-prose-body);
@@ -397,11 +451,11 @@ h2, h3, h4, h5, h6 {
   text-underline-offset: 3px;
 }
 .prose code {
-  color: var(--color-accent-coral);
+  color: var(--color-accent);
   background: var(--color-prose-code-bg);
   padding: 2px 6px;
   border-radius: 4px;
-  font-size: 0.9em;
+  font-size: 0.875em;
 }
 .prose pre {
   background: var(--color-surface) !important;
@@ -430,7 +484,7 @@ h2, h3, h4, h5, h6 {
 
 .glow {
   /* color-mix fallback for Safari < 16.2 */
-  box-shadow: 0 0 40px rgba(79, 70, 229, 0.15);
+  box-shadow: 0 0 40px rgba(47, 72, 194, 0.15);
 }
 @supports (color: color-mix(in srgb, red 50%, blue)) {
   .glow {
@@ -447,9 +501,9 @@ h2, h3, h4, h5, h6 {
    Class form of tintText() in src/lib/tint.ts, for the spots that use a utility
    class rather than an inline style. Mixing 50% toward --color-foreground
    darkens the hue on light and lightens it on dark, clearing AA in both. */
-.text-hue-green  { color: color-mix(in srgb, #10B981 50%, var(--color-foreground)); }
-.text-hue-amber  { color: color-mix(in srgb, #F59E0B 50%, var(--color-foreground)); }
-.text-hue-indigo { color: color-mix(in srgb, #6366F1 50%, var(--color-foreground)); }
+.text-hue-green  { color: color-mix(in srgb, #10B981 45%, var(--color-foreground)); }
+.text-hue-amber  { color: color-mix(in srgb, #F59E0B 45%, var(--color-foreground)); }
+.text-hue-indigo { color: color-mix(in srgb, #6366F1 45%, var(--color-foreground)); }
 
 /* ── SIGNAL: Annotation label (hidden on mobile, visible md+) ── */
 .signal-annotation {

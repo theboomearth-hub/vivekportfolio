@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useCallback, useRef } from "react";
 import { Section, SectionHeader } from "@/components/Section";
@@ -63,7 +64,7 @@ function DisclosureDemo() {
 
   return (
     <div className="w-full max-w-xs rounded-xl bg-background border border-border p-4 text-left">
-      <p className="text-[10px] font-mono text-muted uppercase tracking-widest mb-3">
+      <p className="text-xs font-mono text-muted uppercase tracking-[0.06em] mb-3">
         Button · properties
       </p>
       <div className="space-y-2">
@@ -76,7 +77,7 @@ function DisclosureDemo() {
       </div>
       <button
         onClick={() => setOpen(!open)}
-        className="mt-3 w-full py-2 rounded-lg border border-dashed border-border text-[11px] font-mono text-muted hover:text-foreground hover:border-accent/40 transition-colors"
+        className="mt-3 w-full py-2 rounded-lg border border-dashed border-border text-xs font-mono text-muted hover:text-foreground hover:border-accent/40 transition-colors"
         aria-expanded={open}
       >
         {open ? "− Hide advanced" : "+ Advanced (5)"}
@@ -137,7 +138,7 @@ function OptimisticDemo() {
             initial={{ opacity: 0, y: 6 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -6 }}
-            className="absolute -bottom-8 text-[11px] font-mono text-muted"
+            className="absolute -bottom-8 text-xs font-mono text-muted"
           >
             {saved ? "synced ✓ (42ms)" : "removed ✓ (38ms)"}
           </motion.span>
@@ -171,7 +172,7 @@ const dy = (e.clientY - center.y) * strength;
 animate(el, { x: dx, y: dy }, spring);`,
     demo: (
       <Magnetic strength={0.5} scaleOnHover={1.05}>
-        <span className="inline-block px-6 py-3 bg-accent text-accent-foreground text-sm font-semibold rounded-xl cursor-pointer">
+        <span className="inline-block px-6 py-3 bg-accent text-accent-foreground text-sm font-medium rounded-xl cursor-pointer">
           Catch me
         </span>
       </Magnetic>
@@ -217,6 +218,7 @@ export default function CraftPage() {
     <div className="pt-24">
       <Section>
         <SectionHeader
+          as="h1"
           eyebrow="Craft"
           title="Interaction studies."
           description="Small, focused experiments — each one pairs a live micro-interaction with the psychology principle that makes it work, and the code behind it. Craft is a habit, not a deliverable."
@@ -248,9 +250,9 @@ export default function CraftPage() {
                 <div className="p-6 sm:p-8">
                   <div className="flex items-baseline gap-3 mb-3">
                     <span className="font-mono text-sm text-accent">{study.id}</span>
-                    <h2 className="text-xl font-bold">{study.title}</h2>
+                    <h2 className="text-xl">{study.title}</h2>
                   </div>
-                  <p className="inline-block px-2.5 py-1 rounded-md bg-accent-coral/10 border border-accent-coral/20 text-[11px] font-mono text-accent-coral mb-4">
+                  <p className="inline-block px-2.5 py-1 rounded-md bg-accent/10 border border-accent/20 text-xs font-mono text-accent mb-4">
                     {study.principle}
                   </p>
                   <p className="text-sm text-muted leading-relaxed mb-5">{study.why}</p>
@@ -277,18 +279,18 @@ export default function CraftPage() {
             Interested in psychology-grounded design at scale?
           </p>
           <div className="flex flex-wrap items-center justify-center gap-3">
-            <a
+            <Link
               href="/work"
-              className="px-5 py-2.5 rounded-xl bg-accent text-accent-foreground text-sm font-semibold hover:bg-accent/90 transition-colors"
+              className="px-5 py-2.5 rounded-xl bg-accent text-accent-foreground text-sm font-medium hover:bg-accent/90 transition-colors"
             >
               View Case Studies
-            </a>
-            <a
+            </Link>
+            <Link
               href="/process"
               className="px-5 py-2.5 rounded-xl bg-surface-hover border border-border text-sm font-medium text-foreground hover:border-accent/30 transition-colors"
             >
               My Process
-            </a>
+            </Link>
           </div>
         </motion.div>
       </Section>

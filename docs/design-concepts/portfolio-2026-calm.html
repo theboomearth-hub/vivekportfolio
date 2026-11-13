@@ -1,0 +1,1177 @@
+<!doctype html>
+<html lang="en" data-palette="ink">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Calm — Portfolio Concept</title>
+<meta name="description" content="Design concept B for the 2026 portfolio: calm, clear and crisp, with an agentic layer — a portfolio agent that answers with sources, tailors the page, gives tours and drafts emails for approval.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script>document.documentElement.classList.add("js");try{var p=localStorage.getItem("calm-palette");if(p)document.documentElement.dataset.palette=p}catch(e){}</script>
+<style>
+/* =========================================================================
+   TOKENS — three calm palettes. Every text pair is >= 5.4:1 (WCAG AA).
+   ========================================================================= */
+:root {
+  /* Ink — white paper, near-black type, one quiet cobalt for actions */
+  --bg: #FFFFFF;
+  --surface: #F6F6F7;
+  --line: #EAEAEC;
+  --line-strong: #D4D4D8;
+  --text: #0F0F10;
+  --muted: #5E5E66;          /* 6.4:1 on bg */
+  --accent: #2F48C2;         /* 7.4:1 on bg */
+  --on-accent: #FFFFFF;
+
+  --font: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  --wide: 1080px;
+  --measure: 640px;
+  --gutter: 24px;
+  --ease: cubic-bezier(.22,.61,.36,1);
+}
+/* Sage — soft off-white, green-grey type, deep sage accent */
+:root[data-palette="sage"] {
+  --bg: #F8F8F5; --surface: #EFF0EB; --line: #E3E5DF; --line-strong: #CDD1C9;
+  --text: #1B1F1C; --muted: #5B625D; --accent: #3D6B50;
+}
+/* Mist — cool blue-white, slate type, steel-blue accent */
+:root[data-palette="mist"] {
+  --bg: #F7F9FB; --surface: #EDF1F5; --line: #E1E7EE; --line-strong: #CBD4DF;
+  --text: #0F172A; --muted: #526070; --accent: #2F5E96;
+}
+
+/* =========================================================================
+   BASE
+   ========================================================================= */
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: 96px; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 16px;
+  line-height: 1.65;
+  font-optical-sizing: auto;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  transition: background-color .4s var(--ease), color .4s var(--ease);
+}
+h1, h2, h3, p, dl, dd { margin: 0; }
+h1, h2, h3 { font-weight: 500; text-wrap: balance; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+ul, ol { margin: 0; padding: 0; list-style: none; }
+svg { display: block; }
+::selection { background: var(--text); color: var(--bg); }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+.wrap { max-width: var(--wide); margin: 0 auto; padding: 0 var(--gutter); }
+.num { font-variant-numeric: tabular-nums; }
+.skip { position: fixed; left: 16px; top: -60px; z-index: 100; background: var(--text); color: var(--bg); padding: 10px 16px; border-radius: 8px; transition: top .15s; }
+.skip:focus { top: 16px; }
+kbd { font: 500 11px/1 var(--mono); padding: 4px 6px; border-radius: 5px; color: var(--muted); background: var(--bg); box-shadow: inset 0 0 0 1px var(--line-strong); }
+.spark { width: 16px; height: 16px; flex: none; color: var(--accent); }
+
+/* Links and buttons */
+.text-link { display: inline-flex; align-items: center; gap: 6px; padding: 10px 0; font-weight: 500; color: var(--text); background: linear-gradient(currentColor, currentColor) 0 calc(100% - 9px) / 100% 1px no-repeat; transition: color .2s; }
+.text-link:hover { color: var(--accent); }
+.text-link svg { width: 14px; height: 14px; transition: transform .3s var(--ease); }
+.text-link:hover svg { transform: translateX(3px); }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 0 20px; border-radius: 8px; background: var(--text); color: var(--bg); font-weight: 500; font-size: 15px; transition: background-color .2s, color .2s; }
+.btn:hover { background: var(--accent); color: var(--on-accent); }
+.btn-quiet { background: transparent; color: var(--text); box-shadow: inset 0 0 0 1px var(--line-strong); }
+.btn-quiet:hover { background: var(--surface); color: var(--text); }
+.btn.sm { min-height: 36px; padding: 0 14px; font-size: 14px; }
+.btn svg { width: 15px; height: 15px; }
+
+/* Scroll progress: 2px, scroll-driven where supported */
+.progress { position: fixed; top: 0; left: 0; right: 0; height: 2px; z-index: 70; background: var(--accent); transform-origin: 0 50%; transform: scaleX(var(--p, 0)); pointer-events: none; }
+@supports (animation-timeline: scroll()) {
+  .progress { animation: progress linear both; animation-timeline: scroll(root); }
+  @keyframes progress { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+}
+
+/* =========================================================================
+   CONCEPT CHROME (not part of the site)
+   ========================================================================= */
+.concept { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px 16px; padding: 8px var(--gutter); background: var(--surface); border-bottom: 1px solid var(--line); font-size: 13px; color: var(--muted); }
+.concept b { color: var(--text); font-weight: 500; }
+.concept-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 16px; }
+.palettes { display: flex; gap: 4px; align-items: center; }
+.pal { display: inline-flex; align-items: center; gap: 8px; min-height: 32px; padding: 0 10px; border-radius: 999px; color: var(--muted); }
+.pal i { width: 12px; height: 12px; border-radius: 50%; box-shadow: inset 0 0 0 1px rgba(0,0,0,.12); }
+.pal[aria-pressed="true"] { background: var(--bg); color: var(--text); box-shadow: 0 0 0 1px var(--line-strong); }
+.notes-btn { min-height: 32px; padding: 0 12px; border-radius: 999px; box-shadow: inset 0 0 0 1px var(--line-strong); }
+.notes-btn[aria-pressed="true"] { background: var(--text); color: var(--bg); box-shadow: none; }
+.note { display: none; gap: 12px; max-width: var(--measure); margin-top: 24px; padding: 14px 16px; border-radius: 10px; background: var(--surface); font-size: 14px; line-height: 1.55; color: var(--muted); }
+.note b { color: var(--text); font-weight: 500; }
+.note-n { flex: none; width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; background: var(--text); color: var(--bg); font: 500 11px/1 var(--mono); }
+.notes-on .note { display: flex; }
+
+/* =========================================================================
+   HEADER
+   ========================================================================= */
+.header { position: sticky; top: 0; z-index: 50; background: var(--bg); border-bottom: 1px solid transparent; transition: border-color .3s, background-color .4s var(--ease); }
+.header.scrolled { border-bottom-color: var(--line); }
+.nav { display: flex; justify-content: space-between; align-items: center; height: 72px; gap: 24px; }
+.name { font-weight: 500; font-size: 15px; letter-spacing: -.01em; padding: 10px 0; }
+.links { display: flex; gap: 28px; font-size: 15px; }
+.links a { color: var(--muted); padding: 10px 0; transition: color .2s; }
+.links a:hover, .links a[aria-current="true"] { color: var(--text); }
+.menu-btn { display: none; min-height: 44px; padding: 0 4px; font-size: 15px; font-weight: 500; }
+
+/* "Tailored for…" bar, shown after the agent changes the page */
+.tailorbar { border-top: 1px solid var(--line); font-size: 14px; color: var(--muted); }
+.tailorbar[hidden] { display: none; }
+.tailorbar .wrap { display: flex; justify-content: space-between; align-items: center; gap: 12px; min-height: 44px; }
+.tb-msg { display: inline-flex; align-items: center; gap: 8px; }
+.tailorbar b { color: var(--text); font-weight: 500; }
+.undo { padding: 10px 0; font-weight: 500; color: var(--text); background: linear-gradient(currentColor, currentColor) 0 calc(100% - 9px) / 100% 1px no-repeat; }
+
+/* =========================================================================
+   HERO
+   ========================================================================= */
+.hero { padding: 136px 0 120px; }
+.kicker { color: var(--muted); font-size: 15px; }
+.hero h1 { margin-top: 24px; max-width: 17ch; font-size: clamp(2.3rem, 5.2vw, 3.75rem); line-height: 1.08; letter-spacing: -.035em; }
+.lede { margin-top: 28px; max-width: 52ch; font-size: 18px; line-height: 1.6; color: var(--muted); }
+
+.for-you { display: grid; gap: 4px; max-width: 600px; margin-top: 20px; padding: 12px 16px; border-radius: 12px; background: color-mix(in srgb, var(--accent) 7%, var(--bg)); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 22%, transparent); animation: appear .5s var(--ease); }
+.for-you[hidden] { display: none; }
+.fy-k { display: flex; align-items: center; gap: 6px; font: 500 12px/1.4 var(--mono); letter-spacing: .04em; text-transform: uppercase; color: var(--accent); }
+.fy-k .spark { width: 13px; height: 13px; }
+.fy-t { font-size: 15px; }
+@keyframes appear { from { opacity: 0; transform: translateY(4px); } }
+
+/* The hero's primary action is a prompt */
+.ask { display: flex; align-items: center; gap: 12px; max-width: 600px; margin-top: 40px; padding: 8px 8px 8px 16px; border-radius: 14px; background: var(--bg); box-shadow: 0 0 0 1px var(--line-strong), 0 1px 2px rgba(15,15,16,.04), 0 14px 36px -18px rgba(15,15,16,.14); transition: box-shadow .2s; }
+.ask:focus-within { box-shadow: 0 0 0 1.5px var(--accent), 0 14px 36px -18px rgba(15,15,16,.18); }
+.ask input { flex: 1; min-width: 0; min-height: 40px; border: 0; outline: 0; background: none; font: inherit; font-size: 16px; color: var(--text); }
+.ask input::placeholder, .composer input::placeholder { color: var(--muted); }
+.send { width: 40px; height: 40px; flex: none; border-radius: 10px; display: grid; place-items: center; background: var(--text); color: var(--bg); transition: background-color .2s, color .2s; }
+.send:hover { background: var(--accent); color: var(--on-accent); }
+.send svg { width: 16px; height: 16px; }
+.prompts { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; max-width: 640px; }
+.prompt { min-height: 36px; padding: 0 14px; border-radius: 999px; font-size: 14px; color: var(--muted); box-shadow: inset 0 0 0 1px var(--line); transition: color .2s, box-shadow .2s, background-color .2s; white-space: nowrap; }
+.prompt:hover { color: var(--text); box-shadow: inset 0 0 0 1px var(--line-strong); background: var(--surface); }
+.hero-foot { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 32px; margin-top: 40px; }
+.status { display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--muted); }
+.dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); flex: none; }
+
+/* =========================================================================
+   SECTIONS
+   ========================================================================= */
+.section { padding: 112px 0; border-top: 1px solid var(--line); }
+.sec-head { display: flex; justify-content: space-between; align-items: baseline; gap: 24px; margin-bottom: 48px; }
+.label { font: 500 12px/1.4 var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.sec-head h2 { font-size: clamp(1.6rem, 2.6vw, 2rem); letter-spacing: -.025em; line-height: 1.2; margin-top: 10px; }
+.spot { outline: 2px solid var(--accent) !important; outline-offset: 14px; border-radius: 12px; }
+
+/* Featured project */
+.feature { display: grid; gap: 32px; }
+.frame { display: block; position: relative; aspect-ratio: 16 / 8; border-radius: 14px; background: var(--surface); overflow: hidden; }
+.window { position: absolute; left: 9%; right: 9%; top: 14%; bottom: -2%; border-radius: 10px 10px 0 0; background: var(--bg); box-shadow: 0 0 0 1px var(--line), 0 24px 60px -30px rgba(15,15,16,.18); display: grid; grid-template-columns: 18% 1fr 22%; grid-template-rows: 32px 1fr; transition: transform .6s var(--ease); }
+.frame:hover .window { transform: translateY(-6px); }
+.w-top { grid-column: 1 / -1; display: flex; align-items: center; gap: 6px; padding: 0 14px; border-bottom: 1px solid var(--line); }
+.w-top i { width: 8px; height: 8px; border-radius: 50%; background: var(--line-strong); }
+.w-side, .w-props { padding: 16px 14px; display: grid; gap: 10px; align-content: start; }
+.w-side { border-right: 1px solid var(--line); }
+.w-props { border-left: 1px solid var(--line); }
+.w-side i, .w-props i { height: 7px; border-radius: 4px; background: var(--line); }
+.w-side i:nth-child(2) { background: var(--accent); width: 60%; opacity: .8; }
+.w-props i:nth-child(odd) { height: 24px; border-radius: 6px; background: transparent; box-shadow: inset 0 0 0 1px var(--line); }
+.w-canvas { padding: 22px; display: grid; gap: 14px; align-content: start; background-image: radial-gradient(var(--line) 1px, transparent 1px); background-size: 18px 18px; }
+.blk { border-radius: 8px; box-shadow: 0 0 0 1px var(--line); background: var(--bg); padding: 14px; display: grid; gap: 8px; }
+.blk i { height: 7px; border-radius: 4px; background: var(--line); }
+.blk .h { height: 10px; width: 40%; background: var(--line-strong); }
+.blk .f { height: 26px; border-radius: 6px; background: transparent; box-shadow: inset 0 0 0 1px var(--line); }
+.blk.sel { box-shadow: 0 0 0 1.5px var(--accent); }
+.blk .b { height: 26px; width: 32%; border-radius: 6px; background: var(--text); }
+
+.feature-body { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 48px; align-items: start; }
+.feature-body h3 { font-size: 24px; letter-spacing: -.02em; line-height: 1.25; margin-top: 8px; }
+.feature-body p.desc { color: var(--muted); margin-top: 12px; max-width: 46ch; }
+.feature-links { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 20px; margin-top: 12px; }
+.agent-chip { display: inline-flex; align-items: center; gap: 6px; min-height: 36px; padding: 0 12px; border-radius: 999px; font-size: 14px; color: var(--text); box-shadow: inset 0 0 0 1px var(--line-strong); transition: background-color .2s; }
+.agent-chip:hover { background: var(--surface); }
+.agent-chip .spark { width: 14px; height: 14px; }
+.tldr { margin-top: 16px; padding: 16px; border-radius: 12px; background: var(--surface); display: grid; gap: 10px; max-width: 520px; animation: appear .4s var(--ease); }
+.tldr[hidden] { display: none; }
+.tldr ul { padding-left: 18px; list-style: disc; display: grid; gap: 6px; font-size: 15px; }
+.tldr li::marker { color: var(--muted); }
+.figures { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+.figures div { border-top: 1px solid var(--text); padding-top: 14px; display: flex; flex-direction: column-reverse; justify-content: flex-end; }
+.figures dd { font-size: 28px; font-weight: 500; letter-spacing: -.03em; line-height: 1.1; }
+.figures dt { font-size: 13.5px; color: var(--muted); margin-top: 6px; line-height: 1.4; }
+
+/* Byline + "Currently / Previously" (hero) */
+.byline { display: flex; align-items: center; gap: 12px; }
+.avatar { width: 44px; height: 44px; border-radius: 50%; flex: none; display: grid; place-items: center; background: var(--surface); box-shadow: inset 0 0 0 1px var(--line-strong); font: 500 12px/1 var(--mono); color: var(--muted); }
+.avatar.sm { width: 40px; height: 40px; }
+.byline p b, .who b { display: block; font-weight: 500; font-size: 15px; line-height: 1.35; }
+.byline p span, .who span { display: block; font-size: 14px; color: var(--muted); line-height: 1.35; }
+.creds { display: flex; flex-wrap: wrap; gap: 16px 56px; margin-top: 32px; }
+.creds dt { font-size: 13px; color: var(--muted); }
+.creds dd { font-size: 15px; line-height: 1.5; max-width: 36ch; margin-top: 2px; }
+
+/* Status label: shipped years, or "In flight" with a dot */
+.meta { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; font-size: 13.5px; color: var(--muted); }
+.state { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
+.state .live { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
+
+/* Image-led project grid */
+.grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 56px 32px; margin-top: 80px; }
+.card-w { display: grid; gap: 14px; align-content: start; }
+.card-w .frame { aspect-ratio: 4 / 3; }
+.card-w h3 { font-size: 20px; letter-spacing: -.02em; line-height: 1.3; transition: color .2s; }
+.card-w:hover h3 { color: var(--accent); }
+.mets { display: flex; flex-wrap: wrap; gap: 4px 20px; font-size: 14.5px; color: var(--muted); }
+.mets b { color: var(--text); font-weight: 500; }
+.also { margin-top: 56px; padding-top: 20px; border-top: 1px solid var(--line); display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 24px; font-size: 15px; color: var(--muted); }
+.also a { color: var(--text); padding: 8px 0; text-decoration: underline; text-decoration-color: var(--line-strong); text-underline-offset: 4px; transition: color .2s; }
+.also a:hover { color: var(--accent); }
+.also small { font-size: 13px; color: var(--muted); }
+.also .text-link { margin-left: auto; text-decoration: none; }
+/* "Screen goes here" tag: visible with design notes on */
+.ph { position: absolute; z-index: 2; right: 10px; top: 10px; display: none; padding: 5px 7px; border-radius: 5px; background: var(--bg); box-shadow: inset 0 0 0 1px var(--line); font: 500 10.5px/1 var(--mono); letter-spacing: .05em; text-transform: uppercase; color: var(--muted); }
+.notes-on .ph { display: block; }
+
+/* Placeholder screens — one distinct sketch per project until real screenshots arrive */
+.mock { position: absolute; left: 10%; right: 10%; top: 12%; bottom: -2%; padding: 16px; display: grid; gap: 10px; align-content: start; background: var(--bg); border-radius: 10px 10px 0 0; box-shadow: 0 0 0 1px var(--line), 0 24px 60px -30px rgba(15,15,16,.18); transition: transform .6s var(--ease); }
+.frame:hover .mock, .card-w:hover .mock { transform: translateY(-6px); }
+.mock i { display: block; height: 7px; border-radius: 4px; background: var(--line); }
+.mock .mt { font: 500 10px/1 var(--mono); letter-spacing: .04em; color: var(--muted); }
+.agentic { grid-template-columns: minmax(0, 1fr) 34%; gap: 14px; padding: 14px; }
+.agentic .canvas { display: grid; gap: 6px; align-content: start; }
+.agentic .th, .agentic .tr { display: grid; grid-template-columns: 1.4fr 1fr 1fr .8fr; gap: 8px; padding: 8px; border-radius: 6px; }
+.agentic .th i { background: var(--line-strong); height: 6px; }
+.agentic .tr { box-shadow: inset 0 0 0 1px var(--line); }
+.agentic .tr.add { background: color-mix(in srgb, var(--accent) 6%, var(--bg)); box-shadow: inset 3px 0 0 var(--accent), inset 0 0 0 1px var(--line); }
+.agentic .tr.del i { opacity: .45; }
+.agentic .car { border-left: 1px solid var(--line); padding-left: 14px; display: grid; gap: 10px; align-content: start; }
+.agentic .prop { border-radius: 8px; box-shadow: inset 0 0 0 1px var(--line); padding: 10px; display: grid; gap: 7px; }
+.agentic .pk { font: 500 9.5px/1 var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--accent); }
+.agentic .diff { display: flex; gap: 6px; font: 500 10px/1 var(--mono); }
+.agentic .diff span { padding: 3px 5px; border-radius: 4px; background: var(--surface); color: var(--muted); }
+.agentic .evd { display: flex; gap: 4px; }
+.agentic .evd i { flex: 1; height: 14px; background: transparent; box-shadow: inset 0 0 0 1px var(--line); }
+.agentic .btns { display: flex; gap: 6px; }
+.agentic .btns i { flex: 1; height: 20px; border-radius: 5px; background: var(--surface); }
+.agentic .btns i.ok { background: var(--text); }
+.gantt { gap: 12px; }
+.gantt .row { display: grid; grid-template-columns: 26% 1fr; gap: 10px; align-items: center; }
+.gantt .bar { height: 12px; border-radius: 4px; background: var(--line-strong); margin-left: var(--s); width: var(--w); }
+.gantt .bar.acc { background: var(--accent); }
+.tl { grid-template-columns: 40px 1fr; gap: 10px 12px; align-items: center; }
+.tl .ev { height: 26px; border-radius: 6px; background: transparent; box-shadow: inset 0 0 0 1px var(--line); }
+.tl .ev.acc { box-shadow: inset 3px 0 0 var(--accent), inset 0 0 0 1px var(--line); }
+.tok { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 8px; }
+.tok .sw { height: auto; aspect-ratio: 1; border-radius: 6px; }
+.tok .ln { grid-column: 1 / -1; }
+
+/* Testimonial */
+.quote { padding: 112px 0; border-top: 1px solid var(--line); }
+.q { margin: 0; }
+.q blockquote { margin: 16px 0 0; max-width: 24ch; font-size: clamp(1.6rem, 3.4vw, 2.6rem); font-weight: 500; line-height: 1.2; letter-spacing: -.03em; text-wrap: balance; }
+.q figcaption { display: flex; align-items: center; gap: 12px; margin-top: 28px; }
+.q-nav { display: flex; align-items: center; gap: 12px; margin-top: 32px; }
+.q-nav button { width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; box-shadow: inset 0 0 0 1px var(--line-strong); transition: background-color .2s; }
+.q-nav button:hover { background: var(--surface); }
+.q-nav svg { width: 16px; height: 16px; }
+
+/* Process */
+.steps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 32px; }
+.step { border-top: 1px solid var(--line-strong); padding-top: 20px; }
+.step .label { color: var(--accent); }
+.step h3 { font-size: 18px; letter-spacing: -.015em; margin-top: 12px; }
+.step p { color: var(--muted); font-size: 15px; margin-top: 8px; line-height: 1.55; }
+.process-foot { margin-top: 48px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px 24px; color: var(--muted); }
+
+/* About */
+.about { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 64px; }
+.about-copy p:not(.label) { font-size: 18px; line-height: 1.65; color: var(--muted); }
+.about-copy p:not(.label) + p { margin-top: 18px; }
+.about-copy strong { color: var(--text); font-weight: 500; }
+.facts { border-top: 1px solid var(--line); }
+.facts div { display: grid; grid-template-columns: 140px minmax(0, 1fr); gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--line); font-size: 15px; transition: background-color .4s, box-shadow .4s, padding .4s; }
+.facts div.hl { background: color-mix(in srgb, var(--accent) 6%, transparent); box-shadow: inset 2px 0 0 var(--accent); padding-left: 14px; }
+.facts dt { color: var(--muted); }
+.facts dd a { box-shadow: inset 0 -1px 0 var(--line-strong); padding: 6px 0; transition: box-shadow .2s, color .2s; }
+.facts dd a:hover { color: var(--accent); box-shadow: inset 0 -1px 0 var(--accent); }
+
+/* Writing */
+.posts { border-top: 1px solid var(--line); }
+.posts li { border-bottom: 1px solid var(--line); }
+.posts a { display: grid; grid-template-columns: minmax(0, 1fr) 140px 90px; gap: 24px; align-items: baseline; padding: 20px 0; }
+.posts .t { font-weight: 500; font-size: 17px; letter-spacing: -.01em; transition: color .2s; }
+.posts a:hover .t { color: var(--accent); }
+.posts .c, .posts .dt { color: var(--muted); font-size: 14px; }
+.posts .dt { text-align: right; }
+
+/* Contact + footer */
+.contact { padding: 144px 0; border-top: 1px solid var(--line); }
+.contact h2 { font-size: clamp(2rem, 4.2vw, 3rem); letter-spacing: -.03em; line-height: 1.1; max-width: 18ch; margin-top: 16px; }
+.contact p.sub { margin-top: 20px; color: var(--muted); font-size: 18px; }
+.actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 28px; margin-top: 36px; }
+.footer { border-top: 1px solid var(--line); }
+.foot { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px 24px; padding: 20px var(--gutter); max-width: var(--wide); margin: 0 auto; font-size: 14px; color: var(--muted); }
+.foot:first-child { padding-bottom: 0; }
+.foot nav { display: flex; flex-wrap: wrap; gap: 0 24px; }
+.foot nav a { padding: 10px 0; transition: color .2s; }
+.foot nav a:hover { color: var(--text); }
+.agent-ready { font-size: 13.5px; }
+.agent-ready .dot { display: inline-block; margin-right: 8px; vertical-align: 1px; }
+.agent-ready a { color: var(--text); text-decoration: underline; text-decoration-color: var(--line-strong); text-underline-offset: 4px; padding: 4px 0; }
+.agent-ready a:hover { color: var(--accent); }
+
+.toast { position: fixed; left: 50%; top: 24px; z-index: 95; transform: translate(-50%, -8px); opacity: 0; padding: 10px 16px; border-radius: 8px; background: var(--text); color: var(--bg); font-size: 14px; transition: opacity .2s, transform .25s var(--ease); pointer-events: none; }
+.toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+/* =========================================================================
+   AGENT — panel, dock, tour bar
+   ========================================================================= */
+.agent { position: fixed; z-index: 85; top: 12px; right: 12px; bottom: 12px; width: min(440px, calc(100vw - 24px)); display: flex; flex-direction: column; background: var(--bg); border-radius: 16px; box-shadow: 0 0 0 1px var(--line-strong), 0 30px 80px -24px rgba(15,15,16,.25); transform: translateX(calc(100% + 24px)); opacity: 0; transition: transform .35s var(--ease), opacity .25s; }
+.agent.open { transform: none; opacity: 1; }
+.agent[hidden] { display: none; }
+.agent-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; padding: 16px 12px 14px 20px; border-bottom: 1px solid var(--line); }
+.agent-title { display: flex; align-items: center; gap: 8px; font-weight: 500; }
+.agent-sub { font-size: 13px; color: var(--muted); margin-top: 2px; }
+.x { width: 40px; height: 40px; border-radius: 8px; display: grid; place-items: center; color: var(--muted); flex: none; }
+.x:hover { background: var(--surface); color: var(--text); }
+.x svg { width: 16px; height: 16px; }
+.agent-log { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 20px; scrollbar-width: thin; }
+.u { align-self: flex-end; max-width: 85%; padding: 9px 14px; border-radius: 12px 12px 4px 12px; background: var(--surface); font-size: 15px; }
+.a { display: grid; gap: 12px; font-size: 15px; line-height: 1.6; }
+.a-text.muted { color: var(--muted); }
+.a-list { padding-left: 18px; list-style: disc; display: grid; gap: 6px; }
+.a-list li::marker { color: var(--muted); }
+.run { display: grid; gap: 6px; }
+.run-head { font-size: 13px; color: var(--muted); }
+.run-steps { display: grid; gap: 4px; }
+.run-steps li { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--muted); }
+.st { width: 14px; height: 14px; flex: none; border-radius: 50%; display: grid; place-items: center; }
+.run-steps li.active .st { border: 1.5px solid var(--line-strong); border-top-color: var(--text); animation: spin .8s linear infinite; }
+.run-steps li.done .st { background: var(--text); color: var(--bg); }
+.run-steps li.done .st svg { width: 9px; height: 9px; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.shimmer { background: linear-gradient(90deg, var(--muted) 35%, var(--text) 50%, var(--muted) 65%) 0 0 / 250% 100%; -webkit-background-clip: text; background-clip: text; color: transparent; animation: shimmer 1.8s linear infinite; }
+@keyframes shimmer { from { background-position: 100% 0; } to { background-position: -150% 0; } }
+.srcs { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.srcs-k { font-size: 12.5px; color: var(--muted); margin-right: 2px; }
+.srcs button { display: inline-flex; align-items: center; gap: 4px; min-height: 30px; padding: 0 10px; border-radius: 999px; font-size: 13px; color: var(--muted); box-shadow: inset 0 0 0 1px var(--line-strong); transition: color .2s; }
+.srcs button:hover { color: var(--text); }
+.srcs svg { width: 12px; height: 12px; }
+.opts { display: flex; flex-wrap: wrap; gap: 8px; }
+.opt { min-height: 36px; padding: 0 14px; border-radius: 999px; font-size: 14px; box-shadow: inset 0 0 0 1px var(--line-strong); transition: background-color .2s; }
+.opt:hover:not(:disabled) { background: var(--surface); }
+.opt:disabled { cursor: default; color: var(--muted); }
+.opt.picked { background: var(--text); color: var(--bg); box-shadow: none; }
+.card { display: grid; gap: 12px; padding: 16px; border-radius: 12px; background: var(--surface); }
+.card-k { font: 500 12px/1.4 var(--mono); letter-spacing: .04em; text-transform: uppercase; color: var(--muted); }
+.card-p { font-size: 14px; color: var(--muted); }
+.fld { display: grid; gap: 4px; font-size: 12.5px; color: var(--muted); }
+.fld input, .fld textarea { font: inherit; font-size: 14px; line-height: 1.5; color: var(--text); background: var(--bg); border: 0; border-radius: 8px; padding: 9px 11px; box-shadow: inset 0 0 0 1px var(--line-strong); resize: vertical; }
+.fld input:focus, .fld textarea:focus { outline: none; box-shadow: inset 0 0 0 1.5px var(--accent); }
+.fld input[readonly] { color: var(--muted); }
+.card-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.card-note { font-size: 12.5px; color: var(--muted); }
+.slots { display: grid; gap: 8px; }
+.slot { display: flex; justify-content: space-between; align-items: center; gap: 12px; min-height: 44px; padding: 0 14px; border-radius: 10px; background: var(--bg); box-shadow: inset 0 0 0 1px var(--line-strong); font-size: 14px; text-align: left; }
+.slot:hover:not(:disabled) { box-shadow: inset 0 0 0 1px var(--text); }
+.slot:disabled { cursor: default; }
+.slot span { color: var(--muted); font-size: 13px; }
+.slot[aria-pressed="true"] { box-shadow: inset 0 0 0 1.5px var(--accent); }
+.agent-foot { padding: 12px 16px 16px; border-top: 1px solid var(--line); display: grid; gap: 10px; }
+.suggest { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; padding: 2px; }
+.suggest::-webkit-scrollbar { display: none; }
+.suggest .prompt { flex: none; min-height: 32px; font-size: 13px; padding: 0 12px; }
+.composer { display: flex; align-items: center; gap: 8px; padding: 6px 6px 6px 14px; border-radius: 12px; box-shadow: inset 0 0 0 1px var(--line-strong); }
+.composer:focus-within { box-shadow: inset 0 0 0 1.5px var(--accent); }
+.composer input { flex: 1; min-width: 0; min-height: 36px; border: 0; outline: 0; background: none; font: inherit; font-size: 15px; color: var(--text); }
+.composer .send { width: 36px; height: 36px; border-radius: 9px; }
+
+.dock { position: fixed; left: 50%; bottom: 20px; z-index: 75; transform: translateX(-50%); display: inline-flex; align-items: center; gap: 10px; min-height: 44px; padding: 0 8px 0 16px; border-radius: 999px; background: var(--text); color: var(--bg); font-size: 14px; font-weight: 500; box-shadow: 0 12px 32px -12px rgba(15,15,16,.35); animation: dockIn .35s var(--ease); }
+.dock[hidden] { display: none; }
+.dock .spark { color: var(--bg); }
+.dock kbd { background: transparent; color: var(--bg); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--bg) 35%, transparent); }
+.dock:focus-visible { outline-offset: 4px; }
+@keyframes dockIn { from { opacity: 0; transform: translate(-50%, 10px); } }
+
+.tourbar { position: fixed; left: 50%; bottom: 20px; z-index: 76; transform: translateX(-50%); width: min(640px, calc(100vw - 24px)); display: flex; align-items: center; gap: 14px; padding: 10px 10px 10px 16px; border-radius: 14px; background: var(--text); color: var(--bg); box-shadow: 0 16px 40px -12px rgba(15,15,16,.4); animation: dockIn .35s var(--ease); }
+.tourbar[hidden] { display: none; }
+.tb-step { font: 500 12px/1 var(--mono); flex: none; }
+.tourbar p { flex: 1; font-size: 14px; line-height: 1.45; }
+.tb-actions { display: flex; gap: 6px; flex: none; }
+.tb-btn { min-height: 36px; padding: 0 12px; border-radius: 8px; font-size: 14px; color: var(--bg); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--bg) 35%, transparent); }
+.tb-btn:disabled { opacity: .45; cursor: default; }
+.tb-next { background: var(--bg); color: var(--text); box-shadow: none; font-weight: 500; }
+.tourbar :focus-visible { outline-color: var(--bg); }
+
+/* Mobile menu */
+.sheet { position: fixed; inset: 0; z-index: 80; background: var(--bg); padding: 16px var(--gutter); display: flex; flex-direction: column; }
+.sheet[hidden] { display: none; }
+.sheet-top { display: flex; justify-content: space-between; align-items: center; height: 56px; }
+.sheet nav { display: grid; margin-top: 32px; }
+.sheet nav a, .sheet nav button { font-size: 28px; font-weight: 500; letter-spacing: -.02em; padding: 12px 0; border-bottom: 1px solid var(--line); text-align: left; display: flex; align-items: center; gap: 10px; }
+
+/* Quiet entrance: opacity + 8px, once */
+.js .fade { opacity: 0; transform: translateY(8px); transition: opacity .9s var(--ease), transform .9s var(--ease); transition-delay: var(--d, 0ms); }
+.js .fade.in { opacity: 1; transform: none; }
+
+/* =========================================================================
+   RESPONSIVE
+   ========================================================================= */
+@media (max-width: 860px) {
+  .feature-body, .about { grid-template-columns: 1fr; gap: 32px; }
+  .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 40px; }
+  .grid { gap: 48px 24px; }
+  .agentic { grid-template-columns: minmax(0, 1fr); }
+  .agentic .car { display: none; }
+  .posts a { grid-template-columns: minmax(0, 1fr) 90px; }
+  .posts .c { display: none; }
+}
+@media (max-width: 680px) {
+  :root { --gutter: 20px; }
+  .links { display: none; }
+  .menu-btn { display: inline-flex; align-items: center; }
+  .hero { padding: 80px 0 88px; }
+  .lede { font-size: 17px; }
+  .ask kbd, .dock kbd { display: none; }
+  .section { padding: 80px 0; }
+  .sec-head { flex-direction: column; gap: 4px; margin-bottom: 36px; }
+  .frame { aspect-ratio: 4 / 3; }
+  .window { left: 6%; right: 6%; grid-template-columns: 1fr; }
+  .w-side, .w-props { display: none; }
+  .grid { grid-template-columns: 1fr; margin-top: 56px; }
+  .creds { gap: 12px; }
+  .also .text-link { margin-left: 0; }
+  .quote { padding: 80px 0; }
+  .figures { grid-template-columns: 1fr; gap: 16px; }
+  .figures div { flex-direction: row-reverse; justify-content: space-between; align-items: baseline; gap: 16px; }
+  .figures dd { font-size: 22px; }
+  .steps { grid-template-columns: 1fr; }
+  .facts div { grid-template-columns: 1fr; gap: 2px; }
+  .posts a { grid-template-columns: 1fr; gap: 2px; }
+  .posts .dt { text-align: left; }
+  .contact { padding: 96px 0; }
+  .concept { font-size: 12px; }
+  .agent { top: auto; left: 0; right: 0; bottom: 0; width: 100%; height: 88vh; height: 88dvh; border-radius: 16px 16px 0 0; transform: translateY(100%); }
+  .agent.open { transform: none; }
+  .tourbar { flex-wrap: wrap; bottom: 12px; }
+  .tourbar p { flex-basis: 100%; order: 2; }
+  .tb-actions { order: 3; margin-left: auto; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition-duration: .01ms !important; animation: none !important; }
+  .js .fade { opacity: 1; transform: none; }
+  .shimmer { color: var(--muted); background: none; }
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="progress" id="progress" aria-hidden="true"></div>
+
+<div class="concept" role="note">
+  <span><b>Concept B · Calm + agentic</b> — the agent's answers are scripted in this concept. Not live.</span>
+  <div class="concept-controls">
+    <div class="palettes" role="group" aria-label="Palette">
+      <span>Palette</span>
+      <button type="button" class="pal" data-p="ink" aria-pressed="true"><i style="background:#2F48C2"></i>Ink</button>
+      <button type="button" class="pal" data-p="sage" aria-pressed="false"><i style="background:#3D6B50"></i>Sage</button>
+      <button type="button" class="pal" data-p="mist" aria-pressed="false"><i style="background:#2F5E96"></i>Mist</button>
+    </div>
+    <button type="button" class="notes-btn" id="notesBtn" aria-pressed="false">Design notes</button>
+  </div>
+</div>
+
+<header class="header" id="header">
+  <div class="wrap nav">
+    <a class="name" href="#top">Vivekanand Choudhari</a>
+    <nav class="links" aria-label="Main">
+      <a href="#work">Work</a>
+      <a href="#process">Process</a>
+      <a href="#about">About</a>
+      <a href="#writing">Writing</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <button type="button" class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="sheet">Menu</button>
+  </div>
+  <div class="tailorbar" id="tailorbar" hidden>
+    <div class="wrap">
+      <span class="tb-msg"><svg class="spark" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3l1.8 5.6L19.5 10l-5.7 1.6L12 17l-1.8-5.4L4.5 10l5.7-1.4z"/></svg><span>Tailored for <b id="tbRole">you</b> · <span id="tbCount">0</span> changes highlighted</span></span>
+      <button type="button" class="undo" id="undoBtn">Undo</button>
+    </div>
+  </div>
+</header>
+
+<div class="sheet" id="sheet" hidden>
+  <div class="sheet-top"><span class="name">Vivekanand Choudhari</span><button type="button" class="menu-btn" style="display:inline-flex" id="closeBtn">Close</button></div>
+  <nav aria-label="Mobile">
+    <a href="#work">Work</a><a href="#process">Process</a><a href="#about">About</a><a href="#writing">Writing</a><a href="#contact">Contact</a>
+    <button type="button" data-open-agent><svg class="spark" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3l1.8 5.6L19.5 10l-5.7 1.6L12 17l-1.8-5.4L4.5 10l5.7-1.4z"/></svg>Ask the agent</button>
+  </nav>
+</div>
+
+<main id="main">
+  <!-- HERO -->
+  <section class="hero" id="top">
+    <div class="wrap">
+      <div class="byline fade">
+        <span class="avatar" role="img" aria-label="Photo of Vivekanand Choudhari (placeholder)">VC</span>
+        <p><b>Vivekanand Choudhari</b><span>Senior UI/UX &amp; AI Product Designer · Bengaluru</span></p>
+      </div>
+      <h1 class="fade" style="--d:80ms">Design languages that make complex products feel simple.</h1>
+      <p class="lede fade" style="--d:160ms">9+ years designing B2B SaaS and AI platforms used by over a million people.</p>
+      <dl class="creds fade" style="--d:200ms">
+        <div><dt>Currently</dt><dd>Agentic AdTech at Moving Walls, across a 7-product DOOH portfolio</dd></div>
+        <div><dt>Previously</dt><dd>ConstructivIQ, Slate Technologies, Quinnox, Microland and Knowledge Lens</dd></div>
+      </dl>
+      <div class="for-you" id="forYou" hidden><p class="fy-k"><svg class="spark" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3l1.8 5.6L19.5 10l-5.7 1.6L12 17l-1.8-5.4L4.5 10l5.7-1.4z"/></svg><span></span></p><p class="fy-t"></p></div>
+
+      <form class="ask fade" id="heroAsk" style="--d:240ms">
+        <svg class="spark" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3l1.8 5.6L19.5 10l-5.7 1.6L12 17l-1.8-5.4L4.5 10l5.7-1.4z"/></svg>
+        <label class="sr-only" for="heroInput">Ask the portfolio agent</label>
+        <input id="heroInput" autocomplete="off" placeholder="Ask my agent, or tell it what you need…">
+        <kbd aria-hidden="true">⌘K</kbd>
+        <button type="submit" class="send" aria-label="Send to agent"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
+      </form>
+      <div class="prompts fade" style="--d:300ms" aria-label="Suggested requests" role="group">
+        <button type="button" class="prompt" data-prompt="Give me a 2-minute tour">Give me a 2-minute tour</button>
+        <button type="button" class="prompt" data-prompt="Tailor this page for me">Tailor this page for me</button>
+        <button type="button" class="prompt" data-prompt="Is he a fit for a design-systems lead?">Fit for a design-systems lead?</button>
+      </div>
+      <div class="hero-foot fade" style="--d:360ms">
+        <p class="status"><span class="dot" aria-hidden="true"></span>Available for full-time roles and consulting</p>
+        <a class="text-link" href="#work">Or browse selected work <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6"/></svg></a>
+      </div>
+      <aside class="note" aria-label="Design note 1"><span class="note-n" aria-hidden="true">1</span><p><b>A person, real names, then a prompt.</b> A small photo and name (Sydney's site) and a "Currently / Previously" line (Rachel's) come before anything interactive, so visitors know who this is within a second. The prompt stays the main action. The agent cites its sources, and a quiet link remains for anyone who'd rather browse. Replace "VC" with your photo.</p></aside>
+    </div>
+  </section>
+
+  <!-- WORK -->
+  <section class="section" id="work" aria-labelledby="work-title">
+    <div class="wrap">
+      <div class="sec-head fade">
+        <div><p class="label">Selected work</p><h2 id="work-title">Products that made a measurable difference</h2></div>
+        <a class="text-link" href="#">All projects <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+
+      <article class="feature fade" aria-labelledby="feat-title">
+        <a class="frame" href="#" tabindex="-1" aria-hidden="true">
+          <span class="ph">Screen goes here</span>
+          <div class="mock agentic">
+            <div class="canvas">
+              <div class="th"><i></i><i></i><i></i><i></i></div>
+              <div class="tr"><i></i><i></i><i></i><i></i></div>
+              <div class="tr add"><i style="width:80%"></i><i></i><i style="width:60%"></i><i></i></div>
+              <div class="tr"><i style="width:70%"></i><i></i><i></i><i style="width:50%"></i></div>
+              <div class="tr add"><i></i><i style="width:70%"></i><i></i><i></i></div>
+              <div class="tr del"><i style="width:60%"></i><i></i><i style="width:80%"></i><i></i></div>
+              <div class="tr"><i style="width:85%"></i><i></i><i></i><i style="width:40%"></i></div>
+              <div class="tr"><i style="width:60%"></i><i></i><i style="width:75%"></i><i></i></div>
+              <div class="tr add"><i style="width:90%"></i><i></i><i></i><i style="width:55%"></i></div>
+              <div class="tr"><i></i><i style="width:65%"></i><i></i><i></i></div>
+              <div class="tr"><i style="width:75%"></i><i></i><i style="width:50%"></i><i style="width:70%"></i></div>
+            </div>
+            <div class="car">
+              <div class="prop"><span class="pk">Proposal</span><i></i><i style="width:70%"></i><div class="diff"><span>+3</span><span>−1</span></div><div class="evd"><i></i><i></i><i></i></div><div class="btns"><i class="ok"></i><i></i></div></div>
+              <div class="prop"><i style="width:40%"></i><i></i><i style="width:80%"></i></div>
+              <div class="prop"><i style="width:55%"></i><i></i></div>
+            </div>
+          </div>
+        </a>
+        <div class="feature-body">
+          <div>
+            <p class="meta"><span>AI / AdTech · NDA</span><span class="state"><span class="live" aria-hidden="true"></span>In flight · since 2025</span></p>
+            <h3 id="feat-title">Turned a 40-tab media-planning workflow into an agent planners trust</h3>
+            <p class="desc">The agentic UI for a programmatic out-of-home buying platform used in 30+ countries. The agent proposes plans as diffs, cites its evidence, and can't cross the guardrails planners set.</p>
+            <div class="feature-links">
+              <a class="text-link" href="#">Read the case study <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+              <button type="button" class="agent-chip" id="sumBtn" aria-expanded="false" aria-controls="tldr"><svg class="spark" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3l1.8 5.6L19.5 10l-5.7 1.6L12 17l-1.8-5.4L4.5 10l5.7-1.4z"/></svg>Summarize</button>
+            </div>
+            <div class="tldr" id="tldr" hidden aria-live="polite"></div>
+          </div>
+          <dl class="figures">
+            <div><dt>countries using the platform</dt><dd class="num">30+</dd></div>
+            <div><dt>silent commits in the pilot</dt><dd class="num">0</dd></div>
+            <div><dt>of agent use through the diff preview</dt><dd class="num">80%</dd></div>
+          </dl>
+        </div>
+      </article>
+
+      <div class="grid" id="grid">
+        <a class="card-w fade" href="#" data-id="nocode">
+          <div class="frame" aria-hidden="true"><span class="ph">Screen goes here</span>
+            <div class="window"><div class="w-top"><i></i><i></i><i></i></div><div class="w-side"><i></i><i></i><i></i><i></i><i></i></div><div class="w-canvas"><div class="blk"><i class="h"></i><i style="width:65%"></i></div><div class="blk sel"><i style="width:28%"></i><i class="f"></i></div><div class="blk"><i class="b"></i></div></div><div class="w-props"><i></i><i></i><i></i><i></i></div></div>
+          </div>
+          <p class="meta"><span>Platform design · NoCode / LowCode</span><span class="state">2018–22</span></p>
+          <h3>Cut engineering dependency 60% with a visual app builder</h3>
+          <p class="mets"><span><b>3×</b> faster go-to-market</span><span>NPS <b>32 → 71</b></span></p>
+        </a>
+        <a class="card-w fade" href="#" data-id="ehr" style="--d:80ms">
+          <div class="frame" aria-hidden="true"><span class="ph">Screen goes here</span>
+            <div class="mock tl"><span class="mt">07:00</span><i class="ev acc"></i><span class="mt">08:30</span><i class="ev"></i><span class="mt">09:30</span><i class="ev"></i><span class="mt">11:00</span><i class="ev acc"></i><span class="mt">12:30</span><i class="ev"></i><span class="mt">13:30</span><i class="ev"></i><span class="mt">15:00</span><i class="ev acc"></i><span class="mt">16:00</span><i class="ev"></i></div>
+          </div>
+          <p class="meta"><span>Healthcare · EHR</span><span class="state">2024–26</span></p>
+          <h3>Saved clinicians 2+ hours a shift in daycare surgery</h3>
+          <p class="mets"><span><b>7 → 2</b> clicks to patient data</span><span><b>588</b> procedures covered</span></p>
+        </a>
+        <a class="card-w fade" href="#" data-id="civ">
+          <div class="frame" aria-hidden="true"><span class="ph">Screen goes here</span>
+            <div class="mock gantt">
+              <div class="row"><i></i><span class="bar" style="--s:0%;--w:45%"></span></div>
+              <div class="row"><i style="width:80%"></i><span class="bar acc" style="--s:20%;--w:50%"></span></div>
+              <div class="row"><i></i><span class="bar" style="--s:35%;--w:30%"></span></div>
+              <div class="row"><i style="width:70%"></i><span class="bar" style="--s:50%;--w:40%"></span></div>
+              <div class="row"><i></i><span class="bar acc" style="--s:62%;--w:28%"></span></div>
+              <div class="row"><i style="width:60%"></i><span class="bar" style="--s:70%;--w:25%"></span></div>
+            </div>
+          </div>
+          <p class="meta"><span>ConstructivIQ · Construction cloud</span><span class="state">2023–24</span></p>
+          <h3>Took a construction cloud from zero to $1.2M ARR</h3>
+          <p class="mets"><span><b>15+</b> enterprise contracts</span><span>Onboarding <b>12 → 7 weeks</b></span></p>
+        </a>
+        <a class="card-w fade" href="#" data-id="ds" style="--d:80ms">
+          <div class="frame" aria-hidden="true"><span class="ph">Screen goes here</span>
+            <div class="mock tok">
+              <i class="sw" style="background:var(--text)"></i><i class="sw" style="background:color-mix(in srgb, var(--text) 65%, var(--bg))"></i><i class="sw" style="background:color-mix(in srgb, var(--text) 35%, var(--bg))"></i><i class="sw" style="background:var(--line-strong)"></i><i class="sw" style="background:var(--line)"></i><i class="sw" style="background:var(--surface)"></i>
+              <i class="sw" style="background:var(--accent)"></i><i class="sw" style="background:color-mix(in srgb, var(--accent) 70%, var(--bg))"></i><i class="sw" style="background:color-mix(in srgb, var(--accent) 45%, var(--bg))"></i><i class="sw" style="background:color-mix(in srgb, var(--accent) 25%, var(--bg))"></i><i class="sw" style="background:color-mix(in srgb, var(--accent) 12%, var(--bg))"></i><i class="sw" style="background:color-mix(in srgb, var(--accent) 6%, var(--bg))"></i>
+              <i class="ln" style="height:14px;width:60%;background:var(--line-strong)"></i><i class="ln" style="height:10px;width:45%"></i><i class="ln" style="width:75%"></i><i class="ln" style="width:65%"></i>
+            </div>
+          </div>
+          <p class="meta"><span>Design systems · 6 product types</span><span class="state">2023–25</span></p>
+          <h3>One design-system spine for six products</h3>
+          <p class="mets"><span><b>99%</b> WCAG AA</span><span>Handoff time <b>−50%</b></span></p>
+        </a>
+      </div>
+
+      <p class="also fade">
+        <span>Also</span>
+        <a href="#">IIoT Smart Factory</a>
+        <a href="#">OTT Streaming</a>
+        <a href="#">Big Data Analytics</a>
+        <a href="#">EV Bike OEM</a> <small>in flight · NDA</small>
+        <a href="#">MW PosterOps</a> <small>in flight · NDA</small>
+      </p>
+      <aside class="note" aria-label="Design note 2"><span class="note-n" aria-hidden="true">2</span><p><b>Image-led cards that lead with the result.</b> Every card has a status label (years, or "In flight" with a dot, like Rachel's site), a title that states the outcome (Sydney's and Nicole's sites) and two numbers. The flagship is now your live agentic project, which matches your positioning. The sketches are stand-ins, and each frame is marked where a real screenshot goes. "Summarize" still writes a brief in place.</p></aside>
+    </div>
+  </section>
+
+  <!-- TESTIMONIAL -->
+  <section class="quote" aria-labelledby="quote-title">
+    <div class="wrap">
+      <h2 class="label" id="quote-title">What colleagues say</h2>
+      <figure class="q fade" id="quoteFig" aria-live="polite">
+        <blockquote id="qText">“Brings engineering discipline to design work.”</blockquote>
+        <figcaption><span class="avatar sm" aria-hidden="true"></span><span class="who"><b id="qWho">[Name]</b><span id="qRole">CTO, [Company]</span></span></figcaption>
+      </figure>
+      <div class="q-nav">
+        <button type="button" id="qPrev" aria-label="Previous quote"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg></button>
+        <span class="label num" id="qPos">1 / 3</span>
+        <button type="button" id="qNext" aria-label="Next quote"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+      </div>
+      <aside class="note" aria-label="Design note 3"><span class="note-n" aria-hidden="true">3</span><p><b>One quote at a time, in large type, with a real name.</b> Jessica's and Nicole's sites both lean on named people. These are your current footer quotes. Add each person's name, company and photo with their permission. The quotes only change when the visitor clicks, never on their own.</p></aside>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section class="section" id="process" aria-labelledby="process-title">
+    <div class="wrap">
+      <div class="sec-head fade">
+        <div><p class="label">Process</p><h2 id="process-title">Design run like an engineering discipline</h2></div>
+      </div>
+      <div class="steps">
+        <div class="step fade"><p class="label">01</p><h3>Understand</h3><p>Check the problem is real, write the brief with its kill criteria, then research.</p></div>
+        <div class="step fade" style="--d:60ms"><p class="label">02</p><h3>Decide</h3><p>Map findings to psychology principles, then choose the right paradigm: agentic, hybrid, traditional or zero-UI.</p></div>
+        <div class="step fade" style="--d:120ms"><p class="label">03</p><h3>Design</h3><p>Flows that include failure paths, and interfaces built on the token system.</p></div>
+        <div class="step fade" style="--d:180ms"><p class="label">04</p><h3>Ship</h3><p>Launch against metrics that can't be gamed, and stop when the numbers say so.</p></div>
+      </div>
+      <div class="process-foot fade">
+        <p>Every stage has a gate. Nothing moves forward on instinct alone.</p>
+        <a class="text-link" href="#">See the full method <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+      <aside class="note" aria-label="Design note 4"><span class="note-n" aria-hidden="true">4</span><p><b>The agent can walk visitors through the page.</b> Ask for a tour and it plans a route and waits for a go-ahead. Then it scrolls to each stop, highlights it and explains it in a small control bar. Visitors can step back or leave at any time.</p></aside>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="section" id="about" aria-labelledby="about-title">
+    <div class="wrap about">
+      <div class="about-copy fade">
+        <p class="label">About</p>
+        <h2 id="about-title" class="sr-only">About</h2>
+        <p style="margin-top:20px">I work where <strong>design and engineering</strong> meet. I design the system, write the React that makes it real, and measure whether it worked.</p>
+        <p>My work spans AdTech, Construction Cloud, Healthcare, AIOps, IIoT and Big Data, for products used by over a million people.</p>
+        <a class="text-link" href="#" style="margin-top:12px">More about me <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+      <dl class="facts fade" style="--d:80ms" id="facts">
+        <div><dt>Experience</dt><dd>9+ years, B2B SaaS and AI</dd></div>
+        <div><dt>Currently</dt><dd>Design lead, 7-product DOOH portfolio</dd></div>
+        <div><dt>Focus</dt><dd>Design systems, AI products, complex data</dd></div>
+        <div><dt>Builds with</dt><dd>Figma, React, TypeScript, Next.js</dd></div>
+        <div><dt>Research</dt><dd><a href="#">Forma</a>, <a href="#">Lokul.club</a>, <a href="#">Craft studies</a></dd></div>
+        <div><dt>Based in</dt><dd>Bengaluru, India (IST)</dd></div>
+      </dl>
+    </div>
+    <div class="wrap"><aside class="note" aria-label="Design note 5"><span class="note-n" aria-hidden="true">5</span><p><b>The agent can tailor the page itself.</b> Tell it who you are and it reorders the projects, adds a short note under the intro, highlights the relevant facts and rewords the contact button. Every change stays visible, and one "Undo" in the header restores the page.</p></aside></div>
+  </section>
+
+  <!-- WRITING -->
+  <section class="section" id="writing" aria-labelledby="writing-title">
+    <div class="wrap">
+      <div class="sec-head fade">
+        <div><p class="label">Writing</p><h2 id="writing-title">Notes from the work</h2></div>
+        <a class="text-link" href="#">All posts <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+      <ul class="posts fade">
+        <li><a href="#" id="post-tokens"><span class="t">The Psychology Behind My Design Tokens: 8 Decisions, Explained</span><span class="c">Design systems</span><span class="dt num">Jul 2026</span></a></li>
+        <li><a href="#"><span class="t">Design Thinking in AdTech: How OOH is Going Digital</span><span class="c">Industry</span><span class="dt num">Mar 2026</span></a></li>
+        <li><a href="#" id="post-ai"><span class="t">How I Use 20+ AI Tools to 10x My Design Output</span><span class="c">AI and design</span><span class="dt num">Jan 2026</span></a></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact" id="contact" aria-labelledby="contact-title">
+    <div class="wrap">
+      <p class="label fade">Contact</p>
+      <h2 id="contact-title" class="fade" style="--d:60ms">Have a complex product that should feel simple?</h2>
+      <p class="sub fade" style="--d:120ms">I reply within 24 hours. <span id="tz"></span></p>
+      <div class="actions fade" style="--d:180ms">
+        <a class="btn" href="mailto:vivekanand.design@gmail.com" id="contactCta">Email me</a>
+        <button type="button" class="btn btn-quiet" id="copyBtn">Copy email address</button>
+        <button type="button" class="agent-chip" data-prompt="Find a time to talk"><svg class="spark" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3l1.8 5.6L19.5 10l-5.7 1.6L12 17l-1.8-5.4L4.5 10l5.7-1.4z"/></svg>Find a time with the agent</button>
+      </div>
+      <aside class="note" aria-label="Design note 6"><span class="note-n" aria-hidden="true">6</span><p><b>Anything that leaves the page needs approval.</b> The agent drafts the email and you edit it. It opens in your own mail app only when you approve. Meeting slots appear in your time zone, and the local time in both cities is shown above.</p></aside>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="foot">
+    <p class="agent-ready"><span class="dot" aria-hidden="true"></span>Agent-ready: this site publishes <a href="#">llms.txt</a> and an <a href="#">MCP endpoint</a>, so your own AI assistant can ask it questions directly.</p>
+  </div>
+  <div class="foot">
+    <span>© 2026 Vivekanand Choudhari</span>
+    <nav aria-label="Elsewhere">
+      <a href="#">LinkedIn</a><a href="#">Dribbble</a><a href="#">GitHub</a><a href="#">Résumé (PDF)</a>
+    </nav>
+  </div>
+  <div class="wrap"><aside class="note" aria-label="Design note 7" style="margin-bottom:24px"><span class="note-n" aria-hidden="true">7</span><p><b>Built for visitors' own agents too.</b> llms.txt and an MCP endpoint let tools like Claude or ChatGPT read the portfolio directly. The only other additions are a 2px reading-progress line and a floating "Ask" button that appears after the hero. The calm layout is unchanged.</p></aside></div>
+</footer>
+
+<!-- Floating entry point, shown once the hero prompt scrolls away -->
+<button type="button" class="dock" id="dock" data-open-agent hidden><svg class="spark" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3l1.8 5.6L19.5 10l-5.7 1.6L12 17l-1.8-5.4L4.5 10l5.7-1.4z"/></svg>Ask the agent<kbd aria-hidden="true">⌘K</kbd></button>
+
+<!-- Guided tour control bar -->
+<div class="tourbar" id="tourbar" role="region" aria-label="Guided tour" hidden>
+  <span class="tb-step" id="tbStep">1 / 4</span>
+  <p id="tbText" aria-live="polite"></p>
+  <div class="tb-actions">
+    <button type="button" class="tb-btn" id="tbPrev">Back</button>
+    <button type="button" class="tb-btn tb-next" id="tbNext">Next</button>
+    <button type="button" class="tb-btn" id="tbEnd">End</button>
+  </div>
+</div>
+
+<!-- Agent panel -->
+<aside class="agent" id="agent" role="dialog" aria-modal="false" aria-labelledby="agentTitle" hidden>
+  <div class="agent-head">
+    <div>
+      <p class="agent-title" id="agentTitle"><svg class="spark" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3l1.8 5.6L19.5 10l-5.7 1.6L12 17l-1.8-5.4L4.5 10l5.7-1.4z"/></svg>Portfolio agent</p>
+      <p class="agent-sub">Answers only from this site, with sources</p>
+    </div>
+    <button type="button" class="x" id="agentClose" aria-label="Close agent"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  </div>
+  <div class="agent-log" id="agentLog" aria-live="polite"></div>
+  <div class="agent-foot">
+    <div class="suggest" role="group" aria-label="Suggested requests">
+      <button type="button" class="prompt" data-prompt="Give me a 2-minute tour">2-minute tour</button>
+      <button type="button" class="prompt" data-prompt="Tailor this page for me">Tailor this page</button>
+      <button type="button" class="prompt" data-prompt="What has he shipped?">What has he shipped?</button>
+      <button type="button" class="prompt" data-prompt="Find a time to talk">Find a time</button>
+      <button type="button" class="prompt" data-prompt="How does he use AI?">How he uses AI</button>
+    </div>
+    <form class="composer" id="agentForm">
+      <label class="sr-only" for="agentInput">Message the agent</label>
+      <input id="agentInput" autocomplete="off" placeholder="Ask, or tell it what to do…">
+      <button type="submit" class="send" aria-label="Send"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
+    </form>
+  </div>
+</aside>
+
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+(function () {
+  const root = document.documentElement;
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const $ = (s, el = document) => el.querySelector(s);
+  const $$ = (s, el = document) => [...el.querySelectorAll(s)];
+  const save = (k, v) => { try { localStorage.setItem(k, v); } catch (e) {} };
+  const wait = (ms) => new Promise(r => setTimeout(r, reduce ? 0 : ms));
+  const EMAIL = "vivekanand.design@gmail.com";
+  const SPARK = '<svg class="spark" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3l1.8 5.6L19.5 10l-5.7 1.6L12 17l-1.8-5.4L4.5 10l5.7-1.4z"/></svg>';
+  const CHECK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+  const GO = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg>';
+  function el(tag, cls, text) { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+
+  /* ---------- concept chrome ---------- */
+  const pals = $$(".pal");
+  const paintPal = () => pals.forEach(b => b.setAttribute("aria-pressed", String(b.dataset.p === root.dataset.palette)));
+  pals.forEach(b => b.addEventListener("click", () => { root.dataset.palette = b.dataset.p; save("calm-palette", b.dataset.p); paintPal(); }));
+  paintPal();
+  const notesBtn = $("#notesBtn");
+  notesBtn.addEventListener("click", () => notesBtn.setAttribute("aria-pressed", String(document.body.classList.toggle("notes-on"))));
+
+  /* ---------- toast ---------- */
+  const toastEl = $("#toast"); let toastT;
+  function toast(msg) { toastEl.textContent = msg; toastEl.classList.add("show"); clearTimeout(toastT); toastT = setTimeout(() => toastEl.classList.remove("show"), 1800); }
+
+  /* ---------- header, progress, entrance, nav spy ---------- */
+  const header = $("#header"), progress = $("#progress");
+  const scrollSupported = window.CSS && CSS.supports("animation-timeline: scroll()");
+  function onScroll() {
+    header.classList.toggle("scrolled", scrollY > 8);
+    if (!scrollSupported) { const max = document.documentElement.scrollHeight - innerHeight; progress.style.setProperty("--p", max > 0 ? scrollY / max : 0); }
+  }
+  addEventListener("scroll", onScroll, { passive: true }); onScroll();
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }), { rootMargin: "0px 0px -6% 0px" });
+  $$(".fade").forEach(x => io.observe(x));
+  const navLinks = $$(".links a");
+  const spy = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) navLinks.forEach(a => a.setAttribute("aria-current", String(a.getAttribute("href") === "#" + e.target.id))); }), { rootMargin: "-45% 0px -50% 0px" });
+  ["top", "work", "process", "about", "writing", "contact"].forEach(id => spy.observe(document.getElementById(id)));
+
+  /* ---------- clocks: Bengaluru + visitor ---------- */
+  const tzEl = $("#tz");
+  const visitorTz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+  function paintTz() {
+    const now = new Date();
+    const ist = new Intl.DateTimeFormat("en-GB", { hour: "2-digit", minute: "2-digit", timeZone: "Asia/Kolkata" }).format(now);
+    const mine = new Intl.DateTimeFormat("en-GB", { hour: "2-digit", minute: "2-digit" }).format(now);
+    tzEl.textContent = visitorTz === "Asia/Kolkata" || visitorTz === "Asia/Calcutta" ? `It's ${ist} in Bengaluru.` : `It's ${ist} in Bengaluru, ${mine} where you are.`;
+  }
+  paintTz(); setInterval(paintTz, 30000);
+
+  /* ---------- mobile menu ---------- */
+  const sheet = $("#sheet"), menuBtn = $("#menuBtn"), closeBtn = $("#closeBtn");
+  const openSheet = () => { sheet.hidden = false; menuBtn.setAttribute("aria-expanded", "true"); closeBtn.focus(); document.body.style.overflow = "hidden"; };
+  const closeSheet = (focusBack = true) => { sheet.hidden = true; menuBtn.setAttribute("aria-expanded", "false"); document.body.style.overflow = ""; if (focusBack) menuBtn.focus(); };
+  menuBtn.addEventListener("click", openSheet);
+  closeBtn.addEventListener("click", () => closeSheet());
+  $$("#sheet nav a, #sheet nav button").forEach(a => a.addEventListener("click", () => closeSheet(false)));
+
+  /* ---------- copy email ---------- */
+  $("#copyBtn").addEventListener("click", async () => {
+    try { await navigator.clipboard.writeText(EMAIL); toast("Email copied"); } catch (e) { toast(EMAIL); }
+  });
+
+  /* =====================================================================
+     AGENT
+     ===================================================================== */
+  const agent = $("#agent"), log = $("#agentLog"), aInput = $("#agentInput"), dock = $("#dock");
+  let lastFocus = null, busy = false, tourOn = false, heroOut = false, greeted = false;
+
+  // The dock shows between the hero prompt and the footer, never over either.
+  let footerIn = false;
+  function updateDock() { dock.hidden = !(heroOut && !footerIn && agent.hidden && !tourOn); }
+  new IntersectionObserver(([e]) => { heroOut = !e.isIntersecting; updateDock(); }).observe($("#heroAsk"));
+  new IntersectionObserver(([e]) => { footerIn = e.isIntersecting; updateDock(); }).observe($(".footer"));
+
+  function openAgent() {
+    if (!agent.hidden) { aInput.focus(); return; }
+    lastFocus = document.activeElement;
+    agent.hidden = false; void agent.offsetWidth; agent.classList.add("open");
+    updateDock();
+    if (!greeted) { greeted = true; const g = el("div", "a"); g.appendChild(el("p", "a-text", "Hi. I'm Vivekanand's portfolio agent. I answer only from what's on this site and show my sources. I can also do things for you: give you a tour, tailor this page to you, or draft an email for you to approve.")); log.appendChild(g); }
+    setTimeout(() => aInput.focus({ preventScroll: true }), reduce ? 0 : 120);
+  }
+  function closeAgent(restore = true) {
+    if (agent.hidden) return;
+    agent.classList.remove("open");
+    setTimeout(() => { agent.hidden = true; updateDock(); }, reduce ? 0 : 300);
+    if (restore && lastFocus && document.contains(lastFocus) && !agent.contains(lastFocus)) lastFocus.focus({ preventScroll: true });
+  }
+  $("#agentClose").addEventListener("click", () => closeAgent());
+  $$("[data-open-agent]").forEach(b => b.addEventListener("click", openAgent));
+
+  const scrollLog = () => { log.scrollTop = log.scrollHeight; };
+  function userMsg(text) { log.appendChild(el("div", "u", text)); scrollLog(); }
+  async function stream(node, text) {
+    if (reduce) { node.textContent = text; return; }
+    for (let i = 0; i < text.length;) { i = Math.min(text.length, i + 3); node.textContent = text.slice(0, i); scrollLog(); await new Promise(r => setTimeout(r, 14)); }
+  }
+  async function runSteps(container, steps) {
+    const box = el("div", "run"), head = el("p", "run-head"), ol = el("ol", "run-steps");
+    head.innerHTML = '<span class="shimmer">Working</span>';
+    box.append(head, ol); container.appendChild(box);
+    for (const s of steps) {
+      const li = el("li", "active"); li.innerHTML = '<span class="st" aria-hidden="true"></span>'; li.append(s);
+      ol.appendChild(li); scrollLog(); await wait(480);
+      li.className = "done"; li.querySelector(".st").innerHTML = CHECK;
+    }
+    head.textContent = `Done in ${steps.length} step${steps.length > 1 ? "s" : ""}`;
+  }
+  function flash(sel) {
+    const t = $(sel); if (!t) return;
+    t.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "center" });
+    (t.closest(".fade") || t).classList.add("in");
+    t.classList.add("spot"); setTimeout(() => t.classList.remove("spot"), 1800);
+  }
+  function sources(list) {
+    const d = el("div", "srcs"); d.appendChild(el("span", "srcs-k", "Sources"));
+    list.forEach(([label, sel]) => {
+      const b = el("button"); b.type = "button"; b.innerHTML = GO; b.prepend(label + " ");
+      b.addEventListener("click", () => { if (innerWidth < 760) closeAgent(false); flash(sel); });
+      d.appendChild(b);
+    });
+    return d;
+  }
+  function options(opts) {
+    const d = el("div", "opts");
+    opts.forEach(o => {
+      const b = el("button", "opt", o.label); b.type = "button";
+      b.addEventListener("click", () => { if (busy) return; $$("button", d).forEach(x => { x.disabled = true; x.classList.toggle("picked", x === b); }); o.run(); });
+      d.appendChild(b);
+    });
+    return d;
+  }
+  async function agentTurn(o) {
+    const turn = el("div", "a"); log.appendChild(turn); log.setAttribute("aria-busy", "true");
+    if (o.steps) await runSteps(turn, o.steps);
+    if (o.act) o.act();
+    if (o.text) { const p = el("p", "a-text"); turn.appendChild(p); await stream(p, o.text); }
+    if (o.list) { const ul = el("ul", "a-list"); o.list.forEach(t => ul.appendChild(el("li", null, t))); turn.appendChild(ul); }
+    if (o.after) turn.appendChild(el("p", "a-text muted", o.after));
+    if (o.sources) turn.appendChild(sources(o.sources));
+    if (o.card) turn.appendChild(o.card());
+    if (o.options) turn.appendChild(options(o.options));
+    log.setAttribute("aria-busy", "false"); scrollLog();
+  }
+  async function flow(fn) { if (busy) return; busy = true; try { await fn(); } finally { busy = false; } }
+  const say = (text, fn) => flow(async () => { userMsg(text); await fn(); });
+
+  /* ---------- tailoring: the agent changes the page ---------- */
+  const DEFAULT_ORDER = ["nocode", "ehr", "civ", "ds"];
+  const ROLES = {
+    recruiter: { who: "I'm a recruiter", label: "recruiters", order: ["ehr", "civ", "ds", "nocode"], facts: ["Experience", "Currently", "Based in"], cta: "Share a role",
+      note: "Open to Senior and Lead design roles, full-time, in Bengaluru or remote. Replies within 24 hours.",
+      changes: ["Added a hiring snapshot under the intro", "Highlighted experience, current role and location", "Sorted the project cards newest first", "Changed the contact button to “Share a role”"] },
+    hiring: { who: "I'm a hiring manager", label: "hiring managers", order: ["ds", "civ", "nocode", "ehr"], facts: ["Focus", "Builds with"], cta: "Discuss the role",
+      note: "Designs the system, writes the production React and measures the outcome. Has led teams of up to four designers.",
+      changes: ["Added a note on how he works with engineering", "Moved the design-systems work to the top", "Highlighted focus and tools", "Changed the contact button to “Discuss the role”"] },
+    founder: { who: "I'm a founder", label: "founders", order: ["civ", "nocode", "ehr", "ds"], facts: ["Builds with", "Currently"], cta: "Discuss a project",
+      note: "Takes products from first research to shipped code. ConstructivIQ went from zero to $1.2M ARR on his designs.",
+      changes: ["Added a note on zero-to-revenue work", "Moved the zero-to-$1.2M ARR build to the top", "Highlighted tools and current role", "Changed the contact button to “Discuss a project”"] },
+    designer: { who: "I'm a designer", label: "designers", order: ["ds", "ehr", "nocode", "civ"], facts: ["Research", "Focus"], cta: "Say hello",
+      note: "Start with the token-psychology post, then the process page. Both explain the why, not just the what.",
+      changes: ["Added a reading path: token post, then process", "Moved design systems and healthcare UX up", "Highlighted research and focus", "Changed the contact button to “Say hello”"] },
+  };
+  let role = null;
+  // FLIP: measure, reorder, then animate each card from its old spot to its new one.
+  function reorder(ids) {
+    const grid = $("#grid"), items = [...grid.children];
+    const before = new Map(items.map(c => [c, c.getBoundingClientRect()]));
+    ids.forEach(id => grid.appendChild(grid.querySelector(`[data-id="${id}"]`)));
+    if (reduce) return;
+    items.forEach(c => {
+      const a = before.get(c), b = c.getBoundingClientRect(), dx = a.left - b.left, dy = a.top - b.top;
+      if (dx || dy) c.animate([{ transform: `translate(${dx}px, ${dy}px)` }, { transform: "none" }], { duration: 600, easing: "cubic-bezier(.22,.61,.36,1)" });
+    });
+  }
+  function applyRole(k) {
+    const r = ROLES[k]; role = k;
+    const fy = $("#forYou"); $(".fy-k span", fy).textContent = "For " + r.label; $(".fy-t", fy).textContent = r.note; fy.hidden = false;
+    $$("#facts > div").forEach(d => d.classList.toggle("hl", r.facts.includes($("dt", d).textContent)));
+    reorder(r.order);
+    $("#contactCta").textContent = r.cta;
+    $("#tbRole").textContent = r.label; $("#tbCount").textContent = r.changes.length; $("#tailorbar").hidden = false;
+  }
+  function clearRole() {
+    if (!role) return; role = null;
+    $("#forYou").hidden = true; $$("#facts > div").forEach(d => d.classList.remove("hl"));
+    reorder(DEFAULT_ORDER); $("#contactCta").textContent = "Email me"; $("#tailorbar").hidden = true;
+    toast("Page restored");
+  }
+  $("#undoBtn").addEventListener("click", clearRole);
+  async function tailorAsk() {
+    await agentTurn({ steps: ["Reading the page layout"], text: "Who should I tailor it for? I'll reorder and highlight what matters to you, and you can undo it in one click.",
+      options: Object.keys(ROLES).map(k => ({ label: ROLES[k].who, run: () => say(ROLES[k].who, () => tailor(k)) })) });
+  }
+  async function tailor(k) {
+    const r = ROLES[k];
+    await agentTurn({ steps: [`Re-ranking projects for ${r.label}`, "Writing a short note for the intro", "Highlighting the relevant facts"], act: () => applyRole(k),
+      text: `Done. I made ${r.changes.length} changes for ${r.label}, all highlighted on the page:`, list: r.changes,
+      card: () => { const c = el("div", "card"); c.appendChild(el("p", "card-p", "Not quite right? You can undo everything here or from the bar under the header.")); const a = el("div", "card-actions"); const b = el("button", "btn btn-quiet sm", "Undo changes"); b.type = "button"; b.addEventListener("click", clearRole); a.appendChild(b); c.appendChild(a); return c; } });
+  }
+
+  /* ---------- guided tour ---------- */
+  const STOPS = [
+    ["#top h1", "Start here: the one-line thesis. Everything below backs it up."],
+    ["#work .feature", "The flagship: an agentic layer for media planners in 30+ countries. Zero silent commits in the pilot."],
+    ["#process .steps", "How he works: four phases, each with a gate before moving on."],
+    ["#contact h2", "If it's a fit, email him or copy the address. He replies within 24 hours."],
+  ];
+  let stop = 0;
+  function showStop() {
+    $$(".spot").forEach(e => e.classList.remove("spot"));
+    const [sel, txt] = STOPS[stop], t = $(sel);
+    (t.closest(".fade") || t).classList.add("in"); $$(".fade", t).forEach(f => f.classList.add("in"));
+    // Tall stops align to the top so the tour bar doesn't hide their lower half.
+    t.classList.add("spot"); t.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: t.offsetHeight > innerHeight * .55 ? "start" : "center" });
+    $("#tbStep").textContent = `${stop + 1} / ${STOPS.length}`; $("#tbText").textContent = txt;
+    $("#tbPrev").disabled = stop === 0; $("#tbNext").textContent = stop === STOPS.length - 1 ? "Finish" : "Next";
+  }
+  function startTour() { closeAgent(false); tourOn = true; stop = 0; $("#tourbar").hidden = false; updateDock(); showStop(); $("#tbNext").focus({ preventScroll: true }); }
+  function endTour() { if (!tourOn) return; tourOn = false; $$(".spot").forEach(e => e.classList.remove("spot")); $("#tourbar").hidden = true; updateDock(); toast("Tour finished"); }
+  $("#tbNext").addEventListener("click", () => { if (stop < STOPS.length - 1) { stop++; showStop(); } else endTour(); });
+  $("#tbPrev").addEventListener("click", () => { if (stop > 0) { stop--; showStop(); } });
+  $("#tbEnd").addEventListener("click", endTour);
+  async function tour() {
+    await agentTurn({ steps: ["Reading the page structure", "Picking the strongest proof points", "Planning a 4-stop route"],
+      text: "Here's a 4-stop route that takes about two minutes:", list: ["The thesis", "The flagship case study", "How he works", "How to reach him"],
+      card: () => { const c = el("div", "card"); c.appendChild(el("p", "card-k", "Ready when you are")); c.appendChild(el("p", "card-p", "I'll scroll the page and highlight each stop. You can step back or leave at any time.")); const a = el("div", "card-actions"); const b = el("button", "btn sm", "Start tour"); b.type = "button"; b.addEventListener("click", startTour); a.appendChild(b); c.appendChild(a); return c; } });
+  }
+
+  /* ---------- email draft (human approves) ---------- */
+  function emailCard(subject, body) {
+    const c = el("div", "card");
+    c.innerHTML = `<p class="card-k">Draft · needs your approval</p>
+      <label class="fld"><span>To</span><input value="${EMAIL}" readonly></label>
+      <label class="fld"><span>Subject</span><input class="es"></label>
+      <label class="fld"><span>Message</span><textarea class="eb" rows="6"></textarea></label>
+      <div class="card-actions"><a class="btn sm em">Approve and open in mail app</a><button type="button" class="btn btn-quiet sm ec">Copy draft</button></div>
+      <p class="card-note">Nothing is sent until you press send in your own mail app.</p>`;
+    const es = $(".es", c), eb = $(".eb", c), em = $(".em", c);
+    es.value = subject; eb.value = body;
+    const sync = () => { em.href = `mailto:${EMAIL}?subject=${encodeURIComponent(es.value)}&body=${encodeURIComponent(eb.value)}`; };
+    sync(); es.addEventListener("input", sync); eb.addEventListener("input", sync);
+    $(".ec", c).addEventListener("click", async () => { try { await navigator.clipboard.writeText(`Subject: ${es.value}\n\n${eb.value}`); toast("Draft copied"); } catch (e) { toast("Couldn't copy. Select the text instead."); } });
+    return c;
+  }
+  const TOPIC = { recruiter: "a Senior or Lead design role", hiring: "a design role on my team", founder: "a product we're building", designer: "design systems" };
+  const draftBody = (extra = "") => `Hi Vivekanand,\n\nI came across your portfolio and would like to talk about ${TOPIC[role] || "working together"}.${extra}\n\nThanks,\n[Your name]`;
+  async function email() {
+    await agentTurn({ steps: ["Reading contact preferences", "Drafting a short intro"],
+      text: "Here's a draft. Edit anything you like. Nothing is sent until you approve it in your mail app.",
+      card: () => emailCard("Intro from your portfolio", draftBody(" Could we find 30 minutes this week?")) });
+  }
+
+  /* ---------- scheduling: IST working hours, shown in visitor's time ---------- */
+  function nextSlots() {
+    const now = new Date();
+    const ist = new Date(now.getTime() + (330 + now.getTimezoneOffset()) * 60000); // wall-clock IST
+    const plan = [[11, 0], [15, 30], [12, 0]], out = [];
+    const d = new Date(ist.getFullYear(), ist.getMonth(), ist.getDate());
+    let day = 0;
+    while (out.length < 3) {
+      d.setDate(d.getDate() + 1); if (d.getDay() === 0 || d.getDay() === 6) continue;
+      const times = day === 0 ? plan.slice(0, 2) : plan.slice(2); day++;
+      times.forEach(([H, M]) => { if (out.length < 3) out.push(new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate(), H, M) - 330 * 60000)); });
+    }
+    return out;
+  }
+  const fmtMine = new Intl.DateTimeFormat(undefined, { weekday: "short", day: "numeric", month: "short", hour: "numeric", minute: "2-digit" });
+  const fmtIST = new Intl.DateTimeFormat("en-GB", { hour: "2-digit", minute: "2-digit", timeZone: "Asia/Kolkata" });
+  async function call(prefix) {
+    await agentTurn({ steps: ["Checking working hours (10:00–18:00 IST)", "Converting to your time zone"],
+      text: (prefix ? prefix + " " : "") + "Here are three open slots, shown in your time zone. Pick one and I'll draft the email.",
+      card: () => {
+        const c = el("div", "card"); c.appendChild(el("p", "card-k", "Suggested times"));
+        const list = el("div", "slots");
+        nextSlots().forEach(dt => {
+          const b = el("button", "slot"); b.type = "button"; b.setAttribute("aria-pressed", "false");
+          const mine = fmtMine.format(dt); b.innerHTML = `<b></b><span></span>`; $("b", b).textContent = mine; $("span", b).textContent = fmtIST.format(dt) + " IST";
+          b.addEventListener("click", () => { if (busy) return; $$(".slot", list).forEach(x => { x.disabled = true; x.setAttribute("aria-pressed", String(x === b)); });
+            say(`${mine} works`, () => agentTurn({ steps: ["Adding the time to a draft"], text: "Here's the email with that time. Approve it and it opens in your mail app.",
+              card: () => emailCard(`30-minute call: ${mine}`, draftBody(`\n\nWould ${mine} (your time) / ${fmtIST.format(dt)} IST work for a 30-minute call?`)) })); });
+          list.appendChild(b);
+        });
+        c.appendChild(list); c.appendChild(el("p", "card-note", "Times are suggestions from his working hours. He'll confirm by email."));
+        return c;
+      } });
+  }
+
+  /* ---------- answers ---------- */
+  const askTime = { label: "Find a time to talk", run: () => say("Find a time to talk", () => call()) };
+  const askEmail = { label: "Draft an intro email", run: () => say("Draft an intro email", email) };
+  const askTour = { label: "Give me a tour", run: () => say("Give me a tour", tour) };
+  const askTailor = { label: "Tailor this page for me", run: () => say("Tailor this page for me", tailorAsk) };
+  const INTENTS = [
+    { re: /tailor|personali[sz]e|for me\b|i'?m a |recruiter|founder|hiring manager/, run: tailorAsk },
+    { re: /tour|walk me|show me around|2[- ]?min|overview/, run: tour },
+    { re: /email|intro|draft|write to|message/, run: email },
+    { re: /call|meet|schedule|book|time to talk|find a time|availab/, run: (t) => call(/availab|free|open to/.test(t) ? "Yes, he's open to full-time roles and consulting." : "") },
+    { re: /fit|lead|hire|qualif|design[- ]?system/, run: () => agentTurn({
+        steps: ["Searching case studies for design-system evidence", "Reading the token-psychology post", "Checking the process for governance"],
+        text: "There's strong evidence for a design-systems lead:",
+        list: ["Architected one design-system spine across six product types, reaching 99% WCAG AA.", "At ConstructivIQ, his design system let 3 feature teams ship independently and halved handoff time.", "Documents token decisions together with the psychology behind each one (blog, Jul 2026)."],
+        after: "He has led teams of up to four designers. Worth confirming in a call: the size of the team you're hiring for.",
+        sources: [["Design systems", '[data-id="ds"]'], ["ConstructivIQ", '[data-id="civ"]'], ["Token post", "#post-tokens"]],
+        options: [askTime, askEmail] }) },
+    { re: /ship|work|project|case|built|nocode|ehr|portfolio/, run: () => agentTurn({
+        steps: ["Reading the selected work"],
+        text: "Right now: an agentic layer for a media-buying platform used in 30+ countries. Shipped highlights include a construction cloud that reached $1.2M ARR, a NoCode builder that cut engineering dependency by 60%, and EHR workflows that save clinicians 2+ hours a shift.",
+        sources: [["Agentic DSP", "#work .feature"], ["ConstructivIQ", '[data-id="civ"]'], ["NoCode", '[data-id="nocode"]']], options: [askTour] }) },
+    { re: /process|approach|method|how does he work|how do you work/, run: () => agentTurn({
+        steps: ["Reading the process section"],
+        text: "Four phases: Understand, Decide, Design and Ship, which expand to eight stages on the full method page. Each stage has kill criteria. At the paradigm gate he scores agentic, hybrid, traditional and zero-UI options before any UI is drawn.",
+        sources: [["Process", "#process .steps"]] }) },
+    { re: /\bai\b|agent|tool|llm|gpt|claude/, run: () => agentTurn({
+        steps: ["Reading the writing", "Checking the current role"],
+        text: "He designs agentic products. Right now that's an agentic layer for a media-buying platform: the agent proposes plans as diffs, cites its evidence and can't cross planner-set guardrails. He also wrote the hybrid and agentic UI roadmap for a 7-product portfolio through 2027, and uses 20+ AI tools day to day. I follow the same rules: I cite my sources and ask before I act.",
+        sources: [["Agentic DSP", "#work .feature"], ["AI tools post", "#post-ai"]] }) },
+  ];
+  const fallback = () => agentTurn({ steps: ["Searching this site"],
+    text: "I couldn't find that here, and I only answer from what's on this site. Try asking about his work, process, AI experience or availability, or let me do something for you:",
+    options: [askTour, askTailor] });
+  const handle = (text) => say(text, () => { const t = text.toLowerCase(); const it = INTENTS.find(i => i.re.test(t)); return it ? it.run(t) : fallback(); });
+
+  /* ---------- entry points ---------- */
+  $("#heroAsk").addEventListener("submit", e => { e.preventDefault(); const v = $("#heroInput").value.trim(); if (!v) { $("#heroInput").focus(); return; } $("#heroInput").value = ""; openAgent(); handle(v); });
+  $("#agentForm").addEventListener("submit", e => { e.preventDefault(); const v = aInput.value.trim(); if (!v) return; aInput.value = ""; handle(v); });
+  document.addEventListener("click", e => { const b = e.target.closest("[data-prompt]"); if (!b) return; openAgent(); handle(b.dataset.prompt); });
+  document.addEventListener("keydown", e => {
+    if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") { e.preventDefault(); agent.hidden ? openAgent() : closeAgent(); return; }
+    if (e.key === "Escape") { if (!sheet.hidden) closeSheet(); else if (!agent.hidden) closeAgent(); else if (tourOn) endTour(); }
+  });
+
+  /* ---------- testimonial: changes only on click ---------- */
+  const QUOTES = [
+    { q: "Brings engineering discipline to design work.", role: "CTO" },
+    { q: "Rare blend of design craft and systems thinking.", role: "Product Manager" },
+    { q: "Transforms chaos into clarity with design rigor.", role: "Design Leader" },
+  ];
+  let qi = 0;
+  function paintQuote() {
+    const it = QUOTES[qi];
+    $("#qText").textContent = `“${it.q}”`; $("#qWho").textContent = "[Name]"; $("#qRole").textContent = `${it.role}, [Company]`;
+    $("#qPos").textContent = `${qi + 1} / ${QUOTES.length}`;
+  }
+  $("#qPrev").addEventListener("click", () => { qi = (qi - 1 + QUOTES.length) % QUOTES.length; paintQuote(); });
+  $("#qNext").addEventListener("click", () => { qi = (qi + 1) % QUOTES.length; paintQuote(); });
+
+  /* ---------- inline summarize ---------- */
+  const sumBtn = $("#sumBtn"), tldr = $("#tldr");
+  sumBtn.addEventListener("click", async () => {
+    if (!tldr.hidden && tldr.dataset.done) { tldr.hidden = true; sumBtn.setAttribute("aria-expanded", "false"); return; }
+    tldr.hidden = false; sumBtn.setAttribute("aria-expanded", "true");
+    if (tldr.dataset.done || tldr.dataset.running) return;
+    tldr.dataset.running = "1"; tldr.innerHTML = ""; tldr.setAttribute("aria-busy", "true");
+    await runSteps(tldr, ["Reading the case study", "Writing a three-line brief"]);
+    const ul = el("ul"); tldr.appendChild(ul);
+    for (const line of [
+      "Problem: launching a campaign meant reconciling inventory, audience and brand-safety data across a 40-tab workflow.",
+      "Approach: shadowed 11 planners, then chose a hybrid. The agent proposes a plan as a diff, must cite its evidence, and can't cross planner-set guardrails.",
+      "Result: zero silent commits in the pilot, 80% of agent use through the diff preview, and two out-of-scope spends blocked automatically.",
+    ]) { const li = el("li"); ul.appendChild(li); await stream(li, line); }
+    tldr.setAttribute("aria-busy", "false"); tldr.dataset.done = "1"; delete tldr.dataset.running;
+  });
+})();
+</script>
+</body>
+</html>

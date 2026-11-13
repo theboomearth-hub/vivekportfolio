@@ -28,10 +28,13 @@ export function SectionHeader({
   eyebrow,
   title,
   description,
+  as: Heading = "h2",
 }: {
   eyebrow?: string;
   title: string;
   description?: string;
+  /** Use "h1" when this header is the page title (every page needs exactly one h1). */
+  as?: "h1" | "h2";
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-80px" });
@@ -45,13 +48,12 @@ export function SectionHeader({
           initial={{ opacity: 0, x: -20 }}
           animate={isInView ? { opacity: 1, x: 0 } : {}}
           transition={{ duration: 0.5 }}
-          className="text-accent font-mono text-sm mb-4 uppercase tracking-widest"
+          className="text-accent font-mono text-xs mb-4 uppercase tracking-[0.06em]"
         >
           {eyebrow}
         </motion.p>
       )}
-      <h2
-        className="text-3xl md:text-5xl lg:text-6xl font-bold tracking-tight"
+      <Heading
         aria-label={title}
       >
         {titleWords.map((word, i) => (
@@ -74,13 +76,13 @@ export function SectionHeader({
             </motion.span>
           </span>
         ))}
-      </h2>
+      </Heading>
       {description && (
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.3 + titleWords.length * 0.06 }}
-          className="mt-6 text-muted text-lg lg:text-xl max-w-2xl leading-relaxed"
+          className="mt-6 text-muted text-lg max-w-2xl leading-relaxed"
         >
           {description}
         </motion.p>

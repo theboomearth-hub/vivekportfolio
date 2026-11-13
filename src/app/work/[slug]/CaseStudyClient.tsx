@@ -18,7 +18,7 @@ function DecisionsSection({ decisions }: { decisions: DecisionRecord[] }) {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
       >
-        <h2 className="text-xs font-mono text-accent uppercase tracking-widest mb-2">
+        <h2 className="text-xs font-mono text-accent uppercase tracking-[0.06em] mb-2">
           Decision Records
         </h2>
         <p className="text-sm text-muted mb-8 max-w-2xl">
@@ -40,13 +40,13 @@ function DecisionsSection({ decisions }: { decisions: DecisionRecord[] }) {
                   {String(i + 1).padStart(2, "0")}
                 </span>
                 <div>
-                  <h3 className="text-lg font-bold mb-1">{d.title}</h3>
+                  <h3 className="text-lg mb-1">{d.title}</h3>
                   <p className="text-sm text-muted leading-relaxed">{d.context}</p>
                 </div>
               </div>
               <div className="grid md:grid-cols-2 gap-px bg-border">
                 <div className="bg-surface p-5 sm:p-6">
-                  <p className="text-[10px] font-mono text-muted uppercase tracking-widest mb-3">
+                  <p className="text-xs font-mono text-muted uppercase tracking-[0.06em] mb-3">
                     Options considered
                   </p>
                   <ul className="space-y-2">
@@ -59,7 +59,7 @@ function DecisionsSection({ decisions }: { decisions: DecisionRecord[] }) {
                   </ul>
                 </div>
                 <div className="bg-surface p-5 sm:p-6">
-                  <p className="text-[10px] font-mono text-accent uppercase tracking-widest mb-3">
+                  <p className="text-xs font-mono text-accent uppercase tracking-[0.06em] mb-3">
                     The call → the result
                   </p>
                   <p className="text-sm text-foreground/80 leading-relaxed mb-3">{d.choice}</p>
@@ -67,10 +67,10 @@ function DecisionsSection({ decisions }: { decisions: DecisionRecord[] }) {
                 </div>
               </div>
               <div className="px-5 sm:px-6 py-3.5 bg-background/50 border-t border-border">
-                <p className="text-xs text-muted leading-relaxed">
-                  <span className="font-mono text-accent-coral uppercase tracking-wider text-[10px] mr-2">
+                <p className="text-sm text-muted leading-relaxed">
+                  <span className="font-mono text-accent uppercase tracking-[0.06em] text-xs mr-1">
                     Principle
-                  </span>
+                  </span>{" "}
                   {d.principle}
                 </p>
               </div>
@@ -92,7 +92,7 @@ function RetroSection({ retro }: { retro: string[] }) {
         viewport={{ once: true }}
         className="max-w-3xl"
       >
-        <h2 className="text-xs font-mono text-accent uppercase tracking-widest mb-2">
+        <h2 className="text-xs font-mono text-accent uppercase tracking-[0.06em] mb-2">
           What I&apos;d Do Differently
         </h2>
         <p className="text-sm text-muted mb-8">
@@ -108,7 +108,7 @@ function RetroSection({ retro }: { retro: string[] }) {
               transition={{ delay: i * 0.05 }}
               className="flex gap-4 p-4 rounded-xl bg-surface border border-border"
             >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-accent-coral shrink-0 mt-1">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-accent shrink-0 mt-1">
                 <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
                 <path d="M3 3v5h5" />
               </svg>
@@ -127,7 +127,7 @@ export default function CaseStudyClient({ slug }: { slug: string }) {
   if (!project) {
     return (
       <div className="min-h-screen pt-32 text-center">
-        <h1 className="text-3xl font-bold mb-4">Project not found</h1>
+        <h1 className="mb-4">Project not found</h1>
         <Link href="/" className="text-accent hover:underline">
           Back to home
         </Link>
@@ -139,14 +139,14 @@ export default function CaseStudyClient({ slug }: { slug: string }) {
   if (project.story) {
     const uniqueYears = [...new Set(project.story.map((c) => c.year.split(/\s*[–—]\s*/)[0]))];
     return (
-      <main className="min-h-screen pt-24 sm:pt-32">
+      <div className="min-h-screen pt-24 sm:pt-32">
         {/* Back link */}
         <Section>
           <Link
-            href="/#work"
-            className="inline-flex items-center gap-2 text-sm text-muted hover:text-foreground transition-colors mb-8"
+            href="/work"
+            className="inline-flex items-center gap-2 py-2.5 text-sm text-muted hover:text-foreground transition-colors mb-6"
           >
-            <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
               <path d="M13 8H3M3 8L7 4M3 8L7 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
             Back to projects
@@ -159,7 +159,7 @@ export default function CaseStudyClient({ slug }: { slug: string }) {
               animate={{ opacity: 1, y: 0 }}
               className="flex items-center gap-3 mb-4"
             >
-              <span className="text-accent font-mono text-sm uppercase tracking-widest">{project.category}</span>
+              <span className="text-accent font-mono text-xs uppercase tracking-[0.06em]">{project.category}</span>
               {project.timeline && (
                 <>
                   <span className="w-1 h-1 rounded-full bg-muted" />
@@ -171,7 +171,7 @@ export default function CaseStudyClient({ slug }: { slug: string }) {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.05 }}
-              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6"
+              className="mb-6"
             >
               {project.title}
             </motion.h1>
@@ -179,7 +179,7 @@ export default function CaseStudyClient({ slug }: { slug: string }) {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 }}
-              className="text-lg sm:text-xl text-muted leading-relaxed max-w-3xl mb-10"
+              className="text-lg text-muted leading-relaxed max-w-3xl mb-10"
             >
               {project.heroDesc}
             </motion.p>
@@ -213,20 +213,20 @@ export default function CaseStudyClient({ slug }: { slug: string }) {
                     <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
                     <path d="M16 3.13a4 4 0 0 1 0 7.75" />
                   </svg>
-                  <span className="text-xs font-mono text-accent uppercase tracking-widest">Leadership Context</span>
+                  <span className="text-xs font-mono text-accent uppercase tracking-[0.06em]">Leadership Context</span>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-4 gap-3">
                   <div>
-                    <p className="text-[10px] font-mono text-muted uppercase tracking-wider mb-0.5">Role</p>
-                    <p className="text-sm font-semibold text-foreground">{project.role.title}</p>
+                    <p className="text-xs font-mono text-muted uppercase tracking-[0.06em] mb-0.5">Role</p>
+                    <p className="text-sm font-medium text-foreground">{project.role.title}</p>
                   </div>
                   <div className="sm:col-span-2">
-                    <p className="text-[10px] font-mono text-muted uppercase tracking-wider mb-0.5">Scope</p>
-                    <p className="text-xs text-foreground/70">{project.role.scope}</p>
+                    <p className="text-xs font-mono text-muted uppercase tracking-[0.06em] mb-0.5">Scope</p>
+                    <p className="text-sm text-foreground/70">{project.role.scope}</p>
                   </div>
                   <div>
-                    <p className="text-[10px] font-mono text-muted uppercase tracking-wider mb-0.5">Team</p>
-                    <p className="text-xs text-foreground/70">{project.role.team}</p>
+                    <p className="text-xs font-mono text-muted uppercase tracking-[0.06em] mb-0.5">Team</p>
+                    <p className="text-sm text-foreground/70">{project.role.team}</p>
                   </div>
                 </div>
               </motion.div>
@@ -247,7 +247,7 @@ export default function CaseStudyClient({ slug }: { slug: string }) {
                     <div className="w-2.5 h-2.5 rounded-full bg-border" />
                     <div className="w-2.5 h-2.5 rounded-full bg-border" />
                   </div>
-                  <span className="text-[10px] font-mono text-muted ml-2">app-builder / canvas</span>
+                  <span className="text-xs font-mono text-muted ml-2">app-builder / canvas</span>
                 </div>
                 {/* Builder canvas wireframe */}
                 <div className="p-4 sm:p-6 grid grid-cols-12 gap-3 min-h-[280px] sm:min-h-[340px]" aria-hidden="true">
@@ -269,7 +269,7 @@ export default function CaseStudyClient({ slug }: { slug: string }) {
                         ))}
                       </div>
                     </div>
-                    <div className="h-9 rounded-lg bg-accent-coral/10 border border-accent-coral/20 w-1/2" />
+                    <div className="h-9 rounded-lg bg-accent/10 border border-accent/20 w-1/2" />
                   </div>
                   {/* Property panel — progressive disclosure */}
                   <div className="col-span-3 space-y-2">
@@ -278,7 +278,7 @@ export default function CaseStudyClient({ slug }: { slug: string }) {
                       <div key={n} className="h-8 rounded-lg bg-surface-hover border border-border" />
                     ))}
                     <div className="h-8 rounded-lg border border-dashed border-border flex items-center justify-center">
-                      <span className="text-[9px] font-mono text-muted">+ Advanced</span>
+                      <span className="text-xs font-mono text-muted">+ Advanced</span>
                     </div>
                   </div>
                 </div>
@@ -324,7 +324,7 @@ export default function CaseStudyClient({ slug }: { slug: string }) {
                 >
                   <div className="w-3 h-3 rounded-full bg-accent border-2 border-background -mt-[7px] relative z-10" />
                   <span className="text-xs font-mono text-accent mt-2">{yr}</span>
-                  <span className="text-[10px] text-muted mt-0.5">
+                  <span className="text-xs text-muted mt-0.5">
                     {i === 0 ? "Kickoff" : i === uniqueYears.length - 1 ? "Launch" : `Year ${i + 1}`}
                   </span>
                 </motion.div>
@@ -371,13 +371,13 @@ export default function CaseStudyClient({ slug }: { slug: string }) {
                         {phaseIcons[chapter.visual || "metrics"]}
                       </div>
                       <div>
-                        <p className="text-xs font-mono text-accent uppercase tracking-widest">{chapter.phase.replace(/^\d+\s*—\s*/, "")}</p>
-                        <p className="text-[10px] font-mono text-muted">{chapter.year}</p>
+                        <p className="text-xs font-mono text-accent uppercase tracking-[0.06em]">{chapter.phase.replace(/^\d+\s*—\s*/, "")}</p>
+                        <p className="text-xs font-mono text-muted">{chapter.year}</p>
                       </div>
                     </motion.div>
 
                     {/* Title */}
-                    <h2 className="text-2xl sm:text-3xl font-bold tracking-tight mb-4">{chapter.title}</h2>
+                    <h2 className="mb-4">{chapter.title}</h2>
 
                     {/* Narrative */}
                     <p className="text-base sm:text-lg text-muted leading-relaxed mb-8 max-w-2xl">{chapter.narrative}</p>
@@ -421,8 +421,8 @@ export default function CaseStudyClient({ slug }: { slug: string }) {
                           >
                             {/* Accent top bar */}
                             <div className="absolute top-0 left-0 right-0 h-0.5 bg-accent/50" />
-                            <p className="text-[10px] font-mono text-muted uppercase tracking-widest mb-1">{item.label}</p>
-                            <p className="text-xl font-bold text-foreground">{item.value}</p>
+                            <p className="text-xs font-mono text-muted uppercase tracking-[0.06em] mb-1">{item.label}</p>
+                            <p className="text-xl font-medium text-foreground">{item.value}</p>
                           </motion.div>
                         ))}
                       </div>
@@ -446,7 +446,7 @@ export default function CaseStudyClient({ slug }: { slug: string }) {
                           whileInView={{ scale: 1, opacity: 1 }}
                           viewport={{ once: true }}
                           transition={{ delay: 0.4 + mi * 0.1, type: "spring", stiffness: 200 }}
-                          className="text-3xl sm:text-4xl font-bold text-accent mb-1"
+                          className="text-3xl sm:text-4xl font-medium text-accent mb-1"
                         >
                           {m.value}
                         </motion.p>
@@ -465,20 +465,20 @@ export default function CaseStudyClient({ slug }: { slug: string }) {
         {project.decisions && <DecisionsSection decisions={project.decisions} />}
         {project.retro && <RetroSection retro={project.retro} />}
 
-      </main>
+      </div>
     );
   }
 
   /* ─── Default layout for other projects ─── */
   return (
-    <main className="min-h-screen pt-24 sm:pt-32">
+    <div className="min-h-screen pt-24 sm:pt-32">
       {/* Back link */}
       <Section>
         <Link
-          href="/#work"
-          className="inline-flex items-center gap-2 text-sm text-muted hover:text-foreground transition-colors mb-8"
+          href="/work"
+          className="inline-flex items-center gap-2 py-2.5 text-sm text-muted hover:text-foreground transition-colors mb-6"
         >
-          <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
             <path d="M13 8H3M3 8L7 4M3 8L7 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
           Back to projects
@@ -489,7 +489,7 @@ export default function CaseStudyClient({ slug }: { slug: string }) {
           <motion.p
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-accent font-mono text-sm uppercase tracking-widest mb-4"
+            className="text-accent font-mono text-xs uppercase tracking-[0.06em] mb-4"
           >
             {project.category}
           </motion.p>
@@ -497,7 +497,7 @@ export default function CaseStudyClient({ slug }: { slug: string }) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.05 }}
-            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6"
+            className="mb-6"
           >
             {project.title}
           </motion.h1>
@@ -505,7 +505,7 @@ export default function CaseStudyClient({ slug }: { slug: string }) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="text-lg sm:text-xl text-muted leading-relaxed max-w-3xl mb-10"
+            className="text-lg text-muted leading-relaxed max-w-3xl mb-10"
           >
             {project.heroDesc}
           </motion.p>
@@ -539,20 +539,20 @@ export default function CaseStudyClient({ slug }: { slug: string }) {
                   <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
                   <path d="M16 3.13a4 4 0 0 1 0 7.75" />
                 </svg>
-                <span className="text-xs font-mono text-accent uppercase tracking-widest">Leadership Context</span>
+                <span className="text-xs font-mono text-accent uppercase tracking-[0.06em]">Leadership Context</span>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-4 gap-3">
                 <div>
-                  <p className="text-[10px] font-mono text-muted uppercase tracking-wider mb-0.5">Role</p>
-                  <p className="text-sm font-semibold text-foreground">{project.role.title}</p>
+                  <p className="text-xs font-mono text-muted uppercase tracking-[0.06em] mb-0.5">Role</p>
+                  <p className="text-sm font-medium text-foreground">{project.role.title}</p>
                 </div>
                 <div className="sm:col-span-2">
-                  <p className="text-[10px] font-mono text-muted uppercase tracking-wider mb-0.5">Scope</p>
-                  <p className="text-xs text-foreground/70">{project.role.scope}</p>
+                  <p className="text-xs font-mono text-muted uppercase tracking-[0.06em] mb-0.5">Scope</p>
+                  <p className="text-sm text-foreground/70">{project.role.scope}</p>
                 </div>
                 <div>
-                  <p className="text-[10px] font-mono text-muted uppercase tracking-wider mb-0.5">Team</p>
-                  <p className="text-xs text-foreground/70">{project.role.team}</p>
+                  <p className="text-xs font-mono text-muted uppercase tracking-[0.06em] mb-0.5">Team</p>
+                  <p className="text-sm text-foreground/70">{project.role.team}</p>
                 </div>
               </div>
             </motion.div>
@@ -570,7 +570,7 @@ export default function CaseStudyClient({ slug }: { slug: string }) {
           viewport={{ once: true }}
           className="max-w-3xl"
         >
-          <h2 className="text-xs font-mono text-accent uppercase tracking-widest mb-3">The Challenge</h2>
+          <h2 className="text-xs font-mono text-accent uppercase tracking-[0.06em] mb-3">The Challenge</h2>
           <p className="text-lg text-foreground/80 leading-relaxed">{project.challenge}</p>
         </motion.div>
       </Section>
@@ -583,7 +583,7 @@ export default function CaseStudyClient({ slug }: { slug: string }) {
           viewport={{ once: true }}
           className="max-w-3xl"
         >
-          <h2 className="text-xs font-mono text-accent uppercase tracking-widest mb-6">The Approach</h2>
+          <h2 className="text-xs font-mono text-accent uppercase tracking-[0.06em] mb-6">The Approach</h2>
           <div className="space-y-4">
             {project.approach.map((step, i) => (
               <motion.div
@@ -611,7 +611,7 @@ export default function CaseStudyClient({ slug }: { slug: string }) {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
         >
-          <h2 className="text-xs font-mono text-accent uppercase tracking-widest mb-8">Key Features</h2>
+          <h2 className="text-xs font-mono text-accent uppercase tracking-[0.06em] mb-8">Key Features</h2>
           <div className="grid sm:grid-cols-2 gap-4">
             {project.features.map((feat, i) => (
               <motion.div
@@ -622,8 +622,8 @@ export default function CaseStudyClient({ slug }: { slug: string }) {
                 transition={{ delay: i * 0.05 }}
                 className="p-5 rounded-2xl bg-surface border border-border"
               >
-                <h4 className="text-sm font-semibold text-foreground mb-2">{feat.title}</h4>
-                <p className="text-xs text-muted leading-relaxed">{feat.desc}</p>
+                <h3 className="text-sm text-foreground mb-2">{feat.title}</h3>
+                <p className="text-sm text-muted leading-relaxed">{feat.desc}</p>
               </motion.div>
             ))}
           </div>
@@ -638,7 +638,7 @@ export default function CaseStudyClient({ slug }: { slug: string }) {
           viewport={{ once: true }}
           className="max-w-3xl"
         >
-          <h2 className="text-xs font-mono text-accent uppercase tracking-widest mb-6">The Impact</h2>
+          <h2 className="text-xs font-mono text-accent uppercase tracking-[0.06em] mb-6">The Impact</h2>
           <div className="grid sm:grid-cols-2 gap-4">
             {project.impact.map((item, i) => (
               <motion.div
@@ -663,6 +663,6 @@ export default function CaseStudyClient({ slug }: { slug: string }) {
       {project.decisions && <DecisionsSection decisions={project.decisions} />}
       {project.retro && <RetroSection retro={project.retro} />}
 
-    </main>
+    </div>
   );
 }

@@ -275,15 +275,17 @@ export default function ProjectCard({
               {/* Domain chip */}
               {domain && domainColor && (
                 <span
-                  className="absolute top-3 right-3 z-10 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-background/90 border text-[10px] font-mono uppercase tracking-wider"
+                  className="absolute top-3 right-3 z-10 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-background/90 border text-xs font-mono uppercase tracking-[0.06em]"
                   style={{ borderColor: `${domainColor}40`, color: tintText(domainColor) }}
                 >
                   <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: domainColor }} />
                   {domain}
                 </span>
               )}
-              {/* Parallax mock UI */}
+              {/* Parallax mock UI — a decorative wireframe picture, so it is hidden
+                  from assistive tech (its tiny labels are part of the drawing). */}
               <motion.div
+                aria-hidden="true"
                 style={{ y: parallaxY }}
                 className="absolute inset-0 flex items-center justify-center p-6 sm:p-10"
               >
@@ -298,14 +300,14 @@ export default function ProjectCard({
             {/* Content */}
             <div className={`p-4 sm:p-6 lg:p-8 ${featured ? "lg:w-3/5 lg:flex lg:flex-col lg:justify-center" : ""}`}>
               {featured && (
-                <p className="text-[10px] font-mono uppercase tracking-widest text-accent/70 mb-1.5">
+                <p className="text-xs font-mono uppercase tracking-[0.06em] text-accent mb-1.5">
                   Flagship Case Study
                 </p>
               )}
-              <p className="text-accent font-mono text-xs uppercase tracking-widest mb-2">
+              <p className="text-accent font-mono text-xs uppercase tracking-[0.06em] mb-2">
                 {category}
               </p>
-              <h3 className={`font-bold mb-3 group-hover:text-accent transition-colors ${featured ? "text-2xl lg:text-4xl" : "text-2xl lg:text-3xl"}`}>
+              <h3 className={`font-medium mb-3 group-hover:text-accent transition-colors ${featured ? "text-2xl" : "text-xl"}`}>
                 {title}
               </h3>
               <p className="text-muted leading-relaxed mb-6">{description}</p>
@@ -313,8 +315,8 @@ export default function ProjectCard({
                 <div className="grid grid-cols-3 gap-3 mb-6">
                   {metrics.map((m) => (
                     <div key={m.label} className="rounded-xl border border-border bg-background p-3">
-                      <div className="text-lg lg:text-xl font-bold text-accent">{m.value}</div>
-                      <div className="text-[10px] text-muted font-mono uppercase tracking-wide mt-1">
+                      <div className="text-lg lg:text-xl font-medium text-accent">{m.value}</div>
+                      <div className="text-xs text-muted font-mono uppercase tracking-[0.06em] mt-1">
                         {m.label}
                       </div>
                     </div>

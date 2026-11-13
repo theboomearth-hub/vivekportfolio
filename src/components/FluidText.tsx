@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useEffect, useState, useCallback } from "react";
+import { useRef, useEffect } from "react";
 
 interface FluidTextProps {
   text: string;
@@ -17,71 +17,64 @@ export default function FluidText({
   maxWeight = 900,
   radius = 120,
 }: FluidTextProps) {
-  const containerRef = useRef<HTMLSpanElement>(null);
   const letterRefs = useRef<(HTMLSpanElement | null)[]>([]);
-  const mousePos = useRef({ x: -1000, y: -1000 });
-  const rafId = useRef<number>(0);
-  const [hasMounted, setHasMounted] = useState(false);
 
   useEffect(() => {
-    setHasMounted(true);
-  }, []);
+    let mouse = { x: -1000, y: -1000 };
+    let rafId = 0;
 
-  const updateWeights = useCallback(() => {
-    const letters = letterRefs.current;
-    const mx = mousePos.current.x;
-    const my = mousePos.current.y;
-
-    for (let i = 0; i < letters.length; i++) {
-      const el = letters[i];
-      if (!el) continue;
-      const rect = el.getBoundingClientRect();
-      const cx = rect.left + rect.width / 2;
-      const cy = rect.top + rect.height / 2;
-      const dist = Math.sqrt((mx - cx) ** 2 + (my - cy) ** 2);
-      const t = Math.max(0, 1 - dist / radius);
-      const weight = Math.round(minWeight + t * (maxWeight - minWeight));
-      el.style.fontWeight = String(weight);
-    }
-
-    rafId.current = requestAnimationFrame(updateWeights);
-  }, [minWeight, maxWeight, radius]);
-
-  useEffect(() => {
-    if (!hasMounted) return;
-
-    const handleMouseMove = (e: MouseEvent) => {
-      mousePos.current = { x: e.clientX, y: e.clientY };
+    // The frame loop lives inside the effect so it can schedule itself
+    // without referencing a callback before it is declared.
+    const tick = () => {
+      for (const el of letterRefs.current) {
+        if (!el) continue;
+        const rect = el.getBoundingClientRect();
+        const cx = rect.left + rect.width / 2;
+        const cy = rect.top + rect.height / 2;
+        const dist = Math.hypot(mouse.x - cx, mouse.y - cy);
+        const t = Math.max(0, 1 - dist / radius);
+        el.style.fontWeight = String(Math.round(minWeight + t * (maxWeight - minWeight)));
+      }
+      rafId = requestAnimationFrame(tick);
     };
 
+    const handleMouseMove = (e: MouseEvent) => {
+      mouse = { x: e.clientX, y: e.clientY };
+    };
     const handleMouseLeave = () => {
-      mousePos.current = { x: -1000, y: -1000 };
+      mouse = { x: -1000, y: -1000 };
     };
 
     window.addEventListener("mousemove", handleMouseMove);
     document.addEventListener("mouseleave", handleMouseLeave);
-    rafId.current = requestAnimationFrame(updateWeights);
+    rafId = requestAnimationFrame(tick);
 
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
       document.removeEventListener("mouseleave", handleMouseLeave);
-      cancelAnimationFrame(rafId.current);
+      cancelAnimationFrame(rafId);
     };
-  }, [hasMounted, updateWeights]);
+  }, [minWeight, maxWeight, radius]);
 
   return (
-    <span ref={containerRef} className={className} aria-label={text}>
-      {text.split("").map((char, i) => (
-        <span
-          key={`${char}-${i}`}
-          aria-hidden="true"
-          ref={(el) => { letterRefs.current[i] = el; }}
-          className="inline-block transition-[font-weight] duration-100"
-          style={{ fontWeight: minWeight }}
-        >
-          {char === " " ? "\u00A0" : char}
-        </span>
-      ))}
+    <span className={className}>
+      {/* aria-label is ignored on a plain <span>; screen readers get real text
+          instead, and the per-letter spans are hidden from them. */}
+      <span className="sr-only">{text}</span>
+      <span aria-hidden="true">
+        {text.split("").map((char, i) => (
+          <span
+            key={`${char}-${i}`}
+            ref={(el) => {
+              letterRefs.current[i] = el;
+            }}
+            className="inline-block transition-[font-weight] duration-100"
+            style={{ fontWeight: minWeight }}
+          >
+            {char === " " ? " " : char}
+          </span>
+        ))}
+      </span>
     </span>
   );
 }
