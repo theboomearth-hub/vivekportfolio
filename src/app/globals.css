@@ -41,6 +41,37 @@
   --color-prose-code-bg: #F4F4F5;
 }
 
+/* Hosamane, the live agent at /hosamane, keeps its own design system ("calm ledger", Poppins type;
+   docs/property-discovery/07-design-system.md). Its tokens are namespaced hm-* so they never change
+   the site's own. Scoped base styles and the wireframe theme live in src/app/hosamane/hosamane.css. */
+@theme static {
+  --color-hm-ink: #15181b;
+  --color-hm-muted: #596068;
+  --color-hm-canvas: #fbfaf7;
+  --color-hm-surface: #f3f0ea;
+  --color-hm-card: #ffffff;
+  --color-hm-line: #e3ded5;
+  --color-hm-control: #857e74;
+  --color-hm-primary: #0f5f6b;
+  --color-hm-primary-strong: #0b4a54;
+  --color-hm-primary-soft: #e2eff0;
+  --color-hm-ok: #1d6f45;
+  --color-hm-ok-soft: #e4f2ea;
+  --color-hm-warn: #8f5205;
+  --color-hm-warn-soft: #fbefd9;
+  --color-hm-danger: #b42318;
+  --color-hm-danger-soft: #fce8e6;
+  --text-hm-label: 0.75rem;
+  --text-hm-label--line-height: 1.35;
+  --text-hm-caption: 0.8125rem;
+  --text-hm-caption--line-height: 1.4;
+  --text-hm-compact: 0.9375rem;
+  --text-hm-compact--line-height: 1.5;
+  --radius-hm-control: 10px;
+  --radius-hm-card: 14px;
+  --radius-hm-sheet: 20px;
+}
+
 /* Fonts stay `inline` — they reference other custom properties, which `inline` resolves.
    One family for everything (Inter, with optical sizing), mono for small labels.
    --font-display is kept as an alias so existing `font-display` classes render Inter. */
@@ -546,3 +577,35 @@ html.lenis body {
 }
 
 /* Custom cursor handled by CursorGlow component */
+
+/* ─────────────────────────────────────────────────────────────────
+   SKETCH KIT (src/components/sketch)
+   Doodles and diagrams draw in once when they scroll into view (DrawOnView).
+   Rendered complete by default; only `data-draw="pending"` hides them, and
+   DrawOnView never sets it when the reader prefers reduced motion.
+   ───────────────────────────────────────────────────────────────── */
+.sk-draw { stroke-dasharray: 1; stroke-dashoffset: 0; }
+[data-draw="pending"] .sk-draw { stroke-dashoffset: 1; }
+[data-draw="pending"] .sk-fade { opacity: 0; transform: translateY(10px); }
+[data-draw="run"] .sk-draw {
+  animation: sk-draw var(--motion-slow) var(--ease-out-expo) both;
+  animation-delay: calc(var(--sk-i, 0) * 110ms);
+}
+[data-draw="run"] .sk-fade {
+  animation: sk-fade var(--motion-slow) var(--ease-out-expo) both;
+  animation-delay: calc(var(--sk-i, 0) * 110ms);
+}
+@keyframes sk-draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+@keyframes sk-fade { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+.sk-grow { transform-origin: left center; }
+[data-draw="pending"] .sk-grow { transform: scaleX(0); }
+[data-draw="run"] .sk-grow {
+  animation: sk-grow var(--motion-slow) var(--ease-out-expo) both;
+  animation-delay: calc(var(--sk-i, 0) * 110ms);
+}
+@keyframes sk-grow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+/* Above-the-fold drawings (the homepage scribble) trace in once on load. */
+.sk-intro { stroke-dasharray: 1; stroke-dashoffset: 0; }
+@media (prefers-reduced-motion: no-preference) {
+  .sk-intro { animation: sk-draw 1.4s var(--ease-out-expo) both; animation-delay: calc(300ms + var(--sk-i, 0) * 110ms); }
+}

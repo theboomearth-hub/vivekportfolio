@@ -2,83 +2,69 @@ import Link from "next/link";
 import { Section } from "@/components/Section";
 import { stages } from "@/lib/process/stages";
 import { getPrinciple } from "@/lib/process/principles";
-import {
-  Sparkles, FileText, Users, Brain, Workflow, Palette, Rocket,
-  Check, ArrowUpRight, ArrowRight, CircleDot,
-} from "lucide-react";
+import ProcessLoop from "@/components/sketch/ProcessLoop";
+import { ArrowUpRight, ArrowRight } from "lucide-react";
+import Doodle from "@/components/sketch/Doodle";
+import DrawOnView from "@/components/sketch/DrawOnView";
+import { Tick } from "@/components/sketch/glyphs";
+import { RingMark } from "@/components/sketch/marks";
 
-const stageIcons: Record<string, typeof Sparkles> = {
-  signal: Sparkles, prd: FileText, research: Users, psychology: Brain,
-  flows: Workflow, ui: Palette, ship: Rocket,
-};
-
-function StageSection({ stage }: Readonly<{ stage: (typeof stages)[number] }>) {
-  const Icon = stageIcons[stage.id] ?? CircleDot;
-
+function StageSection({ stage, index }: Readonly<{ stage: (typeof stages)[number]; index: number }>) {
   return (
-    <Section>
-      <div className="max-w-3xl">
-        <div className="flex items-center gap-3 mb-4">
-          <div className="w-10 h-10 rounded-xl bg-accent/10 border border-accent/20 flex items-center justify-center text-accent shrink-0">
-            <Icon className="w-5 h-5" />
+    <Section id={`stage-${stage.id}`} className={index % 2 === 1 ? "bg-surface" : ""}>
+      <div className="grid gap-10 lg:grid-cols-[minmax(0,4fr)_minmax(0,8fr)] lg:gap-16 [&>*]:min-w-0">
+        {/* The stage's doodle, ringed by hand, beside its number and title */}
+        <DrawOnView className="lg:sticky lg:top-32 lg:self-start">
+          <div className="relative grid h-40 w-40 place-items-center">
+            <RingMark className="absolute inset-0 h-full w-full" i={0} />
+            <Doodle name={stage.id} className="h-20 w-20 text-foreground" i={1} />
           </div>
-          <p className="text-xs font-mono text-accent uppercase tracking-[0.06em]">
-            Stage {stage.num} — {stage.eyebrow}
+          <p className="mt-6 font-mono text-xs uppercase tracking-[0.06em] text-accent">Stage {stage.num} · {stage.eyebrow}</p>
+          <h2 className="mt-2">{stage.title}</h2>
+          <p className="mt-3 text-caption text-muted">
+            <span className="font-mono uppercase tracking-[0.06em]">{stage.industryLabel}</span> · {stage.methodTags.join(" · ")}
           </p>
-        </div>
+        </DrawOnView>
 
-        <h2 className="mb-1">{stage.title}</h2>
-        <div className="flex flex-wrap items-center gap-2 mb-5">
-          <span className="font-mono text-xs uppercase tracking-[0.06em] text-primary">
-            {stage.industryLabel}
-          </span>
-          <span className="text-muted">·</span>
-          <span className="text-xs text-muted">{stage.methodTags.join(" · ")}</span>
-        </div>
+        <div className="grid gap-8">
+          <p className="max-w-[62ch] text-lg leading-relaxed text-muted">{stage.method}</p>
 
-        <p className="text-muted leading-relaxed mb-6">{stage.method}</p>
-
-        {/* Psychology principles */}
-        <div className="mb-6">
-          <p className="text-xs font-mono text-muted uppercase tracking-[0.06em] mb-2">
-            Psychology applied
-          </p>
-          <div className="space-y-2">
-            {stage.psychology.map((pid) => {
-              const p = getPrinciple(pid);
-              return (
-                <div key={pid} className="text-sm">
-                  <span className="font-medium text-foreground">{p.name}</span>
-                  <span className="text-muted"> — {p.definition}</span>
-                </div>
-              );
-            })}
+          <div>
+            <p className="font-mono text-xs uppercase tracking-[0.06em] text-muted">Psychology applied</p>
+            <ul className="mt-3 grid gap-3 sm:grid-cols-2">
+              {stage.psychology.map((pid) => {
+                const p = getPrinciple(pid);
+                return (
+                  <li key={pid} className="rounded-2xl bg-background p-4 ring-1 ring-border ring-inset">
+                    <p className="font-medium">{p.name}</p>
+                    <p className="mt-1 text-compact text-muted">{p.definition}</p>
+                  </li>
+                );
+              })}
+            </ul>
           </div>
-        </div>
 
-        {/* Exit gate */}
-        <div className="rounded-2xl bg-surface border border-border p-5 mb-6">
-          <p className="text-xs font-mono text-muted uppercase tracking-[0.06em] mb-3">
-            Exit gate — what must be true to proceed
-          </p>
-          <ul className="space-y-2">
-            {stage.gate.map((g) => (
-              <li key={g} className="flex gap-2 text-sm text-foreground/80">
-                <Check className="w-4 h-4 text-accent shrink-0 mt-0.5" />
-                {g}
-              </li>
-            ))}
-          </ul>
-        </div>
+          {/* Exit gate: drawn as a gate mark with hand-ticked checks */}
+          <DrawOnView className="rounded-2xl bg-foreground p-6 text-background">
+            <p className="flex items-center gap-3 font-mono text-xs uppercase tracking-[0.06em]">
+              <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><path className="sk-draw" pathLength={1} filter="url(#sk-wobble)" d="M12 3l9 9-9 9-9-9z" /></svg>
+              Exit gate: what must be true to go on
+            </p>
+            <ul className="mt-4 grid gap-3">
+              {stage.gate.map((g, i) => (
+                <li key={g} className="flex gap-3 text-compact">
+                  <Tick className="h-5 w-5 shrink-0 text-background" i={i + 1} />
+                  {g}
+                </li>
+              ))}
+            </ul>
+          </DrawOnView>
 
-        {/* Evidence */}
-        <Link
-          href={stage.caseStudy.href}
-          className="inline-flex items-center gap-1.5 py-2.5 text-sm font-medium text-accent hover:gap-2.5 transition-all"
-        >
-          See it shipped — {stage.caseStudy.label}
-          <ArrowUpRight className="w-4 h-4" aria-hidden="true" />
-        </Link>
+          <Link href={stage.caseStudy.href} className="inline-flex items-center gap-1.5 py-2.5 text-sm font-medium text-accent transition-all hover:gap-2.5">
+            See it shipped: {stage.caseStudy.label}
+            <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+          </Link>
+        </div>
       </div>
     </Section>
   );
@@ -106,10 +92,13 @@ export default function ProcessPage() {
             7 stages · every stage has a written exit gate · every stage links to real shipped work
           </p>
         </div>
+        <div className="mt-14 md:mt-16">
+          <ProcessLoop stages={stages} />
+        </div>
       </Section>
 
-      {stages.map((stage) => (
-        <StageSection key={stage.id} stage={stage} />
+      {stages.map((stage, i) => (
+        <StageSection key={stage.id} stage={stage} index={i} />
       ))}
 
       {/* Closing CTA */}

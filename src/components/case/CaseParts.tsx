@@ -90,15 +90,18 @@ export function Section({
   title,
   children,
   intro,
+  tone = "plain",
 }: {
   id: string;
   eyebrow: string;
   title: string;
   intro?: React.ReactNode;
   children: React.ReactNode;
+  /** "tint" sets the section on the surface colour, to give long pages a rhythm of bands. */
+  tone?: "plain" | "tint";
 }) {
   return (
-    <section id={id} aria-labelledby={`${id}-title`} className="scroll-mt-24 border-t border-border py-20 md:py-24">
+    <section id={id} aria-labelledby={`${id}-title`} className={`scroll-mt-24 py-24 md:py-28 ${tone === "tint" ? "bg-surface" : "border-t border-border"}`}>
       <div className="container-premium">
         <p className={caseLabel}>{eyebrow}</p>
         <h2 id={`${id}-title`} className="mt-2.5 max-w-[24ch]">

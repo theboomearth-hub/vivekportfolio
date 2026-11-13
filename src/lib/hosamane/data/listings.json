@@ -1,0 +1,4303 @@
+[
+ {
+  "id": "r-01",
+  "mode": "rent",
+  "title": "2BHK in Ashoka Gardens",
+  "localityId": "indiranagar",
+  "bhk": 2,
+  "bathrooms": 1,
+  "sqft": 1110,
+  "floor": 0,
+  "floorsTotal": 14,
+  "furnishing": "furnished",
+  "balconies": 2,
+  "amenities": [
+   "Lift",
+   "Covered parking",
+   "Swimming pool",
+   "Clubhouse",
+   "Visitor parking"
+  ],
+  "rent": 65000,
+  "depositMonths": 5,
+  "maintenance": 4300,
+  "lister": "owner",
+  "listerName": "Meena",
+  "brokerageMonths": 0,
+  "listedDaysAgo": 7,
+  "availabilityConfirmedDaysAgo": 6,
+  "ownerConfirmed": null,
+  "photos": [
+   {
+    "id": "ph-0001",
+    "src": "/hosamane/photos/living-1.jpg",
+    "kind": "hero",
+    "year": 2025
+   },
+   {
+    "id": "ph-0002",
+    "src": "/hosamane/photos/bedroom-5.jpg",
+    "kind": "bedroom",
+    "year": 2026
+   },
+   {
+    "id": "ph-0003",
+    "src": "/hosamane/photos/living-4.jpg",
+    "kind": "living",
+    "year": 2025
+   },
+   {
+    "id": "ph-0004",
+    "src": "/hosamane/photos/bedroom-5.jpg",
+    "kind": "bedroom",
+    "year": 2025
+   }
+  ],
+  "scamAsk": false,
+  "status": "available",
+  "ownerAnswers": {
+   "pets": "no",
+   "depositNegotiable": "maybe for a longer stay",
+   "houseRules": "Guests welcome; inform the society for overnight stays."
+  },
+  "replyDelayMin": 2,
+  "visitSlots": [
+   "Sat 10:00",
+   "Sat 11:30",
+   "Sat 15:00",
+   "Sun 11:00"
+  ]
+ },
+ {
+  "id": "r-02",
+  "mode": "rent",
+  "title": "2BHK in Neem Residency",
+  "localityId": "indiranagar",
+  "bhk": 2,
+  "bathrooms": 2,
+  "sqft": 1240,
+  "floor": 4,
+  "floorsTotal": 5,
+  "furnishing": "semi",
+  "balconies": 1,
+  "amenities": [
+   "Power backup",
+   "Swimming pool"
+  ],
+  "rent": 51500,
+  "depositMonths": 6,
+  "maintenance": 2600,
+  "lister": "broker",
+  "listerName": "Listed by a broker",
+  "brokerageMonths": 1,
+  "listedDaysAgo": 19,
+  "availabilityConfirmedDaysAgo": 6,
+  "ownerConfirmed": null,
+  "photos": [
+   {
+    "id": "ph-0005",
+    "src": "/hosamane/photos/bedroom-1.jpg",
+    "kind": "hero",
+    "year": 2026
+   },
+   {
+    "id": "ph-0006",
+    "src": "/hosamane/photos/building-2.jpg",
+    "kind": "building",
+    "year": 2026
+   },
+   {
+    "id": "ph-0007",
+    "src": "/hosamane/photos/building-1.jpg",
+    "kind": "building",
+    "year": 2025
+   },
+   {
+    "id": "ph-0008",
+    "src": "/hosamane/photos/living-5.jpg",
+    "kind": "living",
+    "year": 2025
+   }
+  ],
+  "scamAsk": false,
+  "status": "available",
+  "ownerAnswers": {
+   "pets": "yes",
+   "depositNegotiable": "yes, down to 4 months",
+   "houseRules": "No loud music after 10 pm."
+  },
+  "replyDelayMin": 2,
+  "visitSlots": [
+   "Sat 10:00",
+   "Sat 11:30",
+   "Sat 15:00"
+  ]
+ },
+ {
+  "id": "r-03",
+  "mode": "rent",
+  "title": "3BHK in Neem Enclave",
+  "localityId": "indiranagar",
+  "bhk": 3,
+  "bathrooms": 3,
+  "sqft": 1700,
+  "floor": 3,
+  "floorsTotal": 8,
+  "furnishing": "unfurnished",
+  "balconies": 0,
+  "amenities": [
+   "Gym",
+   "Visitor parking"
+  ],
+  "rent": 71000,
+  "depositMonths": 6,
+  "maintenance": 4300,
+  "lister": "owner",
+  "listerName": "Venkat",
+  "brokerageMonths": 0,
+  "listedDaysAgo": 21,
+  "availabilityConfirmedDaysAgo": 4,
+  "ownerConfirmed": {
+   "method": "site visit",
+   "daysAgo": 3
+  },
+  "photos": [
+   {
+    "id": "ph-0009",
+    "src": "/hosamane/photos/living-2.jpg",
+    "kind": "hero",
+    "year": 2026
+   },
+   {
+    "id": "ph-0010",
+    "src": "/hosamane/photos/bedroom-3.jpg",
+    "kind": "bedroom",
+    "year": 2025
+   },
+   {
+    "id": "ph-0011",
+    "src": "/hosamane/photos/building-2.jpg",
+    "kind": "building",
+    "year": 2025
+   },
+   {
+    "id": "ph-0012",
+    "src": "/hosamane/photos/living-2.jpg",
+    "kind": "living",
+    "year": 2026
+   }
+  ],
+  "scamAsk": false,
+  "status": "available",
+  "ownerAnswers": {
+   "pets": "only small pets",
+   "depositNegotiable": "maybe for a longer stay",
+   "houseRules": "No loud music after 10 pm."
+  },
+  "replyDelayMin": 2,
+  "visitSlots": [
+   "Sat 10:00"
+  ]
+ },
+ {
+  "id": "r-04",
+  "mode": "rent",
+  "title": "1BHK in Kadamba Courts",
+  "localityId": "indiranagar",
+  "bhk": 1,
+  "bathrooms": 1,
+  "sqft": 680,
+  "floor": 0,
+  "floorsTotal": 12,
+  "furnishing": "unfurnished",
+  "balconies": 1,
+  "amenities": [
+   "Power backup",
+   "Covered parking",
+   "Gym",
+   "Children's play area",
+   "Clubhouse"
+  ],
+  "rent": 31500,
+  "depositMonths": 8,
+  "maintenance": 3900,
+  "lister": "owner",
+  "listerName": "Venkat",
+  "brokerageMonths": 0,
+  "listedDaysAgo": 8,
+  "availabilityConfirmedDaysAgo": 3,
+  "ownerConfirmed": {
+   "method": "site visit",
+   "daysAgo": 6
+  },
+  "photos": [
+   {
+    "id": "ph-0013",
+    "src": "/hosamane/photos/kitchen-1.jpg",
+    "kind": "hero",
+    "year": 2025
+   },
+   {
+    "id": "ph-0014",
+    "src": "/hosamane/photos/kitchen-2.jpg",
+    "kind": "kitchen",
+    "year": 2025
+   },
+   {
+    "id": "ph-0015",
+    "src": "/hosamane/photos/kitchen-3.jpg",
+    "kind": "kitchen",
+    "year": 2025
+   },
+   {
+    "id": "ph-0016",
+    "src": "/hosamane/photos/living-4.jpg",
+    "kind": "living",
+    "year": 2026
+   }
+  ],
+  "scamAsk": false,
+  "status": "available",
+  "ownerAnswers": {
+   "pets": "only small pets",
+   "depositNegotiable": "maybe for a longer stay",
+   "houseRules": "Guests welcome; inform the society for overnight stays."
+  },
+  "replyDelayMin": 4,
+  "visitSlots": [
+   "Sat 15:00",
+   "Sun 11:00"
+  ]
+ },
+ {
+  "id": "r-05",
+  "mode": "rent",
+  "title": "2BHK in Neem Towers",
+  "localityId": "koramangala",
+  "bhk": 2,
+  "bathrooms": 2,
+  "sqft": 1160,
+  "floor": 7,
+  "floorsTotal": 14,
+  "furnishing": "semi",
+  "balconies": 0,
+  "amenities": [
+   "Covered parking",
+   "Gym",
+   "Clubhouse",
+   "Visitor parking"
+  ],
+  "rent": 54000,
+  "depositMonths": 6,
+  "maintenance": 2900,
+  "lister": "owner",
+  "listerName": "Sanjay",
+  "brokerageMonths": 0,
+  "listedDaysAgo": 35,
+  "availabilityConfirmedDaysAgo": 2,
+  "ownerConfirmed": {
+   "method": "site visit",
+   "daysAgo": 5
+  },
+  "photos": [
+   {
+    "id": "ph-0017",
+    "src": "/hosamane/photos/living-3.jpg",
+    "kind": "hero",
+    "year": 2026
+   },
+   {
+    "id": "ph-0018",
+    "src": "/hosamane/photos/bedroom-5.jpg",
+    "kind": "bedroom",
+    "year": 2026
+   },
+   {
+    "id": "ph-0019",
+    "src": "/hosamane/photos/living-2.jpg",
+    "kind": "living",
+    "year": 2026
+   },
+   {
+    "id": "ph-0020",
+    "src": "/hosamane/photos/balcony-2.jpg",
+    "kind": "balcony",
+    "year": 2026
+   }
+  ],
+  "scamAsk": false,
+  "status": "available",
+  "ownerAnswers": {
+   "pets": "yes",
+   "depositNegotiable": "no",
+   "houseRules": "Guests welcome; inform the society for overnight stays."
+  },
+  "replyDelayMin": 2,
+  "visitSlots": [
+   "Sat 10:00",
+   "Sat 15:00",
+   "Sun 11:00"
+  ]
+ },
+ {
+  "id": "r-06",
+  "mode": "rent",
+  "title": "2BHK in Gulmohar Residency",
+  "localityId": "koramangala",
+  "bhk": 2,
+  "bathrooms": 2,
+  "sqft": 1150,
+  "floor": 4,
+  "floorsTotal": 5,
+  "furnishing": "furnished",
+  "balconies": 1,
+  "amenities": [
+   "Power backup",
+   "Covered parking",
+   "Children's play area",
+   "Visitor parking"
+  ],
+  "rent": 54000,
+  "depositMonths": 5,
+  "maintenance": 2900,
+  "lister": "owner",
+  "listerName": "Anitha",
+  "brokerageMonths": 0,
+  "listedDaysAgo": 26,
+  "availabilityConfirmedDaysAgo": 2,
+  "ownerConfirmed": {
+   "method": "phone",
+   "daysAgo": 3
+  },
+  "photos": [
+   {
+    "id": "ph-0021",
+    "src": "/hosamane/photos/bedroom-2.jpg",
+    "kind": "hero",
+    "year": 2026
+   },
+   {
+    "id": "ph-0022",
+    "src": "/hosamane/photos/bedroom-3.jpg",
+    "kind": "bedroom",
+    "year": 2026
+   },
+   {
+    "id": "ph-0023",
+    "src": "/hosamane/photos/kitchen-1.jpg",
+    "kind": "kitchen",
+    "year": 2026
+   },
+   {
+    "id": "ph-0024",
+    "src": "/hosamane/photos/balcony-2.jpg",
+    "kind": "balcony",
+    "year": 2026
+   }
+  ],
+  "scamAsk": false,
+  "status": "available",
+  "ownerAnswers": {
+   "pets": "only small pets",
+   "depositNegotiable": "no",
+   "houseRules": "Guests welcome; inform the society for overnight stays."
+  },
+  "replyDelayMin": 2,
+  "visitSlots": [
+   "Sat 11:30",
+   "Sat 15:00",
+   "Sun 11:00"
+  ]
+ },
+ {
+  "id": "r-07",
+  "mode": "rent",
+  "title": "3BHK in Tamarind Enclave",
+  "localityId": "koramangala",
+  "bhk": 3,
+  "bathrooms": 3,
+  "sqft": 1740,
+  "floor": 6,
+  "floorsTotal": 14,
+  "furnishing": "furnished",
+  "balconies": 1,
+  "amenities": [
+   "Power backup",
+   "Children's play area",
+   "Clubhouse"
+  ],
+  "rent": 87500,
+  "depositMonths": 8,
+  "maintenance": 2500,
+  "lister": "owner",
+  "listerName": "Kavya",
+  "brokerageMonths": 0,
+  "listedDaysAgo": 21,
+  "availabilityConfirmedDaysAgo": 5,
+  "ownerConfirmed": {
+   "method": "phone",
+   "daysAgo": 4
+  },
+  "photos": [
+   {
+    "id": "ph-0025",
+    "src": "/hosamane/photos/living-4.jpg",
+    "kind": "hero",
+    "year": 2025
+   },
+   {
+    "id": "ph-0026",
+    "src": "/hosamane/photos/kitchen-3.jpg",
+    "kind": "kitchen",
+    "year": 2025
+   },
+   {
+    "id": "ph-0027",
+    "src": "/hosamane/photos/building-2.jpg",
+    "kind": "building",
+    "year": 2026
+   }
+  ],
+  "scamAsk": false,
+  "status": "available",
+  "ownerAnswers": {
+   "pets": "yes",
+   "depositNegotiable": "maybe for a longer stay",
+   "houseRules": "Guests welcome; inform the society for overnight stays."
+  },
+  "replyDelayMin": 9,
+  "visitSlots": [
+   "Sat 10:00",
+   "Sun 11:00"
+  ]
+ },
+ {
+  "id": "r-08",
+  "mode": "rent",
+  "title": "1BHK in Banyan Heights",
+  "localityId": "koramangala",
+  "bhk": 1,
+  "bathrooms": 1,
+  "sqft": 660,
+  "floor": 9,
+  "floorsTotal": 12,
+  "furnishing": "semi",
+  "balconies": 1,
+  "amenities": [
+   "Lift",
+   "Power backup",
+   "Gym",
+   "Swimming pool",
+   "Children's play area",
+   "Clubhouse"
+  ],
+  "rent": 37000,
+  "depositMonths": 6,
+  "maintenance": 2900,
+  "lister": "broker",
+  "listerName": "Listed by a broker",
+  "brokerageMonths": 1,
+  "listedDaysAgo": 11,
+  "availabilityConfirmedDaysAgo": null,
+  "ownerConfirmed": null,
+  "photos": [
+   {
+    "id": "ph-0028",
+    "src": "/hosamane/photos/kitchen-2.jpg",
+    "kind": "hero",
+    "year": 2026
+   },
+   {
+    "id": "ph-0029",
+    "src": "/hosamane/photos/bedroom-4.jpg",
+    "kind": "bedroom",
+    "year": 2026
+   },
+   {
+    "id": "ph-0030",
+    "src": "/hosamane/photos/balcony-1.jpg",
+    "kind": "balcony",
+    "year": 2025
+   },
+   {
+    "id": "ph-0031",
+    "src": "/hosamane/photos/bedroom-4.jpg",
+    "kind": "bedroom",
+    "year": 2025
+   }
+  ],
+  "scamAsk": false,
+  "status": "available",
+  "ownerAnswers": {
+   "pets": "yes",
+   "depositNegotiable": "no",
+   "houseRules": "Guests welcome; inform the society for overnight stays."
+  },
+  "replyDelayMin": 2,
+  "visitSlots": [
+   "Sat 10:00",
+   "Sat 11:30",
+   "Sat 15:00",
+   "Sun 11:00"
+  ]
+ },
+ {
+  "id": "r-09",
+  "mode": "rent",
+  "title": "2BHK in Kadamba Courts",
+  "localityId": "hsr",
+  "bhk": 2,
+  "bathrooms": 1,
+  "sqft": 1140,
+  "floor": 3,
+  "floorsTotal": 12,
+  "furnishing": "semi",
+  "balconies": 2,
+  "amenities": [
+   "Children's play area",
+   "Visitor parking"
+  ],
+  "rent": 42500,
+  "depositMonths": 8,
+  "maintenance": 5100,
+  "lister": "owner",
+  "listerName": "Farah",
+  "brokerageMonths": 0,
+  "listedDaysAgo": 7,
+  "availabilityConfirmedDaysAgo": null,
+  "ownerConfirmed": {
+   "method": "phone",
+   "daysAgo": 7
+  },
+  "photos": [
+   {
+    "id": "ph-0032",
+    "src": "/hosamane/photos/bedroom-3.jpg",
+    "kind": "hero",
+    "year": 2025
+   },
+   {
+    "id": "ph-0033",
+    "src": "/hosamane/photos/building-1.jpg",
+    "kind": "building",
+    "year": 2026
+   },
+   {
+    "id": "ph-0034",
+    "src": "/hosamane/photos/balcony-1.jpg",
+    "kind": "balcony",
+    "year": 2025
+   }
+  ],
+  "scamAsk": false,
+  "status": "available",
+  "ownerAnswers": {
+   "pets": "yes",
+   "depositNegotiable": "maybe for a longer stay",
+   "houseRules": "No loud music after 10 pm."
+  },
+  "replyDelayMin": 2,
+  "visitSlots": [
+   "Sat 10:00",
+   "Sat 11:30",
+   "Sun 11:00"
+  ]
+ },
+ {
+  "id": "r-10",
+  "mode": "rent",
+  "title": "2BHK in Jacaranda Greens",
+  "localityId": "hsr",
+  "bhk": 2,
+  "bathrooms": 1,
+  "sqft": 1130,
+  "floor": 11,
+  "floorsTotal": 18,
+  "furnishing": "unfurnished",
+  "balconies": 0,
+  "amenities": [
+   "Lift",
+   "Gym"
+  ],
+  "rent": 49000,
+  "depositMonths": 3,
+  "maintenance": 5300,
+  "lister": "broker",
+  "listerName": "Listed by a broker",
+  "brokerageMonths": 1,
+  "listedDaysAgo": 32,
+  "availabilityConfirmedDaysAgo": null,
+  "ownerConfirmed": null,
+  "photos": [
+   {
+    "id": "ph-0035",
+    "src": "/hosamane/photos/living-5.jpg",
+    "kind": "hero",
+    "year": 2026
+   },
+   {
+    "id": "ph-0036",
+    "src": "/hosamane/photos/balcony-1.jpg",
+    "kind": "balcony",
+    "year": 2026
+   },
+   {
+    "id": "ph-0037",
+    "src": "/hosamane/photos/building-2.jpg",
+    "kind": "building",
+    "year": 2026
+   },
+   {
+    "id": "ph-0038",
+    "src": "/hosamane/photos/balcony-1.jpg",
+    "kind": "balcony",
+    "year": 2026
+   }
+  ],
+  "scamAsk": false,
+  "status": "available",
+  "ownerAnswers": {
+   "pets": "yes",
+   "depositNegotiable": "no",
+   "houseRules": "Guests welcome; inform the society for overnight stays."
+  },
+  "replyDelayMin": 6,
+  "visitSlots": [
+   "Sat 11:30",
+   "Sat 15:00",
+   "Sun 11:00"
+  ]
+ },
+ {
+  "id": "r-11",
+  "mode": "rent",
+  "title": "3BHK in Neem Gardens",
+  "localityId": "hsr",
+  "bhk": 3,
+  "bathrooms": 3,
+  "sqft": 1490,
+  "floor": 0,
+  "floorsTotal": 5,
+  "furnishing": "unfurnished",
+  "balconies": 0,
+  "amenities": [
+   "Gym",
+   "Swimming pool",
+   "Clubhouse"
+  ],
+  "rent": 68000,
+  "depositMonths": 3,
+  "maintenance": 4600,
+  "lister": "owner",
+  "listerName": "Meena",
+  "brokerageMonths": 0,
+  "listedDaysAgo": 7,
+  "availabilityConfirmedDaysAgo": 3,
+  "ownerConfirmed": {
+   "method": "site visit",
+   "daysAgo": 6
+  },
+  "photos": [
+   {
+    "id": "ph-0039",
+    "src": "/hosamane/photos/balcony-2.jpg",
+    "kind": "hero",
+    "year": 2025
+   },
+   {
+    "id": "ph-0040",
+    "src": "/hosamane/photos/balcony-1.jpg",
+    "kind": "balcony",
+    "year": 2025
+   },
+   {
+    "id": "ph-0041",
+    "src": "/hosamane/photos/balcony-2.jpg",
+    "kind": "balcony",
+    "year": 2025
+   },
+   {
+    "id": "ph-0042",
+    "src": "/hosamane/photos/building-3.jpg",
+    "kind": "building",
+    "year": 2026
+   }
+  ],
+  "scamAsk": false,
+  "status": "available",
+  "ownerAnswers": {
+   "pets": "no",
+   "depositNegotiable": "maybe for a longer stay",
+   "houseRules": "No loud music after 10 pm."
+  },
+  "replyDelayMin": 6,
+  "visitSlots": [
+   "Sat 10:00",
+   "Sat 11:30"
+  ]
+ },
+ {
+  "id": "r-12",
+  "mode": "rent",
+  "title": "1BHK in Champak Enclave",
+  "localityId": "hsr",
+  "bhk": 1,
+  "bathrooms": 1,
+  "sqft": 670,
+  "floor": 6,
+  "floorsTotal": 8,
+  "furnishing": "furnished",
+  "balconies": 1,
+  "amenities": [
+   "Power backup",
+   "Children's play area",
+   "Clubhouse",
+   "Visitor parking"
+  ],
+  "rent": 31500,
+  "depositMonths": 5,
+  "maintenance": 4500,
+  "lister": "owner",
+  "listerName": "Neha",
+  "brokerageMonths": 0,
+  "listedDaysAgo": 17,
+  "availabilityConfirmedDaysAgo": null,
+  "ownerConfirmed": {
+   "method": "site visit",
+   "daysAgo": 6
+  },
+  "photos": [
+   {
+    "id": "ph-0043",
+    "src": "/hosamane/photos/bedroom-4.jpg",
+    "kind": "hero",
+    "year": 2026
+   },
+   {
+    "id": "ph-0044",
+    "src": "/hosamane/photos/building-1.jpg",
+    "kind": "building",
+    "year": 2025
+   },
+   {
+    "id": "ph-0045",
+    "src": "/hosamane/photos/building-3.jpg",
+    "kind": "building",
+    "year": 2026
+   },
+   {
+    "id": "ph-0046",
+    "src": "/hosamane/photos/building-1.jpg",
+    "kind": "building",
+    "year": 2025
+   }
+  ],
+  "scamAsk": false,
+  "status": "available",
+  "ownerAnswers": {
+   "pets": "no",
+   "depositNegotiable": "no",
+   "houseRules": "No loud music after 10 pm."
+  },
+  "replyDelayMin": 9,
+  "visitSlots": [
+   "Sat 10:00",
+   "Sat 11:30",
+   "Sat 15:00"
+  ]
+ },
+ {
+  "id": "r-13",
+  "mode": "rent",
+  "title": "2BHK in Mango Enclave",
+  "localityId": "bellandur",
+  "bhk": 2,
+  "bathrooms": 2,
+  "sqft": 950,
+  "floor": 4,
+  "floorsTotal": 14,
+  "furnishing": "semi",
+  "balconies": 1,
+  "amenities": [
+   "Covered parking",
+   "Gym",
+   "Clubhouse",
+   "Visitor parking"
+  ],
+  "rent": 39000,
+  "depositMonths": 6,
+  "maintenance": 4600,
+  "lister": "owner",
+  "listerName": "Arjun",
+  "brokerageMonths": 0,
+  "listedDaysAgo": 14,
+  "availabilityConfirmedDaysAgo": 3,
+  "ownerConfirmed": {
+   "method": "site visit",
+   "daysAgo": 12
+  },
+  "photos": [
+   {
+    "id": "ph-0047",
+    "src": "/hosamane/photos/kitchen-3.jpg",
+    "kind": "hero",
+    "year": 2025
+   },
+   {
+    "id": "ph-0048",
+    "src": "/hosamane/photos/building-3.jpg",
+    "kind": "building",
+    "year": 2026
+   },
+   {
+    "id": "ph-0049",
+    "src": "/hosamane/photos/living-2.jpg",
+    "kind": "living",
+    "year": 2026
+   }
+  ],
+  "scamAsk": false,
+  "status": "available",
+  "ownerAnswers": {
+   "pets": "yes",
+   "depositNegotiable": "maybe for a longer stay",
+   "houseRules": "No smoking indoors."
+  },
+  "replyDelayMin": 2,
+  "visitSlots": [
+   "Sat 11:30",
+   "Sat 15:00",
+   "Sun 11:00"
+  ]
+ },
+ {
+  "id": "r-14",
+  "mode": "rent",
+  "title": "2BHK in Peepal Heights",
+  "localityId": "bellandur",
+  "bhk": 2,
+  "bathrooms": 1,
+  "sqft": 950,
+  "floor": 0,
+  "floorsTotal": 8,
+  "furnishing": "semi",
+  "balconies": 0,
+  "amenities": [
+   "Covered parking",
+   "Gym"
+  ],
+  "rent": 39500,
+  "depositMonths": 6,
+  "maintenance": 3300,
+  "lister": "owner",
+  "listerName": "Unverified lister",
+  "brokerageMonths": 0,
+  "listedDaysAgo": 34,
+  "availabilityConfirmedDaysAgo": 2,
+  "ownerConfirmed": null,
+  "photos": [
+   {
+    "id": "ph-0050",
+    "src": "/hosamane/photos/bedroom-5.jpg",
+    "kind": "hero",
+    "year": 2026
+   },
+   {
+    "id": "ph-0051",
+    "src": "/hosamane/photos/balcony-2.jpg",
+    "kind": "balcony",
+    "year": 2026
+   },
+   {
+    "id": "ph-0052",
+    "src": "/hosamane/photos/balcony-2.jpg",
+    "kind": "balcony",
+    "year": 2026
+   },
+   {
+    "id": "ph-0053",
+    "src": "/hosamane/photos/building-2.jpg",
+    "kind": "building",
+    "year": 2025
+   }
+  ],
+  "scamAsk": true,
+  "status": "available",
+  "ownerAnswers": {
+   "pets": "no",
+   "depositNegotiable": "no",
+   "houseRules": "No smoking indoors."
+  },
+  "replyDelayMin": 1,
+  "visitSlots": [
+   "Sat 11:30",
+   "Sat 15:00",
+   "Sun 11:00"
+  ]
+ },
+ {
+  "id": "r-15",
+  "mode": "rent",
+  "title": "3BHK in Mango Residency",
+  "localityId": "bellandur",
+  "bhk": 3,
+  "bathrooms": 3,
+  "sqft": 1480,
+  "floor": 13,
+  "floorsTotal": 14,
+  "furnishing": "semi",
+  "balconies": 1,
+  "amenities": [
+   "Covered parking",
+   "Swimming pool",
+   "Children's play area"
+  ],
+  "rent": 62500,
+  "depositMonths": 8,
+  "maintenance": 3500,
+  "lister": "owner",
+  "listerName": "Neha",
+  "brokerageMonths": 0,
+  "listedDaysAgo": 26,
+  "availabilityConfirmedDaysAgo": null,
+  "ownerConfirmed": {
+   "method": "site visit",
+   "daysAgo": 2
+  },
+  "photos": [
+   {
+    "id": "ph-0054",
+    "src": "/hosamane/photos/living-1.jpg",
+    "kind": "hero",
+    "year": 2026
+   },
+   {
+    "id": "ph-0055",
+    "src": "/hosamane/photos/bedroom-3.jpg",
+    "kind": "bedroom",
+    "year": 2026
+   },
+   {
+    "id": "ph-0056",
+    "src": "/hosamane/photos/kitchen-3.jpg",
+    "kind": "kitchen",
+    "year": 2025
+   },
+   {
+    "id": "ph-0057",
+    "src": "/hosamane/photos/living-3.jpg",
+    "kind": "living",
+    "year": 2026
+   }
+  ],
+  "scamAsk": false,
+  "status": "available",
+  "ownerAnswers": {
+   "pets": "yes",
+   "depositNegotiable": "yes, down to 4 months",
+   "houseRules": "No loud music after 10 pm."
+  },
+  "replyDelayMin": 9,
+  "visitSlots": [
+   "Sat 10:00",
+   "Sat 11:30",
+   "Sat 15:00",
+   "Sun 11:00"
+  ]
+ },
+ {
+  "id": "r-16",
+  "mode": "rent",
+  "title": "1BHK in Lotus Gardens",
+  "localityId": "bellandur",
+  "bhk": 1,
+  "bathrooms": 1,
+  "sqft": 580,
+  "floor": 0,
+  "floorsTotal": 5,
+  "furnishing": "unfurnished",
+  "balconies": 1,
+  "amenities": [
+   "Lift",
+   "Power backup",
+   "Gym",
+   "Clubhouse",
+   "Visitor parking"
+  ],
+  "rent": 24000,
+  "depositMonths": 5,
+  "maintenance": 4300,
+  "lister": "owner",
+  "listerName": "Kavya",
+  "brokerageMonths": 0,
+  "listedDaysAgo": 18,
+  "availabilityConfirmedDaysAgo": 5,
+  "ownerConfirmed": {
+   "method": "phone",
+   "daysAgo": 10
+  },
+  "photos": [
+   {
+    "id": "ph-0058",
+    "src": "/hosamane/photos/bedroom-1.jpg",
+    "kind": "hero",
+    "year": 2026
+   },
+   {
+    "id": "ph-0059",
+    "src": "/hosamane/photos/kitchen-2.jpg",
+    "kind": "kitchen",
+    "year": 2026
+   },
+   {
+    "id": "ph-0060",
+    "src": "/hosamane/photos/living-5.jpg",
+    "kind": "living",
+    "year": 2026
+   },
+   {
+    "id": "ph-0061",
+    "src": "/hosamane/photos/building-3.jpg",
+    "kind": "building",
+    "year": 2025
+   }
+  ],
+  "scamAsk": false,
+  "status": "available",
+  "ownerAnswers": {
+   "pets": "yes",
+   "depositNegotiable": "yes, down to 4 months",
+   "houseRules": "No smoking indoors."
+  },
+  "replyDelayMin": 4,
+  "visitSlots": [
+   "Sat 10:00",
+   "Sat 11:30",
+   "Sun 11:00"
+  ]
+ },
+ {
+  "id": "r-17",
+  "mode": "rent",
+  "title": "2BHK in Jacaranda Enclave",
+  "localityId": "kadubeesanahalli",
+  "bhk": 2,
+  "bathrooms": 1,
+  "sqft": 1210,
+  "floor": 2,
+  "floorsTotal": 4,
+  "furnishing": "furnished",
+  "balconies": 1,
+  "amenities": [
+   "Gym",
+   "Swimming pool",
+   "Clubhouse",
+   "Visitor parking"
+  ],
+  "rent": 36000,
+  "depositMonths": 6,
+  "maintenance": 2900,
+  "lister": "owner",
+  "listerName": "Ritu",
+  "brokerageMonths": 0,
+  "listedDaysAgo": 32,
+  "availabilityConfirmedDaysAgo": 1,
+  "ownerConfirmed": {
+   "method": "phone",
+   "daysAgo": 5
+  },
+  "photos": [
+   {
+    "id": "ph-0231",
+    "src": "/hosamane/photos/living-3.jpg",
+    "kind": "hero",
+    "year": 2020
+   },
+   {
+    "id": "ph-0232",
+    "src": "/hosamane/photos/building-3.jpg",
+    "kind": "building",
+    "year": 2020
+   },
+   {
+    "id": "ph-0233",
+    "src": "/hosamane/photos/kitchen-1.jpg",
+    "kind": "kitchen",
+    "year": 2026
+   },
+   {
+    "id": "ph-0234",
+    "src": "/hosamane/photos/building-1.jpg",
+    "kind": "building",
+    "year": 2026
+   }
+  ],
+  "scamAsk": false,
+  "status": "available",
+  "ownerAnswers": {
+   "pets": "no",
+   "depositNegotiable": "yes, down to 4 months",
+   "houseRules": "Guests welcome; inform the society for overnight stays."
+  },
+  "replyDelayMin": 2,
+  "visitSlots": [
+   "Sat 10:00",
+   "Sat 11:30",
+   "Sat 15:00",
+   "Sun 11:00"
+  ]
+ },
+ {
+  "id": "r-18",
+  "mode": "rent",
+  "title": "2BHK in Jacaranda Heights",
+  "localityId": "kadubeesanahalli",
+  "bhk": 2,
+  "bathrooms": 2,
+  "sqft": 1000,
+  "floor": 7,
+  "floorsTotal": 18,
+  "furnishing": "semi",
+  "balconies": 2,
+  "amenities": [
+   "Lift",
+   "Power backup",
+   "Covered parking",
+   "Visitor parking"
+  ],
+  "rent": 32500,
+  "depositMonths": 10,
+  "maintenance": 4900,
+  "lister": "owner",
+  "listerName": "Prakash",
+  "brokerageMonths": 0,
+  "listedDaysAgo": 31,
+  "availabilityConfirmedDaysAgo": 6,
+  "ownerConfirmed": {
+   "method": "phone",
+   "daysAgo": 6
+  },
+  "photos": [
+   {
+    "id": "ph-0066",
+    "src": "/hosamane/photos/kitchen-1.jpg",
+    "kind": "hero",
+    "year": 2025
+   },
+   {
+    "id": "ph-0067",
+    "src": "/hosamane/photos/bedroom-3.jpg",
+    "kind": "bedroom",
+    "year": 2025
+   },
+   {
+    "id": "ph-0068",
+    "src": "/hosamane/photos/kitchen-2.jpg",
+    "kind": "kitchen",
+    "year": 2026
+   },
+   {
+    "id": "ph-0069",
+    "src": "/hosamane/photos/living-5.jpg",
+    "kind": "living",
+    "year": 2026
+   }
+  ],
+  "scamAsk": false,
+  "status": "available",
+  "ownerAnswers": {
+   "pets": "no",
+   "depositNegotiable": "maybe for a longer stay",
+   "houseRules": "No loud music after 10 pm."
+  },
+  "replyDelayMin": 6,
+  "visitSlots": [
+   "Sat 10:00",
+   "Sat 11:30",
+   "Sat 15:00"
+  ]
+ },
+ {
+  "id": "r-19",
+  "mode": "rent",
+  "title": "3BHK in Gulmohar Nest",
+  "localityId": "kadubeesanahalli",
+  "bhk": 3,
+  "bathrooms": 3,
+  "sqft": 1770,
+  "floor": 0,
+  "floorsTotal": 4,
+  "furnishing": "furnished",
+  "balconies": 1,
+  "amenities": [
+   "Covered parking",
+   "Gym",
+   "Swimming pool",
+   "Visitor parking"
+  ],
+  "rent": 51000,
+  "depositMonths": 3,
+  "maintenance": 3200,
+  "lister": "owner",
+  "listerName": "Kavya",
+  "brokerageMonths": 0,
+  "listedDaysAgo": 25,
+  "availabilityConfirmedDaysAgo": null,
+  "ownerConfirmed": null,
+  "photos": [
+   {
+    "id": "ph-0070",
+    "src": "/hosamane/photos/living-3.jpg",
+    "kind": "hero",
+    "year": 2025
+   },
+   {
+    "id": "ph-0071",
+    "src": "/hosamane/photos/bedroom-4.jpg",
+    "kind": "bedroom",
+    "year": 2025
+   },
+   {
+    "id": "ph-0072",
+    "src": "/hosamane/photos/building-2.jpg",
+    "kind": "building",
+    "year": 2025
+   },
+   {
+    "id": "ph-0073",
+    "src": "/hosamane/photos/building-3.jpg",
+    "kind": "building",
+    "year": 2026
+   }
+  ],
+  "scamAsk": false,
+  "status": "taken",
+  "ownerAnswers": {
+   "pets": "no",
+   "depositNegotiable": "yes, down to 4 months",
+   "houseRules": "No smoking indoors."
+  },
+  "replyDelayMin": 2,
+  "visitSlots": []
+ },
+ {
+  "id": "r-20",
+  "mode": "rent",
+  "title": "1BHK in Kadamba Courts",
+  "localityId": "kadubeesanahalli",
+  "bhk": 1,
+  "bathrooms": 1,
+  "sqft": 590,
+  "floor": 11,
+  "floorsTotal": 14,
+  "furnishing": "semi",
+  "balconies": 1,
+  "amenities": [
+   "Gym",
+   "Swimming pool",
+   "Children's play area",
+   "Clubhouse"
+  ],
+  "rent": 26000,
+  "depositMonths": 6,
+  "maintenance": 3300,
+  "lister": "owner",
+  "listerName": "Suresh",
+  "brokerageMonths": 0,
+  "listedDaysAgo": 11,
+  "availabilityConfirmedDaysAgo": 6,
+  "ownerConfirmed": {
+   "method": "site visit",
+   "daysAgo": 3
+  },
+  "photos": [
+   {
+    "id": "ph-0074",
+    "src": "/hosamane/photos/bedroom-2.jpg",
+    "kind": "hero",
+    "year": 2025
+   },
+   {
+    "id": "ph-0075",
+    "src": "/hosamane/photos/bedroom-4.jpg",
+    "kind": "bedroom",
+    "year": 2026
+   },
+   {
+    "id": "ph-0076",
+    "src": "/hosamane/photos/building-3.jpg",
+    "kind": "building",
+    "year": 2026
+   },
+   {
+    "id": "ph-0077",
+    "src": "/hosamane/photos/balcony-2.jpg",
+    "kind": "balcony",
+    "year": 2025
+   }
+  ],
+  "scamAsk": false,
+  "status": "available",
+  "ownerAnswers": {
+   "pets": "yes",
+   "depositNegotiable": "no",
+   "houseRules": "Guests welcome; inform the society for overnight stays."
+  },
+  "replyDelayMin": 2,
+  "visitSlots": [
+   "Sat 10:00",
+   "Sat 11:30",
+   "Sat 15:00"
+  ]
+ },
+ {
+  "id": "r-21",
+  "mode": "rent",
+  "title": "2BHK in Kadamba Towers",
+  "localityId": "whitefield",
+  "bhk": 2,
+  "bathrooms": 1,
+  "sqft": 1150,
+  "floor": 7,
+  "floorsTotal": 18,
+  "furnishing": "unfurnished",
+  "balconies": 1,
+  "amenities": [
+   "Power backup",
+   "Gym",
+   "Children's play area"
+  ],
+  "rent": 35000,
+  "depositMonths": 6,
+  "maintenance": 3700,
+  "lister": "owner",
+  "listerName": "Rahul",
+  "brokerageMonths": 0,
+  "listedDaysAgo": 34,
+  "availabilityConfirmedDaysAgo": null,
+  "ownerConfirmed": {
+   "method": "site visit",
+   "daysAgo": 6
+  },
+  "photos": [
+   {
+    "id": "ph-0232",
+    "src": "/hosamane/photos/building-3.jpg",
+    "kind": "building",
+    "year": 2020
+   },
+   {
+    "id": "ph-0079",
+    "src": "/hosamane/photos/balcony-1.jpg",
+    "kind": "balcony",
+    "year": 2026
+   },
+   {
+    "id": "ph-0080",
+    "src": "/hosamane/photos/building-1.jpg",
+    "kind": "building",
+    "year": 2026
+   }
+  ],
+  "scamAsk": false,
+  "status": "available",
+  "ownerAnswers": {
+   "pets": "only small pets",
+   "depositNegotiable": "no",
+   "houseRules": "Guests welcome; inform the society for overnight stays."
+  },
+  "replyDelayMin": null,
+  "visitSlots": [
+   "Sat 10:00",
+   "Sat 15:00",
+   "Sun 11:00"
+  ]
+ },
+ {
+  "id": "r-22",
+  "mode": "rent",
+  "title": "2BHK in Champak Residency",
+  "localityId": "whitefield",
+  "bhk": 2,
+  "bathrooms": 1,
+  "sqft": 1230,
+  "floor": 10,
+  "floorsTotal": 14,
+  "furnishing": "unfurnished",
+  "balconies": 2,
+  "amenities": [
+   "Lift",
+   "Power backup",
+   "Gym",
+   "Swimming pool",
+   "Children's play area",
+   "Clubhouse"
+  ],
+  "rent": 33500,
+  "depositMonths": 10,
+  "maintenance": 5000,
+  "lister": "broker",
+  "listerName": "Listed by a broker",
+  "brokerageMonths": 1,
+  "listedDaysAgo": 7,
+  "availabilityConfirmedDaysAgo": 1,
+  "ownerConfirmed": null,
+  "photos": [
+   {
+    "id": "ph-0081",
+    "src": "/hosamane/photos/kitchen-2.jpg",
+    "kind": "hero",
+    "year": 2026
+   },
+   {
+    "id": "ph-0082",
+    "src": "/hosamane/photos/building-1.jpg",
+    "kind": "building",
+    "year": 2026
+   },
+   {
+    "id": "ph-0083",
+    "src": "/hosamane/photos/building-1.jpg",
+    "kind": "building",
+    "year": 2026
+   }
+  ],
+  "scamAsk": false,
+  "status": "available",
+  "ownerAnswers": {
+   "pets": "only small pets",
+   "depositNegotiable": "no",
+   "houseRules": "Guests welcome; inform the society for overnight stays."
+  },
+  "replyDelayMin": 6,
+  "visitSlots": [
+   "Sat 11:30",
+   "Sat 15:00",
+   "Sun 11:00"
+  ]
+ },
+ {
+  "id": "r-23",
+  "mode": "rent",
+  "title": "3BHK in Tamarind Enclave",
+  "localityId": "whitefield",
+  "bhk": 3,
+  "bathrooms": 3,
+  "sqft": 1630,
+  "floor": 5,
+  "floorsTotal": 14,
+  "furnishing": "semi",
+  "balconies": 2,
+  "amenities": [
+   "Power backup",
+   "Covered parking",
+   "Children's play area",
+   "Visitor parking"
+  ],
+  "rent": 56000,
+  "depositMonths": 5,
+  "maintenance": 3200,
+  "lister": "owner",
+  "listerName": "Sanjay",
+  "brokerageMonths": 0,
+  "listedDaysAgo": 4,
+  "availabilityConfirmedDaysAgo": 1,
+  "ownerConfirmed": null,
+  "photos": [
+   {
+    "id": "ph-0084",
+    "src": "/hosamane/photos/bedroom-3.jpg",
+    "kind": "hero",
+    "year": 2026
+   },
+   {
+    "id": "ph-0085",
+    "src": "/hosamane/photos/building-3.jpg",
+    "kind": "building",
+    "year": 2026
+   },
+   {
+    "id": "ph-0086",
+    "src": "/hosamane/photos/building-3.jpg",
+    "kind": "building",
+    "year": 2026
+   },
+   {
+    "id": "ph-0087",
+    "src": "/hosamane/photos/bedroom-3.jpg",
+    "kind": "bedroom",
+    "year": 2026
+   }
+  ],
+  "scamAsk": false,
+  "status": "available",
+  "ownerAnswers": {
+   "pets": "yes",
+   "depositNegotiable": "maybe for a longer stay",
+   "houseRules": "No loud music after 10 pm."
+  },
+  "replyDelayMin": null,
+  "visitSlots": [
+   "Sat 15:00"
+  ]
+ },
+ {
+  "id": "r-24",
+  "mode": "rent",
+  "title": "1BHK in Coral Heights",
+  "localityId": "whitefield",
+  "bhk": 1,
+  "bathrooms": 1,
+  "sqft": 600,
+  "floor": 9,
+  "floorsTotal": 12,
+  "furnishing": "semi",
+  "balconies": 1,
+  "amenities": [
+   "Lift",
+   "Covered parking",
+   "Swimming pool",
+   "Children's play area"
+  ],
+  "rent": 20000,
+  "depositMonths": 8,
+  "maintenance": 4200,
+  "lister": "owner",
+  "listerName": "Venkat",
+  "brokerageMonths": 0,
+  "listedDaysAgo": 16,
+  "availabilityConfirmedDaysAgo": null,
+  "ownerConfirmed": null,
+  "photos": [
+   {
+    "id": "ph-0088",
+    "src": "/hosamane/photos/living-5.jpg",
+    "kind": "hero",
+    "year": 2026
+   },
+   {
+    "id": "ph-0089",
+    "src": "/hosamane/photos/balcony-1.jpg",
+    "kind": "balcony",
+    "year": 2025
+   },
+   {
+    "id": "ph-0090",
+    "src": "/hosamane/photos/living-4.jpg",
+    "kind": "living",
+    "year": 2025
+   },
+   {
+    "id": "ph-0091",
+    "src": "/hosamane/photos/balcony-1.jpg",
+    "kind": "balcony",
+    "year": 2025
+   }
+  ],
+  "scamAsk": false,
+  "status": "available",
+  "ownerAnswers": {
+   "pets": "no",
+   "depositNegotiable": "yes, down to 4 months",
+   "houseRules": "No loud music after 10 pm."
+  },
+  "replyDelayMin": null,
+  "visitSlots": [
+   "Sat 10:00",
+   "Sat 15:00"
+  ]
+ },
+ {
+  "id": "r-25",
+  "mode": "rent",
+  "title": "2BHK in Neem Greens",
+  "localityId": "sarjapur",
+  "bhk": 2,
+  "bathrooms": 2,
+  "sqft": 1080,
+  "floor": 8,
+  "floorsTotal": 12,
+  "furnishing": "unfurnished",
+  "balconies": 0,
+  "amenities": [
+   "Power backup",
+   "Swimming pool",
+   "Visitor parking"
+  ],
+  "rent": 40500,
+  "depositMonths": 3,
+  "maintenance": 5100,
+  "lister": "owner",
+  "listerName": "Meena",
+  "brokerageMonths": 0,
+  "listedDaysAgo": 34,
+  "availabilityConfirmedDaysAgo": 5,
+  "ownerConfirmed": null,
+  "photos": [
+   {
+    "id": "ph-0092",
+    "src": "/hosamane/photos/balcony-2.jpg",
+    "kind": "hero",
+    "year": 2026
+   },
+   {
+    "id": "ph-0093",
+    "src": "/hosamane/photos/balcony-1.jpg",
+    "kind": "balcony",
+    "year": 2026
+   },
+   {
+    "id": "ph-0094",
+    "src": "/hosamane/photos/building-2.jpg",
+    "kind": "building",
+    "year": 2025
+   },
+   {
+    "id": "ph-0095",
+    "src": "/hosamane/photos/bedroom-3.jpg",
+    "kind": "bedroom",
+    "year": 2026
+   }
+  ],
+  "scamAsk": false,
+  "status": "available",
+  "ownerAnswers": {
+   "pets": "no",
+   "depositNegotiable": "maybe for a longer stay",
+   "houseRules": "No loud music after 10 pm."
+  },
+  "replyDelayMin": 9,
+  "visitSlots": [
+   "Sat 10:00",
+   "Sat 15:00",
+   "Sun 11:00"
+  ]
+ },
+ {
+  "id": "r-26",
+  "mode": "rent",
+  "title": "2BHK in Champak Residency",
+  "localityId": "sarjapur",
+  "bhk": 2,
+  "bathrooms": 1,
+  "sqft": 990,
+  "floor": 0,
+  "floorsTotal": 14,
+  "furnishing": "furnished",
+  "balconies": 0,
+  "amenities": [
+   "Lift",
+   "Swimming pool",
+   "Clubhouse",
+   "Visitor parking"
+  ],
+  "rent": 38000,
+  "depositMonths": 6,
+  "maintenance": 4400,
+  "lister": "broker",
+  "listerName": "Listed by a broker",
+  "brokerageMonths": 1,
+  "listedDaysAgo": 15,
+  "availabilityConfirmedDaysAgo": 1,
+  "ownerConfirmed": null,
+  "photos": [
+   {
+    "id": "ph-0096",
+    "src": "/hosamane/photos/bedroom-4.jpg",
+    "kind": "hero",
+    "year": 2025
+   },
+   {
+    "id": "ph-0097",
+    "src": "/hosamane/photos/balcony-2.jpg",
+    "kind": "balcony",
+    "year": 2026
+   },
+   {
+    "id": "ph-0098",
+    "src": "/hosamane/photos/building-3.jpg",
+    "kind": "building",
+    "year": 2025
+   }
+  ],
+  "scamAsk": false,
+  "status": "available",
+  "ownerAnswers": {
+   "pets": "only small pets",
+   "depositNegotiable": "no",
+   "houseRules": "No loud music after 10 pm."
+  },
+  "replyDelayMin": 2,
+  "visitSlots": [
+   "Sat 10:00",
+   "Sat 15:00",
+   "Sun 11:00"
+  ]
+ },
+ {
+  "id": "r-27",
+  "mode": "rent",
+  "title": "3BHK in Mango Greens",
+  "localityId": "sarjapur",
+  "bhk": 3,
+  "bathrooms": 3,
+  "sqft": 1500,
+  "floor": 6,
+  "floorsTotal": 12,
+  "furnishing": "semi",
+  "balconies": 2,
+  "amenities": [
+   "Lift",
+   "Power backup",
+   "Swimming pool",
+   "Visitor parking"
+  ],
+  "rent": 50500,
+  "depositMonths": 6,
+  "maintenance": 5500,
+  "lister": "owner",
+  "listerName": "Kavya",
+  "brokerageMonths": 0,
+  "listedDaysAgo": 19,
+  "availabilityConfirmedDaysAgo": 6,
+  "ownerConfirmed": null,
+  "photos": [
+   {
+    "id": "ph-0099",
+    "src": "/hosamane/photos/kitchen-3.jpg",
+    "kind": "hero",
+    "year": 2026
+   },
+   {
+    "id": "ph-0100",
+    "src": "/hosamane/photos/bedroom-4.jpg",
+    "kind": "bedroom",
+    "year": 2026
+   },
+   {
+    "id": "ph-0101",
+    "src": "/hosamane/photos/living-4.jpg",
+    "kind": "living",
+    "year": 2026
+   }
+  ],
+  "scamAsk": true,
+  "status": "available",
+  "ownerAnswers": {
+   "pets": "no",
+   "depositNegotiable": "yes, down to 4 months",
+   "houseRules": "Guests welcome; inform the society for overnight stays."
+  },
+  "replyDelayMin": null,
+  "visitSlots": [
+   "Sat 15:00",
+   "Sun 11:00"
+  ]
+ },
+ {
+  "id": "r-28",
+  "mode": "rent",
+  "title": "1BHK in Tamarind Courts",
+  "localityId": "sarjapur",
+  "bhk": 1,
+  "bathrooms": 1,
+  "sqft": 670,
+  "floor": 2,
+  "floorsTotal": 12,
+  "furnishing": "unfurnished",
+  "balconies": 1,
+  "amenities": [
+   "Covered parking"
+  ],
+  "rent": 22500,
+  "depositMonths": 6,
+  "maintenance": 3900,
+  "lister": "broker",
+  "listerName": "Listed by a broker",
+  "brokerageMonths": 1,
+  "listedDaysAgo": 11,
+  "availabilityConfirmedDaysAgo": 3,
+  "ownerConfirmed": null,
+  "photos": [
+   {
+    "id": "ph-0102",
+    "src": "/hosamane/photos/bedroom-5.jpg",
+    "kind": "hero",
+    "year": 2025
+   },
+   {
+    "id": "ph-0103",
+    "src": "/hosamane/photos/kitchen-3.jpg",
+    "kind": "kitchen",
+    "year": 2025
+   },
+   {
+    "id": "ph-0104",
+    "src": "/hosamane/photos/kitchen-1.jpg",
+    "kind": "kitchen",
+    "year": 2026
+   },
+   {
+    "id": "ph-0105",
+    "src": "/hosamane/photos/living-1.jpg",
+    "kind": "living",
+    "year": 2026
+   }
+  ],
+  "scamAsk": false,
+  "status": "available",
+  "ownerAnswers": {
+   "pets": "yes",
+   "depositNegotiable": "yes, down to 4 months",
+   "houseRules": "Guests welcome; inform the society for overnight stays."
+  },
+  "replyDelayMin": 4,
+  "visitSlots": [
+   "Sat 10:00",
+   "Sat 11:30",
+   "Sat 15:00",
+   "Sun 11:00"
+  ]
+ },
+ {
+  "id": "r-29",
+  "mode": "rent",
+  "title": "2BHK in Lotus Residency",
+  "localityId": "ecity",
+  "bhk": 2,
+  "bathrooms": 2,
+  "sqft": 1190,
+  "floor": 2,
+  "floorsTotal": 4,
+  "furnishing": "furnished",
+  "balconies": 0,
+  "amenities": [
+   "Lift",
+   "Power backup",
+   "Covered parking",
+   "Swimming pool",
+   "Children's play area"
+  ],
+  "rent": 26000,
+  "depositMonths": 6,
+  "maintenance": 4500,
+  "lister": "owner",
+  "listerName": "Venkat",
+  "brokerageMonths": 0,
+  "listedDaysAgo": 29,
+  "availabilityConfirmedDaysAgo": 5,
+  "ownerConfirmed": {
+   "method": "phone",
+   "daysAgo": 2
+  },
+  "photos": [
+   {
+    "id": "ph-0106",
+    "src": "/hosamane/photos/living-1.jpg",
+    "kind": "hero",
+    "year": 2026
+   },
+   {
+    "id": "ph-0107",
+    "src": "/hosamane/photos/balcony-2.jpg",
+    "kind": "balcony",
+    "year": 2026
+   },
+   {
+    "id": "ph-0108",
+    "src": "/hosamane/photos/balcony-1.jpg",
+    "kind": "balcony",
+    "year": 2026
+   },
+   {
+    "id": "ph-0109",
+    "src": "/hosamane/photos/balcony-2.jpg",
+    "kind": "balcony",
+    "year": 2025
+   }
+  ],
+  "scamAsk": false,
+  "status": "available",
+  "ownerAnswers": {
+   "pets": "yes",
+   "depositNegotiable": "no",
+   "houseRules": "No smoking indoors."
+  },
+  "replyDelayMin": 9,
+  "visitSlots": [
+   "Sat 10:00",
+   "Sat 15:00",
+   "Sun 11:00"
+  ]
+ },
+ {
+  "id": "r-30",
+  "mode": "rent",
+  "title": "2BHK in Ashoka Towers",
+  "localityId": "ecity",
+  "bhk": 2,
+  "bathrooms": 1,
+  "sqft": 1240,
+  "floor": 0,
+  "floorsTotal": 4,
+  "furnishing": "semi",
+  "balconies": 1,
+  "amenities": [
+   "Gym",
+   "Swimming pool",
+   "Clubhouse"
+  ],
+  "rent": 28000,
+  "depositMonths": 6,
+  "maintenance": 3200,
+  "lister": "broker",
+  "listerName": "Listed by a broker",
+  "brokerageMonths": 1,
+  "listedDaysAgo": 13,
+  "availabilityConfirmedDaysAgo": null,
+  "ownerConfirmed": null,
+  "photos": [
+   {
+    "id": "ph-0110",
+    "src": "/hosamane/photos/bedroom-1.jpg",
+    "kind": "hero",
+    "year": 2026
+   },
+   {
+    "id": "ph-0111",
+    "src": "/hosamane/photos/balcony-1.jpg",
+    "kind": "balcony",
+    "year": 2026
+   },
+   {
+    "id": "ph-0112",
+    "src": "/hosamane/photos/living-2.jpg",
+    "kind": "living",
+    "year": 2026
+   },
+   {
+    "id": "ph-0113",
+    "src": "/hosamane/photos/bedroom-4.jpg",
+    "kind": "bedroom",
+    "year": 2025
+   }
+  ],
+  "scamAsk": false,
+  "status": "available",
+  "ownerAnswers": {
+   "pets": "yes",
+   "depositNegotiable": "no",
+   "houseRules": "Guests welcome; inform the society for overnight stays."
+  },
+  "replyDelayMin": 2,
+  "visitSlots": [
+   "Sat 10:00",
+   "Sat 11:30",
+   "Sat 15:00",
+   "Sun 11:00"
+  ]
+ },
+ {
+  "id": "r-31",
+  "mode": "rent",
+  "title": "3BHK in Mango Towers",
+  "localityId": "ecity",
+  "bhk": 3,
+  "bathrooms": 3,
+  "sqft": 1620,
+  "floor": 13,
+  "floorsTotal": 18,
+  "furnishing": "unfurnished",
+  "balconies": 1,
+  "amenities": [
+   "Power backup",
+   "Gym",
+   "Swimming pool"
+  ],
+  "rent": 40000,
+  "depositMonths": 8,
+  "maintenance": 2600,
+  "lister": "broker",
+  "listerName": "Listed by a broker",
+  "brokerageMonths": 1,
+  "listedDaysAgo": 27,
+  "availabilityConfirmedDaysAgo": 6,
+  "ownerConfirmed": null,
+  "photos": [
+   {
+    "id": "ph-0114",
+    "src": "/hosamane/photos/living-2.jpg",
+    "kind": "hero",
+    "year": 2026
+   },
+   {
+    "id": "ph-0115",
+    "src": "/hosamane/photos/building-1.jpg",
+    "kind": "building",
+    "year": 2025
+   },
+   {
+    "id": "ph-0116",
+    "src": "/hosamane/photos/living-1.jpg",
+    "kind": "living",
+    "year": 2025
+   },
+   {
+    "id": "ph-0117",
+    "src": "/hosamane/photos/building-3.jpg",
+    "kind": "building",
+    "year": 2026
+   }
+  ],
+  "scamAsk": false,
+  "status": "available",
+  "ownerAnswers": {
+   "pets": "yes",
+   "depositNegotiable": "yes, down to 4 months",
+   "houseRules": "No smoking indoors."
+  },
+  "replyDelayMin": 6,
+  "visitSlots": [
+   "Sat 11:30",
+   "Sat 15:00",
+   "Sun 11:00"
+  ]
+ },
+ {
+  "id": "r-32",
+  "mode": "rent",
+  "title": "1BHK in Peepal Greens",
+  "localityId": "ecity",
+  "bhk": 1,
+  "bathrooms": 1,
+  "sqft": 650,
+  "floor": 1,
+  "floorsTotal": 12,
+  "furnishing": "furnished",
+  "balconies": 1,
+  "amenities": [
+   "Lift",
+   "Power backup",
+   "Gym",
+   "Clubhouse"
+  ],
+  "rent": 13500,
+  "depositMonths": 8,
+  "maintenance": 5300,
+  "lister": "owner",
+  "listerName": "Kavya",
+  "brokerageMonths": 0,
+  "listedDaysAgo": 16,
+  "availabilityConfirmedDaysAgo": 4,
+  "ownerConfirmed": {
+   "method": "phone",
+   "daysAgo": 7
+  },
+  "photos": [
+   {
+    "id": "ph-0118",
+    "src": "/hosamane/photos/kitchen-1.jpg",
+    "kind": "hero",
+    "year": 2026
+   },
+   {
+    "id": "ph-0119",
+    "src": "/hosamane/photos/kitchen-1.jpg",
+    "kind": "kitchen",
+    "year": 2026
+   },
+   {
+    "id": "ph-0120",
+    "src": "/hosamane/photos/living-1.jpg",
+    "kind": "living",
+    "year": 2025
+   },
+   {
+    "id": "ph-0121",
+    "src": "/hosamane/photos/balcony-2.jpg",
+    "kind": "balcony",
+    "year": 2025
+   }
+  ],
+  "scamAsk": false,
+  "status": "available",
+  "ownerAnswers": {
+   "pets": "only small pets",
+   "depositNegotiable": "no",
+   "houseRules": "Guests welcome; inform the society for overnight stays."
+  },
+  "replyDelayMin": 2,
+  "visitSlots": [
+   "Sat 11:30"
+  ]
+ },
+ {
+  "id": "r-33",
+  "mode": "rent",
+  "title": "2BHK in Lotus Nest",
+  "localityId": "hebbal",
+  "bhk": 2,
+  "bathrooms": 2,
+  "sqft": 960,
+  "floor": 7,
+  "floorsTotal": 8,
+  "furnishing": "semi",
+  "balconies": 1,
+  "amenities": [
+   "Power backup",
+   "Swimming pool",
+   "Children's play area",
+   "Visitor parking"
+  ],
+  "rent": 43500,
+  "depositMonths": 5,
+  "maintenance": 4800,
+  "lister": "owner",
+  "listerName": "Arjun",
+  "brokerageMonths": 0,
+  "listedDaysAgo": 2,
+  "availabilityConfirmedDaysAgo": 2,
+  "ownerConfirmed": {
+   "method": "phone",
+   "daysAgo": 10
+  },
+  "photos": [
+   {
+    "id": "ph-0122",
+    "src": "/hosamane/photos/living-3.jpg",
+    "kind": "hero",
+    "year": 2026
+   },
+   {
+    "id": "ph-0123",
+    "src": "/hosamane/photos/bedroom-5.jpg",
+    "kind": "bedroom",
+    "year": 2026
+   },
+   {
+    "id": "ph-0124",
+    "src": "/hosamane/photos/kitchen-3.jpg",
+    "kind": "kitchen",
+    "year": 2025
+   },
+   {
+    "id": "ph-0125",
+    "src": "/hosamane/photos/bedroom-1.jpg",
+    "kind": "bedroom",
+    "year": 2026
+   }
+  ],
+  "scamAsk": false,
+  "status": "available",
+  "ownerAnswers": {
+   "pets": "no",
+   "depositNegotiable": "yes, down to 4 months",
+   "houseRules": "No loud music after 10 pm."
+  },
+  "replyDelayMin": 2,
+  "visitSlots": [
+   "Sat 10:00",
+   "Sat 11:30",
+   "Sat 15:00",
+   "Sun 11:00"
+  ]
+ },
+ {
+  "id": "r-34",
+  "mode": "rent",
+  "title": "2BHK in Ashoka Greens",
+  "localityId": "hebbal",
+  "bhk": 2,
+  "bathrooms": 2,
+  "sqft": 1000,
+  "floor": 7,
+  "floorsTotal": 14,
+  "furnishing": "furnished",
+  "balconies": 2,
+  "amenities": [
+   "Power backup",
+   "Gym",
+   "Children's play area"
+  ],
+  "rent": 41500,
+  "depositMonths": 6,
+  "maintenance": 5100,
+  "lister": "owner",
+  "listerName": "Ritu",
+  "brokerageMonths": 0,
+  "listedDaysAgo": 16,
+  "availabilityConfirmedDaysAgo": 4,
+  "ownerConfirmed": null,
+  "photos": [
+   {
+    "id": "ph-0126",
+    "src": "/hosamane/photos/bedroom-2.jpg",
+    "kind": "hero",
+    "year": 2026
+   },
+   {
+    "id": "ph-0127",
+    "src": "/hosamane/photos/kitchen-1.jpg",
+    "kind": "kitchen",
+    "year": 2026
+   },
+   {
+    "id": "ph-0128",
+    "src": "/hosamane/photos/building-2.jpg",
+    "kind": "building",
+    "year": 2025
+   }
+  ],
+  "scamAsk": false,
+  "status": "available",
+  "ownerAnswers": {
+   "pets": "only small pets",
+   "depositNegotiable": "maybe for a longer stay",
+   "houseRules": "Guests welcome; inform the society for overnight stays."
+  },
+  "replyDelayMin": 4,
+  "visitSlots": [
+   "Sat 10:00",
+   "Sat 11:30"
+  ]
+ },
+ {
+  "id": "r-35",
+  "mode": "rent",
+  "title": "3BHK in Coral Towers",
+  "localityId": "hebbal",
+  "bhk": 3,
+  "bathrooms": 3,
+  "sqft": 1610,
+  "floor": 2,
+  "floorsTotal": 4,
+  "furnishing": "semi",
+  "balconies": 0,
+  "amenities": [
+   "Power backup",
+   "Covered parking",
+   "Gym",
+   "Swimming pool",
+   "Children's play area",
+   "Clubhouse"
+  ],
+  "rent": 64500,
+  "depositMonths": 8,
+  "maintenance": 5200,
+  "lister": "owner",
+  "listerName": "Lakshmi",
+  "brokerageMonths": 0,
+  "listedDaysAgo": 24,
+  "availabilityConfirmedDaysAgo": 5,
+  "ownerConfirmed": null,
+  "photos": [
+   {
+    "id": "ph-0129",
+    "src": "/hosamane/photos/living-4.jpg",
+    "kind": "hero",
+    "year": 2026
+   },
+   {
+    "id": "ph-0130",
+    "src": "/hosamane/photos/kitchen-3.jpg",
+    "kind": "kitchen",
+    "year": 2026
+   },
+   {
+    "id": "ph-0131",
+    "src": "/hosamane/photos/kitchen-3.jpg",
+    "kind": "kitchen",
+    "year": 2026
+   },
+   {
+    "id": "ph-0132",
+    "src": "/hosamane/photos/building-1.jpg",
+    "kind": "building",
+    "year": 2025
+   }
+  ],
+  "scamAsk": false,
+  "status": "available",
+  "ownerAnswers": {
+   "pets": "no",
+   "depositNegotiable": "maybe for a longer stay",
+   "houseRules": "Guests welcome; inform the society for overnight stays."
+  },
+  "replyDelayMin": 6,
+  "visitSlots": [
+   "Sat 10:00",
+   "Sat 11:30",
+   "Sat 15:00"
+  ]
+ },
+ {
+  "id": "r-36",
+  "mode": "rent",
+  "title": "1BHK in Mango Nest",
+  "localityId": "hebbal",
+  "bhk": 1,
+  "bathrooms": 1,
+  "sqft": 660,
+  "floor": 5,
+  "floorsTotal": 8,
+  "furnishing": "semi",
+  "balconies": 0,
+  "amenities": [
+   "Lift",
+   "Covered parking",
+   "Swimming pool",
+   "Children's play area"
+  ],
+  "rent": 24500,
+  "depositMonths": 6,
+  "maintenance": 2600,
+  "lister": "broker",
+  "listerName": "Listed by a broker",
+  "brokerageMonths": 1,
+  "listedDaysAgo": 22,
+  "availabilityConfirmedDaysAgo": null,
+  "ownerConfirmed": null,
+  "photos": [
+   {
+    "id": "ph-0133",
+    "src": "/hosamane/photos/kitchen-2.jpg",
+    "kind": "hero",
+    "year": 2026
+   },
+   {
+    "id": "ph-0134",
+    "src": "/hosamane/photos/building-3.jpg",
+    "kind": "building",
+    "year": 2026
+   },
+   {
+    "id": "ph-0135",
+    "src": "/hosamane/photos/kitchen-2.jpg",
+    "kind": "kitchen",
+    "year": 2026
+   },
+   {
+    "id": "ph-0136",
+    "src": "/hosamane/photos/living-5.jpg",
+    "kind": "living",
+    "year": 2026
+   }
+  ],
+  "scamAsk": false,
+  "status": "available",
+  "ownerAnswers": {
+   "pets": "no",
+   "depositNegotiable": "yes, down to 4 months",
+   "houseRules": "No loud music after 10 pm."
+  },
+  "replyDelayMin": 2,
+  "visitSlots": [
+   "Sat 10:00",
+   "Sat 11:30",
+   "Sat 15:00",
+   "Sun 11:00"
+  ]
+ },
+ {
+  "id": "r-37",
+  "mode": "rent",
+  "title": "2BHK in Ashoka Residency",
+  "localityId": "thanisandra",
+  "bhk": 2,
+  "bathrooms": 1,
+  "sqft": 1020,
+  "floor": 3,
+  "floorsTotal": 4,
+  "furnishing": "unfurnished",
+  "balconies": 1,
+  "amenities": [
+   "Lift",
+   "Power backup",
+   "Swimming pool",
+   "Clubhouse",
+   "Visitor parking"
+  ],
+  "rent": 41500,
+  "depositMonths": 6,
+  "maintenance": 2700,
+  "lister": "broker",
+  "listerName": "Listed by a broker",
+  "brokerageMonths": 1,
+  "listedDaysAgo": 2,
+  "availabilityConfirmedDaysAgo": 2,
+  "ownerConfirmed": null,
+  "photos": [
+   {
+    "id": "ph-0137",
+    "src": "/hosamane/photos/bedroom-3.jpg",
+    "kind": "hero",
+    "year": 2026
+   },
+   {
+    "id": "ph-0138",
+    "src": "/hosamane/photos/kitchen-1.jpg",
+    "kind": "kitchen",
+    "year": 2026
+   },
+   {
+    "id": "ph-0139",
+    "src": "/hosamane/photos/balcony-2.jpg",
+    "kind": "balcony",
+    "year": 2025
+   },
+   {
+    "id": "ph-0140",
+    "src": "/hosamane/photos/bedroom-3.jpg",
+    "kind": "bedroom",
+    "year": 2026
+   }
+  ],
+  "scamAsk": false,
+  "status": "available",
+  "ownerAnswers": {
+   "pets": "yes",
+   "depositNegotiable": "yes, down to 4 months",
+   "houseRules": "Guests welcome; inform the society for overnight stays."
+  },
+  "replyDelayMin": null,
+  "visitSlots": [
+   "Sat 10:00",
+   "Sat 11:30",
+   "Sat 15:00"
+  ]
+ },
+ {
+  "id": "r-38",
+  "mode": "rent",
+  "title": "2BHK in Ashoka Nest",
+  "localityId": "thanisandra",
+  "bhk": 2,
+  "bathrooms": 1,
+  "sqft": 1160,
+  "floor": 5,
+  "floorsTotal": 8,
+  "furnishing": "furnished",
+  "balconies": 0,
+  "amenities": [
+   "Power backup",
+   "Covered parking",
+   "Swimming pool",
+   "Clubhouse"
+  ],
+  "rent": 41000,
+  "depositMonths": 6,
+  "maintenance": 3500,
+  "lister": "owner",
+  "listerName": "Sanjay",
+  "brokerageMonths": 0,
+  "listedDaysAgo": 32,
+  "availabilityConfirmedDaysAgo": 4,
+  "ownerConfirmed": {
+   "method": "site visit",
+   "daysAgo": 6
+  },
+  "photos": [
+   {
+    "id": "ph-0141",
+    "src": "/hosamane/photos/living-5.jpg",
+    "kind": "hero",
+    "year": 2026
+   },
+   {
+    "id": "ph-0142",
+    "src": "/hosamane/photos/balcony-1.jpg",
+    "kind": "balcony",
+    "year": 2025
+   },
+   {
+    "id": "ph-0143",
+    "src": "/hosamane/photos/living-5.jpg",
+    "kind": "living",
+    "year": 2026
+   }
+  ],
+  "scamAsk": false,
+  "status": "available",
+  "ownerAnswers": {
+   "pets": "yes",
+   "depositNegotiable": "no",
+   "houseRules": "No smoking indoors."
+  },
+  "replyDelayMin": 9,
+  "visitSlots": [
+   "Sat 10:00",
+   "Sat 11:30",
+   "Sat 15:00",
+   "Sun 11:00"
+  ]
+ },
+ {
+  "id": "r-39",
+  "mode": "rent",
+  "title": "3BHK in Tamarind Enclave",
+  "localityId": "thanisandra",
+  "bhk": 3,
+  "bathrooms": 3,
+  "sqft": 1400,
+  "floor": 5,
+  "floorsTotal": 18,
+  "furnishing": "semi",
+  "balconies": 1,
+  "amenities": [
+   "Swimming pool",
+   "Children's play area",
+   "Clubhouse",
+   "Visitor parking"
+  ],
+  "rent": 46000,
+  "depositMonths": 8,
+  "maintenance": 2300,
+  "lister": "owner",
+  "listerName": "Rahul",
+  "brokerageMonths": 0,
+  "listedDaysAgo": 35,
+  "availabilityConfirmedDaysAgo": 3,
+  "ownerConfirmed": {
+   "method": "site visit",
+   "daysAgo": 4
+  },
+  "photos": [
+   {
+    "id": "ph-0144",
+    "src": "/hosamane/photos/balcony-2.jpg",
+    "kind": "hero",
+    "year": 2026
+   },
+   {
+    "id": "ph-0145",
+    "src": "/hosamane/photos/balcony-2.jpg",
+    "kind": "balcony",
+    "year": 2026
+   },
+   {
+    "id": "ph-0146",
+    "src": "/hosamane/photos/living-2.jpg",
+    "kind": "living",
+    "year": 2026
+   },
+   {
+    "id": "ph-0147",
+    "src": "/hosamane/photos/balcony-2.jpg",
+    "kind": "balcony",
+    "year": 2026
+   }
+  ],
+  "scamAsk": false,
+  "status": "available",
+  "ownerAnswers": {
+   "pets": "yes",
+   "depositNegotiable": "maybe for a longer stay",
+   "houseRules": "Guests welcome; inform the society for overnight stays."
+  },
+  "replyDelayMin": 9,
+  "visitSlots": [
+   "Sat 11:30",
+   "Sat 15:00",
+   "Sun 11:00"
+  ]
+ },
+ {
+  "id": "r-40",
+  "mode": "rent",
+  "title": "1BHK in Mango Heights",
+  "localityId": "thanisandra",
+  "bhk": 1,
+  "bathrooms": 1,
+  "sqft": 590,
+  "floor": 2,
+  "floorsTotal": 8,
+  "furnishing": "semi",
+  "balconies": 1,
+  "amenities": [
+   "Lift",
+   "Power backup",
+   "Covered parking",
+   "Children's play area",
+   "Visitor parking"
+  ],
+  "rent": 23500,
+  "depositMonths": 8,
+  "maintenance": 5400,
+  "lister": "owner",
+  "listerName": "Venkat",
+  "brokerageMonths": 0,
+  "listedDaysAgo": 15,
+  "availabilityConfirmedDaysAgo": 1,
+  "ownerConfirmed": null,
+  "photos": [
+   {
+    "id": "ph-0148",
+    "src": "/hosamane/photos/bedroom-4.jpg",
+    "kind": "hero",
+    "year": 2025
+   },
+   {
+    "id": "ph-0149",
+    "src": "/hosamane/photos/bedroom-5.jpg",
+    "kind": "bedroom",
+    "year": 2026
+   },
+   {
+    "id": "ph-0150",
+    "src": "/hosamane/photos/building-1.jpg",
+    "kind": "building",
+    "year": 2025
+   }
+  ],
+  "scamAsk": false,
+  "status": "available",
+  "ownerAnswers": {
+   "pets": "yes",
+   "depositNegotiable": "no",
+   "houseRules": "No smoking indoors."
+  },
+  "replyDelayMin": 2,
+  "visitSlots": [
+   "Sat 10:00",
+   "Sat 11:30",
+   "Sat 15:00",
+   "Sun 11:00"
+  ]
+ },
+ {
+  "id": "b-01",
+  "mode": "buy",
+  "title": "2BHK in Banyan Heights",
+  "localityId": "indiranagar",
+  "bhk": 2,
+  "bathrooms": 2,
+  "sqft": 1190,
+  "floor": 11,
+  "floorsTotal": 18,
+  "furnishing": "unfurnished",
+  "balconies": 2,
+  "amenities": [
+   "Covered parking",
+   "Gym",
+   "Children's play area",
+   "Clubhouse",
+   "Visitor parking"
+  ],
+  "price": 21400000,
+  "perSqft": 18000,
+  "readiness": "under construction",
+  "possession": "Mar 2028",
+  "builder": "Halasuru Estates",
+  "builderDelivered": 3,
+  "builderAvgDelayMonths": 14,
+  "registration": {
+   "status": "registered",
+   "number": "PRM/KA/RERA/DEMO/1001",
+   "checkedDaysAgo": 8
+  },
+  "khata": "A-khata · e-khata issued",
+  "corpusPerSqft": 100,
+  "lister": "builder",
+  "listerName": "Halasuru Estates",
+  "listedDaysAgo": 14,
+  "availabilityConfirmedDaysAgo": 7,
+  "ownerConfirmed": {
+   "method": "builder sales office",
+   "daysAgo": 8
+  },
+  "photos": [
+   {
+    "id": "ph-0151",
+    "src": "/hosamane/photos/kitchen-3.jpg",
+    "kind": "hero",
+    "year": 2026
+   },
+   {
+    "id": "ph-0152",
+    "src": "/hosamane/photos/bedroom-2.jpg",
+    "kind": "bedroom",
+    "year": 2026
+   },
+   {
+    "id": "ph-0153",
+    "src": "/hosamane/photos/balcony-2.jpg",
+    "kind": "balcony",
+    "year": 2026
+   },
+   {
+    "id": "ph-0154",
+    "src": "/hosamane/photos/bedroom-2.jpg",
+    "kind": "bedroom",
+    "year": 2025
+   }
+  ],
+  "scamAsk": false,
+  "status": "available",
+  "ownerAnswers": {
+   "pets": "yes",
+   "depositNegotiable": "n/a",
+   "houseRules": "Society bye-laws shared on request."
+  },
+  "replyDelayMin": 8,
+  "visitSlots": [
+   "Sat 10:00",
+   "Sat 12:00",
+   "Sun 10:30",
+   "Sun 16:00"
+  ]
+ },
+ {
+  "id": "b-02",
+  "mode": "buy",
+  "title": "3BHK in Mango Towers",
+  "localityId": "indiranagar",
+  "bhk": 3,
+  "bathrooms": 3,
+  "sqft": 1830,
+  "floor": 8,
+  "floorsTotal": 18,
+  "furnishing": "unfurnished",
+  "balconies": 2,
+  "amenities": [
+   "Lift",
+   "Covered parking",
+   "Children's play area",
+   "Clubhouse",
+   "Visitor parking"
+  ],
+  "price": 33500000,
+  "perSqft": 18300,
+  "readiness": "ready",
+  "possession": "Ready to move",
+  "builder": "Halasuru Estates",
+  "builderDelivered": 3,
+  "builderAvgDelayMonths": 14,
+  "registration": {
+   "status": "registered",
+   "number": "PRM/KA/RERA/DEMO/1002",
+   "checkedDaysAgo": 4
+  },
+  "khata": "A-khata · e-khata applied",
+  "corpusPerSqft": 100,
+  "lister": "builder",
+  "listerName": "Halasuru Estates",
+  "listedDaysAgo": 3,
+  "availabilityConfirmedDaysAgo": 1,
+  "ownerConfirmed": {
+   "method": "builder sales office",
+   "daysAgo": 5
+  },
+  "photos": [
+   {
+    "id": "ph-0155",
+    "src": "/hosamane/photos/bedroom-5.jpg",
+    "kind": "hero",
+    "year": 2025
+   },
+   {
+    "id": "ph-0156",
+    "src": "/hosamane/photos/bedroom-4.jpg",
+    "kind": "bedroom",
+    "year": 2026
+   },
+   {
+    "id": "ph-0157",
+    "src": "/hosamane/photos/living-2.jpg",
+    "kind": "living",
+    "year": 2026
+   },
+   {
+    "id": "ph-0158",
+    "src": "/hosamane/photos/living-3.jpg",
+    "kind": "living",
+    "year": 2026
+   }
+  ],
+  "scamAsk": false,
+  "status": "available",
+  "ownerAnswers": {
+   "pets": "yes",
+   "depositNegotiable": "n/a",
+   "houseRules": "Society bye-laws shared on request."
+  },
+  "replyDelayMin": 3,
+  "visitSlots": [
+   "Sat 10:00",
+   "Sat 12:00",
+   "Sun 10:30",
+   "Sun 16:00"
+  ]
+ },
+ {
+  "id": "b-03",
+  "mode": "buy",
+  "title": "2BHK in Peepal Enclave",
+  "localityId": "koramangala",
+  "bhk": 2,
+  "bathrooms": 2,
+  "sqft": 1090,
+  "floor": 4,
+  "floorsTotal": 14,
+  "furnishing": "unfurnished",
+  "balconies": 1,
+  "amenities": [
+   "Covered parking",
+   "Children's play area"
+  ],
+  "price": 18900000,
+  "perSqft": 17350,
+  "readiness": "under construction",
+  "possession": "Mar 2028",
+  "builder": "Halasuru Estates",
+  "builderDelivered": 3,
+  "builderAvgDelayMonths": 14,
+  "registration": {
+   "status": "registered",
+   "number": "PRM/KA/RERA/DEMO/1003",
+   "checkedDaysAgo": 10
+  },
+  "khata": "A-khata · e-khata applied",
+  "corpusPerSqft": 50,
+  "lister": "builder",
+  "listerName": "Halasuru Estates",
+  "listedDaysAgo": 32,
+  "availabilityConfirmedDaysAgo": 2,
+  "ownerConfirmed": {
+   "method": "builder sales office",
+   "daysAgo": 3
+  },
+  "photos": [
+   {
+    "id": "ph-0159",
+    "src": "/hosamane/photos/living-1.jpg",
+    "kind": "hero",
+    "year": 2026
+   },
+   {
+    "id": "ph-0160",
+    "src": "/hosamane/photos/kitchen-1.jpg",
+    "kind": "kitchen",
+    "year": 2025
+   },
+   {
+    "id": "ph-0161",
+    "src": "/hosamane/photos/kitchen-1.jpg",
+    "kind": "kitchen",
+    "year": 2025
+   },
+   {
+    "id": "ph-0162",
+    "src": "/hosamane/photos/bedroom-1.jpg",
+    "kind": "bedroom",
+    "year": 2026
+   }
+  ],
+  "scamAsk": false,
+  "status": "available",
+  "ownerAnswers": {
+   "pets": "yes",
+   "depositNegotiable": "n/a",
+   "houseRules": "Society bye-laws shared on request."
+  },
+  "replyDelayMin": 8,
+  "visitSlots": [
+   "Sat 10:00",
+   "Sat 12:00",
+   "Sun 10:30",
+   "Sun 16:00"
+  ]
+ },
+ {
+  "id": "b-04",
+  "mode": "buy",
+  "title": "3BHK in Kadamba Heights",
+  "localityId": "koramangala",
+  "bhk": 3,
+  "bathrooms": 3,
+  "sqft": 1670,
+  "floor": 8,
+  "floorsTotal": 18,
+  "furnishing": "unfurnished",
+  "balconies": 1,
+  "amenities": [
+   "Lift",
+   "Power backup",
+   "Gym",
+   "Children's play area",
+   "Clubhouse"
+  ],
+  "price": 29150000,
+  "perSqft": 17450,
+  "readiness": "under construction",
+  "possession": "Mar 2028",
+  "builder": "Halasuru Estates",
+  "builderDelivered": 3,
+  "builderAvgDelayMonths": 14,
+  "registration": {
+   "status": "registered",
+   "number": "PRM/KA/RERA/DEMO/1004",
+   "checkedDaysAgo": 10
+  },
+  "khata": "A-khata · e-khata applied",
+  "corpusPerSqft": 100,
+  "lister": "builder",
+  "listerName": "Halasuru Estates",
+  "listedDaysAgo": 38,
+  "availabilityConfirmedDaysAgo": 5,
+  "ownerConfirmed": {
+   "method": "builder sales office",
+   "daysAgo": 4
+  },
+  "photos": [
+   {
+    "id": "ph-0163",
+    "src": "/hosamane/photos/bedroom-1.jpg",
+    "kind": "hero",
+    "year": 2025
+   },
+   {
+    "id": "ph-0164",
+    "src": "/hosamane/photos/balcony-2.jpg",
+    "kind": "balcony",
+    "year": 2025
+   },
+   {
+    "id": "ph-0165",
+    "src": "/hosamane/photos/living-5.jpg",
+    "kind": "living",
+    "year": 2026
+   },
+   {
+    "id": "ph-0166",
+    "src": "/hosamane/photos/balcony-1.jpg",
+    "kind": "balcony",
+    "year": 2026
+   }
+  ],
+  "scamAsk": false,
+  "status": "available",
+  "ownerAnswers": {
+   "pets": "yes",
+   "depositNegotiable": "n/a",
+   "houseRules": "Society bye-laws shared on request."
+  },
+  "replyDelayMin": 3,
+  "visitSlots": [
+   "Sat 10:00",
+   "Sat 12:00",
+   "Sun 10:30",
+   "Sun 16:00"
+  ]
+ },
+ {
+  "id": "b-05",
+  "mode": "buy",
+  "title": "2BHK in Gulmohar Nest",
+  "localityId": "hsr",
+  "bhk": 2,
+  "bathrooms": 2,
+  "sqft": 1080,
+  "floor": 3,
+  "floorsTotal": 14,
+  "furnishing": "unfurnished",
+  "balconies": 2,
+  "amenities": [
+   "Lift",
+   "Power backup",
+   "Gym",
+   "Children's play area",
+   "Clubhouse",
+   "Visitor parking"
+  ],
+  "price": 14700000,
+  "perSqft": 13600,
+  "readiness": "under construction",
+  "possession": "Jun 2027",
+  "builder": "Halasuru Estates",
+  "builderDelivered": 3,
+  "builderAvgDelayMonths": 14,
+  "registration": {
+   "status": "registered",
+   "number": "PRM/KA/RERA/DEMO/1005",
+   "checkedDaysAgo": 10
+  },
+  "khata": "A-khata · e-khata issued",
+  "corpusPerSqft": 50,
+  "lister": "builder",
+  "listerName": "Halasuru Estates",
+  "listedDaysAgo": 39,
+  "availabilityConfirmedDaysAgo": 1,
+  "ownerConfirmed": {
+   "method": "builder sales office",
+   "daysAgo": 5
+  },
+  "photos": [
+   {
+    "id": "ph-0167",
+    "src": "/hosamane/photos/living-2.jpg",
+    "kind": "hero",
+    "year": 2025
+   },
+   {
+    "id": "ph-0168",
+    "src": "/hosamane/photos/bedroom-4.jpg",
+    "kind": "bedroom",
+    "year": 2026
+   },
+   {
+    "id": "ph-0169",
+    "src": "/hosamane/photos/living-2.jpg",
+    "kind": "living",
+    "year": 2026
+   },
+   {
+    "id": "ph-0170",
+    "src": "/hosamane/photos/living-2.jpg",
+    "kind": "living",
+    "year": 2026
+   }
+  ],
+  "scamAsk": false,
+  "status": "available",
+  "ownerAnswers": {
+   "pets": "yes",
+   "depositNegotiable": "n/a",
+   "houseRules": "Society bye-laws shared on request."
+  },
+  "replyDelayMin": 5,
+  "visitSlots": [
+   "Sat 10:00",
+   "Sat 12:00",
+   "Sun 10:30",
+   "Sun 16:00"
+  ]
+ },
+ {
+  "id": "b-06",
+  "mode": "buy",
+  "title": "3BHK in Jacaranda Residency",
+  "localityId": "hsr",
+  "bhk": 3,
+  "bathrooms": 3,
+  "sqft": 1720,
+  "floor": 7,
+  "floorsTotal": 14,
+  "furnishing": "unfurnished",
+  "balconies": 1,
+  "amenities": [
+   "Power backup",
+   "Covered parking",
+   "Swimming pool",
+   "Children's play area",
+   "Clubhouse"
+  ],
+  "price": 25200000,
+  "perSqft": 14650,
+  "readiness": "ready",
+  "possession": "Ready to move",
+  "builder": "Halasuru Estates",
+  "builderDelivered": 3,
+  "builderAvgDelayMonths": 14,
+  "registration": {
+   "status": "registered",
+   "number": "PRM/KA/RERA/DEMO/1006",
+   "checkedDaysAgo": 3
+  },
+  "khata": "A-khata · e-khata applied",
+  "corpusPerSqft": 75,
+  "lister": "builder",
+  "listerName": "Halasuru Estates",
+  "listedDaysAgo": 37,
+  "availabilityConfirmedDaysAgo": 6,
+  "ownerConfirmed": {
+   "method": "builder sales office",
+   "daysAgo": 6
+  },
+  "photos": [
+   {
+    "id": "ph-0171",
+    "src": "/hosamane/photos/kitchen-1.jpg",
+    "kind": "hero",
+    "year": 2026
+   },
+   {
+    "id": "ph-0172",
+    "src": "/hosamane/photos/balcony-1.jpg",
+    "kind": "balcony",
+    "year": 2026
+   },
+   {
+    "id": "ph-0173",
+    "src": "/hosamane/photos/kitchen-1.jpg",
+    "kind": "kitchen",
+    "year": 2026
+   },
+   {
+    "id": "ph-0174",
+    "src": "/hosamane/photos/bedroom-2.jpg",
+    "kind": "bedroom",
+    "year": 2026
+   }
+  ],
+  "scamAsk": false,
+  "status": "available",
+  "ownerAnswers": {
+   "pets": "yes",
+   "depositNegotiable": "n/a",
+   "houseRules": "Society bye-laws shared on request."
+  },
+  "replyDelayMin": 5,
+  "visitSlots": [
+   "Sat 10:00",
+   "Sat 12:00",
+   "Sun 10:30",
+   "Sun 16:00"
+  ]
+ },
+ {
+  "id": "b-07",
+  "mode": "buy",
+  "title": "2BHK in Mango Greens",
+  "localityId": "bellandur",
+  "bhk": 2,
+  "bathrooms": 2,
+  "sqft": 1280,
+  "floor": 8,
+  "floorsTotal": 18,
+  "furnishing": "unfurnished",
+  "balconies": 1,
+  "amenities": [
+   "Lift",
+   "Covered parking",
+   "Gym",
+   "Children's play area",
+   "Clubhouse"
+  ],
+  "price": 15950000,
+  "perSqft": 12450,
+  "readiness": "ready",
+  "possession": "Ready to move",
+  "builder": "Tungabhadra Homes",
+  "builderDelivered": 14,
+  "builderAvgDelayMonths": 0,
+  "registration": {
+   "status": "registered",
+   "number": "PRM/KA/RERA/DEMO/1007",
+   "checkedDaysAgo": 10
+  },
+  "khata": "A-khata · e-khata applied",
+  "corpusPerSqft": 75,
+  "lister": "builder",
+  "listerName": "Tungabhadra Homes",
+  "listedDaysAgo": 27,
+  "availabilityConfirmedDaysAgo": 5,
+  "ownerConfirmed": {
+   "method": "builder sales office",
+   "daysAgo": 3
+  },
+  "photos": [
+   {
+    "id": "ph-0175",
+    "src": "/hosamane/photos/living-3.jpg",
+    "kind": "hero",
+    "year": 2026
+   },
+   {
+    "id": "ph-0176",
+    "src": "/hosamane/photos/bedroom-5.jpg",
+    "kind": "bedroom",
+    "year": 2026
+   },
+   {
+    "id": "ph-0177",
+    "src": "/hosamane/photos/balcony-1.jpg",
+    "kind": "balcony",
+    "year": 2025
+   },
+   {
+    "id": "ph-0178",
+    "src": "/hosamane/photos/building-2.jpg",
+    "kind": "building",
+    "year": 2026
+   }
+  ],
+  "scamAsk": false,
+  "status": "available",
+  "ownerAnswers": {
+   "pets": "yes",
+   "depositNegotiable": "n/a",
+   "houseRules": "Society bye-laws shared on request."
+  },
+  "replyDelayMin": 3,
+  "visitSlots": [
+   "Sat 10:00",
+   "Sat 12:00",
+   "Sun 10:30",
+   "Sun 16:00"
+  ]
+ },
+ {
+  "id": "b-08",
+  "mode": "buy",
+  "title": "3BHK in Ashoka Heights",
+  "localityId": "bellandur",
+  "bhk": 3,
+  "bathrooms": 3,
+  "sqft": 1810,
+  "floor": 3,
+  "floorsTotal": 22,
+  "furnishing": "unfurnished",
+  "balconies": 1,
+  "amenities": [
+   "Covered parking",
+   "Gym",
+   "Swimming pool",
+   "Visitor parking"
+  ],
+  "price": 22650000,
+  "perSqft": 12500,
+  "readiness": "ready",
+  "possession": "Ready to move",
+  "builder": "Nandi Ridge Builders",
+  "builderDelivered": 6,
+  "builderAvgDelayMonths": 9,
+  "registration": {
+   "status": "registered",
+   "number": "PRM/KA/RERA/DEMO/1008",
+   "checkedDaysAgo": 3
+  },
+  "khata": "B-khata · e-khata issued (doesn't regularise B-khata)",
+  "corpusPerSqft": 100,
+  "lister": "builder",
+  "listerName": "Nandi Ridge Builders",
+  "listedDaysAgo": 27,
+  "availabilityConfirmedDaysAgo": 4,
+  "ownerConfirmed": {
+   "method": "builder sales office",
+   "daysAgo": 10
+  },
+  "photos": [
+   {
+    "id": "ph-0179",
+    "src": "/hosamane/photos/bedroom-2.jpg",
+    "kind": "hero",
+    "year": 2025
+   },
+   {
+    "id": "ph-0180",
+    "src": "/hosamane/photos/balcony-1.jpg",
+    "kind": "balcony",
+    "year": 2026
+   },
+   {
+    "id": "ph-0181",
+    "src": "/hosamane/photos/kitchen-1.jpg",
+    "kind": "kitchen",
+    "year": 2026
+   },
+   {
+    "id": "ph-0182",
+    "src": "/hosamane/photos/bedroom-4.jpg",
+    "kind": "bedroom",
+    "year": 2026
+   }
+  ],
+  "scamAsk": false,
+  "status": "available",
+  "ownerAnswers": {
+   "pets": "yes",
+   "depositNegotiable": "n/a",
+   "houseRules": "Society bye-laws shared on request."
+  },
+  "replyDelayMin": 8,
+  "visitSlots": [
+   "Sat 10:00",
+   "Sat 12:00",
+   "Sun 10:30",
+   "Sun 16:00"
+  ]
+ },
+ {
+  "id": "b-09",
+  "mode": "buy",
+  "title": "2BHK in Peepal Enclave",
+  "localityId": "kadubeesanahalli",
+  "bhk": 2,
+  "bathrooms": 2,
+  "sqft": 1150,
+  "floor": 1,
+  "floorsTotal": 22,
+  "furnishing": "unfurnished",
+  "balconies": 1,
+  "amenities": [
+   "Lift",
+   "Covered parking",
+   "Gym",
+   "Swimming pool",
+   "Children's play area"
+  ],
+  "price": 12400000,
+  "perSqft": 10800,
+  "readiness": "ready",
+  "possession": "Ready to move",
+  "builder": "Halasuru Estates",
+  "builderDelivered": 3,
+  "builderAvgDelayMonths": 14,
+  "registration": {
+   "status": "registered",
+   "number": "PRM/KA/RERA/DEMO/1009",
+   "checkedDaysAgo": 6
+  },
+  "khata": "A-khata · e-khata issued",
+  "corpusPerSqft": 75,
+  "lister": "builder",
+  "listerName": "Halasuru Estates",
+  "listedDaysAgo": 28,
+  "availabilityConfirmedDaysAgo": 7,
+  "ownerConfirmed": {
+   "method": "builder sales office",
+   "daysAgo": 8
+  },
+  "photos": [
+   {
+    "id": "ph-0183",
+    "src": "/hosamane/photos/living-4.jpg",
+    "kind": "hero",
+    "year": 2026
+   },
+   {
+    "id": "ph-0184",
+    "src": "/hosamane/photos/building-3.jpg",
+    "kind": "building",
+    "year": 2025
+   },
+   {
+    "id": "ph-0185",
+    "src": "/hosamane/photos/living-2.jpg",
+    "kind": "living",
+    "year": 2025
+   },
+   {
+    "id": "ph-0186",
+    "src": "/hosamane/photos/balcony-2.jpg",
+    "kind": "balcony",
+    "year": 2026
+   }
+  ],
+  "scamAsk": false,
+  "status": "available",
+  "ownerAnswers": {
+   "pets": "yes",
+   "depositNegotiable": "n/a",
+   "houseRules": "Society bye-laws shared on request."
+  },
+  "replyDelayMin": 8,
+  "visitSlots": [
+   "Sat 10:00",
+   "Sat 12:00",
+   "Sun 10:30",
+   "Sun 16:00"
+  ]
+ },
+ {
+  "id": "b-10",
+  "mode": "buy",
+  "title": "3BHK in Lotus Nest",
+  "localityId": "kadubeesanahalli",
+  "bhk": 3,
+  "bathrooms": 3,
+  "sqft": 1500,
+  "floor": 1,
+  "floorsTotal": 18,
+  "furnishing": "unfurnished",
+  "balconies": 1,
+  "amenities": [
+   "Lift",
+   "Power backup",
+   "Gym",
+   "Children's play area",
+   "Clubhouse"
+  ],
+  "price": 17200000,
+  "perSqft": 11450,
+  "readiness": "under construction",
+  "possession": "Jun 2027",
+  "builder": "Nandi Ridge Builders",
+  "builderDelivered": 6,
+  "builderAvgDelayMonths": 9,
+  "registration": {
+   "status": "registered",
+   "number": "PRM/KA/RERA/DEMO/1010",
+   "checkedDaysAgo": 5
+  },
+  "khata": "A-khata · e-khata applied",
+  "corpusPerSqft": 75,
+  "lister": "builder",
+  "listerName": "Nandi Ridge Builders",
+  "listedDaysAgo": 45,
+  "availabilityConfirmedDaysAgo": 4,
+  "ownerConfirmed": {
+   "method": "builder sales office",
+   "daysAgo": 5
+  },
+  "photos": [
+   {
+    "id": "ph-0187",
+    "src": "/hosamane/photos/kitchen-2.jpg",
+    "kind": "hero",
+    "year": 2026
+   },
+   {
+    "id": "ph-0188",
+    "src": "/hosamane/photos/building-1.jpg",
+    "kind": "building",
+    "year": 2026
+   },
+   {
+    "id": "ph-0189",
+    "src": "/hosamane/photos/balcony-2.jpg",
+    "kind": "balcony",
+    "year": 2025
+   },
+   {
+    "id": "ph-0190",
+    "src": "/hosamane/photos/balcony-2.jpg",
+    "kind": "balcony",
+    "year": 2025
+   }
+  ],
+  "scamAsk": false,
+  "status": "available",
+  "ownerAnswers": {
+   "pets": "yes",
+   "depositNegotiable": "n/a",
+   "houseRules": "Society bye-laws shared on request."
+  },
+  "replyDelayMin": 5,
+  "visitSlots": [
+   "Sat 10:00",
+   "Sat 12:00",
+   "Sun 10:30",
+   "Sun 16:00"
+  ]
+ },
+ {
+  "id": "b-11",
+  "mode": "buy",
+  "title": "2BHK in Gulmohar Heights",
+  "localityId": "whitefield",
+  "bhk": 2,
+  "bathrooms": 2,
+  "sqft": 1260,
+  "floor": 9,
+  "floorsTotal": 22,
+  "furnishing": "unfurnished",
+  "balconies": 2,
+  "amenities": [
+   "Power backup",
+   "Covered parking",
+   "Children's play area"
+  ],
+  "price": 13850000,
+  "perSqft": 11000,
+  "readiness": "ready",
+  "possession": "Ready to move",
+  "builder": "Nandi Ridge Builders",
+  "builderDelivered": 6,
+  "builderAvgDelayMonths": 9,
+  "registration": {
+   "status": "registered",
+   "number": "PRM/KA/RERA/DEMO/1011",
+   "checkedDaysAgo": 2
+  },
+  "khata": "A-khata · e-khata applied",
+  "corpusPerSqft": 50,
+  "lister": "builder",
+  "listerName": "Nandi Ridge Builders",
+  "listedDaysAgo": 19,
+  "availabilityConfirmedDaysAgo": 5,
+  "ownerConfirmed": {
+   "method": "builder sales office",
+   "daysAgo": 8
+  },
+  "photos": [
+   {
+    "id": "ph-0191",
+    "src": "/hosamane/photos/bedroom-3.jpg",
+    "kind": "hero",
+    "year": 2026
+   },
+   {
+    "id": "ph-0192",
+    "src": "/hosamane/photos/kitchen-3.jpg",
+    "kind": "kitchen",
+    "year": 2026
+   },
+   {
+    "id": "ph-0193",
+    "src": "/hosamane/photos/balcony-1.jpg",
+    "kind": "balcony",
+    "year": 2026
+   },
+   {
+    "id": "ph-0194",
+    "src": "/hosamane/photos/living-5.jpg",
+    "kind": "living",
+    "year": 2025
+   }
+  ],
+  "scamAsk": false,
+  "status": "available",
+  "ownerAnswers": {
+   "pets": "yes",
+   "depositNegotiable": "n/a",
+   "houseRules": "Society bye-laws shared on request."
+  },
+  "replyDelayMin": 5,
+  "visitSlots": [
+   "Sat 10:00",
+   "Sat 12:00",
+   "Sun 10:30",
+   "Sun 16:00"
+  ]
+ },
+ {
+  "id": "b-12",
+  "mode": "buy",
+  "title": "3BHK in Mango Enclave",
+  "localityId": "whitefield",
+  "bhk": 3,
+  "bathrooms": 3,
+  "sqft": 1570,
+  "floor": 9,
+  "floorsTotal": 18,
+  "furnishing": "unfurnished",
+  "balconies": 2,
+  "amenities": [
+   "Lift",
+   "Gym",
+   "Children's play area",
+   "Visitor parking"
+  ],
+  "price": 17250000,
+  "perSqft": 11000,
+  "readiness": "ready",
+  "possession": "Ready to move",
+  "builder": "Tungabhadra Homes",
+  "builderDelivered": 14,
+  "builderAvgDelayMonths": 0,
+  "registration": {
+   "status": "registered",
+   "number": "PRM/KA/RERA/DEMO/1012",
+   "checkedDaysAgo": 9
+  },
+  "khata": "A-khata · e-khata issued",
+  "corpusPerSqft": 100,
+  "lister": "builder",
+  "listerName": "Tungabhadra Homes",
+  "listedDaysAgo": 39,
+  "availabilityConfirmedDaysAgo": 7,
+  "ownerConfirmed": {
+   "method": "builder sales office",
+   "daysAgo": 6
+  },
+  "photos": [
+   {
+    "id": "ph-0195",
+    "src": "/hosamane/photos/living-5.jpg",
+    "kind": "hero",
+    "year": 2025
+   },
+   {
+    "id": "ph-0196",
+    "src": "/hosamane/photos/bedroom-2.jpg",
+    "kind": "bedroom",
+    "year": 2026
+   },
+   {
+    "id": "ph-0197",
+    "src": "/hosamane/photos/living-4.jpg",
+    "kind": "living",
+    "year": 2026
+   },
+   {
+    "id": "ph-0198",
+    "src": "/hosamane/photos/building-2.jpg",
+    "kind": "building",
+    "year": 2025
+   }
+  ],
+  "scamAsk": false,
+  "status": "available",
+  "ownerAnswers": {
+   "pets": "yes",
+   "depositNegotiable": "n/a",
+   "houseRules": "Society bye-laws shared on request."
+  },
+  "replyDelayMin": 5,
+  "visitSlots": [
+   "Sat 10:00",
+   "Sat 12:00",
+   "Sun 10:30",
+   "Sun 16:00"
+  ]
+ },
+ {
+  "id": "b-13",
+  "mode": "buy",
+  "title": "2BHK in Coral Heights",
+  "localityId": "sarjapur",
+  "bhk": 2,
+  "bathrooms": 2,
+  "sqft": 1130,
+  "floor": 2,
+  "floorsTotal": 18,
+  "furnishing": "unfurnished",
+  "balconies": 2,
+  "amenities": [
+   "Lift",
+   "Power backup",
+   "Gym",
+   "Swimming pool",
+   "Children's play area"
+  ],
+  "price": 12350000,
+  "perSqft": 10950,
+  "readiness": "under construction",
+  "possession": "Dec 2028",
+  "builder": "Kaveri Habitats",
+  "builderDelivered": 11,
+  "builderAvgDelayMonths": 2,
+  "registration": {
+   "status": "not found",
+   "number": null,
+   "checkedDaysAgo": 1
+  },
+  "khata": "A-khata · e-khata issued",
+  "corpusPerSqft": 50,
+  "lister": "builder",
+  "listerName": "Kaveri Habitats",
+  "listedDaysAgo": 32,
+  "availabilityConfirmedDaysAgo": 2,
+  "ownerConfirmed": {
+   "method": "builder sales office",
+   "daysAgo": 9
+  },
+  "photos": [
+   {
+    "id": "ph-0199",
+    "src": "/hosamane/photos/balcony-2.jpg",
+    "kind": "hero",
+    "year": 2026
+   },
+   {
+    "id": "ph-0200",
+    "src": "/hosamane/photos/bedroom-1.jpg",
+    "kind": "bedroom",
+    "year": 2026
+   },
+   {
+    "id": "ph-0201",
+    "src": "/hosamane/photos/kitchen-2.jpg",
+    "kind": "kitchen",
+    "year": 2025
+   },
+   {
+    "id": "ph-0202",
+    "src": "/hosamane/photos/living-5.jpg",
+    "kind": "living",
+    "year": 2025
+   }
+  ],
+  "scamAsk": false,
+  "status": "available",
+  "ownerAnswers": {
+   "pets": "yes",
+   "depositNegotiable": "n/a",
+   "houseRules": "Society bye-laws shared on request."
+  },
+  "replyDelayMin": 8,
+  "visitSlots": [
+   "Sat 10:00",
+   "Sat 12:00",
+   "Sun 10:30",
+   "Sun 16:00"
+  ]
+ },
+ {
+  "id": "b-14",
+  "mode": "buy",
+  "title": "3BHK in Tamarind Greens",
+  "localityId": "sarjapur",
+  "bhk": 3,
+  "bathrooms": 3,
+  "sqft": 1790,
+  "floor": 4,
+  "floorsTotal": 14,
+  "furnishing": "unfurnished",
+  "balconies": 2,
+  "amenities": [
+   "Lift",
+   "Covered parking",
+   "Swimming pool",
+   "Children's play area",
+   "Clubhouse",
+   "Visitor parking"
+  ],
+  "price": 20600000,
+  "perSqft": 11500,
+  "readiness": "ready",
+  "possession": "Ready to move",
+  "builder": "Kaveri Habitats",
+  "builderDelivered": 11,
+  "builderAvgDelayMonths": 2,
+  "registration": {
+   "status": "registered",
+   "number": "PRM/KA/RERA/DEMO/1014",
+   "checkedDaysAgo": 10
+  },
+  "khata": "A-khata · e-khata issued",
+  "corpusPerSqft": 75,
+  "lister": "builder",
+  "listerName": "Kaveri Habitats",
+  "listedDaysAgo": 32,
+  "availabilityConfirmedDaysAgo": 5,
+  "ownerConfirmed": {
+   "method": "builder sales office",
+   "daysAgo": 9
+  },
+  "photos": [
+   {
+    "id": "ph-0203",
+    "src": "/hosamane/photos/bedroom-4.jpg",
+    "kind": "hero",
+    "year": 2026
+   },
+   {
+    "id": "ph-0204",
+    "src": "/hosamane/photos/kitchen-3.jpg",
+    "kind": "kitchen",
+    "year": 2026
+   },
+   {
+    "id": "ph-0205",
+    "src": "/hosamane/photos/balcony-1.jpg",
+    "kind": "balcony",
+    "year": 2026
+   },
+   {
+    "id": "ph-0206",
+    "src": "/hosamane/photos/building-1.jpg",
+    "kind": "building",
+    "year": 2025
+   }
+  ],
+  "scamAsk": false,
+  "status": "available",
+  "ownerAnswers": {
+   "pets": "yes",
+   "depositNegotiable": "n/a",
+   "houseRules": "Society bye-laws shared on request."
+  },
+  "replyDelayMin": 5,
+  "visitSlots": [
+   "Sat 10:00",
+   "Sat 12:00",
+   "Sun 10:30",
+   "Sun 16:00"
+  ]
+ },
+ {
+  "id": "b-15",
+  "mode": "buy",
+  "title": "2BHK in Mango Enclave",
+  "localityId": "ecity",
+  "bhk": 2,
+  "bathrooms": 2,
+  "sqft": 1150,
+  "floor": 2,
+  "floorsTotal": 18,
+  "furnishing": "unfurnished",
+  "balconies": 1,
+  "amenities": [
+   "Lift",
+   "Power backup",
+   "Covered parking",
+   "Gym",
+   "Swimming pool",
+   "Clubhouse",
+   "Visitor parking"
+  ],
+  "price": 8200000,
+  "perSqft": 7150,
+  "readiness": "under construction",
+  "possession": "Jun 2027",
+  "builder": "Nandi Ridge Builders",
+  "builderDelivered": 6,
+  "builderAvgDelayMonths": 9,
+  "registration": {
+   "status": "registered",
+   "number": "PRM/KA/RERA/DEMO/1015",
+   "checkedDaysAgo": 6
+  },
+  "khata": "A-khata · e-khata issued",
+  "corpusPerSqft": 75,
+  "lister": "builder",
+  "listerName": "Nandi Ridge Builders",
+  "listedDaysAgo": 32,
+  "availabilityConfirmedDaysAgo": 5,
+  "ownerConfirmed": {
+   "method": "builder sales office",
+   "daysAgo": 5
+  },
+  "photos": [
+   {
+    "id": "ph-0207",
+    "src": "/hosamane/photos/kitchen-3.jpg",
+    "kind": "hero",
+    "year": 2026
+   },
+   {
+    "id": "ph-0208",
+    "src": "/hosamane/photos/balcony-2.jpg",
+    "kind": "balcony",
+    "year": 2025
+   },
+   {
+    "id": "ph-0209",
+    "src": "/hosamane/photos/kitchen-3.jpg",
+    "kind": "kitchen",
+    "year": 2026
+   },
+   {
+    "id": "ph-0210",
+    "src": "/hosamane/photos/bedroom-3.jpg",
+    "kind": "bedroom",
+    "year": 2026
+   }
+  ],
+  "scamAsk": false,
+  "status": "available",
+  "ownerAnswers": {
+   "pets": "yes",
+   "depositNegotiable": "n/a",
+   "houseRules": "Society bye-laws shared on request."
+  },
+  "replyDelayMin": 8,
+  "visitSlots": [
+   "Sat 10:00",
+   "Sat 12:00",
+   "Sun 10:30",
+   "Sun 16:00"
+  ]
+ },
+ {
+  "id": "b-16",
+  "mode": "buy",
+  "title": "3BHK in Coral Gardens",
+  "localityId": "ecity",
+  "bhk": 3,
+  "bathrooms": 3,
+  "sqft": 1780,
+  "floor": 2,
+  "floorsTotal": 18,
+  "furnishing": "unfurnished",
+  "balconies": 1,
+  "amenities": [
+   "Lift",
+   "Power backup",
+   "Covered parking",
+   "Gym",
+   "Visitor parking"
+  ],
+  "price": 13800000,
+  "perSqft": 7750,
+  "readiness": "ready",
+  "possession": "Ready to move",
+  "builder": "Halasuru Estates",
+  "builderDelivered": 3,
+  "builderAvgDelayMonths": 14,
+  "registration": {
+   "status": "registered",
+   "number": "PRM/KA/RERA/DEMO/1016",
+   "checkedDaysAgo": 9
+  },
+  "khata": "A-khata · e-khata applied",
+  "corpusPerSqft": 100,
+  "lister": "builder",
+  "listerName": "Halasuru Estates",
+  "listedDaysAgo": 31,
+  "availabilityConfirmedDaysAgo": 6,
+  "ownerConfirmed": {
+   "method": "builder sales office",
+   "daysAgo": 7
+  },
+  "photos": [
+   {
+    "id": "ph-0211",
+    "src": "/hosamane/photos/bedroom-5.jpg",
+    "kind": "hero",
+    "year": 2026
+   },
+   {
+    "id": "ph-0212",
+    "src": "/hosamane/photos/bedroom-1.jpg",
+    "kind": "bedroom",
+    "year": 2026
+   },
+   {
+    "id": "ph-0213",
+    "src": "/hosamane/photos/building-3.jpg",
+    "kind": "building",
+    "year": 2026
+   },
+   {
+    "id": "ph-0214",
+    "src": "/hosamane/photos/living-4.jpg",
+    "kind": "living",
+    "year": 2025
+   }
+  ],
+  "scamAsk": false,
+  "status": "available",
+  "ownerAnswers": {
+   "pets": "yes",
+   "depositNegotiable": "n/a",
+   "houseRules": "Society bye-laws shared on request."
+  },
+  "replyDelayMin": 5,
+  "visitSlots": [
+   "Sat 10:00",
+   "Sat 12:00",
+   "Sun 10:30",
+   "Sun 16:00"
+  ]
+ },
+ {
+  "id": "b-17",
+  "mode": "buy",
+  "title": "2BHK in Banyan Greens",
+  "localityId": "hebbal",
+  "bhk": 2,
+  "bathrooms": 2,
+  "sqft": 1110,
+  "floor": 6,
+  "floorsTotal": 14,
+  "furnishing": "unfurnished",
+  "balconies": 1,
+  "amenities": [
+   "Lift",
+   "Power backup",
+   "Covered parking",
+   "Children's play area",
+   "Clubhouse",
+   "Visitor parking"
+  ],
+  "price": 14250000,
+  "perSqft": 12850,
+  "readiness": "under construction",
+  "possession": "Jun 2027",
+  "builder": "Halasuru Estates",
+  "builderDelivered": 3,
+  "builderAvgDelayMonths": 14,
+  "registration": {
+   "status": "registered",
+   "number": "PRM/KA/RERA/DEMO/1017",
+   "checkedDaysAgo": 9
+  },
+  "khata": "A-khata · e-khata applied",
+  "corpusPerSqft": 50,
+  "lister": "builder",
+  "listerName": "Halasuru Estates",
+  "listedDaysAgo": 31,
+  "availabilityConfirmedDaysAgo": 7,
+  "ownerConfirmed": {
+   "method": "builder sales office",
+   "daysAgo": 6
+  },
+  "photos": [
+   {
+    "id": "ph-0215",
+    "src": "/hosamane/photos/living-1.jpg",
+    "kind": "hero",
+    "year": 2026
+   },
+   {
+    "id": "ph-0216",
+    "src": "/hosamane/photos/balcony-2.jpg",
+    "kind": "balcony",
+    "year": 2025
+   },
+   {
+    "id": "ph-0217",
+    "src": "/hosamane/photos/balcony-1.jpg",
+    "kind": "balcony",
+    "year": 2025
+   },
+   {
+    "id": "ph-0218",
+    "src": "/hosamane/photos/bedroom-1.jpg",
+    "kind": "bedroom",
+    "year": 2025
+   }
+  ],
+  "scamAsk": false,
+  "status": "available",
+  "ownerAnswers": {
+   "pets": "yes",
+   "depositNegotiable": "n/a",
+   "houseRules": "Society bye-laws shared on request."
+  },
+  "replyDelayMin": 5,
+  "visitSlots": [
+   "Sat 10:00",
+   "Sat 12:00",
+   "Sun 10:30",
+   "Sun 16:00"
+  ]
+ },
+ {
+  "id": "b-18",
+  "mode": "buy",
+  "title": "3BHK in Gulmohar Enclave",
+  "localityId": "hebbal",
+  "bhk": 3,
+  "bathrooms": 3,
+  "sqft": 1480,
+  "floor": 12,
+  "floorsTotal": 18,
+  "furnishing": "unfurnished",
+  "balconies": 1,
+  "amenities": [
+   "Lift",
+   "Covered parking",
+   "Gym",
+   "Swimming pool",
+   "Children's play area",
+   "Clubhouse",
+   "Visitor parking"
+  ],
+  "price": 19550000,
+  "perSqft": 13200,
+  "readiness": "under construction",
+  "possession": "Jun 2027",
+  "builder": "Nandi Ridge Builders",
+  "builderDelivered": 6,
+  "builderAvgDelayMonths": 9,
+  "registration": {
+   "status": "registered",
+   "number": "PRM/KA/RERA/DEMO/1018",
+   "checkedDaysAgo": 8
+  },
+  "khata": "A-khata · e-khata issued",
+  "corpusPerSqft": 100,
+  "lister": "builder",
+  "listerName": "Nandi Ridge Builders",
+  "listedDaysAgo": 35,
+  "availabilityConfirmedDaysAgo": 4,
+  "ownerConfirmed": {
+   "method": "builder sales office",
+   "daysAgo": 9
+  },
+  "photos": [
+   {
+    "id": "ph-0219",
+    "src": "/hosamane/photos/bedroom-1.jpg",
+    "kind": "hero",
+    "year": 2025
+   },
+   {
+    "id": "ph-0220",
+    "src": "/hosamane/photos/building-1.jpg",
+    "kind": "building",
+    "year": 2026
+   },
+   {
+    "id": "ph-0221",
+    "src": "/hosamane/photos/living-3.jpg",
+    "kind": "living",
+    "year": 2026
+   },
+   {
+    "id": "ph-0222",
+    "src": "/hosamane/photos/living-1.jpg",
+    "kind": "living",
+    "year": 2025
+   }
+  ],
+  "scamAsk": false,
+  "status": "available",
+  "ownerAnswers": {
+   "pets": "yes",
+   "depositNegotiable": "n/a",
+   "houseRules": "Society bye-laws shared on request."
+  },
+  "replyDelayMin": 3,
+  "visitSlots": [
+   "Sat 10:00",
+   "Sat 12:00",
+   "Sun 10:30",
+   "Sun 16:00"
+  ]
+ },
+ {
+  "id": "b-19",
+  "mode": "buy",
+  "title": "2BHK in Banyan Towers",
+  "localityId": "thanisandra",
+  "bhk": 2,
+  "bathrooms": 2,
+  "sqft": 1210,
+  "floor": 6,
+  "floorsTotal": 18,
+  "furnishing": "unfurnished",
+  "balconies": 1,
+  "amenities": [
+   "Power backup",
+   "Children's play area",
+   "Clubhouse"
+  ],
+  "price": 13350000,
+  "perSqft": 11050,
+  "readiness": "ready",
+  "possession": "Ready to move",
+  "builder": "Tungabhadra Homes",
+  "builderDelivered": 14,
+  "builderAvgDelayMonths": 0,
+  "registration": {
+   "status": "registered",
+   "number": "PRM/KA/RERA/DEMO/1019",
+   "checkedDaysAgo": 5
+  },
+  "khata": "A-khata · e-khata issued",
+  "corpusPerSqft": 75,
+  "lister": "builder",
+  "listerName": "Tungabhadra Homes",
+  "listedDaysAgo": 28,
+  "availabilityConfirmedDaysAgo": 6,
+  "ownerConfirmed": {
+   "method": "builder sales office",
+   "daysAgo": 5
+  },
+  "photos": [
+   {
+    "id": "ph-0223",
+    "src": "/hosamane/photos/living-2.jpg",
+    "kind": "hero",
+    "year": 2026
+   },
+   {
+    "id": "ph-0224",
+    "src": "/hosamane/photos/bedroom-3.jpg",
+    "kind": "bedroom",
+    "year": 2026
+   },
+   {
+    "id": "ph-0225",
+    "src": "/hosamane/photos/building-1.jpg",
+    "kind": "building",
+    "year": 2026
+   },
+   {
+    "id": "ph-0226",
+    "src": "/hosamane/photos/balcony-2.jpg",
+    "kind": "balcony",
+    "year": 2025
+   }
+  ],
+  "scamAsk": false,
+  "status": "available",
+  "ownerAnswers": {
+   "pets": "yes",
+   "depositNegotiable": "n/a",
+   "houseRules": "Society bye-laws shared on request."
+  },
+  "replyDelayMin": 3,
+  "visitSlots": [
+   "Sat 10:00",
+   "Sat 12:00",
+   "Sun 10:30",
+   "Sun 16:00"
+  ]
+ },
+ {
+  "id": "b-20",
+  "mode": "buy",
+  "title": "3BHK in Mango Gardens",
+  "localityId": "thanisandra",
+  "bhk": 3,
+  "bathrooms": 3,
+  "sqft": 1560,
+  "floor": 11,
+  "floorsTotal": 18,
+  "furnishing": "unfurnished",
+  "balconies": 2,
+  "amenities": [
+   "Lift",
+   "Covered parking",
+   "Gym"
+  ],
+  "price": 15200000,
+  "perSqft": 9750,
+  "readiness": "under construction",
+  "possession": "Dec 2027",
+  "builder": "Halasuru Estates",
+  "builderDelivered": 3,
+  "builderAvgDelayMonths": 14,
+  "registration": {
+   "status": "registered",
+   "number": "PRM/KA/RERA/DEMO/1020",
+   "checkedDaysAgo": 5
+  },
+  "khata": "A-khata · e-khata issued",
+  "corpusPerSqft": 75,
+  "lister": "builder",
+  "listerName": "Halasuru Estates",
+  "listedDaysAgo": 10,
+  "availabilityConfirmedDaysAgo": 4,
+  "ownerConfirmed": {
+   "method": "builder sales office",
+   "daysAgo": 4
+  },
+  "photos": [
+   {
+    "id": "ph-0227",
+    "src": "/hosamane/photos/kitchen-1.jpg",
+    "kind": "hero",
+    "year": 2025
+   },
+   {
+    "id": "ph-0228",
+    "src": "/hosamane/photos/bedroom-5.jpg",
+    "kind": "bedroom",
+    "year": 2026
+   },
+   {
+    "id": "ph-0229",
+    "src": "/hosamane/photos/kitchen-3.jpg",
+    "kind": "kitchen",
+    "year": 2026
+   },
+   {
+    "id": "ph-0230",
+    "src": "/hosamane/photos/building-2.jpg",
+    "kind": "building",
+    "year": 2025
+   }
+  ],
+  "scamAsk": false,
+  "status": "available",
+  "ownerAnswers": {
+   "pets": "yes",
+   "depositNegotiable": "n/a",
+   "houseRules": "Society bye-laws shared on request."
+  },
+  "replyDelayMin": 5,
+  "visitSlots": [
+   "Sat 10:00",
+   "Sat 12:00",
+   "Sun 10:30",
+   "Sun 16:00"
+  ]
+ }
+]

@@ -1,0 +1,4 @@
+People doodles (people/*.svg): Open Peeps by Pablo Stanley, https://www.openpeeps.com
+Licence: CC0 1.0 (public domain), confirmed on openpeeps.com on 14 Nov 2026.
+Composed with react-peeps (MIT, https://github.com/CeamKrier/react-peeps), then optimised with SVGO.
+All other doodles and diagrams on this site are drawn for it.

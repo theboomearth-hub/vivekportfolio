@@ -3,12 +3,16 @@
 import { useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 import Lenis from "lenis";
+import { isAppPath } from "@/components/SiteChrome";
 
 export default function SmoothScroll() {
   const lenisRef = useRef<Lenis | null>(null);
   const pathname = usePathname();
+  // Full-screen apps (the Hosamane agent) scroll their own panes; Lenis would hijack them.
+  const onApp = isAppPath(pathname);
 
   useEffect(() => {
+    if (onApp) return;
     // Respect the OS reduced-motion setting: fall back to native scrolling.
     if (globalThis.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       return;
@@ -40,8 +44,9 @@ export default function SmoothScroll() {
     return () => {
       resizeObserver.disconnect();
       lenis.destroy();
+      lenisRef.current = null;
     };
-  }, []);
+  }, [onApp]);
 
   // Route changes swap the entire page content — re-measure after paint.
   useEffect(() => {

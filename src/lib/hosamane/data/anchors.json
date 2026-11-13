@@ -1,0 +1,38 @@
+[
+ {
+  "id": "bellandur-orr",
+  "name": "Bellandur (Outer Ring Road)",
+  "x": 9,
+  "y": -6.5
+ },
+ {
+  "id": "manyata",
+  "name": "Manyata Tech Park, Hebbal",
+  "x": 3,
+  "y": 9.5
+ },
+ {
+  "id": "ecity-p1",
+  "name": "Electronic City Phase 1",
+  "x": 6,
+  "y": -17
+ },
+ {
+  "id": "itpl",
+  "name": "Whitefield (ITPL)",
+  "x": 16,
+  "y": 1.5
+ },
+ {
+  "id": "koramangala",
+  "name": "Koramangala",
+  "x": 2,
+  "y": -5
+ },
+ {
+  "id": "mg-road",
+  "name": "MG Road",
+  "x": 0,
+  "y": 0
+ }
+]

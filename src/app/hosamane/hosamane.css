@@ -1,0 +1,55 @@
+/* Hosamane app: base styles scoped to .hm-app, so the portfolio's own styles are untouched.
+   Tokens (hm-*) are defined in globals.css. */
+.hm-app {
+  min-height: 100dvh;
+  background: var(--color-hm-canvas);
+  color: var(--color-hm-ink);
+  font-family: var(--font-poppins), system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 1.55;
+  font-feature-settings: "tnum" 1;
+}
+
+/* In the base layer, so the app's own utility classes still win. */
+@layer base {
+  /* The portfolio sets Inter, tracking and balanced wrapping on headings; the app uses Poppins. */
+  .hm-app :where(h1, h2, h3, h4, h5, h6) {
+    font-family: inherit;
+    letter-spacing: normal;
+    line-height: inherit;
+    text-wrap: wrap;
+  }
+  .hm-app :focus-visible { outline: 2px solid var(--color-hm-primary); outline-offset: 2px; }
+  .hm-app button { cursor: pointer; }
+  .hm-app ::selection { background: var(--color-hm-primary-soft); color: var(--color-hm-ink); }
+}
+
+/* Wireframe theme (?theme=wire): same layout and type, greys only, photos replaced by labelled boxes. */
+:root[data-theme="wire"] {
+  --color-hm-ink: #3a3a3a;
+  --color-hm-muted: #6e6e6e;
+  --color-hm-canvas: #f2f2f2;
+  --color-hm-surface: #e9e9e9;
+  --color-hm-card: #ffffff;
+  --color-hm-line: #c9c9c9;
+  --color-hm-control: #8a8a8a;
+  --color-hm-primary: #4a4a4a;
+  --color-hm-primary-strong: #3a3a3a;
+  --color-hm-primary-soft: #e4e4e4;
+  --color-hm-ok: #4a4a4a;
+  --color-hm-ok-soft: #ececec;
+  --color-hm-warn: #4a4a4a;
+  --color-hm-warn-soft: #ececec;
+  --color-hm-danger: #4a4a4a;
+  --color-hm-danger-soft: #ececec;
+}
+:root[data-theme="wire"] .hm-app img.photo { visibility: hidden; }
+:root[data-theme="wire"] .hm-app .photo-box { background: repeating-linear-gradient(45deg, #e6e6e6 0 8px, #efefef 8px 16px); }
+:root[data-theme="wire"] .hm-app .photo-box::after { content: "Photo"; position: absolute; inset: auto 8px 8px auto; font-size: 11px; color: #6e6e6e; }
+
+.hm-app .scroll-thin { scrollbar-width: thin; }
+.hm-app .hm-dot-pulse { animation: hm-pulse 1.2s ease-in-out infinite; }
+@keyframes hm-pulse { 50% { opacity: 0.35; } }
+@media (prefers-reduced-motion: reduce) {
+  .hm-app .hm-dot-pulse { animation: none; }
+}

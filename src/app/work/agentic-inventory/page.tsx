@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { Arrow, BackLink, BulletList, CaseCta, CaseKicker, FactList, NumberedGrid, Section, Shot } from "@/components/case/CaseParts";
+import Doodle from "@/components/sketch/Doodle";
+import DrawOnView from "@/components/sketch/DrawOnView";
+import { SketchArrow } from "@/components/sketch/glyphs";
+import { Pipeline } from "@/components/sketch/structures";
 import { facts, hero, journey, LIVE_URL, nextSteps, phone, principles, stages, toolCount } from "@/lib/work/agentic-inventory";
 
 export const metadata: Metadata = {
@@ -64,16 +68,30 @@ export default function AgenticInventoryCase() {
 
       {/* ── PROBLEM ──────────────────────────────────── */}
       <Section id="problem" eyebrow="The problem" title="Planning one campaign meant working across six tools.">
-        <div className="grid gap-10 md:grid-cols-2 md:gap-16">
-          <p className="text-lg leading-relaxed text-muted">
-            A DOOH planner moves between inventory sheets, maps, audience data, rate cards, proposal decks, booking emails and pacing reports. Each hand-off
-            loses context, and each tool asks the same questions again: which screens, which cities, what budget.
-          </p>
-          <p className="text-lg leading-relaxed">
-            MW-Inventory asks one question instead: <em className="not-italic font-medium">what do you want to do?</em> The answer is an agent with a typed
-            tool for every step of the campaign, and an interface that shows each result in the shape the decision needs.
-          </p>
-        </div>
+        {/* Before and after: scattered hand-offs, then one conversation */}
+        <DrawOnView className="grid items-stretch gap-4 md:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)]">
+          <div className="sk-fade flex flex-col gap-5 rounded-2xl bg-surface p-6" style={{ "--sk-i": 0 } as React.CSSProperties}>
+            <div className="flex items-center gap-3">
+              <Doodle name="windows" className="h-12 w-12 text-foreground" i={0} />
+              <p className="font-mono text-xs uppercase tracking-[0.06em] text-muted">Before · a hand-off at every step</p>
+            </div>
+            <ul className="flex flex-wrap gap-2">
+              {["Inventory sheets", "Maps", "Audience data", "Rate cards", "Proposal decks", "Booking emails", "Pacing reports"].map((t, i) => (
+                <li key={t} className="rounded-lg bg-background px-3 py-1.5 text-compact shadow-[0_0_0_1px_var(--color-border)]" style={{ transform: `rotate(${[-2, 1.5, -1, 2, -1.5, 1, -2.5][i]}deg)` }}>{t}</li>
+              ))}
+            </ul>
+            <p className="mt-auto text-compact text-muted">Each hand-off loses context, and each tool asks again: which screens, which cities, what budget.</p>
+          </div>
+          <SketchArrow className="mx-auto h-6 w-10 rotate-90 self-center text-accent md:rotate-0" i={2} />
+          <div className="sk-fade flex flex-col gap-5 rounded-2xl bg-accent-light/40 p-6" style={{ "--sk-i": 3 } as React.CSSProperties}>
+            <div className="flex items-center gap-3">
+              <Doodle name="chat" className="h-12 w-12 text-foreground" i={3} />
+              <p className="font-mono text-xs uppercase tracking-[0.06em] text-accent">After · one conversation</p>
+            </div>
+            <p className="text-[clamp(1.25rem,2vw,1.5rem)] leading-snug tracking-[-0.02em]">“What do you want to do?”</p>
+            <p className="mt-auto text-compact text-muted">An agent with a typed tool for every step of the campaign, and an interface that shows each result in the shape the decision needs.</p>
+          </div>
+        </DrawOnView>
       </Section>
 
       {/* ── STAGES ───────────────────────────────────── */}
@@ -83,22 +101,7 @@ export default function AgenticInventoryCase() {
         title={`One conversation, six stages, ${toolCount} tools.`}
         intro="Each stage of a campaign maps to tools the agent can call. A further context tool grounds every answer in the inventory."
       >
-        <ol className="grid gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
-          {stages.map((s, i) => (
-            <li key={s.name} className="border-t border-border-strong pt-5">
-              <p className="font-mono text-xs tracking-[0.06em] text-accent">0{i + 1}</p>
-              <h3 className="mt-2 text-lg">{s.name}</h3>
-              <p className="mt-1 text-compact text-muted">“{s.question}”</p>
-              <ul className="mt-4 flex flex-wrap gap-1.5">
-                {s.tools.map((t) => (
-                  <li key={t} className="rounded-md bg-surface px-2 py-1 font-mono text-xs text-foreground ring-1 ring-border ring-inset">
-                    {t}
-                  </li>
-                ))}
-              </ul>
-            </li>
-          ))}
-        </ol>
+        <Pipeline stages={stages.map((s) => ({ name: s.name, text: `“${s.question}”`, items: s.tools }))} />
       </Section>
 
       {/* ── JOURNEY ──────────────────────────────────── */}

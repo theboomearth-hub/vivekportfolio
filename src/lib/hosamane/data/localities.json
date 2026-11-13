@@ -1,0 +1,152 @@
+[
+ {
+  "id": "indiranagar",
+  "name": "Indiranagar",
+  "x": 4,
+  "y": 1,
+  "rent2": [
+   45000,
+   70000
+  ],
+  "sqft": 18000,
+  "sourced": false,
+  "metroKm": 0.6,
+  "water": "Cauvery",
+  "flood": null
+ },
+ {
+  "id": "koramangala",
+  "name": "Koramangala",
+  "x": 2,
+  "y": -5,
+  "rent2": [
+   42000,
+   65000
+  ],
+  "sqft": 16500,
+  "sourced": false,
+  "metroKm": 2.8,
+  "water": "Cauvery and borewell",
+  "flood": "Some streets waterlogged in heavy rain (2022)"
+ },
+ {
+  "id": "hsr",
+  "name": "HSR Layout",
+  "x": 4,
+  "y": -8,
+  "rent2": [
+   38000,
+   55000
+  ],
+  "sqft": 14000,
+  "sourced": false,
+  "metroKm": 1.9,
+  "water": "Cauvery and borewell",
+  "flood": null
+ },
+ {
+  "id": "bellandur",
+  "name": "Bellandur",
+  "x": 9,
+  "y": -7,
+  "rent2": [
+   35000,
+   50000
+  ],
+  "sqft": 11800,
+  "sourced": false,
+  "metroKm": 4.5,
+  "water": "Borewell and tanker",
+  "flood": "Outer Ring Road stretch flooded in Sep 2022"
+ },
+ {
+  "id": "kadubeesanahalli",
+  "name": "Kadubeesanahalli",
+  "x": 10,
+  "y": -4,
+  "rent2": [
+   32000,
+   48000
+  ],
+  "sqft": 11200,
+  "sourced": false,
+  "metroKm": 3.2,
+  "water": "Borewell and tanker",
+  "flood": null
+ },
+ {
+  "id": "whitefield",
+  "name": "Whitefield",
+  "x": 16,
+  "y": 1,
+  "rent2": [
+   30000,
+   46000
+  ],
+  "sqft": 10850,
+  "sourced": true,
+  "metroKm": 1.1,
+  "water": "Cauvery (Stage V) and borewell",
+  "flood": null
+ },
+ {
+  "id": "sarjapur",
+  "name": "Sarjapur Road",
+  "x": 11,
+  "y": -11,
+  "rent2": [
+   33000,
+   46500
+  ],
+  "sqft": 11560,
+  "sourced": true,
+  "metroKm": 6.5,
+  "water": "Borewell and tanker",
+  "flood": null
+ },
+ {
+  "id": "ecity",
+  "name": "Electronic City",
+  "x": 6,
+  "y": -18,
+  "rent2": [
+   20000,
+   31000
+  ],
+  "sqft": 7450,
+  "sourced": true,
+  "metroKm": 1.4,
+  "water": "Borewell",
+  "flood": null
+ },
+ {
+  "id": "hebbal",
+  "name": "Hebbal",
+  "x": 1,
+  "y": 9,
+  "rent2": [
+   32000,
+   50000
+  ],
+  "sqft": 12500,
+  "sourced": false,
+  "metroKm": 3,
+  "water": "Cauvery",
+  "flood": null
+ },
+ {
+  "id": "thanisandra",
+  "name": "Thanisandra",
+  "x": 5,
+  "y": 11,
+  "rent2": [
+   28000,
+   42000
+  ],
+  "sqft": 10300,
+  "sourced": true,
+  "metroKm": 2.2,
+  "water": "Cauvery and borewell",
+  "flood": null
+ }
+]

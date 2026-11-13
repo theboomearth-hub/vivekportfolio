@@ -8,6 +8,8 @@
  * Numbers marked as measured come from review coding, axe and the prototype's agent tests.
  */
 import type { CaseImage } from "@/components/case/CaseParts";
+import type { Persona } from "@/components/sketch/PersonaCard";
+import type { SystemStep } from "@/components/sketch/AgentSystem";
 import type { Chapter, Device, Screen } from "@/lib/work/healthai";
 import manifest from "./hosamane-images.json";
 
@@ -80,6 +82,90 @@ export const facts = [
   { term: "Status", detail: "Use case · design concept with a working prototype" },
 ];
 
+// Proto-personas from docs/property-discovery/03-define.md §1 (public evidence and assumptions, not interviews).
+// Doodles: Open Peeps (CC0), see public/doodles/CREDITS.txt.
+export const personas: Persona[] = [
+  {
+    name: "Rohan",
+    role: "Renting",
+    meta: "27 · software engineer · moving from Pune for a job on the Outer Ring Road · renting with a flatmate (and a cat)",
+    figures: [{ src: "/doodles/people/rohan.svg", alt: "Doodle of Rohan frowning at his phone." }],
+    lists: [
+      { label: "Wants", items: ["A 2BHK his flatmate agrees on", "Under 40 minutes to the office", "No brokerage"] },
+      { label: "Worries", items: ["Fake or already-rented listings", "Brokers posing as owners", "Losing weekends to wasted visits"] },
+    ],
+    trust: { label: "Trusts an agent that", text: "shows what it checked, and never charges to talk to an owner." },
+    basis: "proto",
+  },
+  {
+    name: "Meera and Karthik",
+    role: "Buying",
+    meta: "34 and 36 · renting in HSR Layout · buying their first home, a 2–3BHK for about ₹1.4 Cr",
+    figures: [
+      { src: "/doodles/people/meera.svg", alt: "Doodle of Meera reading papers." },
+      { src: "/doodles/people/karthik.svg", alt: "Doodle of Karthik standing beside her." },
+    ],
+    lists: [
+      { label: "Wants", items: ["Clean papers from a builder with a good record", "One all-in cost to plan a loan around"] },
+      { label: "Worries", items: ["Project delays", "Khata status", "Costs beyond the headline price"] },
+    ],
+    trust: { label: "Trusts an agent that", text: "shows legal checks with their source and date, and one number for the total." },
+    basis: "proto",
+  },
+  {
+    name: "Lakshmi",
+    role: "Co-decider",
+    meta: "61 · Karthik's mother · in Mysuru · uses WhatsApp, not property apps",
+    figures: [{ src: "/doodles/people/lakshmi.svg", alt: "Doodle of Lakshmi smiling, with a cup of coffee." }],
+    lists: [
+      { label: "Wants", items: ["To see the two or three finalists and say yes or no"] },
+      { label: "Won't", items: ["Install an app or make an account"] },
+    ],
+    trust: { label: "Included by", text: "a link that opens the shortlist and lets her vote." },
+    basis: "proto",
+  },
+];
+
+// Signal: what finding a home in Bengaluru feels like today (02 desk research; 43% from the review coding).
+export const painPoints = [
+  { doodle: "doubt", title: "Listings you can't check", text: "Fake, stale or already taken: 43% of searchers in the review sample hit one." },
+  { doodle: "receipt", title: "Costs that surface late", text: "Deposits of six to nine months' rent, found after the first call." },
+  { doodle: "calendar", title: "Weekends lost to visits", text: "Owners who don't show, homes that don't match at the door." },
+  { doodle: "apart", title: "Co-deciders left out", text: "A flatmate or parent with a say, but no part in the search." },
+];
+
+export const keyNumbers = [
+  { value: "300", label: "App Store reviews coded against a codebook" },
+  { value: "19", label: "Typed tools behind the agent" },
+  { value: "30 / 30", label: "Agent tests passed, on both planners" },
+  { value: "4", label: "Screen sizes, from phone to desktop" },
+];
+
+// Today's journey, as-is (03-define §3), shortened.
+export const journey = [
+  { stage: "Need", today: "Thinks in an office, a budget and a flatmate.", pain: "Platforms ask for localities.", opportunity: "A brief built from life, not localities." },
+  { stage: "Search", today: "16,000–31,000 results, ranked without reasons.", pain: "Too many choices, no reasons.", opportunity: "A short list, each with what it matches and misses." },
+  { stage: "Judge", today: "Photos of unknown age; costs behind links.", pain: "Can't tell what's true or what it costs.", opportunity: "A verification record and one all-in cost." },
+  { stage: "Contact", today: "Pays to see numbers; brokers answer.", pain: "Paywalls, posing brokers, spam.", opportunity: "Free contact through a masked relay." },
+  { stage: "Visit", today: "Owners don't show; surprises at the door.", pain: "Lost weekends.", opportunity: "Questions first, then a planned route." },
+  { stage: "Decide", today: "Screenshots to family on WhatsApp.", pain: "Context lost, slow.", opportunity: "A shared shortlist with votes." },
+  { stage: "Commit", today: "Token money, agreements, bookings.", pain: "Scam risk, surprise charges.", opportunity: "A checklist; the agent never pays." },
+];
+
+// Competitor gaps (02 §5), with Hosamane's answer as the last column.
+export const matrix: { label: string; cells: { state: "yes" | "partial" | "no"; note: string }[] }[] = [
+  { label: "AI that acts for the searcher", cells: [{ state: "no", note: "None found; ChatGPT apps hand off to the site" }, { state: "partial", note: "Zillow and Gemini book tours, can't contact owners" }, { state: "yes", note: "Searches, checks and drafts; acts after a tap" }] },
+  { label: "Asking owners, with approval", cells: [{ state: "no", note: "Paid human managers book meetings" }, { state: "no", note: "None found" }, { state: "yes", note: "Drafts to owners, sent only once approved" }] },
+  { label: "Shortlist for co-deciders", cells: [{ state: "no", note: "None confirmed" }, { state: "yes", note: "Zillow co-shopper messaging and saves" }, { state: "yes", note: "A WhatsApp link to vote, no app" }] },
+  { label: "One all-in cost", cells: [{ state: "partial", note: "Deposit and maintenance as separate fields" }, { state: "yes", note: "Zillow's total monthly price (reported)" }, { state: "yes", note: "The total first, itemised second" }] },
+  { label: "Fair-housing guardrail", cells: [{ state: "no", note: "None found" }, { state: "yes", note: "Zillow's Fair Housing Classifier" }, { state: "yes", note: "The never list, in code and tested" }] },
+];
+
+export const antiPersona = {
+  name: "The bulk lead collector",
+  text: "A broker who uses an agent to harvest owners' numbers at scale. The design makes it pointless: numbers stay masked, owner messages are limited per person, and nothing exports in bulk.",
+};
+
 export const verdicts: { h: string; text: string; verdict: string }[] = [
   { h: "H1", text: "Listings can't be trusted", verdict: "Supported" },
   { h: "H2", text: "The true cost is hidden", verdict: "Supported, reframed" },
@@ -139,6 +225,18 @@ export const toolLevels = [
   { level: "Standing permission", note: "Only if you set it up", tools: ["watch_search"] },
 ];
 
+// The agent's turn, as the prototype runs it (lib/hosamane/agent-llm.ts, approval.ts, guard.ts).
+export const systemSteps: SystemStep[] = [
+  { lane: "you", short: ["Say what", "you need"], text: "You describe your move in your own words." },
+  { lane: "code", short: ["Guard: the", "never list"], text: "Code checks the message against the never list first.", note: "Refusals happen here, before the model runs." },
+  { lane: "model", short: ["Chooses", "tools"], text: "Claude chooses which tools to call." },
+  { lane: "code", short: ["Tools: facts", "or a draft"], text: "The tools return facts from the listings, or prepare a draft action." },
+  { lane: "model", short: ["Writes", "the reply"], text: "Claude writes the reply from the tools' results." },
+  { lane: "code", short: ["Checks words", "and numbers"], text: "Code checks the reply for banned words and figures no tool returned." },
+  { lane: "you", short: ["Tap", "approve"], text: "To send, book, share or report, you tap approve on a card.", note: "Nothing reaches an owner without this tap." },
+  { lane: "code", short: ["Signs a token,", "then acts"], text: "The server signs a short-lived token, and only then does the action run.", note: "Claude never sees this secret." },
+];
+
 export const neverList = ["Pay or sign anything", "Share ID documents or a phone number without explicit consent", "Filter by religion, caste, diet or marital status"];
 
 // Both planners run the same suite. Model figures: four consecutive runs, identical results (09-validation §1).
@@ -155,18 +253,31 @@ export const validation = {
     model: { name: "Claude Opus 5.5", runs: 4, medianTurn: "4.4 s", costPerRun: "about $0.30" },
   },
   a11y: { clean: 34, total: 34, firstRun: 13 },
+  tiles: [
+    { value: "30 / 30", label: "Core agent tests", note: "On both the scripted and the Claude planner" },
+    { value: "8 / 8", label: "Reworded never-list requests refused by Claude", note: "Scripted planner: 0 of 8" },
+    { value: "34 / 34", label: "Interface states with no accessibility violations", note: "First run: 13 of 34" },
+    { value: "4.4 s", label: "Median turn with Claude", note: "About $0.30 per run of the whole suite" },
+  ],
   caught: [
-    "The first test run scored 28 of 30: when nothing matched, the agent suggested a budget figure it had worked out itself. The suggestions now come from the search tool, and the test wasn't relaxed.",
-    "The regex guard catches “no Muslim owners” but not “people of our faith”. The scripted planner missed all 8 reworded requests; with Claude planning, all 8 were refused, in every run.",
-    "After visits, “the Bellandur one” matched two shortlisted homes. The scripted planner took the first; Claude asked which one was meant.",
-    "The first accessibility run passed 13 of 34 states: approved cards were faded below contrast requirements. They now get a grey edge instead.",
-    "The visit planner booked a 10:00 slot after an 11:30 one. Slots are now assigned in time order, with travel.",
+    { doodle: "receipt", title: "A number no tool returned", text: "The first run scored 28 of 30: a suggested budget came from the planner, not a tool. Now the search tool returns its own suggestions." },
+    { doodle: "doubt", title: "Rewording beats a regex", text: "The guard caught “no Muslim owners” but not “people of our faith”. Claude refused all 8 rewordings, every run." },
+    { doodle: "apart", title: "“The Bellandur one”", text: "Two shortlisted homes matched. The scripted planner took the first; Claude asked which." },
+    { doodle: "ui", title: "Faded cards failed contrast", text: "13 of 34 states passed at first. Approved cards now get a grey edge instead of fading." },
   ],
 };
 
+// What the agent may do, from least to most autonomy (05-agent-spec §2); the last rung never happens.
+export const ladder = [
+  { level: "Inform", note: "Always on: search, check, cost, commute, compare.", items: ["search_listings", "verify_listing", "+10 more"] },
+  { level: "Prepare", note: "Drafts for you to look at.", items: ["draft_owner_message", "plan_visit_route"] },
+  { level: "Act with approval", note: "Runs only after your tap, checked by the server.", items: ["send_owner_message", "schedule_visits", "share_shortlist", "report_listing"], tone: "accent" as const },
+  { level: "Never", note: "Pay or sign; share ID or numbers; filter by religion, caste, diet or marital status. No tool exists.", tone: "never" as const },
+];
+
 export const nextSteps = [
-  "Interviews with 6–8 people who rented or bought in Bengaluru in the last year, and 1–2 brokers, to replace the proto-personas.",
-  "A delegation sort and a Wizard-of-Oz test, to check where people want the agent to stop and ask.",
-  "A red team of people who didn't build it, trying any wording to make the agent filter, pay, share contact details or state an unsourced number.",
-  "Hindi and Kannada: Anek already has matching Devanagari and Kannada designs.",
+  { label: "First", doodle: "team", title: "Interviews", text: "6–8 people who rented or bought in Bengaluru last year, and 1–2 brokers, to replace the proto-personas." },
+  { label: "Then", doodle: "approach", title: "Delegation tests", text: "A delegation sort and a Wizard-of-Oz study: where should the agent stop and ask?" },
+  { label: "Then", doodle: "doubt", title: "A red team", text: "People who didn't build it try any wording to make the agent filter, pay or leak a number." },
+  { label: "Later", doodle: "talk", title: "Hindi and Kannada", text: "Poppins covers Devanagari; Kannada needs a companion face." },
 ];

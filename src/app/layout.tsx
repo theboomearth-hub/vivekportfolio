@@ -8,6 +8,8 @@ import ScrollProgress from "@/components/ScrollProgress";
 import SmoothScroll from "@/components/SmoothScroll";
 import BackToTop from "@/components/BackToTop";
 import MotionProvider from "@/components/MotionProvider";
+import { SiteOnly } from "@/components/SiteChrome";
+import SketchDefs from "@/components/sketch/SketchDefs";
 import { SITE_URL } from "@/lib/site";
 
 // Two families total (Nov 2026 "Calm" redesign): Inter for everything, with its
@@ -354,16 +356,22 @@ export default function RootLayout({
         <a href="#main-content" className="skip-link">
           Skip to content
         </a>
+        <SketchDefs />
         <MotionProvider>
           <div className="relative overflow-x-clip">
             <SmoothScroll />
-            <ScrollProgress />
-            <Navbar />
+            {/* Hidden on full-screen app routes (/hosamane), which bring their own navigation. */}
+            <SiteOnly>
+              <ScrollProgress />
+              <Navbar />
+            </SiteOnly>
             <main id="main-content" className="flex-1">
               <PageTransition>{children}</PageTransition>
             </main>
-            <Footer />
-            <BackToTop />
+            <SiteOnly>
+              <Footer />
+              <BackToTop />
+            </SiteOnly>
           </div>
         </MotionProvider>
       </body>

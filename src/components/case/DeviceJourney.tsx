@@ -50,11 +50,14 @@ export default function DeviceJourney({ chapters, devices }: { chapters: Chapter
                 <p className="font-mono text-xs tracking-[0.06em] text-accent">
                   {ch.n} · {shots.length} {shots.length === 1 ? "screen" : "screens"}
                 </p>
-                <h3 className="mt-3 text-2xl tracking-[-0.02em]">{ch.title}</h3>
+                <h3 className="mt-3">{ch.title}</h3>
                 <p className="mt-4 max-w-[46ch] leading-relaxed text-muted">{ch.body}</p>
                 <p className="mt-5 max-w-[46ch] border-l-2 border-accent pl-3 text-compact leading-relaxed">{ch.decision}</p>
               </div>
-              <Shots device={device} shots={shots} />
+              {/* A stage for the screens, so they read as product shots rather than loose images. */}
+              <div className="rounded-3xl bg-background p-4 ring-1 ring-border ring-inset sm:p-6 lg:p-8">
+                <Shots device={device} shots={shots} />
+              </div>
             </li>
           );
         })}
@@ -67,10 +70,10 @@ function Shots({ device, shots }: { device: Device; shots: Chapter["screens"][De
   // Fixed columns per size, so a screen is the same size in every chapter.
   if (device === "phone") {
     return (
-      <ul className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+      <ul className="grid grid-cols-2 gap-5 sm:grid-cols-3">
         {shots.map((s) => (
           <li key={s.src}>
-            <Shot image={s} rounded="rounded-[20px]" sizes="(min-width: 1024px) 190px, (min-width: 640px) 30vw, 45vw" caption={`${s.code} · ${s.label}`} />
+            <Shot image={s} rounded="rounded-[22px]" sizes="(min-width: 1024px) 240px, (min-width: 640px) 30vw, 45vw" caption={`${s.code} · ${s.label}`} />
           </li>
         ))}
       </ul>

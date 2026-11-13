@@ -3,7 +3,28 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { Section, SectionHeader } from "@/components/Section";
+import Doodle from "@/components/sketch/Doodle";
+import { Ladder, StackDiagram } from "@/components/sketch/structures";
 import { tintText } from "@/lib/tint";
+
+/* ─── The stack I work across, top (newest) to bottom, from the role lists below ─── */
+const stack = [
+  { name: "AI products", text: "Agents with typed tools and approval steps, designed and built end to end.", doodle: <Doodle name="ai" className="h-10 w-10" />, accent: true },
+  { name: "Front-end engineering", text: "Production React and Next.js: I build what I design.", doodle: <Doodle name="code" className="h-10 w-10" i={1} /> },
+  { name: "Design systems", text: "Component libraries and tokens that keep products consistent.", doodle: <Doodle name="system" className="h-10 w-10" i={2} /> },
+  { name: "Product design", text: "End-to-end UI/UX: research, wireframes, prototypes, interaction design.", doodle: <Doodle name="ui" className="h-10 w-10" i={3} /> },
+  { name: "Design strategy", text: "Align design direction with business goals, and measure the impact.", doodle: <Doodle name="approach" className="h-10 w-10" i={4} /> },
+];
+
+/* ─── How much an agent may do on its own, as in the Hosamane and MW-Inventory case studies ─── */
+const agentLadder = [
+  { level: "Inform", note: "Search, check and summarise. Always on, always with sources." },
+  { level: "Prepare", note: "Drafts, plans and proposals you look at before anything moves." },
+  { level: "Act with approval", note: "Anything that contacts a person, books or spends waits for your tap.", tone: "accent" as const },
+  { level: "Never", note: "Pay, sign, or judge people on who they are. No tool is built for it.", tone: "never" as const },
+];
+
+const principleDoodles = ["research", "system", "ship", "team", "code", "access"];
 
 /* ─── AI Tool Data ─── */
 interface AITool {
@@ -191,6 +212,9 @@ export default function AboutPage() {
           title="I own the full stack of design."
           description="Not just screens — I own the systems, the code, and the strategy that makes great products happen at scale."
         />
+        <div className="mb-10">
+          <StackDiagram layers={stack} />
+        </div>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Leader Column */}
           <motion.div
@@ -290,7 +314,7 @@ export default function AboutPage() {
               transition={{ delay: i * 0.08 }}
               className="p-5 sm:p-8 rounded-2xl bg-surface border border-border hover:border-accent/20 transition-all"
             >
-              <div className="text-accent mb-6">{p.icon}</div>
+              <div className="mb-6"><Doodle name={principleDoodles[i] ?? "signal"} className="h-12 w-12 text-foreground" i={i} /></div>
               <h3 className="text-xl mb-3">{p.title}</h3>
               <p className="text-muted leading-relaxed">{p.description}</p>
             </motion.div>
@@ -528,7 +552,7 @@ export default function AboutPage() {
                   desc: "The best tool is the one that solves the problem — no loyalty, only effectiveness.",
                   icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="text-accent"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>,
                 },
-              ].map((principle) => (
+              ].map((principle, pi) => (
                 <motion.div
                   key={principle.title}
                   initial={{ opacity: 0, y: 20 }}
@@ -536,13 +560,18 @@ export default function AboutPage() {
                   viewport={{ once: true }}
                   className="p-5 rounded-2xl bg-surface border border-border"
                 >
-                  <div className="mb-3">{principle.icon}</div>
+                  <div className="mb-3"><Doodle name={["ai", "flows", "system"][pi]} className="h-10 w-10 text-foreground" i={pi} /></div>
                   <h3 className="text-sm mb-2 text-foreground">{principle.title}</h3>
                   <p className="text-sm text-muted leading-relaxed">{principle.desc}</p>
                 </motion.div>
               ))}
             </div>
           </motion.div>
+        </div>
+        <div className="mx-auto mt-16 max-w-5xl">
+          <h3 className="text-xl">How much I let an agent do on its own</h3>
+          <p className="mt-2 max-w-[60ch] text-compact text-muted">The same ladder runs through both agents I&apos;ve built: each step up needs more from the person, and the top step never happens.</p>
+          <div className="mt-6"><Ladder rungs={agentLadder} /></div>
         </div>
       </Section>
 

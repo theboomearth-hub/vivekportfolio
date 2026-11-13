@@ -25,6 +25,9 @@ import {
   Summarize,
 } from "@/components/home/parts";
 import Sketch from "@/components/home/Sketch";
+import Doodle from "@/components/sketch/Doodle";
+import { StepStrip } from "@/components/sketch/flows";
+import HeroScribble from "@/components/sketch/HeroScribble";
 import s from "@/components/home/home.module.css";
 
 /** Staggered CSS entrance for the hero (see .rise in home.module.css). */
@@ -120,7 +123,8 @@ export default function HomePage() {
     <AgentProvider>
       {/* ── HERO ─────────────────────────────────────────── */}
       <section aria-labelledby={anchors.heroTitle} className="pb-24 pt-36 md:pb-28 md:pt-48">
-        <div className="container-premium">
+        <div className="container-premium relative">
+          <HeroScribble className="pointer-events-none absolute top-14 right-[120px] hidden w-[400px] xl:block" />
           <div className={`${s.rise} flex items-center gap-3`} style={rise(0)}>
             <span role="img" aria-label="Vivekanand Choudhari" className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-surface font-mono text-xs text-muted ring-1 ring-border-strong ring-inset">
               VC
@@ -278,17 +282,16 @@ export default function HomePage() {
       <section aria-labelledby="process-title" className="border-t border-border py-24 md:py-28">
         <div className="container-premium">
           <SectionHead eyebrow="Process" title="Design run like an engineering discipline" id="process-title" />
-          <ol id={anchors.processSteps} className="grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
-            {processSteps.map((step, i) => (
-              <li key={step.n}>
-                <Reveal delay={i * 60} className="border-t border-border-strong pt-5">
-                  <p className="font-mono text-xs tracking-[0.06em] text-accent">{step.n}</p>
-                  <h3 className="mt-3 text-lg">{step.title}</h3>
-                  <p className="mt-2 text-compact leading-relaxed text-muted">{step.body}</p>
-                </Reveal>
-              </li>
-            ))}
-          </ol>
+          <div id={anchors.processSteps}>
+            <StepStrip
+              steps={processSteps.map((step, i) => ({
+                label: step.n,
+                title: step.title,
+                text: step.body,
+                doodle: <Doodle name={["research", "psychology", "flows", "ship"][i] ?? "signal"} className="h-12 w-12" i={i} />,
+              }))}
+            />
+          </div>
           <Reveal className="mt-12 flex flex-wrap items-center justify-between gap-x-6 gap-y-3 text-muted">
             <p>Every stage has a gate. Nothing moves forward on instinct alone.</p>
             <TextLink href="/process">See the full method</TextLink>

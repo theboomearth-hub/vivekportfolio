@@ -48,7 +48,11 @@ The type and layout stay the same.
 
 ## 4. Type
 
-**Anek Latin** by Ek Type (Mumbai). The same family has matching **Anek Kannada** and **Anek
+**Poppins** by Indian Type Foundry (Ahmedabad), from 14 Nov 2026, at the owner's request. It covers
+Latin and Devanagari, so Hindi (a "should" in 03 §9) can share the family; Kannada will need a
+companion face. Regular, medium and semibold. The sizes below are unchanged.
+
+*Before 14 Nov 2026:* **Anek Latin** by Ek Type (Mumbai). The same family has matching **Anek Kannada** and **Anek
 Devanagari** designs, so Kannada and Hindi (a "should" in 03 §9) will look native rather than
 bolted on. All three are on Google Fonts. Numbers use tabular figures.
 

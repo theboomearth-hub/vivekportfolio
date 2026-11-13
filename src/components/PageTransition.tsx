@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { usePathname } from "next/navigation";
+import { isAppPath } from "@/components/SiteChrome";
 
 const variants = {
   hidden: {
@@ -32,6 +33,10 @@ export default function PageTransition({
   // (no entrance animation) vs. a subsequent client-side navigation
   // (animate in). Comparing against state avoids mutating refs during render.
   const [initialPathname] = useState(() => pathname);
+
+  // Full-screen apps get no wrapper: the motion div keeps a `filter`, which would make it the
+  // containing block for the app's position: fixed panels.
+  if (isAppPath(pathname)) return <>{children}</>;
 
   const isFirstPage = pathname === initialPathname;
 

@@ -3,10 +3,38 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { Section } from "@/components/Section";
+import { StatTiles } from "@/components/sketch/charts";
+import Doodle from "@/components/sketch/Doodle";
+import { StepStrip } from "@/components/sketch/flows";
+import { Tick } from "@/components/sketch/glyphs";
+import { DecisionTree, Pipeline } from "@/components/sketch/structures";
 import {
   projectData,
   type DecisionRecord,
 } from "@/lib/work/project-data";
+
+/* ─── Summaries drawn from the case study's own words ─── */
+
+/** The first sentence; when it runs long, the clause before the first dash or semicolon. */
+function lead(text: string, maxWords = 24): string {
+  const first = text.split(/(?<=[.!?])\s/)[0].trim();
+  if (first.split(/\s+/).length <= maxWords) return first;
+  const clause = first.split(/\s[—–]\s|;\s/)[0].trim();
+  if (clause.split(/\s+/).length <= maxWords) return clause.replace(/[,:]$/, "") + ".";
+  return first.split(/\s+/).slice(0, maxWords).join(" ") + "…";
+}
+
+/** The part of a line before " — ". */
+const head = (text: string) => text.split(/\s[—–]\s/)[0].trim();
+
+/** "60% reduction in X — because Y" → { value: "60%", label: "Reduction in X", note: "Because Y" }; null if the line doesn't open with a figure. */
+function figureOf(item: string): { value: string; label: string; note?: string } | null {
+  const [main, ...rest] = item.split(/\s[—–]\s/);
+  const m = main.match(/^(Zero|[₹$]?\d[\d,.]*\s?(?:%|x|×|k|K|M|Cr)?\+?)(\s(?:hours?|minutes?|days?|weeks?|months?|product experiences|enterprises|teams|customers|screens))?\s+(.+)$/);
+  if (!m) return null;
+  const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
+  return { value: `${m[1]}${m[2] ?? ""}`.trim(), label: cap(m[3]), note: rest.length ? cap(rest.join(" — ")) : undefined };
+}
 
 
 /* ─── Decision Records — context → options → choice → result ─── */
@@ -35,36 +63,15 @@ function DecisionsSection({ decisions }: { decisions: DecisionRecord[] }) {
               transition={{ delay: i * 0.06 }}
               className="rounded-2xl bg-surface border border-border overflow-hidden"
             >
-              <div className="p-5 sm:p-6 border-b border-border flex items-start gap-4">
+              <div className="p-5 sm:p-6 flex items-start gap-4">
                 <span className="font-mono text-sm text-accent shrink-0 mt-1">
                   {String(i + 1).padStart(2, "0")}
                 </span>
-                <div>
-                  <h3 className="text-lg mb-1">{d.title}</h3>
-                  <p className="text-sm text-muted leading-relaxed">{d.context}</p>
-                </div>
+                <h3 className="text-lg">{d.title}</h3>
               </div>
-              <div className="grid md:grid-cols-2 gap-px bg-border">
-                <div className="bg-surface p-5 sm:p-6">
-                  <p className="text-xs font-mono text-muted uppercase tracking-[0.06em] mb-3">
-                    Options considered
-                  </p>
-                  <ul className="space-y-2">
-                    {d.options.map((opt, oi) => (
-                      <li key={oi} className="flex gap-2.5 text-sm text-foreground/70 leading-relaxed">
-                        <span className="mt-2 w-1 h-1 rounded-full bg-muted shrink-0" />
-                        {opt}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                <div className="bg-surface p-5 sm:p-6">
-                  <p className="text-xs font-mono text-accent uppercase tracking-[0.06em] mb-3">
-                    The call → the result
-                  </p>
-                  <p className="text-sm text-foreground/80 leading-relaxed mb-3">{d.choice}</p>
-                  <p className="text-sm text-muted leading-relaxed">{d.result}</p>
-                </div>
+              {/* The decision as a small tree: context → options weighed → the call → result */}
+              <div className="px-5 pb-6 sm:px-6">
+                <DecisionTree context={d.context} options={d.options} choice={d.choice} result={d.result} />
               </div>
               <div className="px-5 sm:px-6 py-3.5 bg-background/50 border-t border-border">
                 <p className="text-sm text-muted leading-relaxed">
@@ -232,7 +239,8 @@ export default function CaseStudyClient({ slug }: { slug: string }) {
               </motion.div>
             )}
 
-            {/* ─── Product Artifact (stylized recreation) ─── */}
+            {/* ─── Product Artifact (stylized recreation of the NoCode builder; that project only) ─── */}
+            {slug === "nocode-platform" && (
             <motion.figure
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -289,48 +297,17 @@ export default function CaseStudyClient({ slug }: { slug: string }) {
                 are under NDA.
               </figcaption>
             </motion.figure>
+            )}
 
           </div>
         </Section>
 
-        {/* ─── Horizontal Journey Bar ─── */}
+        {/* ─── The story at a glance: chapters on one hand-drawn line ─── */}
         <Section>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="relative"
-          >
-            {/* Bar track */}
-            <div className="relative h-px bg-border my-6">
-              <motion.div
-                initial={{ scaleX: 0 }}
-                whileInView={{ scaleX: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 1.2, ease: "easeOut" }}
-                className="absolute inset-y-0 left-0 right-0 bg-accent origin-left"
-              />
-            </div>
-            {/* Year markers */}
-            <div className="flex justify-between items-start">
-              {uniqueYears.map((yr, i) => (
-                <motion.div
-                  key={yr}
-                  initial={{ opacity: 0, y: 10 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.2 + i * 0.1 }}
-                  className="flex flex-col items-center"
-                >
-                  <div className="w-3 h-3 rounded-full bg-accent border-2 border-background -mt-[7px] relative z-10" />
-                  <span className="text-xs font-mono text-accent mt-2">{yr}</span>
-                  <span className="text-xs text-muted mt-0.5">
-                    {i === 0 ? "Kickoff" : i === uniqueYears.length - 1 ? "Launch" : `Year ${i + 1}`}
-                  </span>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
+          <p className="text-xs font-mono text-muted uppercase tracking-[0.06em] mb-6">
+            {project.story.length} chapters · {uniqueYears[0]}–{uniqueYears[uniqueYears.length - 1]}
+          </p>
+          <Pipeline stages={project.story.map((c) => ({ name: c.phase.replace(/^\d+\s*—\s*/, ""), text: c.year, items: [] }))} />
         </Section>
 
         {/* ─── Story Chapters ─── */}
@@ -470,6 +447,10 @@ export default function CaseStudyClient({ slug }: { slug: string }) {
   }
 
   /* ─── Default layout for other projects ─── */
+  const figures = project.impact.map((item) => ({ item, fig: figureOf(item) }));
+  const tiled = figures.filter((f) => f.fig).slice(0, 4);
+  const impactTiles = tiled.length >= 2 ? tiled.map((f) => f.fig!) : [];
+  const impactRest = impactTiles.length ? figures.filter((f) => !tiled.includes(f)).map((f) => f.item) : project.impact;
   return (
     <div className="min-h-screen pt-24 sm:pt-32">
       {/* Back link */}
@@ -562,8 +543,19 @@ export default function CaseStudyClient({ slug }: { slug: string }) {
         </div>
       </Section>
 
+      {/* The case at a glance: challenge → approach → impact, in the case study's own words */}
+      <Section className="!pt-0">
+        <StepStrip
+          steps={[
+            { label: "The challenge", title: lead(project.challenge), doodle: <Doodle name="tangle" className="h-12 w-12" />, href: "#challenge" },
+            { label: `The approach · ${project.approach.length} moves`, title: lead(head(project.approach[0]), 16), doodle: <Doodle name="approach" className="h-12 w-12" i={1} />, href: "#approach" },
+            { label: "The impact", title: lead(head(project.impact[0]), 16), doodle: <Doodle name="rise" className="h-12 w-12" i={2} />, href: "#impact" },
+          ]}
+        />
+      </Section>
+
       {/* Challenge */}
-      <Section>
+      <Section id="challenge">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -576,7 +568,7 @@ export default function CaseStudyClient({ slug }: { slug: string }) {
       </Section>
 
       {/* Approach */}
-      <Section>
+      <Section id="approach">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -630,17 +622,21 @@ export default function CaseStudyClient({ slug }: { slug: string }) {
         </motion.div>
       </Section>
 
-      {/* Impact */}
-      <Section>
+      {/* Impact: lines that open with a figure become stat tiles; the rest stay as a list */}
+      <Section id="impact">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="max-w-3xl"
         >
           <h2 className="text-xs font-mono text-accent uppercase tracking-[0.06em] mb-6">The Impact</h2>
-          <div className="grid sm:grid-cols-2 gap-4">
-            {project.impact.map((item, i) => (
+          {impactTiles.length >= 2 && (
+            <div className="mb-4">
+              <StatTiles items={impactTiles} cols={impactTiles.length === 3 ? "sm:grid-cols-3" : "sm:grid-cols-2 lg:grid-cols-4"} />
+            </div>
+          )}
+          <div className="grid sm:grid-cols-2 gap-4 max-w-4xl">
+            {impactRest.map((item, i) => (
               <motion.div
                 key={i}
                 initial={{ opacity: 0, y: 10 }}
@@ -649,9 +645,7 @@ export default function CaseStudyClient({ slug }: { slug: string }) {
                 transition={{ delay: i * 0.05 }}
                 className="flex gap-3 p-4 rounded-xl bg-surface border border-border"
               >
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-accent shrink-0 mt-0.5">
-                  <polyline points="20 6 9 17 4 12" />
-                </svg>
+                <Tick className="h-5 w-5 shrink-0 text-accent" />
                 <p className="text-sm text-foreground/80 leading-relaxed">{item}</p>
               </motion.div>
             ))}
