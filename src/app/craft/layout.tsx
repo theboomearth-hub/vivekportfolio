@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Craft — Interaction Studies",
+  title: "Craft — Interaction Studies, Run as Experiments",
   description:
-    "Small, focused interaction studies — each demo pairs a live micro-interaction with the psychology principle that makes it work and the code behind it.",
+    "Ten interactive labs: Fitts's law, Hick's law, pop-out search, latency thresholds, area perception, perceptual colour, spring physics, change blindness, progress bars and trust in AI agents. Each measures you against the published research.",
   openGraph: {
     title: "Craft — Interaction Studies",
     description:
-      "Live micro-interactions paired with the psychology principles that make them work.",
+      "Ten interactive labs that measure you against the published research, and say what it changes in an interface.",
     images: [
       {
         url: "/api/og?title=Craft&category=Interaction%20Studies",

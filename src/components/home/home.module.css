@@ -3,113 +3,39 @@
    global theme tokens, so the whole page re-skins from globals.css. */
 
 /* ── Project frames ─────────────────────────────────────────────── */
+/* The card cover: the same dotted paper as the flagship stage, with a stylised screen rising out of it. */
 .frame {
   position: relative;
   display: block;
   overflow: hidden;
-  border-radius: 14px;
-  background: var(--color-surface);
+  border-radius: 16px;
+  background-color: var(--color-surface);
+  background-image: radial-gradient(var(--color-border-strong) 1px, transparent 1px);
+  background-size: 20px 20px;
+  box-shadow: inset 0 0 0 1px var(--color-border);
 }
-.frameWide { aspect-ratio: 16 / 8; }
-.frameCard { aspect-ratio: 4 / 3; }
+.frameCard { aspect-ratio: 16 / 10; }
 
-/* A white "screen" that rises slightly on hover. Real screenshots replace these. */
+/* The stylised screen. It rises slightly when the card is hovered. */
 .mock {
   position: absolute;
-  left: 10%;
-  right: 10%;
-  top: 12%;
+  left: 9%;
+  right: 9%;
+  top: 11%;
   bottom: -2%;
-  display: grid;
-  align-content: start;
-  gap: 10px;
-  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
   background: var(--color-background);
   border-radius: 10px 10px 0 0;
-  box-shadow: 0 0 0 1px var(--color-border), 0 24px 60px -30px rgb(15 15 16 / 0.18);
+  box-shadow: 0 0 0 1px var(--color-border), 0 24px 60px -30px rgb(15 15 16 / 0.22);
   transition: transform 0.6s cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 .lift:hover .mock,
 .lift:focus-visible .mock { transform: translateY(-6px); }
-.mock i {
-  display: block;
-  height: 7px;
-  border-radius: 4px;
-  background: var(--color-border);
-}
-.mt {
-  font: 500 10px/1 var(--font-jetbrains-mono), monospace;
-  letter-spacing: 0.04em;
-  color: var(--color-muted);
-}
-
-/* Agentic: plan canvas + agent side-car */
-.agentic { grid-template-columns: minmax(0, 1fr) 34%; gap: 14px; padding: 14px; }
-.canvas { display: grid; align-content: start; gap: 6px; }
-.th, .tr { display: grid; grid-template-columns: 1.4fr 1fr 1fr 0.8fr; gap: 8px; padding: 8px; border-radius: 6px; }
-.th i { height: 6px; background: var(--color-border-strong); }
-.tr { box-shadow: inset 0 0 0 1px var(--color-border); }
-.trAdd {
-  background: color-mix(in srgb, var(--color-accent) 6%, var(--color-background));
-  box-shadow: inset 3px 0 0 var(--color-accent), inset 0 0 0 1px var(--color-border);
-}
-.trDel i { opacity: 0.45; }
-.car { display: grid; align-content: start; gap: 10px; padding-left: 14px; border-left: 1px solid var(--color-border); }
-.prop { display: grid; gap: 7px; padding: 10px; border-radius: 8px; box-shadow: inset 0 0 0 1px var(--color-border); }
-.pk { font: 500 9.5px/1 var(--font-jetbrains-mono), monospace; letter-spacing: 0.06em; text-transform: uppercase; color: var(--color-accent); }
-.diff { display: flex; gap: 6px; font: 500 10px/1 var(--font-jetbrains-mono), monospace; }
-.diff span { padding: 3px 5px; border-radius: 4px; background: var(--color-surface); color: var(--color-muted); }
-.evd { display: flex; gap: 4px; }
-.evd i { flex: 1; height: 14px; background: transparent; box-shadow: inset 0 0 0 1px var(--color-border); }
-.btns { display: flex; gap: 6px; }
-.btns i { flex: 1; height: 20px; border-radius: 5px; background: var(--color-surface); }
-.btns i.ok { background: var(--color-foreground); }
-
-/* Builder (NoCode) */
-.builder { grid-template-columns: 18% minmax(0, 1fr) 22%; grid-template-rows: 28px 1fr; gap: 0; padding: 0; }
-.bTop { grid-column: 1 / -1; display: flex; align-items: center; gap: 6px; padding: 0 12px; border-bottom: 1px solid var(--color-border); }
-.bTop i { width: 7px; height: 7px; border-radius: 50%; background: var(--color-border-strong); }
-.bSide, .bProps { display: grid; align-content: start; gap: 9px; padding: 14px 12px; }
-.bSide { border-right: 1px solid var(--color-border); }
-.bProps { border-left: 1px solid var(--color-border); }
-.bSide i:nth-child(2) { width: 60%; background: var(--color-accent); opacity: 0.8; }
-.bProps i:nth-child(odd) { height: 22px; border-radius: 6px; background: transparent; box-shadow: inset 0 0 0 1px var(--color-border); }
-.bCanvas {
-  display: grid;
-  align-content: start;
-  gap: 12px;
-  padding: 18px;
-  background-image: radial-gradient(var(--color-border) 1px, transparent 1px);
-  background-size: 18px 18px;
-}
-.blk { display: grid; gap: 8px; padding: 12px; border-radius: 8px; background: var(--color-background); box-shadow: 0 0 0 1px var(--color-border); }
-.blk .h { width: 40%; height: 10px; background: var(--color-border-strong); }
-.blk .f { height: 24px; border-radius: 6px; background: transparent; box-shadow: inset 0 0 0 1px var(--color-border); }
-.blk .b { width: 32%; height: 24px; border-radius: 6px; background: var(--color-foreground); }
-.sel { box-shadow: 0 0 0 1.5px var(--color-accent); }
-
-/* Timeline (EHR) */
-.timeline { grid-template-columns: 40px 1fr; gap: 10px 12px; align-items: center; }
-.timeline .ev { height: 24px; border-radius: 6px; background: transparent; box-shadow: inset 0 0 0 1px var(--color-border); }
-.timeline .evAcc { box-shadow: inset 3px 0 0 var(--color-accent), inset 0 0 0 1px var(--color-border); }
-
-/* Gantt (ConstructivIQ) */
-.gantt { gap: 12px; }
-.row { display: grid; grid-template-columns: 26% 1fr; align-items: center; gap: 10px; }
-.bar { display: block; height: 12px; border-radius: 4px; background: var(--color-border-strong); }
-.barAcc { background: var(--color-accent); }
-
-/* Tokens (design systems) */
-.tokens { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 8px; }
-.tokens .sw { height: auto; aspect-ratio: 1; border-radius: 6px; }
-.tokens .ln { grid-column: 1 / -1; }
-
-@media (max-width: 767px) {
-  .frameWide { aspect-ratio: 4 / 3; }
-  .agentic { grid-template-columns: minmax(0, 1fr); }
-  .car { display: none; }
-  .builder { grid-template-columns: minmax(0, 1fr); }
-  .bSide, .bProps { display: none; }
+/* Phones: a little more headroom above the screen, so the "Stylized" tag sits clear of its title bar. */
+@media (max-width: 639px) {
+  .mock { top: 16%; left: 7%; right: 7%; }
 }
 
 /* ── Agent working indicators ───────────────────────────────────── */

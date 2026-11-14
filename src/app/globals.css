@@ -629,3 +629,9 @@ html.lenis body {
 .sk-lift { transition: transform var(--motion-base) var(--ease-out-expo), box-shadow var(--motion-base) var(--ease-out-expo); }
 .sk-lift:hover, .sk-lift:focus-visible { transform: translateY(-3px); box-shadow: 0 22px 44px -28px rgb(15 15 16 / 0.35); }
 @media (prefers-reduced-motion: reduce) { .sk-lift:hover, .sk-lift:focus-visible { transform: none; } }
+
+/* ── CRAFT LABS ── Moving ribs for the progress-bar study. The global reduced-motion rule stills them. */
+.craft-ribs-back { animation: craft-ribs-back 0.6s linear infinite; }
+.craft-ribs-fwd { animation: craft-ribs-fwd 0.6s linear infinite; }
+@keyframes craft-ribs-back { from { background-position: 0 0; } to { background-position: -40px 0; } }
+@keyframes craft-ribs-fwd { from { background-position: 0 0; } to { background-position: 40px 0; } }

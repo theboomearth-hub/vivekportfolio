@@ -2,7 +2,7 @@
 
 import { useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore, type ReactNode } from "react";
 import { motion, useReducedMotion } from "framer-motion";
-import { anchors, DEFAULT_ORDER, quotes, roles, type CardId, type FactLabel } from "@/lib/home";
+import { anchors, DEFAULT_ORDER, roles, type CardId, type FactLabel } from "@/lib/home";
 import { CONTACT_EMAIL } from "@/lib/site";
 import { SendButton, Spark, useAgent } from "./Agent";
 import s from "./home.module.css";
@@ -320,47 +320,6 @@ export function Summarize({ lines }: { lines: string[] }) {
             ))}
           </ul>
         )}
-      </div>
-    </>
-  );
-}
-
-/* ── Quotes: one at a time, changes only on click ───────────────── */
-export function Quotes() {
-  const [i, setI] = useState(0);
-  const q = quotes[i];
-  const step = (d: number) => setI((n) => (n + d + quotes.length) % quotes.length);
-  return (
-    <>
-      <figure aria-live="polite" className="m-0">
-        <blockquote className="mt-4 max-w-[24ch] text-display leading-[1.2] [text-wrap:balance]">
-          “{q.quote}”
-        </blockquote>
-        <figcaption className="mt-7 text-compact text-muted">— {q.role}</figcaption>
-      </figure>
-      <div className="mt-8 flex items-center gap-3">
-        {[
-          { d: -1, label: "Previous quote", path: "M19 12H5M11 18l-6-6 6-6" },
-          { d: 1, label: "Next quote", path: "M5 12h14M13 6l6 6-6 6" },
-        ].map((b, idx) => (
-          <span key={b.label} className="contents">
-            {idx === 1 && (
-              <span className="font-mono text-xs tabular-nums text-muted">
-                {i + 1} / {quotes.length}
-              </span>
-            )}
-            <button
-              type="button"
-              aria-label={b.label}
-              onClick={() => step(b.d)}
-              className="grid h-11 w-11 place-items-center rounded-full ring-1 ring-border-strong ring-inset transition-colors hover:bg-surface"
-            >
-              <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <path d={b.path} />
-              </svg>
-            </button>
-          </span>
-        ))}
       </div>
     </>
   );

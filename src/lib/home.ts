@@ -30,7 +30,7 @@ export const credentials = [
 export const flagship = {
   slug: "agentic-inventory",
   domain: "Agentic AI · Design and build",
-  status: "Use case · live prototype",
+  status: "Live prototype",
   title: "An agent that takes a DOOH campaign from search to debrief",
   desc: "MW-Inventory, designed and built end to end: planners ask in plain language, and the agent calls typed tools and answers with interactive views for every stage of the campaign.",
   image: {
@@ -103,14 +103,14 @@ export const projectCards: ProjectCardData[] = [
 export const DEFAULT_ORDER: CardId[] = ["nocode", "ehr", "civ", "ds"];
 
 export const alsoProjects = [
-  { slug: "hosamane", label: "Hosamane", note: "use case" },
-  { slug: "healthai", label: "HealthAI", note: "use case" },
-  { slug: "mw-activate", label: "Agentic DSP", note: "in flight · NDA" },
+  { slug: "hosamane", label: "Hosamane" },
+  { slug: "healthai", label: "HealthAI" },
+  { slug: "mw-activate", label: "Agentic DSP" },
   { slug: "iiot-smart-factory", label: "IIoT Smart Factory" },
-  { slug: "ott-platform", label: "OTT Streaming", note: "use case" },
+  { slug: "ott-platform", label: "OTT Streaming" },
   { slug: "bigdata-analytics", label: "Big Data Analytics" },
-  { slug: "ev-bike-platform", label: "EV Bike OEM", note: "in flight · NDA" },
-  { slug: "mw-posterops", label: "MW PosterOps", note: "in flight · NDA" },
+  { slug: "ev-bike-platform", label: "EV Bike OEM" },
+  { slug: "mw-posterops", label: "MW PosterOps" },
 ];
 
 export const processSteps = [

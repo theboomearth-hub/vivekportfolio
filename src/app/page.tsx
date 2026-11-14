@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import type { CSSProperties, ReactNode } from "react";
 import { getAllPosts } from "@/lib/blog";
@@ -9,6 +8,7 @@ import {
   flagship,
   processSteps,
   projectCards,
+  quotes,
   type FactLabel,
   type Metric,
 } from "@/lib/home";
@@ -20,12 +20,13 @@ import {
   ForYouNote,
   HeroAsk,
   ProjectGrid,
-  Quotes,
   Reveal,
   Summarize,
 } from "@/components/home/parts";
+import FlagshipStage from "@/components/home/FlagshipStage";
 import Sketch from "@/components/home/Sketch";
 import Doodle from "@/components/sketch/Doodle";
+import DrawOnView from "@/components/sketch/DrawOnView";
 import { StepStrip } from "@/components/sketch/flows";
 import HeroScribble from "@/components/sketch/HeroScribble";
 import s from "@/components/home/home.module.css";
@@ -188,16 +189,9 @@ export default function HomePage() {
                 href={`/work/${flagship.slug}`}
                 tabIndex={-1}
                 aria-hidden="true"
-                className="group block overflow-hidden rounded-[14px] bg-surface shadow-[0_0_0_1px_var(--color-border),0_30px_80px_-44px_rgb(15_15_16/0.35)]"
+                className="group block"
               >
-                <Image
-                  src={flagship.image.src}
-                  alt=""
-                  width={flagship.image.width}
-                  height={flagship.image.height}
-                  sizes="(min-width: 1440px) 1200px, 100vw"
-                  className="h-auto w-full transition-transform duration-700 ease-[cubic-bezier(.22,.61,.36,1)] group-hover:scale-[1.01]"
-                />
+                <FlagshipStage />
               </Link>
               <div className="grid items-start gap-8 md:grid-cols-2 md:gap-12">
                 <div>
@@ -255,26 +249,37 @@ export default function HomePage() {
           <Reveal className="mt-14 flex flex-wrap items-baseline gap-x-6 gap-y-1 border-t border-border pt-5 text-compact text-muted">
             <span>Also</span>
             {alsoProjects.map((p) => (
-              <span key={p.slug} className="inline-flex items-baseline gap-2">
-                <Link href={`/work/${p.slug}`} className="py-2 text-foreground underline decoration-border-strong underline-offset-4 hover:text-accent">
-                  {p.label}
-                </Link>
-                {p.note && <small className="text-caption text-muted">{p.note}</small>}
-              </span>
+              <Link key={p.slug} href={`/work/${p.slug}`} className="py-2 text-foreground underline decoration-border-strong underline-offset-4 hover:text-accent">
+                {p.label}
+              </Link>
             ))}
           </Reveal>
         </div>
       </section>
 
       {/* ── WHAT COLLEAGUES SAY ──────────────────────────── */}
-      <section aria-labelledby="quotes-title" className="border-t border-border py-24 md:py-28">
+      <section aria-labelledby="quotes-title" className="bg-surface py-24 md:py-28">
         <div className="container-premium">
           <Reveal>
             <h2 id="quotes-title" className={label}>
               What colleagues say
             </h2>
-            <Quotes />
           </Reveal>
+          {/* All three at once, as cards: short quotes read better side by side than behind a carousel. */}
+          <DrawOnView className="mt-8 grid gap-4 md:grid-cols-3">
+            {quotes.map((q, i) => (
+              <figure key={q.role} className="sk-fade m-0 flex flex-col gap-6 rounded-2xl bg-background p-7 ring-1 ring-border ring-inset" style={{ "--sk-i": i } as CSSProperties}>
+                <span aria-hidden="true" className="block h-7 font-display text-[64px] leading-[0.9] text-accent">“</span>
+                <blockquote className="flex-1 text-[clamp(1.25rem,1.9vw,1.5rem)] leading-snug tracking-[-0.015em] [text-wrap:balance]">
+                  {q.quote}
+                </blockquote>
+                <figcaption className="flex items-center gap-3 text-compact text-muted">
+                  <span aria-hidden="true" className="h-px w-6 bg-border-strong" />
+                  {q.role}
+                </figcaption>
+              </figure>
+            ))}
+          </DrawOnView>
         </div>
       </section>
 
