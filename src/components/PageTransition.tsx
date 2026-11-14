@@ -5,21 +5,19 @@ import { motion } from "framer-motion";
 import { usePathname } from "next/navigation";
 import { isAppPath } from "@/components/SiteChrome";
 
+// A quick, crisp fade-and-rise between pages. No blur: it was costly to paint and softened text mid-move.
 const variants = {
   hidden: {
     opacity: 0,
-    y: 20,
-    filter: "blur(4px)",
+    y: 12,
   },
   enter: {
     opacity: 1,
     y: 0,
-    filter: "blur(0px)",
   },
   exit: {
     opacity: 0,
-    y: -20,
-    filter: "blur(4px)",
+    y: -8,
   },
 };
 
@@ -53,7 +51,7 @@ export default function PageTransition({
       animate="enter"
       exit="exit"
       variants={variants}
-      transition={{ duration: 0.35, ease: [0.25, 0.46, 0.45, 0.94] }}
+      transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
     >
       {children}
     </motion.div>

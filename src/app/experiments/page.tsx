@@ -3,6 +3,8 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useMemo } from "react";
 import { Section } from "@/components/Section";
+import Doodle from "@/components/sketch/Doodle";
+import DrawOnView from "@/components/sketch/DrawOnView";
 import { tintText } from "@/lib/tint";
 import Link from "next/link";
 
@@ -402,9 +404,12 @@ export default function ExperimentsPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7 }}
           >
-            <p className="text-accent font-mono text-xs uppercase tracking-[0.06em] mb-4">
-              The Lab
-            </p>
+            <DrawOnView className="mb-4 flex flex-col items-center gap-3">
+              <Doodle name="flask" className="h-14 w-14 text-foreground" />
+              <p className="text-accent font-mono text-xs uppercase tracking-[0.06em]">
+                The Lab
+              </p>
+            </DrawOnView>
             <h1 className="mb-6">
               Experiments &{" "}
               <span className="text-accent">Use Cases.</span>

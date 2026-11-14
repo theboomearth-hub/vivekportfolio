@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Section } from "@/components/Section";
+import Doodle from "@/components/sketch/Doodle";
+import { StepStrip } from "@/components/sketch/flows";
 
 const socials = [
   {
@@ -338,6 +340,23 @@ export default function ContactPage() {
           </motion.div>
         </div>
       </Section>
+
+      {/* What happens after you write */}
+      <section aria-labelledby="next-title" className="border-t border-border bg-surface py-20 md:py-24">
+        <div className="container-premium">
+          <p className="font-mono text-xs uppercase tracking-[0.06em] text-muted">What happens next</p>
+          <h2 id="next-title" className="mt-2.5 max-w-[24ch]">Three steps, no forms after this one.</h2>
+          <div className="mt-10">
+            <StepStrip
+              steps={[
+                { label: "01 · You", title: "Write a line or two", text: "Email or the form above. What you're building is enough to start.", doodle: <Doodle name="talk" className="h-12 w-12" /> },
+                { label: "02 · Me", title: "A reply within 24 hours", text: "From me, not an auto-responder, with a question or two if I need them.", doodle: <Doodle name="clock" className="h-12 w-12" i={1} /> },
+                { label: "03 · Us", title: "A short call, if it's a fit", text: "We talk through the product and whether I'm the right person for it.", doodle: <Doodle name="team" className="h-12 w-12" i={2} /> },
+              ]}
+            />
+          </div>
+        </div>
+      </section>
     </div>
   );
 }

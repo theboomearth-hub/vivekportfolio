@@ -206,6 +206,15 @@ html.lenis body {
     -webkit-font-smoothing: antialiased;
   }
 
+  /* Links and buttons ease their colour changes instead of snapping. Opacity and transform are left out on purpose:
+     Framer Motion animates those inline every frame, and a CSS transition would drag behind it. Utilities that set
+     their own transition still win, since this sits in the base layer. */
+  a, button {
+    transition-property: color, background-color, border-color, text-decoration-color, box-shadow;
+    transition-duration: var(--motion-fast);
+    transition-timing-function: ease;
+  }
+
   /* Calm type scale: one family, medium weight, tight tracking at display sizes.
      Pages that set their own size/weight classes still win (utilities layer). */
   h1 {
@@ -609,3 +618,14 @@ html.lenis body {
 @media (prefers-reduced-motion: no-preference) {
   .sk-intro { animation: sk-draw 1.4s var(--ease-out-expo) both; animation-delay: calc(300ms + var(--sk-i, 0) * 110ms); }
 }
+/* Screenshots unmask softly the first time they scroll into view. */
+[data-draw="pending"] .sk-reveal { opacity: 0; transform: scale(0.985); clip-path: inset(4% 4% 4% 4% round 18px); }
+[data-draw="run"] .sk-reveal { animation: sk-reveal var(--motion-slow) var(--ease-out-expo) both; }
+@keyframes sk-reveal {
+  from { opacity: 0; transform: scale(0.985); clip-path: inset(4% 4% 4% 4% round 18px); }
+  to { opacity: 1; transform: none; clip-path: inset(0 0 0 0 round 0); }
+}
+/* Linked cards lift a little on hover and focus; content cards that aren't links don't move. */
+.sk-lift { transition: transform var(--motion-base) var(--ease-out-expo), box-shadow var(--motion-base) var(--ease-out-expo); }
+.sk-lift:hover, .sk-lift:focus-visible { transform: translateY(-3px); box-shadow: 0 22px 44px -28px rgb(15 15 16 / 0.35); }
+@media (prefers-reduced-motion: reduce) { .sk-lift:hover, .sk-lift:focus-visible { transform: none; } }

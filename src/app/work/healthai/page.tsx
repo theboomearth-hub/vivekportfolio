@@ -3,6 +3,8 @@ import Image from "next/image";
 import { BackLink, BulletList, CaseCta, CaseIndex, CaseKicker, FactList, NumberedGrid, Section, caseLabel } from "@/components/case/CaseParts";
 import CardSort from "@/components/case/CardSort";
 import DeviceJourney from "@/components/case/DeviceJourney";
+import Doodle from "@/components/sketch/Doodle";
+import DrawOnView from "@/components/sketch/DrawOnView";
 import {
   a11y,
   aiPrinciples,
@@ -74,6 +76,37 @@ function Scroller({ label, children }: { label: string; children: React.ReactNod
   );
 }
 
+/** The triage scale from decision 3, drawn: three levels of care on one hand-drawn line. */
+function TriageScale() {
+  const levels = [
+    { name: "Self-care", note: "Wait it out, with what to watch for", doodle: "clock" },
+    { name: "Doctor visit", note: "Book a specialty, with the assessment attached", doodle: "team" },
+    { name: "Emergency", note: "Call 112 now", doodle: "shield" },
+  ];
+  return (
+    <DrawOnView className="rounded-2xl bg-background p-6 ring-1 ring-border ring-inset md:p-8">
+      <p className={caseLabel}>Recommended care, always on one scale</p>
+      <div className="relative mt-8">
+        <svg className="pointer-events-none absolute top-[22px] left-[8%] hidden h-3 w-[84%] text-foreground md:block" viewBox="0 0 1000 12" preserveAspectRatio="none" aria-hidden="true">
+          <path className="sk-draw" pathLength={1} d="M4 6C300 4 640 8 996 6" fill="none" stroke="currentColor" strokeWidth="1.6" vectorEffect="non-scaling-stroke" />
+        </svg>
+        <ol className="relative grid gap-6 md:grid-cols-3">
+          {levels.map((l, i) => (
+            <li key={l.name} className="sk-fade grid justify-items-start gap-2 md:justify-items-center md:text-center" style={{ "--sk-i": i } as React.CSSProperties}>
+              <span className={`grid h-12 w-12 place-items-center rounded-full bg-background ring-2 ${i === 2 ? "ring-danger/60" : "ring-foreground"}`}>
+                <Doodle name={l.doodle} className="h-7 w-7 text-foreground" i={i} />
+              </span>
+              <p className="text-lg">{l.name}</p>
+              <p className="max-w-[24ch] text-compact text-muted">{l.note}</p>
+            </li>
+          ))}
+        </ol>
+      </div>
+      <p className="mt-8 text-compact text-muted">Causes are rated in words (strong match, possible, less likely), never percentages, and red flags are listed at every level.</p>
+    </DrawOnView>
+  );
+}
+
 export default function HealthAICase() {
   return (
     <article className="pt-28 md:pt-36">
@@ -122,21 +155,27 @@ export default function HealthAICase() {
       {/* ── USERS ────────────────────────────────────── */}
       <Section
         id="users"
+        tone="tint"
         eyebrow="Users"
         title="One patient, three jobs."
         intro="A proto-persona: built from assumptions to focus the design, and to be replaced by what patients say in interviews."
       >
         <div className="grid gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-14">
-          <div className="rounded-2xl bg-surface p-6 ring-1 ring-border ring-inset">
-            <div className="flex items-center gap-3">
-              <span aria-hidden="true" className="grid h-11 w-11 place-items-center rounded-full bg-accent/10 font-medium text-accent">
-                AS
-              </span>
+          <div className="overflow-hidden rounded-2xl bg-background ring-1 ring-border ring-inset">
+            {/* Aarav, drawn: unwell, on his phone (Open Peeps, CC0) */}
+            <DrawOnView className="relative flex h-[200px] items-end justify-center overflow-hidden bg-surface px-6 pt-6">
+              <svg viewBox="0 0 300 200" className="sk-fade absolute inset-x-8 bottom-0 h-[80%] w-[calc(100%-4rem)] text-accent-light" aria-hidden="true">
+                <path filter="url(#sk-wobble)" fill="currentColor" d="M34 200C10 150 18 82 64 50 112 16 196 14 242 52c40 33 52 98 34 148z" />
+              </svg>
+              <Image src="/doodles/people/healthai-aarav.svg" alt="Doodle of Aarav, tired, looking at his phone." width={850} height={1200} unoptimized className="sk-fade relative h-[184px] w-auto" style={{ "--sk-i": 1 } as React.CSSProperties} />
+            </DrawOnView>
+            <div className="flex items-center gap-3 px-6 pt-5">
               <div>
                 <p className="text-lg leading-tight">{persona.name}</p>
                 <p className="text-caption text-muted">Proto-persona</p>
               </div>
             </div>
+            <div className="px-6 pb-6">
             <p className="mt-4 text-compact leading-relaxed text-muted">{persona.context}</p>
             <div className="mt-5 grid gap-5 sm:grid-cols-2">
               <div>
@@ -155,6 +194,7 @@ export default function HealthAICase() {
                   ))}
                 </ul>
               </div>
+            </div>
             </div>
           </div>
           <div>
@@ -460,8 +500,11 @@ export default function HealthAICase() {
       </Section>
 
       {/* ── AI DECISIONS ─────────────────────────────── */}
-      <Section id="ai" eyebrow="Designing the AI" title="Six decisions about where the AI stops.">
-        <NumberedGrid items={aiPrinciples} />
+      <Section id="ai" tone="tint" eyebrow="Designing the AI" title="Six decisions about where the AI stops.">
+        <TriageScale />
+        <div className="mt-14">
+          <NumberedGrid items={aiPrinciples} />
+        </div>
       </Section>
 
       {/* ── FOUR LAYOUTS ─────────────────────────────── */}

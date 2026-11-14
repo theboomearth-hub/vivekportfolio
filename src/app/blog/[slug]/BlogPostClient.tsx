@@ -5,6 +5,9 @@ import { useState, useEffect, useRef, useMemo } from "react";
 import Link from "next/link";
 import { Section } from "@/components/Section";
 import ReadingProgress from "@/components/ReadingProgress";
+import { categoryDoodle } from "@/components/BlogCard";
+import Doodle from "@/components/sketch/Doodle";
+import DrawOnView from "@/components/sketch/DrawOnView";
 import { getPostBySlug, getAllPosts } from "@/lib/blog";
 import { SITE_URL } from "@/lib/site";
 
@@ -159,9 +162,12 @@ export default function BlogPostClient({ slug }: { slug: string }) {
           transition={{ duration: 0.7 }}
           className="max-w-3xl"
         >
-          <p className="text-accent font-mono text-xs uppercase tracking-[0.06em] mb-4">
-            {post.category}
-          </p>
+          <DrawOnView className="mb-4 flex items-center gap-3">
+            <Doodle name={categoryDoodle[post.category] ?? "prd"} className="h-10 w-10 shrink-0 text-foreground" />
+            <p className="text-accent font-mono text-xs uppercase tracking-[0.06em]">
+              {post.category}
+            </p>
+          </DrawOnView>
           <h1 className="mb-6">
             {post.title}
           </h1>

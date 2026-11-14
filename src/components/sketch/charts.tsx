@@ -1,3 +1,4 @@
+import CountUp from "@/components/sketch/CountUp";
 import DrawOnView from "@/components/sketch/DrawOnView";
 import { UnderlineMark } from "@/components/sketch/marks";
 
@@ -38,7 +39,7 @@ export function StatTiles({ items, cols = "sm:grid-cols-2 lg:grid-cols-4" }: { i
       {items.map((s, i) => (
         <div key={s.label} className="sk-fade rounded-2xl bg-background p-5 ring-1 ring-border ring-inset" style={sk(i)}>
           <p className="relative inline-block text-[clamp(1.75rem,3vw,2.25rem)] font-medium leading-none tracking-[-0.03em] tabular-nums">
-            {s.value}
+            <CountUp value={s.value} />
             <UnderlineMark className="absolute -bottom-2.5 left-0 h-2.5 w-full" i={i + 1} />
           </p>
           <p className="mt-5 text-compact">{s.label}</p>
@@ -46,6 +47,45 @@ export function StatTiles({ items, cols = "sm:grid-cols-2 lg:grid-cols-4" }: { i
         </div>
       ))}
     </DrawOnView>
+  );
+}
+
+/**
+ * Market sizes as nested hand-drawn rings, innermost first (SAM inside TAM inside the long tail).
+ * Ring sizes show nesting, not scale; the figures are printed beside each ring.
+ */
+export function MarketCircles({ rings, note }: { rings: { name: string; value: string; size: string; desc: string }[]; note?: string }) {
+  const r = [62, 104, 146];
+  return (
+    <figure className="m-0 grid items-center gap-8 md:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]">
+      <DrawOnView className="mx-auto w-full max-w-[340px]">
+        <svg viewBox="0 0 320 320" className="h-auto w-full text-foreground" aria-hidden="true">
+          {rings.map((ring, i) => {
+            const rr = r[i] ?? 146;
+            return (
+              <g key={ring.name} style={sk(rings.length - i)}>
+                <circle cx="160" cy="160" r={rr} className={i === 0 ? "fill-accent-light/60 stroke-accent" : "fill-none stroke-foreground"} strokeWidth="1.8" strokeDasharray={i === rings.length - 1 ? "6 6" : undefined} filter="url(#sk-wobble)" />
+                <text x="160" y={160 - rr + 22} textAnchor="middle" className={i === 0 ? "fill-accent font-mono" : "fill-muted font-mono"} fontSize="12" letterSpacing="0.08em">{ring.name.toUpperCase()}</text>
+              </g>
+            );
+          })}
+          <text x="160" y="168" textAnchor="middle" className="fill-foreground" fontSize="18">{rings[0]?.size}</text>
+        </svg>
+      </DrawOnView>
+      <ol className="grid gap-4">
+        {rings.map((ring, i) => (
+          <li key={ring.name} className="grid grid-cols-[6rem_minmax(0,1fr)] items-baseline gap-4 border-t border-border pt-4">
+            <p className={`font-mono text-xs uppercase tracking-[0.06em] ${i === 0 ? "text-accent" : "text-muted"}`}>{ring.name}</p>
+            <div>
+              <p className="text-[clamp(1.4rem,2.4vw,1.75rem)] font-medium leading-none tracking-[-0.02em] tabular-nums">{ring.size}</p>
+              <p className="mt-1.5 text-compact">{ring.value}</p>
+              <p className="mt-0.5 text-caption text-muted">{ring.desc}</p>
+            </div>
+          </li>
+        ))}
+        {note && <li className="text-caption text-muted">{note}</li>}
+      </ol>
+    </figure>
   );
 }
 

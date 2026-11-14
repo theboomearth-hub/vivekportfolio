@@ -1,621 +1,280 @@
-"use client";
+import Link from "next/link";
+import { CaseCta, CaseKicker, Section, caseLabel } from "@/components/case/CaseParts";
+import { BarList, MarketCircles, StatTiles } from "@/components/sketch/charts";
+import Doodle from "@/components/sketch/Doodle";
+import DrawOnView from "@/components/sketch/DrawOnView";
+import { BeforeAfter, FlowRows, StepStrip } from "@/components/sketch/flows";
+import { Tick } from "@/components/sketch/glyphs";
+import PersonaCard, { type Persona } from "@/components/sketch/PersonaCard";
+import { RadiusScene } from "@/components/sketch/scenes";
+import { Pipeline, StatusLists } from "@/components/sketch/structures";
 
-import { motion, AnimatePresence } from "framer-motion";
-import { useState, Fragment } from "react";
-import { Section, SectionHeader } from "@/components/Section";
-import { tintText } from "@/lib/tint";
-import { Check, Circle, Code, Dot, MapPin, Users, Shield, Store, Utensils, Car, Wallet, Building2, ChevronRight, Smartphone } from "lucide-react";
+/*
+ * Lokul: a hyperlocal neighbourhood platform for urban India. Content from the Lokul research and monorepo.
+ * The old page linked to a private repo and five "#" placeholders; those links are gone until they're public.
+ */
 
-/* ─── Data ─── */
-
-const milestones = [
-  { phase: "v1 — Society App", label: "RWA-Centric", color: "#6366F1", year: "2024", desc: "Feed, safety, chat, marketplace, classifieds, SOS, society ops — a single app replacing WhatsApp groups + MyGate + classifieds." },
-  { phase: "v2 — Peer Economy", label: "200m Radius", color: "#8B5CF6", year: "2025", desc: "Peer roles (cook/rider/coach/reseller), local business hub, community creation, group buying — anyone is supply within 200m." },
-  { phase: "v3 — National OS", label: "Bharat Infrastructure", color: "#10B981", year: "2026+", desc: "40 modules across 12 categories — rural economy, healthcare, education, civic governance, disaster resilience — serving 1.44B Indians." },
+const phases = [
+  { name: "v1 · Society app", text: "2024 · Feed, safety, chat, marketplace and society operations: one app instead of WhatsApp groups, MyGate and classifieds.", items: [] },
+  { name: "v2 · Peer economy", text: "2025 · Peer roles, a local business hub, communities and group buying: anyone within 200 m can be supply.", items: [] },
+  { name: "v3 · National OS", text: "2026 onwards · 40 modules in 12 categories: rural economy, health, education, civic, disaster resilience.", items: [] },
 ];
 
-const tamCircles = [
-  { name: "SAM", value: "28K societies", arr: "₹1,450 Cr/Yr", desc: "Urban gated societies in top-8 metros with RWA structures" },
-  { name: "TAM", value: "180K localities", arr: "₹8,200 Cr/Yr", desc: "+ Urban non-gated neighborhoods + tier-2 city clusters" },
-  { name: "Long-tail", value: "1.2M clusters", arr: "₹47,000 Cr/Yr", desc: "+ Rural gram panchayats + semi-urban pin codes across India" },
+const flow = [
+  { label: "01", title: "Onboard", text: "Phone OTP and a PIN.", doodle: "talk" },
+  { label: "02", title: "Verify", text: "Bronze, Silver, then Gold KYC.", doodle: "shield" },
+  { label: "03", title: "Locate", text: "Society, tower and a 200 m radius.", doodle: "pin" },
+  { label: "04", title: "Engage", text: "Feed, chat and communities.", doodle: "team" },
+  { label: "05", title: "Transact", text: "Marketplace and peer roles.", doodle: "store" },
 ];
 
-const flowSteps = [
-  { label: "Onboard", sub: "Phone OTP · PIN", icon: Smartphone, color: "#6366F1" },
-  { label: "KYC", sub: "Bronze → Silver → Gold", icon: Shield, color: "#8B5CF6" },
-  { label: "Locality", sub: "Society · Tower · 200m Radius", icon: MapPin, color: "#10B981" },
-  { label: "Engage", sub: "Feed · Chat · Communities", icon: Users, color: "#F59E0B" },
-  { label: "Transact", sub: "Marketplace · Peer Roles", icon: Wallet, color: "#EC4899" },
+const roles = [
+  { doodle: "cook", name: "Cook", text: "List a daily menu, take tiffin orders and get paid. No GST, no shop." },
+  { doodle: "rider", name: "Rider", text: "Post availability for errands and deliveries within 200 m; earn per trip." },
+  { doodle: "coach", name: "Coach", text: "Sessions, a booking calendar and payments: fitness, music, language, tutoring." },
+  { doodle: "tag", name: "Reseller", text: "Buy and relist within the neighbourhood, with no stock risk." },
 ];
 
-const peerRoles = [
-  { name: "Cook", icon: Utensils, color: "#F97316", desc: "List daily food menu, accept tiffin orders, receive payments — no GST, no shop required" },
-  { name: "Rider", icon: Car, color: "#06B6D4", desc: "Post availability for errands/deliveries within 200m, get matched, earn per trip" },
-  { name: "Coach", icon: Users, color: "#8B5CF6", desc: "List sessions/batches, booking calendar, accept payments — fitness, music, language, tutoring" },
-  { name: "Reseller", icon: Store, color: "#EC4899", desc: "Buy and relist items with markup within the neighborhood — zero inventory risk" },
+const personas: Persona[] = [
+  { name: "Priya", role: "Resident", meta: "26–45 · uses eight WhatsApp groups for society, kirana, rides and school", figures: [{ src: "/doodles/people/lokul-priya.svg", alt: "Doodle of Priya on her phone." }], lists: [{ label: "Needs", items: ["One place that replaces all of them."] }], basis: "proto" as const },
+  { name: "Ramesh", role: "Kirana owner", meta: "35–55 · knows customers by face, loses business to BigBasket", figures: [{ src: "/doodles/people/lokul-ramesh.svg", alt: "Doodle of Ramesh, smiling." }], lists: [{ label: "Needs", items: ["A digital storefront that reaches exactly his 500 m."] }], basis: "proto" as const },
+  { name: "Meena", role: "Peer cook", meta: "28–50 · cooks biryani her neighbours love", figures: [{ src: "/doodles/people/lokul-meena.svg", alt: "Doodle of Meena with a cup." }], lists: [{ label: "Needs", items: ["A way to earn without setting up a formal business."] }], basis: "proto" as const },
+  { name: "Arun", role: "Coach", meta: "25–40 · fitness trainer with spare capacity within 1 km", figures: [{ src: "/doodles/people/lokul-arun.svg", alt: "Doodle of Arun, determined." }], lists: [{ label: "Needs", items: ["Discovery, booking and payment in one place."] }], basis: "proto" as const },
+  { name: "Rajan", role: "Senior resident", meta: "60+ · lives alone and trusts his neighbours", figures: [{ src: "/doodles/people/lokul-rajan.svg", alt: "Doodle of Rajan in a sweater and glasses." }], lists: [{ label: "Needs", items: ["Large type, his own language, SOS and someone to run errands."] }], basis: "proto" as const },
+  { name: "Ananya", role: "New arrival", meta: "22–32 · just moved in and knows nobody", figures: [{ src: "/doodles/people/lokul-ananya.svg", alt: "Doodle of Ananya." }], lists: [{ label: "Needs", items: ["Which kirana is good, who the neighbours are, what's nearby."] }], basis: "proto" as const },
+].map((p) => ({ ...p, basisNote: "A persona from the Lokul research: an assumption until interviews confirm it." }));
+
+const decisions = [
+  ["Radius as the primitive", "200 m, 500 m or 2 km is the core filter, not the social graph or categories", "Geography binds neighbourhood commerce. People widen the radius on purpose; it's never the default."],
+  ["Role fluidity", "One profile, many roles: a toggle turns on Cook, Rider, Coach or Reseller", "Everyone is resident, buyer and seller at once. Separate apps or accounts kill adoption."],
+  ["Tiered trust", "Bronze (phone), Silver (address), Gold (ID and selfie); features unlock by tier", "Trust isn't binary: reading the feed, trading and becoming a merchant need different proof."],
+  ["Anyone is supply", "No gatekeeping on who can offer a service", "Lokul doesn't create supply; it surfaces what already exists within verified proximity."],
+  ["Businesses are peers", "Local businesses post in the same feed as residents", "A separate ads section kills the community feel and the merchant's return."],
+  ["Offline India first", "3G, low-end Android and regional languages", "The next 500 million smartphone users are on budget phones with patchy data."],
+  ["Government as partner", "Aadhaar, DigiLocker, ONDC and ABDM, integrated rather than rebuilt", "Public digital infrastructure saves years: e-KYC, open commerce, interoperable health."],
 ];
 
-const personas = [
-  { title: "Priya", role: "Resident-Everything", desc: "26–45, urban India. Uses 8 WhatsApp groups for society, kirana, rides, school. Needs one place that replaces them all.", color: "#6366F1" },
-  { title: "Ramesh", role: "Kirana Owner", desc: "35–55, local shopkeeper. Knows customers by face but loses business to BigBasket. Needs a digital storefront reaching exactly his 500m.", color: "#F97316" },
-  { title: "Meena", role: "Peer Cook", desc: "28–50, homemaker with excess cooking capacity. Makes biryani neighbors love. Needs a way to earn without formal business setup.", color: "#EC4899" },
-  { title: "Arun", role: "Coach", desc: "25–40, fitness trainer. Has capacity beyond current students, works within 1km. Needs discovery + booking + payment in one place.", color: "#06B6D4" },
-  { title: "Rajan", role: "Senior Resident", desc: "60+, lives alone. Trusts neighbors deeply. Needs large-font UI, regional language, SOS, and someone to run errands.", color: "#10B981" },
-  { title: "Ananya", role: "New Arrival", desc: "22–32, just moved in. Knows nobody. Needs local discovery — which kirana is good, who are her neighbors, what's nearby.", color: "#F59E0B" },
+const revenue = [
+  { value: "5–8%", label: "Booking take-rate", note: "On in-app bookings; the seller earns net" },
+  { value: "₹299–999", label: "Business listing, a month", note: "Storefronts for kirana, salon, clinic, school" },
+  { value: "₹20–500", label: "Local reach boost", note: "Promote an offer within a chosen radius" },
+  { value: "2–3%", label: "Community tools", note: "On ticketed events and group buys" },
+  { value: "0.5%", label: "RWA dues", note: "Capped at ₹10 a transaction" },
+  { value: "₹10–30", label: "Local delivery", note: "Per rider trip, paid by the buyer" },
 ];
 
-const designDecisions = [
-  { decision: "Radius as Primitive", choice: "200m/500m/2km is the core filter — not social graph, not categories", why: "Geography binds real neighborhood commerce. A kirana 200m away is relevant; one 2km away is not. Users expand radius deliberately — it's never the default.", color: "#6366F1" },
-  { decision: "Role Fluidity", choice: "One profile, many roles — toggle activates Cook/Rider/Coach/Reseller mode", why: "Every user is simultaneously resident, buyer, seller, and service provider. Creating separate apps or accounts kills adoption. The toggle is instant, reversible, and cost-free.", color: "#8B5CF6" },
-  { decision: "Tiered Trust", choice: "Bronze (phone) → Silver (address) → Gold (ID + selfie); features gated by tier", why: "Trust is not binary. A phone-verified user can read the feed; an address-verified user can transact; an ID-verified user can become a merchant or RWA admin. Escalation is possible.", color: "#10B981" },
-  { decision: "Anyone Is Supply", choice: "No gatekeeping on who can offer services — a toggle activates a role", why: "The biryani Mrs. Mehta makes is better than anything Swiggy delivers — and 20 neighbors want it. Lokul doesn't create supply; it surfaces what already exists within verified proximity.", color: "#F97316" },
-  { decision: "Businesses Are Peers", choice: "Local businesses post in the same feed as residents — no separate 'ads section'", why: "The kirana announcing a dal arrival is as useful as a neighbor's post. Segregating businesses into a 'sponsored' silo destroys the community feel and reduces merchant ROI.", color: "#EC4899" },
-  { decision: "Offline India First", choice: "Works on 3G, low-end Android, regional languages — not every user has Jio 5G", why: "India's next 500M smartphone users are on budget devices with patchy connectivity. The app must feel native on a ₹8,000 phone in a tier-3 city with 10Mbps down.", color: "#F59E0B" },
-  { decision: "Government as Partner", choice: "Integrate with Aadhaar, DigiLocker, ONDC, ABDM — don't compete with them", why: "India's digital public infrastructure is a gift, not a threat. Aadhaar e-KYC saves years of identity build. ONDC connects Lokul merchants to all buyer apps. ABDM makes healthcare interoperable.", color: "#06B6D4" },
+const built = [
+  "Monorepo: Next.js 16 web, React Native and Expo mobile, shared ui-tokens",
+  "42 Prisma models across identity, societies, feed, marketplace, safety, wallet and platform",
+  "90+ mobile screens in 28 route groups",
+  "46+ API routes; an admin CMS with 43 route groups",
+  "Real-time chat, feed, SOS and group buying on Ably",
+  "Razorpay integration (dev mode); Cloudflare Worker for geo and SOS escalation",
+  "Playwright end-to-end tests with mobile emulation; load tests",
+];
+const next = [
+  "Production payments, SMS OTP and push notifications",
+  "Production database and secrets",
+  "RBI PPI compliance for wallets over ₹10K a month",
+  "Terms, privacy policy and a grievance officer",
+  "App Store and Play Store submission",
+  "Rate limiting and auth hardening",
 ];
 
-const revenueStreams = [
-  { stream: "Booking Take-Rate", value: "5–8%", desc: "On in-app bookings (cook, coach, rider, formal services) — seller earns net", color: "#6366F1" },
-  { stream: "Business Listing", value: "₹299–999/mo", desc: "Storefront subscription for kirana, salon, clinic, school — catalogue, hours, orders", color: "#8B5CF6" },
-  { stream: "Hyperlocal Reach Boost", value: "₹20–500", desc: "Promote offers to users within chosen radius — self-serve, auction-based", color: "#F97316" },
-  { stream: "Community Tools", value: "2–3%", desc: "On ticketed events and group buys — organizer pays", color: "#EC4899" },
-  { stream: "RWA SaaS", value: "0.5%", desc: "On dues collected (capped ₹10/txn) — society ops digitization", color: "#10B981" },
-  { stream: "Delivery Network", value: "₹10–30", desc: "Per local rider delivery — buyer pays for last-mile from kirana/home", color: "#06B6D4" },
+const release = [
+  { name: "Closed alpha", text: "Month 3 · 1 locality, 100 users, 10 businesses; one peer role (Cook).", items: [] },
+  { name: "Open beta", text: "Month 5 · 10 localities, 2,000 users, 100 businesses; all peer roles.", items: [] },
+  { name: "GA 2.0", text: "Month 8 · Mumbai MMR; all 20 modules; 50K users.", items: [] },
+  { name: "v2.1", text: "Month 11 · Pune and Bengaluru; Tamil and Kannada.", items: [] },
+  { name: "v2.2", text: "Month 14 · Top-8 metros; Telugu, Bengali, Gujarati.", items: [] },
 ];
 
-const builtItems = [
-  "Monorepo: Next.js 16 web + React Native/Expo mobile + ui-tokens package",
-  "42 Prisma models across identity, societies, feed, marketplace, safety, wallet, platform",
-  "90+ mobile screens across 28 route groups with full navigation",
-  "46+ API routes covering auth, mobile, admin, webhooks, integrations",
-  "Full admin CMS with 43 route groups — users, posts, merchants, moderation, KYC, analytics",
-  "22 Zustand stores for mobile state management",
-  "Ably real-time integration for chat, feed, SOS, group buying",
-  "Razorpay payment gateway integration (dev mode)",
-  "Prisma schema with 7 Prisma migrations",
-  "Cloudflare Worker for geo-headers + SOS escalation cron",
-  "Playwright E2E test suite with mobile emulation",
-  "Load testing script (autocannon) for API benchmarking",
-];
-
-const nextItems = [
-  "Production payment gateway wiring (Razorpay/Cashfree)",
-  "SMS OTP provider integration (MSG91) to production",
-  "Push notification delivery (FCM + APNs certificates)",
-  "Production database + secrets (Vercel + Neon/PlanetScale)",
-  "RBI PPI compliance for wallet >₹10k/month",
-  "Terms of Service, Privacy Policy, Grievance Officer",
-  "App Store + Play Store submission",
-  "Real-time chat (currently REST polling, needs full Ably wiring)",
-  "Google Maps API key for production",
-  "Rate limiting + auth hardening on API routes",
+const vision = [
+  { label: "Rural economy and farmers", value: 8 }, { label: "Healthcare and wellness", value: 5 }, { label: "Education and skilling", value: 4 },
+  { label: "Women's empowerment", value: 4 }, { label: "Civic governance", value: 4 }, { label: "Disaster resilience", value: 3 },
+  { label: "Senior care", value: 3 }, { label: "Financial inclusion", value: 3 },
 ];
 
 export default function LokulResearchPage() {
-  const [activeRole, setActiveRole] = useState<number | null>(null);
-
   return (
-    <div className="pt-24">
-      {/* ════════════════════════════════════════ */}
-      {/* 1. EXECUTIVE SUMMARY & HERO            */}
-      {/* ════════════════════════════════════════ */}
-      <Section>
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-10">
-            <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
-              <p className="text-accent font-mono text-xs uppercase tracking-[0.06em] mb-4">Research · Product · Architecture</p>
-              <h1 className="mb-6">
-                The <span className="text-accent">Lokul</span> Project.
-              </h1>
-              <p className="text-lg text-muted leading-relaxed max-w-2xl mx-auto mb-8">
-                The hyperlocal neighborhood economy platform for urban India — making 200 meters the most valuable radius in Indian commerce.
-              </p>
-            </motion.div>
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="grid grid-cols-2 md:grid-cols-4 gap-px bg-border rounded-2xl overflow-hidden max-w-3xl mx-auto">
-              {[{ value: "90+", label: "Mobile Screens" }, { value: "42", label: "DB Models" }, { value: "46+", label: "API Routes" }, { value: "3", label: "Product Phases" }].map((s) => (
-                <div key={s.label} className="bg-background p-6">
-                  <div className="text-2xl md:text-3xl font-display font-medium">{s.value}</div>
-                  <p className="text-xs font-mono text-muted mt-1">{s.label}</p>
-                </div>
-              ))}
-            </motion.div>
+    <article className="pt-28 md:pt-36">
+      <header className="container-premium">
+        <CaseKicker domain="Research · Product · Architecture" status="Research project, code-complete in most areas" />
+        <div className="mt-3 grid items-center gap-10 lg:grid-cols-[minmax(0,6fr)_minmax(0,5fr)] [&>*]:min-w-0">
+          <div>
+            <h1 className="max-w-[16ch]">Lokul: the <span className="whitespace-nowrap">200-metre</span> economy.</h1>
+            <p className="mt-6 max-w-[54ch] text-lg leading-relaxed text-muted">
+              A hyperlocal neighbourhood platform for urban India. The kirana downstairs, the home cook next door and the coach two floors up are already
+              there; Lokul makes them findable, verified and paid, within 200 metres.
+            </p>
           </div>
+          <RadiusScene className="mx-auto w-full max-w-[420px]" />
+        </div>
+        <div className="mt-12">
+          <StatTiles items={[
+            { value: "90+", label: "Mobile screens" },
+            { value: "42", label: "Database models" },
+            { value: "46+", label: "API routes" },
+            { value: "3", label: "Product phases" },
+          ]} />
+        </div>
+      </header>
 
-          {/* Product Evolution Timeline */}
-          <h2 className="sr-only">Product evolution</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-            {milestones.map((m, i) => (
-              <motion.div key={m.phase} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 + i * 0.1 }} className="relative p-6 rounded-2xl border overflow-hidden" style={{ borderColor: m.color + "25", backgroundColor: m.color + "04" }}>
-                <div className="absolute top-0 right-0 w-24 h-24 -mr-8 -mt-8 rounded-full opacity-[0.04]" style={{ backgroundColor: m.color }} />
-                <div className="relative">
-                  <span className="text-xs font-mono px-2 py-0.5 rounded-full border" style={{ borderColor: m.color + "30", color: tintText(m.color), backgroundColor: m.color + "10" }}>{m.year}</span>
-                  <h3 className="text-lg mt-3 mb-1" style={{ color: tintText(m.color) }}>{m.phase}</h3>
-                  <p className="text-xs font-mono text-muted mb-2">{m.label}</p>
-                  <p className="text-sm text-muted leading-relaxed">{m.desc}</p>
-                </div>
-              </motion.div>
-            ))}
-          </div>
+      <Section id="evolution" tone="tint" eyebrow="Product evolution" title="From one society to a national platform.">
+        <Pipeline stages={phases} />
+      </Section>
+
+      <Section id="flow" eyebrow="User flow" title="From onboarding to a first transaction.">
+        <StepStrip steps={flow.map((s, i) => ({ label: s.label, title: s.title, text: s.text, doodle: <Doodle name={s.doodle} className="h-12 w-12" i={i} /> }))} />
+      </Section>
+
+      <Section id="thesis" tone="tint" eyebrow="The thesis" title="The demand and supply already exist." intro="India's hyperlocal economy is large, alive and unplatformed. Lokul doesn't create demand or supply; it makes them visible to each other within a verified radius.">
+        <BeforeAfter
+          before={{ label: "Today · unplatformed", doodle: <Doodle name="apart" className="h-12 w-12" />, items: ["A neighbour's biryani that 20 people want, with no way to order it", "The kirana below the building, losing business to BigBasket", "A trainer two floors up with 6 clients on WhatsApp, who could have 60", "A school's admissions on a notice board parents never see"] }}
+          after={{ label: "The three unlocks", doodle: <Doodle name="pin" className="h-12 w-12" />, items: ["Radius as the primitive: 200 m, 500 m, 2 km", "Role fluidity: every resident can also be a seller, cook, rider or coach", "Trust by proximity: verified identity and payments on top of neighbours who already know each other"] }}
+        />
+        <div className="mt-16">
+          <MarketCircles
+            rings={[
+              { name: "SAM", size: "₹1,450 Cr", value: "28K societies a year", desc: "Gated societies with RWAs in the top eight metros" },
+              { name: "TAM", size: "₹8,200 Cr", value: "180K localities a year", desc: "Plus non-gated neighbourhoods and tier-2 clusters" },
+              { name: "Long tail", size: "₹47,000 Cr", value: "1.2M clusters a year", desc: "Plus gram panchayats and semi-urban PIN codes" },
+            ]}
+            note="Market sizing from the Lokul research, not yet tested in the market."
+          />
         </div>
       </Section>
 
-      {/* ════════════════════════════════════════ */}
-      {/* 2. ONBOARDING → TRANSACTION FLOW        */}
-      {/* ════════════════════════════════════════ */}
-      <Section>
-        <div className="max-w-5xl mx-auto">
-          <SectionHeader eyebrow="User Flow" title="From onboarding to transaction." description="How a user moves through the Lokul ecosystem — from first signup to active participation in the 200-meter economy." />
-          <div className="flex flex-col lg:flex-row items-stretch gap-3 lg:gap-2">
-            {flowSteps.map((step, i) => (
-              <Fragment key={step.label}>
-                <motion.div
-                  initial={{ opacity: 0, y: 15 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.08 }}
-                  className="flex-1 p-5 rounded-2xl border"
-                  style={{ borderColor: step.color + "25", backgroundColor: step.color + "04" }}
-                >
-                  <div className="flex items-center gap-3 mb-3">
-                    <span
-                      className="text-xs font-mono px-1.5 py-0.5 rounded-full border shrink-0"
-                      style={{ borderColor: step.color + "30", color: tintText(step.color), backgroundColor: step.color + "10" }}
-                    >
-                      0{i + 1}
-                    </span>
-                    <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0" style={{ backgroundColor: step.color + "15" }}>
-                      <step.icon size={16} style={{ color: tintText(step.color) }} />
-                    </div>
-                  </div>
-                  <h3 className="text-sm text-foreground mb-1">{step.label}</h3>
-                  <p className="text-xs font-mono text-muted leading-relaxed">{step.sub}</p>
-                </motion.div>
-                {i < flowSteps.length - 1 && (
-                  <div className="flex items-center justify-center shrink-0 py-1 lg:py-0">
-                    <ChevronRight size={18} className="text-muted rotate-90 lg:rotate-0" />
-                  </div>
-                )}
-              </Fragment>
-            ))}
-          </div>
-        </div>
+      <Section id="people" eyebrow="People" title="Who Lokul serves." intro="Six personas, from the resident who does everything to the senior who lives alone.">
+        <DrawOnView className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 [&>*]:min-w-0">
+          {personas.map((p, i) => <PersonaCard key={p.name} persona={p} i={i * 2} />)}
+        </DrawOnView>
       </Section>
 
-      {/* ════════════════════════════════════════ */}
-      {/* 3. MARKET & THESIS                     */}
-      {/* ════════════════════════════════════════ */}
-      <Section>
-        <div className="max-w-5xl mx-auto">
-          <SectionHeader eyebrow="Market Analysis" title="The 200-Meter Thesis." description="India's informal hyperlocal economy is massive, alive, and completely unplatformed. Lokul does not need to create demand or supply — it needs to make them discoverable to each other within a verified, trusted, geography-bounded radius." />
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
-            <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="p-6 rounded-2xl bg-surface border border-border">
-              <h3 className="text-lg mb-3 text-foreground">The Unplatformed Economy</h3>
-              <ul className="space-y-3 text-sm text-muted">
-                <li className="flex gap-3"><Dot size={16} className="text-accent shrink-0 mt-0.5" /><span>The biryani Mrs. Mehta makes is better than anything Swiggy delivers — and 20 neighbors want it.</span></li>
-                <li className="flex gap-3"><Dot size={16} className="text-accent shrink-0 mt-0.5" /><span>The kirana below your building stocks exactly what you need — and loses business to BigBasket because it has no digital presence.</span></li>
-                <li className="flex gap-3"><Dot size={16} className="text-accent shrink-0 mt-0.5" /><span>The gym trainer two floors up has 6 paying clients through WhatsApp — and could have 60.</span></li>
-                <li className="flex gap-3"><Dot size={16} className="text-accent shrink-0 mt-0.5" /><span>The school 300 meters away posts admissions on a physical board — parents 200m away never see them.</span></li>
-              </ul>
-            </motion.div>
-            <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="p-6 rounded-2xl bg-surface border border-border">
-              <h3 className="text-lg mb-3" style={{ color: tintText("#10B981") }}>The Three Unlocks</h3>
-              <ul className="space-y-3 text-sm text-muted">
-                <li className="flex gap-3"><Check size={14} className="text-hue-green shrink-0 mt-0.5" /><span><strong className="text-foreground">Radius as primitive</strong> — 200m / 500m / 2km is the core filter, not city, not category, not social graph.</span></li>
-                <li className="flex gap-3"><Check size={14} className="text-hue-green shrink-0 mt-0.5" /><span><strong className="text-foreground">Role fluidity</strong> — every user is simultaneously resident, buyer, seller, cook, rider, coach; roles activate with a toggle.</span></li>
-                <li className="flex gap-3"><Check size={14} className="text-hue-green shrink-0 mt-0.5" /><span><strong className="text-foreground">Trust by proximity</strong> — neighbors already know each other; Lokul adds verified identity + transaction infrastructure on top.</span></li>
-              </ul>
-            </motion.div>
-          </div>
-
-          {/* TAM Circles */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-10">
-            {tamCircles.map((circle, i) => (
-              <motion.div key={circle.name} initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }} className="relative p-6 rounded-2xl border border-border bg-surface text-center overflow-hidden">
-                <div className="absolute -top-10 -right-10 w-32 h-32 rounded-full opacity-10" style={{ backgroundColor: i === 0 ? "#6366F1" : i === 1 ? "#8B5CF6" : "#10B981" }} />
-                <div className="relative">
-                  <p className="text-xs font-mono uppercase tracking-[0.06em] mb-1" style={{ color: tintText(i === 0 ? "#6366F1" : i === 1 ? "#8B5CF6" : "#10B981") }}>{circle.name}</p>
-                  <div className="text-xl font-medium text-foreground">{circle.value}</div>
-                  <div className="text-2xl font-display font-medium mt-1" style={{ color: tintText(i === 0 ? "#6366F1" : i === 1 ? "#8B5CF6" : "#10B981") }}>{circle.arr}</div>
-                  <p className="text-sm text-muted mt-2">{circle.desc}</p>
+      <Section id="product" tone="tint" eyebrow="The product" title="Everything within 200 metres.">
+        <div className="grid gap-5 md:grid-cols-2 [&>*]:min-w-0">
+          {[
+            { doodle: "pin", title: "Feed and radius discovery", sub: "200 m · 500 m · 2 km", text: "One feed of neighbourhood activity: updates, safety alerts, lost items, events, polls and business offers, filtered by a radius you choose.", items: ["Business posts sit alongside residents' posts", "Reactions, nested comments and 24-hour stories"] },
+            { doodle: "shield", title: "Safety and SOS", sub: "Panic button · proximity waves · responders", text: "On trigger: a 5-second countdown, live location to trusted contacts, a 200 m wave to nearby volunteers, and recording.", items: ["Widens to 400 m if no one responds in 60 s", "Verified volunteer responders; a medical profile for them"] },
+          ].map((f) => (
+            <DrawOnView key={f.title} className="flex flex-col gap-4 rounded-2xl bg-background p-6 ring-1 ring-border ring-inset">
+              <div className="flex items-center gap-4">
+                <Doodle name={f.doodle} className="h-12 w-12 shrink-0 text-foreground" />
+                <div>
+                  <h3 className="text-lg">{f.title}</h3>
+                  <p className="font-mono text-xs text-muted">{f.sub}</p>
                 </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </Section>
-
-      {/* ════════════════════════════════════════ */}
-      {/* 4. PERSONAS                            */}
-      {/* ════════════════════════════════════════ */}
-      <Section>
-        <div className="max-w-5xl mx-auto">
-          <SectionHeader eyebrow="User Personas" title="Who Lokul serves." description="Seven distinct user personas — from the resident-everything to the kirana owner to the senior citizen. Each represents a different pain point, a different buying center, and a different entry into the Lokul ecosystem." />
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {personas.map((p, i) => (
-              <motion.div key={p.title} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.06 }} className="p-5 rounded-2xl border border-border bg-surface">
-                <div className="flex items-center gap-3 mb-3">
-                  <div className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-medium" style={{ backgroundColor: p.color + "20", color: tintText(p.color) }}>{p.title[0]}</div>
-                  <div>
-                    <h3 className="text-sm text-foreground">{p.title}</h3>
-                    <p className="text-xs font-mono" style={{ color: tintText(p.color) }}>{p.role}</p>
-                  </div>
-                </div>
-                <p className="text-sm text-muted leading-relaxed">{p.desc}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </Section>
-
-      {/* ════════════════════════════════════════ */}
-      {/* 5. ARCHITECTURE & SYSTEM DESIGN        */}
-      {/* ════════════════════════════════════════ */}
-      <Section>
-        <div className="max-w-5xl mx-auto">
-          <SectionHeader eyebrow="Architecture" title="System Design & Data Model." description="Lokul is built as a monorepo with 3 packages: a Next.js 16 web app, a React Native + Expo mobile app (90+ screens), and a shared ui-tokens design system. The backend serves 42 database models across identity, society, feed, marketplace, safety, wallet, and platform domains." />
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-            <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="p-6 rounded-2xl border border-border bg-surface">
-              <h3 className="text-sm text-foreground mb-4 flex items-center gap-2"><Code size={14} className="text-accent" /> Tech Stack</h3>
-              <div className="space-y-2">
-                {[
-                  { label: "Framework", value: "Next.js 16 (web) + Expo SDK 56 (mobile)" },
-                  { label: "Database", value: "PostgreSQL 16 with PostGIS, Prisma 7 ORM" },
-                  { label: "Cache & Queue", value: "Redis 7 + BullMQ (rate limiting, job queues)" },
-                  { label: "Realtime", value: "Ably (chat, feed, SOS, live updates)" },
-                  { label: "Auth", value: "Phone OTP via MSG91; NextAuth for admin" },
-                  { label: "Payments", value: "Razorpay primary, Cashfree secondary" },
-                  { label: "Storage", value: "Cloudflare R2 (media, KYC documents)" },
-                  { label: "Edge", value: "Cloudflare Worker (geo-headers, SOS cron)" },
-                ].map((t) => (
-                  <div key={t.label} className="flex items-center justify-between py-1.5 border-b border-border/50 last:border-0">
-                    <span className="text-xs font-mono text-muted">{t.label}</span>
-                    <span className="text-xs text-foreground font-medium text-right">{t.value}</span>
-                  </div>
-                ))}
               </div>
-            </motion.div>
-            <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="p-6 rounded-2xl border border-border bg-surface">
-              <h3 className="text-sm text-foreground mb-4 flex items-center gap-2"><Building2 size={14} className="text-accent" /> Data Model (42 Models)</h3>
-              <div className="space-y-2">
-                {[
-                  { category: "Identity", models: "User, KycDocument, Vouch, OtpVerification, PushToken" },
-                  { category: "Societies", models: "Society, Tower, SocietyAdmin, UserResidence" },
-                  { category: "Feed", models: "Post, PostMedia, PostTag, Reaction, Comment" },
-                  { category: "Marketplace", models: "Classified, Merchant, ServiceSlot, Appointment, QuoteRequest, Order, Rating" },
-                  { category: "Peer Services", models: "ServiceListing, Order, Rating" },
-                  { category: "Safety", models: "SosIncident, SosResponder, SafetyContact, SafetyJourney, Volunteer, MedicalProfile, IncidentReport" },
-                  { category: "Chat", models: "ChatThread, ChatMembership, ChatMessage" },
-                  { category: "Wallet", models: "WalletEntry, RazorpayOrder" },
-                  { category: "Platform", models: "Report, ModAction, StrikeRecord, AuditLog, FeatureFlag, Broadcast, IntegrationConfig" },
-                ].map((m) => (
-                  <div key={m.category} className="flex items-start gap-2 py-1 border-b border-border/50 last:border-0">
-                    <span className="text-xs font-mono text-accent shrink-0 w-20">{m.category}</span>
-                    <span className="text-xs font-mono text-muted">{m.models}</span>
-                  </div>
-                ))}
+              <p className="text-compact text-muted">{f.text}</p>
+              <ul className="grid gap-2">{f.items.map((it) => <li key={it} className="flex gap-2.5 text-compact"><Tick className="h-5 w-5 shrink-0 text-accent" />{it}</li>)}</ul>
+            </DrawOnView>
+          ))}
+        </div>
+        <h3 className="mt-16 text-xl">Peer roles: the supply side</h3>
+        <p className="mt-2 max-w-[60ch] text-compact text-muted">Any resident can switch on a role from Silver verification up. No business registration, no separate account.</p>
+        <DrawOnView className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4 [&>*]:min-w-0">
+          {roles.map((r, i) => (
+            <div key={r.name} className="sk-fade flex flex-col gap-3 rounded-2xl bg-background p-5 ring-1 ring-border ring-inset" style={{ "--sk-i": i } as React.CSSProperties}>
+              <Doodle name={r.doodle} className="h-12 w-12 text-foreground" i={i} />
+              <h4 className="text-lg">{r.name}</h4>
+              <p className="text-compact text-muted">{r.text}</p>
+            </div>
+          ))}
+        </DrawOnView>
+        <ul className="mt-8 grid gap-x-8 gap-y-3 sm:grid-cols-2 lg:grid-cols-3">
+          {[
+            ["Communities", "Morning walks, book clubs, parents' networks, with member roles."],
+            ["Group buying", "Bulk orders with commit thresholds and split payments."],
+            ["Carpool", "Trips within the locality, with price splitting."],
+            ["Local business hub", "Storefronts, slot booking and orders."],
+            ["Tiffin ordering", "Daily menus from home cooks, by order or subscription."],
+            ["Society operations", "Visitor passes, staff attendance, notices, polls and dues."],
+          ].map(([t, d]) => <li key={t} className="border-t border-border pt-3 text-compact"><span className="font-medium">{t}.</span> <span className="text-muted">{d}</span></li>)}
+        </ul>
+      </Section>
+
+      <Section id="architecture" eyebrow="Architecture" title="Built for a ₹8,000 phone on 3G." intro="A monorepo with a Next.js web app, a React Native and Expo mobile app with 90+ screens, and a shared token package, over 42 database models.">
+        <div className="grid gap-10 lg:grid-cols-2 lg:gap-14 [&>*]:min-w-0">
+          <div>
+            <h3 className="text-xl">Stack</h3>
+            <dl className="mt-5 grid">
+              {[
+                ["Apps", "Next.js 16 (web), Expo SDK 56 (mobile)"], ["Data", "PostgreSQL 16 with PostGIS, Prisma 7"], ["Cache and queue", "Redis 7 and BullMQ"],
+                ["Real time", "Ably: chat, feed, SOS"], ["Auth", "Phone OTP via MSG91; NextAuth for admin"], ["Payments", "Razorpay, with Cashfree as backup"],
+                ["Storage", "Cloudflare R2"], ["Edge", "Cloudflare Worker: geo headers, SOS cron"],
+              ].map(([k, v]) => (
+                <div key={k} className="grid grid-cols-[8rem_minmax(0,1fr)] gap-4 border-t border-border py-2.5 text-compact">
+                  <dt className="text-muted">{k}</dt>
+                  <dd>{v}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+          <div>
+            <h3 className="text-xl">Principles</h3>
+            <DrawOnView className="mt-5 grid gap-3 sm:grid-cols-2">
+              {[
+                { doodle: "pin", t: "The PIN code is the unit", d: "Every entity has a PIN code and a geocode; discovery, feed and safety radiate from it." },
+                { doodle: "shield", t: "Trust is tiered", d: "Bronze, Silver, Gold. Features unlock by tier, and tiers can drop." },
+                { doodle: "talk", t: "Real time by default", d: "Feed, chat, SOS and polls are pushed, never polled." },
+                { doodle: "clock", t: "Offline-first reads", d: "The last 200 feed items, chats and profile are cached; writes queue." },
+              ].map((p, i) => (
+                <div key={p.t} className="sk-fade flex flex-col gap-2 rounded-2xl bg-surface p-4" style={{ "--sk-i": i } as React.CSSProperties}>
+                  <Doodle name={p.doodle} className="h-9 w-9 text-foreground" i={i} />
+                  <p className="font-medium">{p.t}</p>
+                  <p className="text-compact text-muted">{p.d}</p>
+                </div>
+              ))}
+            </DrawOnView>
+          </div>
+        </div>
+      </Section>
+
+      <Section id="decisions" tone="tint" eyebrow="Design decisions" title="The choices that shaped Lokul.">
+        <FlowRows head={["Decision", "The choice", "Why"]} rows={decisions} emphasis={1} />
+      </Section>
+
+      <Section id="business" eyebrow="Business model" title="Lokul earns when neighbours trade." intro="Earning from transactions, not from charging for visibility. Supply earns; Lokul takes a small share across several lines.">
+        <StatTiles items={revenue} cols="sm:grid-cols-2 lg:grid-cols-3" />
+        <div className="mt-10 grid gap-4 md:grid-cols-3">
+          {[
+            { round: "Pre-seed", target: "₹1–2 Cr ($120–240K)", detail: "SAFE at a ₹15–20 Cr valuation cap" },
+            { round: "Seed", target: "₹8–15 Cr ($1–2M)", detail: "18 months of runway, a team of 8–12" },
+            { round: "Investors to approach", target: "Blume, Prime, Elevation, Stellaris, 3one4", detail: "Angels: Kunal Shah, Amrish Rau, Jitendra Gupta" },
+          ].map((f) => (
+            <div key={f.round} className="rounded-2xl border border-dashed border-border-strong p-5">
+              <p className={caseLabel}>{f.round}</p>
+              <p className="mt-2 font-medium">{f.target}</p>
+              <p className="mt-1 text-compact text-muted">{f.detail}</p>
+            </div>
+          ))}
+        </div>
+      </Section>
+
+      <Section id="status" tone="tint" eyebrow="Status" title="Where Lokul is today." intro="Code-complete in most areas, with about four to six weeks of production integration left.">
+        <StatusLists built={built} next={next} builtLabel="Built" nextLabel="Before launch" />
+        <h3 className="mt-16 text-xl">Release plan</h3>
+        <div className="mt-6"><Pipeline stages={release} /></div>
+      </Section>
+
+      <Section id="vision" eyebrow="Phase 3 vision" title="The operating system of Bharat." intro="From a hyperlocal app to national infrastructure: 40 modules in 12 categories. These are the largest eight.">
+        <div className="grid gap-10 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:gap-14 [&>*]:min-w-0">
+          <BarList items={vision} highlight={[0]} caption="Modules per category." />
+          <dl className="grid content-start gap-x-6 sm:grid-cols-2">
+            {[["Rural households", "900M"], ["Informal workers", "500M+"], ["Women not in the workforce", "350M"], ["Agricultural workers", "270M"], ["Youth seeking income", "200M"], ["Senior citizens", "180M"], ["Tribal communities", "104M"], ["People with disabilities", "50M"]].map(([k, v]) => (
+              <div key={k} className="flex items-baseline justify-between gap-4 border-t border-border py-2.5">
+                <dt className="text-compact text-muted">{k}</dt>
+                <dd className="font-mono text-sm tabular-nums">{v}</dd>
               </div>
-            </motion.div>
-          </div>
-
-          {/* Architectural Principles */}
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="p-6 rounded-2xl border border-border bg-surface">
-            <h3 className="text-sm text-foreground mb-4">Architectural Principles</h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-              {[
-                { title: "PIN-code is the unit", desc: "Every entity has a PIN code + geocode. Discovery, feed, and safety all radiate from this.", color: "#6366F1" },
-                { title: "Trust is tiered", desc: "Bronze → Silver → Gold. Features gate by tier. Downgrade is possible.", color: "#8B5CF6" },
-                { title: "Realtime by default", desc: "Feed, chat, SOS, polls — all push-updated via Ably, never poll-based.", color: "#EC4899" },
-                { title: "Offline-first reads", desc: "Last 200 feed items, chat, profile cached locally. Writes queue for retry.", color: "#10B981" },
-              ].map((p) => (
-                <div key={p.title} className="p-3 rounded-xl border" style={{ borderColor: p.color + "20", backgroundColor: p.color + "06" }}>
-                  <div className="flex items-center gap-2 mb-1">
-                    <div className="w-2 h-2 rounded-full" style={{ backgroundColor: p.color }} />
-                    <span className="text-xs font-medium text-foreground">{p.title}</span>
-                  </div>
-                  <p className="text-sm text-muted leading-relaxed">{p.desc}</p>
-                </div>
-              ))}
-            </div>
-          </motion.div>
-        </div>
-      </Section>
-
-      {/* ════════════════════════════════════════ */}
-      {/* 6. CORE FEATURES DEEP-DIVE             */}
-      {/* ════════════════════════════════════════ */}
-      <Section>
-        <div className="max-w-5xl mx-auto">
-          <SectionHeader eyebrow="Core Features" title="The 200-Meter Product." description="Lokul's feature set spans feed-based discovery, safety infrastructure, peer economy marketplace, community tools, and society operations — all within a geography-bounded radius." />
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="p-6 rounded-2xl border border-border bg-surface">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 rounded-xl bg-[#6366F1]/10 border border-[#6366F1]/20 flex items-center justify-center"><MapPin size={18} className="text-hue-indigo" /></div>
-                <div><h3 className="text-sm text-foreground">Feed + Radius Discovery</h3><p className="text-xs font-mono text-muted">200m / 500m / 2km</p></div>
-              </div>
-              <p className="text-sm text-muted leading-relaxed mb-3">A single chronological feed of all neighborhood activity — posts, safety alerts, lost items, events, polls, business offers — filtered by a user-selectable radius. The default is 200m; users expand deliberately.</p>
-              <ul className="space-y-1.5">
-                {["Post types: update, safety, lost, event, poll, sell, RWA notice, SOS", "Business posts appear alongside resident posts — no separate ads silo", "Reactions (like/love/thanks/support/concern) + nested comments", "Stories: 24-hour ephemeral posts with view tracking"].map((f) => (
-                  <li key={f} className="flex items-start gap-2 text-sm text-muted"><Check size={10} className="text-hue-indigo shrink-0 mt-0.5" />{f}</li>
-                ))}
-              </ul>
-            </motion.div>
-            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.05 }} className="p-6 rounded-2xl border border-border bg-surface">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 rounded-xl bg-[#10B981]/10 border border-[#10B981]/20 flex items-center justify-center"><Shield size={18} className="text-hue-green" /></div>
-                <div><h3 className="text-sm text-foreground">Safety & SOS</h3><p className="text-xs font-mono text-muted">Panic button · Proximity waves · Responders</p></div>
-              </div>
-              <p className="text-sm text-muted leading-relaxed mb-3">A persistent SOS button accessible from anywhere in the app. On trigger: 5s countdown → live GPS broadcast to trusted contacts → 200m proximity wave to nearby volunteers → auto-record + cloud upload.</p>
-              <ul className="space-y-1.5">
-                {["200m → 400m proximity escalation waves if no responder in 60s", "Volunteer responder network with verified identity", "Safety Journey: guardian watches a user's route in real-time", "Medical Profile: blood group, allergies, conditions accessible to responders"].map((f) => (
-                  <li key={f} className="flex items-start gap-2 text-sm text-muted"><Check size={10} className="text-hue-green shrink-0 mt-0.5" />{f}</li>
-                ))}
-              </ul>
-            </motion.div>
-          </div>
-
-          {/* Peer Roles Interactive */}
-          <h3 className="text-2xl mb-4">Peer Roles — The Supply Side</h3>
-          <p className="text-muted mb-6 max-w-2xl">Any resident can activate a peer role with a single toggle. No business registration, no GST, no separate account. The same profile serves buyer and seller identities.</p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-            {peerRoles.map((role, i) => {
-              const isActive = activeRole === i;
-              return (
-                <motion.div
-                  key={role.name}
-                  initial={{ opacity: 0, y: 15 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.06 }}
-                  onClick={() => setActiveRole(isActive ? null : i)}
-                  className="p-5 rounded-2xl border cursor-pointer transition-all duration-300"
-                  style={{ borderColor: isActive ? role.color + "50" : "var(--color-border)", backgroundColor: isActive ? role.color + "06" : "var(--color-surface)" }}
-                >
-                  <div className="flex items-center gap-3 mb-3">
-                    <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ backgroundColor: role.color + "15" }}>
-                      <role.icon size={18} style={{ color: tintText(role.color) }} />
-                    </div>
-                    <h4 className="text-sm text-foreground">{role.name}</h4>
-                  </div>
-                  <p className="text-sm text-muted leading-relaxed">{role.desc}</p>
-                  <AnimatePresence>
-                    {isActive && (
-                      <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.2 }} className="overflow-hidden">
-                        <div className="mt-3 pt-3 border-t border-border/50">
-                          <p className="text-xs font-mono" style={{ color: tintText(role.color) }}>
-                            {role.name === "Cook" ? "Activated at Silver KYC. List menu, set pricing, receive orders & payments in-app." :
-                             role.name === "Rider" ? "Activated at Silver KYC. Post availability windows, get matched to nearby delivery requests." :
-                             role.name === "Coach" ? "Activated at Silver KYC. Set up session types, calendar, pricing. Booking + payment in-app." :
-                             "Activated at Silver KYC. List items with markup, manage listings, arrange meetups via Lokul chat."}
-                          </p>
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </motion.div>
-              );
-            })}
-          </div>
-
-          {/* Additional Features Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-            {[
-              { icon: Users, label: "Communities", desc: "Anyone creates micro-communities — morning walk, book club, parents network — with join policies and member roles.", color: "#8B5CF6" },
-              { icon: Wallet, label: "Group Buying", desc: "Community-coordinated bulk purchases with commit thresholds, pooled orders, and wallet-split payments.", color: "#F97316" },
-              { icon: Car, label: "Carpool", desc: "Driver posts trip → passengers join within locality. Price splitting and route matching.", color: "#06B6D4" },
-              { icon: Store, label: "Local Business Hub", desc: "Digital storefronts for kirana, salon, clinic, school — catalogue, slot booking, order management.", color: "#EC4899" },
-              { icon: Utensils, label: "Tiffin Ordering", desc: "Daily food menu from home cooks with pre-order, subscription, and in-app payments.", color: "#F59E0B" },
-              { icon: Building2, label: "Society Ops", desc: "Visitor e-passes, staff attendance, RWA notices, binding polls, dues collection, lost & found.", color: "#10B981" },
-            ].map((f) => (
-              <motion.div key={f.label} initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="p-4 rounded-xl border border-border bg-surface flex items-start gap-3">
-                <div className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0" style={{ backgroundColor: f.color + "10" }}><f.icon size={14} style={{ color: tintText(f.color) }} /></div>
-                <div><h4 className="text-xs text-foreground">{f.label}</h4><p className="text-sm text-muted mt-0.5">{f.desc}</p></div>
-              </motion.div>
             ))}
-          </div>
+          </dl>
         </div>
+        <p className="mt-10 text-compact text-muted">
+          The repository and research documents aren&apos;t public yet. Related: <Link href="/research/forma" className="text-foreground underline decoration-border-strong underline-offset-4 hover:text-accent">Forma, malleable software</Link> · <Link href="/work/hosamane" className="text-foreground underline decoration-border-strong underline-offset-4 hover:text-accent">Hosamane, a home-search agent for Bengaluru</Link>
+        </p>
       </Section>
 
-      {/* ════════════════════════════════════════ */}
-      {/* 7. DESIGN DECISIONS                    */}
-      {/* ════════════════════════════════════════ */}
-      <Section>
-        <div className="max-w-4xl mx-auto">
-          <SectionHeader eyebrow="Design Decisions" title="The key choices that shaped Lokul." description="Every product is a set of tradeoffs. Here are the most consequential decisions made during Lokul's design — and why each one was chosen." />
-          <div className="space-y-4">
-            {designDecisions.map((d, i) => (
-              <motion.div key={d.decision} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.05 }} className="p-5 sm:p-6 rounded-2xl border" style={{ borderColor: d.color + "20", backgroundColor: d.color + "04" }}>
-                <div className="flex items-start gap-4">
-                  <div className="w-2 h-2 rounded-full mt-2 shrink-0" style={{ backgroundColor: d.color }} />
-                  <div>
-                    <div className="flex items-center gap-3 mb-1 flex-wrap">
-                      <h3 className="text-base text-foreground">{d.decision}</h3>
-                      <span className="text-xs font-mono px-2 py-0.5 rounded" style={{ backgroundColor: d.color + "15", color: tintText(d.color) }}>{d.choice}</span>
-                    </div>
-                    <p className="text-sm text-muted leading-relaxed">{d.why}</p>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </Section>
-
-      {/* ════════════════════════════════════════ */}
-      {/* 8. BUSINESS MODEL & MONETIZATION       */}
-      {/* ════════════════════════════════════════ */}
-      <Section>
-        <div className="max-w-5xl mx-auto">
-          <SectionHeader eyebrow="Business Model" title="Revenue streams & unit economics." description="Lokul earns by enabling transactions, not by charging for visibility. Supply-side earns; Lokul takes a small share. Multiple revenue lines create a diversified, resilient model." />
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
-            {revenueStreams.map((r, i) => (
-              <motion.div key={r.stream} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.04 }} className="p-5 rounded-2xl border" style={{ borderColor: r.color + "20", backgroundColor: r.color + "04" }}>
-                <div className="text-xl font-display font-medium" style={{ color: tintText(r.color) }}>{r.value}</div>
-                <h3 className="text-sm text-foreground mt-1">{r.stream}</h3>
-                <p className="text-sm text-muted mt-1">{r.desc}</p>
-              </motion.div>
-            ))}
-          </div>
-
-          {/* Fundraising */}
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="p-6 rounded-2xl border border-border bg-surface">
-            <h3 className="text-sm text-foreground mb-4">Fundraising Thesis</h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {[
-                { round: "Pre-Seed", target: "₹1–2 Cr ($120–240K)", structure: "SAFE at ₹15–20 Cr valuation cap", color: "#6366F1" },
-                { round: "Seed", target: "₹8–15 Cr ($1–2M)", structure: "18-month runway, team of 8–12", color: "#8B5CF6" },
-                { round: "Target Investors", target: "Blume, Prime, Elevation, Stellaris, 3one4", structure: "Angel: Kunal Shah, Amrish Rau, Jitendra Gupta", color: "#10B981" },
-              ].map((f) => (
-                <div key={f.round} className="p-4 rounded-xl border" style={{ borderColor: f.color + "20", backgroundColor: f.color + "06" }}>
-                  <p className="text-xs font-mono" style={{ color: tintText(f.color) }}>{f.round}</p>
-                  <p className="text-sm font-medium text-foreground mt-1">{f.target}</p>
-                  <p className="text-sm text-muted mt-0.5">{f.structure}</p>
-                </div>
-              ))}
-            </div>
-          </motion.div>
-        </div>
-      </Section>
-
-      {/* ════════════════════════════════════════ */}
-      {/* 9. CURRENT STATUS & ROADMAP            */}
-      {/* ════════════════════════════════════════ */}
-      <Section>
-        <div className="max-w-5xl mx-auto">
-          <SectionHeader eyebrow="Current Status" title="Where Lokul is today." description="The monorepo is fully scaffolded with 42 database models, 90+ mobile screens, 46+ API routes, and a full admin CMS. The backend is code-complete across most domains with ~4–6 weeks of production integration work remaining." />
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-            <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="p-5 rounded-2xl border border-[#10B981]/30 bg-[#10B981]/05">
-              <h3 className="text-sm text-hue-green mb-3 flex items-center gap-1.5"><Check size={14} /> Built</h3>
-              <ul className="space-y-2">
-                {builtItems.map((item) => (
-                  <li key={item} className="flex gap-2 text-sm text-muted"><Check size={12} className="text-hue-green shrink-0 mt-0.5" />{item}</li>
-                ))}
-              </ul>
-            </motion.div>
-            <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }} className="p-5 rounded-2xl border border-[#F59E0B]/30 bg-[#F59E0B]/05">
-              <h3 className="text-sm text-hue-amber mb-3 flex items-center gap-1.5"><Circle size={14} /> In Progress / Next</h3>
-              <ul className="space-y-2">
-                {nextItems.map((item) => (
-                  <li key={item} className="flex gap-2 text-sm text-muted"><Circle size={12} className="text-hue-amber shrink-0 mt-0.5" />{item}</li>
-                ))}
-              </ul>
-            </motion.div>
-          </div>
-
-          {/* Release Timeline */}
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="p-6 rounded-2xl border border-border bg-surface">
-            <h3 className="text-sm text-foreground mb-4">Release Plan</h3>
-            <div className="space-y-3">
-              {[
-                { phase: "α — Closed Alpha", when: "T+3 mo", scope: "1 locality, 100 users, 10 businesses; Feed, Chat, Business Hub, 1 peer role (Cook)", color: "#6366F1" },
-                { phase: "β — Open Beta", when: "T+5 mo", scope: "10 localities, 2,000 users, 100 businesses; All peer roles, Community, Group buying", color: "#8B5CF6" },
-                { phase: "GA 2.0", when: "T+8 mo", scope: "Mumbai MMR open; all 20 modules; 50K users, 2,000 businesses", color: "#EC4899" },
-                { phase: "v2.1", when: "T+11 mo", scope: "Pune + Bangalore; Tamil/Kannada; AI assistant; school bus carpool", color: "#F59E0B" },
-                { phase: "v2.2", when: "T+14 mo", scope: "Top-8 metros; Telugu, Bengali, Gujarati; business subscription engine", color: "#10B981" },
-              ].map((r) => (
-                <div key={r.phase} className="flex items-center justify-between p-3 rounded-xl" style={{ backgroundColor: r.color + "08" }}>
-                  <div className="flex items-center gap-3">
-                    <div className="w-2 h-2 rounded-full" style={{ backgroundColor: r.color }} />
-                    <div>
-                      <p className="text-xs font-medium text-foreground">{r.phase}</p>
-                      <p className="text-sm text-muted">{r.scope}</p>
-                    </div>
-                  </div>
-                  <span className="text-xs font-mono" style={{ color: tintText(r.color) }}>{r.when}</span>
-                </div>
-              ))}
-            </div>
-          </motion.div>
-        </div>
-      </Section>
-
-      {/* ════════════════════════════════════════ */}
-      {/* 10. V3 — NATIONAL OS VISION            */}
-      {/* ════════════════════════════════════════ */}
-      <Section>
-        <div className="max-w-5xl mx-auto">
-          <SectionHeader eyebrow="Phase 3 Vision" title="The Operating System of Bharat." description="From hyperlocal app to national infrastructure — 40 modules across 12 empowerment categories serving India's 1.44 billion people. Rural economy, healthcare, education, women empowerment, civic governance, and disaster resilience." />
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 mb-8">
-            {[
-              { name: "Rural Economy & Farmer", count: "8 modules", color: "#10B981" },
-              { name: "Healthcare & Wellness", count: "5 modules", color: "#06B6D4" },
-              { name: "Education & Skilling", count: "4 modules", color: "#8B5CF6" },
-              { name: "Women Empowerment", count: "4 modules", color: "#EC4899" },
-              { name: "Civic Governance", count: "4 modules", color: "#6366F1" },
-              { name: "Disaster Resilience", count: "3 modules", color: "#F97316" },
-              { name: "Senior Care", count: "3 modules", color: "#F59E0B" },
-              { name: "Financial Inclusion", count: "3 modules", color: "#84CC16" },
-            ].map((cat) => (
-              <motion.div key={cat.name} initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="flex items-center justify-between p-3 rounded-xl border border-border bg-surface">
-                <span className="text-xs font-medium text-foreground">{cat.name}</span>
-                <span className="text-xs font-mono px-2 py-0.5 rounded" style={{ backgroundColor: cat.color + "15", color: tintText(cat.color) }}>{cat.count}</span>
-              </motion.div>
-            ))}
-          </div>
-
-          {/* Population segments */}
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="p-6 rounded-2xl border border-border bg-surface">
-            <h3 className="text-sm text-foreground mb-4">Population Segments — Non-Negotiable Coverage</h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2">
-              {[
-                { seg: "Rural households", pop: "900M" },
-                { seg: "Informal workers", pop: "500M+" },
-                { seg: "Women not in workforce", pop: "350M" },
-                { seg: "Agricultural workers", pop: "270M" },
-                { seg: "Senior citizens (60+)", pop: "180M" },
-                { seg: "Youth seeking income", pop: "200M" },
-                { seg: "Differently abled", pop: "50M" },
-                { seg: "Tribal communities", pop: "104M" },
-              ].map((s) => (
-                <div key={s.seg} className="flex items-center justify-between p-2 rounded-lg border border-border/50 bg-background">
-                  <span className="text-xs text-muted">{s.seg}</span>
-                  <span className="text-xs font-mono text-foreground font-medium">{s.pop}</span>
-                </div>
-              ))}
-            </div>
-          </motion.div>
-        </div>
-      </Section>
-
-      {/* ════════════════════════════════════════ */}
-      {/* 11. LINKS & ECOSYSTEM                  */}
-      {/* ════════════════════════════════════════ */}
-      <Section>
-        <div className="max-w-4xl mx-auto text-center">
-          <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-            <p className="text-accent font-mono text-xs uppercase tracking-[0.06em] mb-4">Explore Further</p>
-            <h2 className="text-display mb-6">Dive into the <span className="text-accent">Lokul ecosystem.</span></h2>
-          </motion.div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-3xl mx-auto">
-            {[
-              { label: "Monorepo", href: "https://github.com/VivekcMW/lokul.club", desc: "Full stack with 3 packages, 42 models", color: "#6366F1" },
-              { label: "PRD v1", href: "#", desc: "Society app: 16 documents", color: "#8B5CF6" },
-              { label: "PRD v2", href: "#", desc: "Peer economy: 11 documents", color: "#EC4899" },
-              { label: "Phase 3 Vision", href: "#", desc: "National OS: 40 modules", color: "#10B981" },
-              { label: "Investor Analysis", href: "#", desc: "Market thesis + financial model", color: "#F97316" },
-              { label: "Playwright Tests", href: "#", desc: "E2E suite with mobile emulation", color: "#06B6D4" },
-            ].map((link, i) => (
-              <motion.a
-                key={link.label}
-                href={link.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.06 }}
-                className="group p-5 rounded-2xl border border-border bg-surface hover:border-accent/20 transition-all duration-300 text-left"
-              >
-                <div className="flex items-center gap-2 mb-2">
-                  <div className="w-2 h-2 rounded-full" style={{ backgroundColor: link.color }} />
-                  <span className="text-sm font-medium text-foreground group-hover:text-accent transition-colors">{link.label}</span>
-                </div>
-                <p className="text-sm text-muted">{link.desc}</p>
-              </motion.a>
-            ))}
-          </div>
-          <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="mt-10 text-xs font-mono text-muted">Lokul — 200 meters is the most valuable radius in Indian commerce.</motion.p>
-        </div>
-      </Section>
-    </div>
+      <CaseCta title="Building for the next 500 million users?" />
+    </article>
   );
 }

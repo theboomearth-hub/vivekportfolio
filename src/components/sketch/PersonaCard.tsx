@@ -9,9 +9,11 @@ export interface Persona {
   /** One or two doodles from /public/doodles/people (Open Peeps, CC0). */
   figures: { src: string; alt: string }[];
   lists: { label: string; items: string[] }[];
-  trust: { label: string; text: string };
+  trust?: { label: string; text: string };
   /** What the persona rests on. Proto-personas are assumptions until interviews replace them. */
   basis: "proto" | "research";
+  /** Overrides the default line that says what the persona rests on. */
+  basisNote?: string;
 }
 
 /** A persona as a person first: a doodle on a hand-drawn blob, then what they want and fear. */
@@ -59,12 +61,14 @@ export default function PersonaCard({ persona, i = 0 }: { persona: Persona; i?: 
             </ul>
           </div>
         ))}
-        <p className="mt-auto border-l-2 border-accent pl-3 text-compact">
-          <span className="text-muted">{persona.trust.label} </span>
-          {persona.trust.text}
-        </p>
-        <p className="text-caption text-muted">
-          {persona.basis === "proto" ? "Proto-persona: built from public evidence and assumptions, not interviews." : "From research interviews."}
+        {persona.trust && (
+          <p className="mt-auto border-l-2 border-accent pl-3 text-compact">
+            <span className="text-muted">{persona.trust.label} </span>
+            {persona.trust.text}
+          </p>
+        )}
+        <p className={`text-caption text-muted ${persona.trust ? "" : "mt-auto"}`}>
+          {persona.basisNote ?? (persona.basis === "proto" ? "Proto-persona: built from public evidence and assumptions, not interviews." : "From research interviews.")}
         </p>
       </div>
     </article>

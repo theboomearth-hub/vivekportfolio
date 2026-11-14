@@ -1,609 +1,253 @@
-"use client";
-
 import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
-import { useState, Fragment } from "react";
-import { Section, SectionHeader } from "@/components/Section";
-import { ArrowRight, Check, Circle, Code, Dot, Square, Zap, ChevronLeft, ChevronRight, ChevronDown, Webhook, ShieldCheck, RefreshCw } from "lucide-react";
-import { tintText } from "@/lib/tint";
+import { CaseCta, CaseKicker, Section, caseLabel } from "@/components/case/CaseParts";
+import { BarList, MarketCircles, StatTiles } from "@/components/sketch/charts";
+import Doodle from "@/components/sketch/Doodle";
+import DrawOnView from "@/components/sketch/DrawOnView";
+import { BeforeAfter, FlowRows } from "@/components/sketch/flows";
+import { SketchArrow, Tick } from "@/components/sketch/glyphs";
+import PersonaCard, { type Persona } from "@/components/sketch/PersonaCard";
+import { FormaScene } from "@/components/sketch/scenes";
+import { Pipeline, StackDiagram, StatusLists } from "@/components/sketch/structures";
 
-/* ─── Data ─── */
+/*
+ * Forma: research into infrastructure for malleable software. Content from the Forma research (June 2026 snapshot).
+ * Where the old page disagreed with itself, this uses the figure it stated most specifically (536 components in
+ * 48 categories). Use-case figures are what Forma targets, not measurements: there are no customers yet.
+ */
 
-const pricingTiers = [
-  { name: "Free", price: "$0", users: "500 configs", features: ["1 manifest", "Community support"], color: "#64748B" },
-  { name: "Builder", price: "$99", users: "5K configs", features: ["3 manifests", "Email support", "Basic analytics"], color: "#06B6D4" },
-  { name: "Growth", price: "$399", users: "50K configs", features: ["10 manifests", "Webhooks", "Priority support"], color: "#8B5CF6" },
-  { name: "Enterprise", price: "$1,500-5,000", users: "Unlimited", features: ["SLA", "HIPAA BAA", "Dedicated success", "Self-hosted option"], color: "#F97316" },
+const flow = [
+  { name: "Manifest", text: "The capability contract: what the app can do." },
+  { name: "Compiler", text: "Constrained decoding turns intent into a config." },
+  { name: "Runtime", text: "A sandboxed render of that config." },
+  { name: "Hooks", text: "User-scoped middleware and routing." },
+  { name: "Contract", text: "Auto-migration when the app changes." },
 ];
 
-const tamCircles = [
-  { name: "SAM", value: "28K companies", arr: "$134M", desc: "B2B SaaS 5-500 eng, multi-segment" },
-  { name: "TAM", value: "180K orgs", arr: "$2.1B", desc: "+ Vertical SaaS + Enterprise internal tools" },
-  { name: "Long-tail", value: "1.2M apps", arr: "$14B", desc: "+ Every React app with user roles" },
+// Top of the stack first; the manifest is the foundation.
+const layers = [
+  { name: "Version contract", tag: "Layer 5", text: "When the app ships an update, the system diffs old and new manifests, migrates deterministic changes and flags the rest.", items: ["Semantic diff, not string diff", "Auto-migrate at ≥ 0.85 confidence", "7-day compatibility window"], doodle: <Doodle name="code" className="h-10 w-10" /> },
+  { name: "Middleware hooks", tag: "Layer 4", text: "User-scoped filtering, routing and notification rules, in a restricted sandbox.", items: ["on_email_receive, on_order_created…", "200 ms timeout, 32 MB limit", "Only manifest-declared actions"], doodle: <Doodle name="flows" className="h-10 w-10" /> },
+  { name: "Sandboxed runtime", tag: "Layer 3 · open source (MIT)", text: "A secure React tree that renders the compiled config: typed props only, no way out to the DOM.", items: ["No eval, no dynamic imports", "Typed expression language, no I/O", "< 60 KB gzipped per view"], doodle: <Doodle name="ui" className="h-10 w-10" /> },
+  { name: "AI compiler", tag: "Layer 2 · closed source", text: "The person describes their workflow; the compiler runs once and stores a versioned config.", items: ["98% valid first try, 99.7% after one retry", "Only references declared fields"], doodle: <Doodle name="ai" className="h-10 w-10" />, accent: true },
+  { name: "Capability manifest", tag: "Layer 1 · open source (MIT)", text: "A JSON contract for every action, data shape, view and permission. Written once by the developer, versioned forever.", items: ["Reverse-DNS names", "Semver, with migrations", "JSON Schema with autocomplete"], doodle: <Doodle name="layers" className="h-10 w-10" /> },
 ];
 
-const archLayers = [
-  { level: 1, name: "Capability Manifest", short: "Manifest", color: "#6366F1", desc: "A structured JSON contract describing every action, data shape, view, and permission the app exposes. Written once by the developer, versioned forever.", details: ["Entities, fields, actions declared in reverse-DNS format", "Versioned with semver — breaking changes require manifest migration", "JSON Schema validated with IDE autocomplete"] },
-  { level: 2, name: "AI Compiler", short: "Compiler", color: "#8B5CF6", desc: "User describes their workflow in natural language. Compiler runs once → produces a versioned JSON config stored in Redis.", details: ["Constrained decoding ensures structurally valid JSON output", "98% valid first try, 99.7% after one retry loop", "Only emits configs referencing declared manifest fields"] },
-  { level: 3, name: "Sandboxed Runtime", short: "Runtime", color: "#EC4899", desc: "A secure React component tree that renders the compiled config — typed props only, no DOM escape.", details: ["No eval, no Function, no dynamic imports", "JSONata-lite expression language — typed, no I/O, no window access", "<60KB gzipped per view, SSR-compatible"] },
-  { level: 4, name: "Middleware Hooks", short: "Hooks", color: "#F59E0B", desc: "User-scoped middleware: custom filtering, routing rules, notification conditions in a restricted sandbox.", details: ["Hook points: on_email_receive, on_order_created, on_label_applied", "200ms timeout, 32MB memory limit per execution", "Can only call actions declared in the manifest"] },
-  { level: 5, name: "Version Contract", short: "Contract", color: "#10B981", desc: "When the app ships an update, the system diffs old vs new manifest, auto-migrates deterministic changes, flags the rest.", details: ["Semantic diff engine — not string diff, semantic field mapping", "Auto-migrate at ≥0.85 confidence threshold", "7-day compatibility window — zero broken interfaces"] },
+const tiers = [
+  { name: "Domain packs", tag: "Tier 3", text: "Ship on top of @forma/react.", items: ["@forma/packs-crm", "@forma/packs-analytics", "@forma/packs-helpdesk", "@forma/packs-charts"] },
+  { name: "UI layer", tag: "Tier 2", text: "536 components in 48 categories, rendered through the runtime.", items: ["@forma/react"] },
+  { name: "Runtime", tag: "Tier 1", text: "Builds on the manifest contract.", items: ["@forma/runtime", "@forma/runtime-react"] },
+  { name: "Core foundation", tag: "Tier 0", text: "No internal dependencies.", items: ["@forma/schema", "@forma/types", "@forma/cli", "@forma/devtools", "@forma/testing"] },
 ];
 
-const archFlowSteps = [
-  { label: "Manifest", tagline: "Capability contract", icon: Code, color: "#6366F1" },
-  { label: "Compiler", tagline: "Constrained decoding", icon: Zap, color: "#8B5CF6" },
-  { label: "Runtime", tagline: "Sandboxed render", icon: Square, color: "#EC4899" },
-  { label: "Hooks", tagline: "Middleware · routing", icon: Webhook, color: "#F59E0B" },
-  { label: "Contract", tagline: "Auto-migration", icon: ShieldCheck, color: "#10B981" },
+const sectors = [
+  { label: "Engineering & industry", value: 43 }, { label: "Commerce & trade", value: 34 }, { label: "Science & research", value: 24 },
+  { label: "Government & civic", value: 23 }, { label: "Health & life", value: 21 }, { label: "Media & arts", value: 20 },
+  { label: "People & education", value: 18 }, { label: "Agriculture & food", value: 14 }, { label: "Transport & mobility", value: 13 },
+  { label: "Legal & compliance", value: 13 }, { label: "Frontier & emerging", value: 13 }, { label: "Real estate & property", value: 11 },
 ];
 
-const packages = [
-  { name: "@forma/schema", tier: 0, desc: "Manifest spec & validation", deps: [], color: "#6366F1" },
-  { name: "@forma/types", tier: 0, desc: "Shared TypeScript types", deps: [], color: "#818CF8" },
-  { name: "@forma/runtime", tier: 1, desc: "Core rendering engine", deps: ["schema"], color: "#EC4899" },
-  { name: "@forma/runtime-react", tier: 1, desc: "React bindings", deps: ["runtime"], color: "#F472B6" },
-  { name: "@forma/react", tier: 2, desc: "536 components, 48 categories", deps: ["runtime-react"], color: "#06B6D4" },
-  { name: "@forma/packs-crm", tier: 3, desc: "CRM domain pack", deps: ["react"], color: "#F97316" },
-  { name: "@forma/packs-analytics", tier: 3, desc: "Analytics domain pack", deps: ["react"], color: "#F59E0B" },
-  { name: "@forma/packs-helpdesk", tier: 3, desc: "Helpdesk domain pack", deps: ["react"], color: "#10B981" },
-  { name: "@forma/packs-charts", tier: 3, desc: "D3-powered charts", deps: ["react"], color: "#8B5CF6" },
-  { name: "@forma/cli", tier: 0, desc: "7 commands: init, dev, validate, migrate, publish, introspect, doctor", deps: ["schema"], color: "#64748B" },
-  { name: "@forma/devtools", tier: 0, desc: "Browser extension & React component", deps: [], color: "#94A3B8" },
-  { name: "@forma/testing", tier: 0, desc: "Mock data sources, MSW handlers, ManifestBuilder", deps: ["schema"], color: "#A855F7" },
-];
-
-const packageTiers = [
-  { tier: 0, label: "Core Foundation", note: "No internal deps — the ground floor" },
-  { tier: 1, label: "Runtime", note: "Builds on the manifest contract" },
-  { tier: 2, label: "UI Layer", note: "Renders through the runtime" },
-  { tier: 3, label: "Domain Packs", note: "Ship on top of @forma/react" },
-];
-
-const domainCategories = [
-  { name: "Health & Life", count: 21, color: "#10B981" },
-  { name: "Science & Research", count: 24, color: "#A855F7" },
-  { name: "Engineering & Industry", count: 43, color: "#F97316" },
-  { name: "Transport & Mobility", count: 13, color: "#06B6D4" },
-  { name: "Commerce & Trade", count: 34, color: "#F59E0B" },
-  { name: "Government & Civic", count: 23, color: "#64748B" },
-  { name: "People & Education", count: 18, color: "#EC4899" },
-  { name: "Media & Arts", count: 20, color: "#F43F5E" },
-  { name: "Legal & Compliance", count: 13, color: "#6366F1" },
-  { name: "Agriculture & Food", count: 14, color: "#84CC16" },
-  { name: "Real Estate & Property", count: 11, color: "#0EA5E9" },
-  { name: "Frontier & Emerging", count: 13, color: "#2DD4BF" },
-];
-
-const personas = [
-  { title: "Priya Sharma", role: "Sales VP", company: "Series B SaaS (200 emp)", pain: "Needs a forecast dashboard that shows pipeline by region, rep, and product line — she's built 3 in Excel this quarter alone.", color: "#6366F1" },
-  { title: "Dr. Marcus Chen", role: "Computational Biologist", company: "Genomics Startup (50 emp)", pain: "Every new assay generates a unique data shape — he needs a new analysis UI every 3 days.", color: "#8B5CF6" },
-  { title: "Sarah Mitchell", role: "VP of Product", company: "Mid-Market SaaS (300 emp)", pain: "50 enterprise customers each want their own interface variant — burning 40% of eng capacity on view customization.", color: "#EC4899" },
-  { title: "Carlos Mendez", role: "ICU Nurse Manager", company: "Regional Hospital (1,200 beds)", pain: "EHR alerts fire at 47 per hour — he needs a filtered, role-specific view of critical alerts only.", color: "#10B981" },
-  { title: "Emily Zhao", role: "Staff Engineer", company: "Big SaaS (5,000 emp)", pain: "Her team maintains 12 separate view configurations for the same data model — each one a fragile fork.", color: "#F59E0B" },
-  { title: "James Okonkwo", role: "CTO", company: "Seed-stage Startup (15 emp)", pain: "His 3 frontend engineers are the bottleneck — every feature needs a new view.", color: "#F97316" },
-];
-
-const designDecisions = [
-  { decision: "Open-Core Model", choice: "MIT for schema/runtime/primitives; closed-source compiler + flagship packs", why: "The compiler is the moat — it improves with every customer's training signal. Same play as Vercel (Next.js OSS, deploy infra closed).", color: "#6366F1" },
-  { decision: "CRM-First Wedge", choice: "Only @forma/packs-crm until it reaches $50K ARR", why: "CRM has the most complex entity graph. If the manifest handles CRM, it handles everything.", color: "#F97316" },
-  { decision: "Never Proxy Data", choice: "Sandbox calls the host app's own API with the user's own auth token", why: "Forma never holds PII, PHI, or any customer data. The security conversation becomes: 'We never touch your data.'", color: "#10B981" },
-  { decision: "Typed Props Only", choice: "No className, no style, no dangerouslySetInnerHTML in sandbox components", why: "The compiler can only produce configs referencing declared capabilities. Makes the system accessible by construction.", color: "#EC4899" },
-  { decision: "Compile Once, Cache Forever", choice: "LLM call happens once per user per view; config stored in Redis; subsequent renders are 5ms lookups", why: "The 2-5s LLM latency is a one-time cost per user per view. Pricing is per compile-call ceiling, not per user.", color: "#F59E0B" },
-  { decision: "Framework-Agnostic Core", choice: "@forma/runtime is pure TypeScript; React bindings are a thin adapter", why: "React is the install path (95% of B2B SaaS frontends), not the bet. Vue/Svelte/Solid adapters are 6-week ports each.", color: "#8B5CF6" },
+const decisions = [
+  ["Open-core", "MIT for schema, runtime and primitives; the compiler and flagship packs closed", "The compiler is the moat: it improves with every customer. The same play as Next.js and Vercel."],
+  ["CRM first", "Only the CRM pack until it reaches $50K ARR", "CRM has the most complex entity graph. If the manifest handles CRM, it handles the rest."],
+  ["Never proxy data", "The sandbox calls the host app's own API with the person's own token", "Forma never holds personal or health data, so the security answer is simple."],
+  ["Typed props only", "No className, style or raw HTML inside sandbox components", "The compiler can only produce declared capabilities, which keeps output accessible by construction."],
+  ["Compile once, cache", "One model call per person per view; then a 5 ms cached lookup", "The 2–5 s model latency is paid once, and pricing caps compile calls, not users."],
+  ["Framework-agnostic core", "A pure TypeScript runtime with thin React bindings", "React is the way in (most B2B front ends), not the bet. Other adapters are short ports."],
 ];
 
 const useCases = [
-  { id: "crm", title: "CRM — Sales Pipeline Customization", color: "#6366F1", summary: "A Series B CRM company with 200 employees and 50 enterprise customers. Each customer wants a different pipeline view. Before Forma: 6-week custom dashboard builds. After Forma: user describes their workflow once, AI compiles a config, sandboxed runtime renders it instantly.", transformation: ["Before: 40% of frontend sprint capacity spent on interface variation", "After: interface variation costs zero engineering time", "Before: 6-week wait for a custom view", "After: 30 seconds from request to rendered interface"], metrics: [{ label: "Frontend capacity recovered", value: "40%" }, { label: "Time to custom view", value: "30s" }, { label: "Customer NPS impact", value: "+28" }] },
-  { id: "healthcare", title: "Healthcare — EHR Alert Triage", color: "#10B981", summary: "A regional hospital with 1,200 beds runs an EHR that fires 47 alerts per hour per nurse. Before Forma: IT quotes a $200K professional services engagement to customize views. After Forma: the manifest declares all alert types; each role compiles their own filtered triage view.", transformation: ["Before: 47 alerts/hour/nurse — alert fatigue causes missed criticals", "After: role-filtered views reduce alert noise by 78%", "Before: $200K PS engagement for view customization", "After: self-serve config, zero professional services cost"], metrics: [{ label: "Alert noise reduction", value: "78%" }, { label: "Critical alert response", value: "-62%" }, { label: "IT tickets for view changes", value: "→ 0" }] },
+  {
+    title: "CRM: a pipeline view per customer",
+    who: "A Series B CRM company, 200 people, 50 enterprise customers who each want a different pipeline view.",
+    pairs: [["40% of front-end sprint capacity goes to interface variants", "Interface variation costs no engineering time"], ["Six weeks to wait for a custom view", "About 30 seconds from request to interface"]],
+    targets: [{ value: "40%", label: "Front-end capacity recovered" }, { value: "30 s", label: "Time to a custom view" }, { value: "+28", label: "NPS" }],
+  },
+  {
+    title: "Healthcare: EHR alert triage",
+    who: "A 1,200-bed regional hospital whose EHR fires 47 alerts an hour per nurse.",
+    pairs: [["Alert fatigue causes missed critical alerts", "Role-filtered views cut alert noise by 78%"], ["A $200K services engagement to customise views", "Self-serve configs, no services cost"]],
+    targets: [{ value: "78%", label: "Less alert noise" }, { value: "−62%", label: "Critical-alert response time" }, { value: "0", label: "IT tickets for view changes" }],
+  },
 ];
 
-const manifestCode = `{
-  "name": "com.acmecorp.crm",
-  "version": "1.2.0",
-  "entities": {
-    "deal": {
-      "fields": [{ "name": "id", "type": "string" }, { "name": "name", "type": "string" }, { "name": "value", "type": "currency", "currency": "USD" }, { "name": "stage", "type": "enum", "values": ["discovery","proposal","negotiation","closed_won","closed_lost"] }, { "name": "owner", "type": "reference", "entity": "user" }],
-      "actions": [{ "name": "move_stage", "params": { "stage": "enum" } }, { "name": "assign_owner", "params": { "user_id": "string" } }],
-      "permissions": ["sales_rep: move_stage, assign_owner", "sales_vp: + delete, close_won"]
-    }
-  }
-}`;
+const personas: Persona[] = [
+  { name: "Priya Sharma", role: "Sales VP", meta: "Series B SaaS, 200 people", figures: [{ src: "/doodles/people/forma-priya.svg", alt: "Doodle of Priya, pointing up." }], lists: [{ label: "Pain", items: ["Needs a forecast by region, rep and product line; has built three in Excel this quarter."] }], basis: "proto" as const },
+  { name: "Dr. Marcus Chen", role: "Biologist", meta: "Computational biologist, genomics start-up, 50 people", figures: [{ src: "/doodles/people/forma-marcus.svg", alt: "Doodle of Marcus at his laptop." }], lists: [{ label: "Pain", items: ["Every new assay has a new data shape; he needs a new analysis view every three days."] }], basis: "proto" as const },
+  { name: "Sarah Mitchell", role: "VP Product", meta: "Mid-market SaaS, 300 people", figures: [{ src: "/doodles/people/forma-sarah.svg", alt: "Doodle of Sarah, looking concerned." }], lists: [{ label: "Pain", items: ["50 enterprise customers each want their own variant; 40% of engineering goes to view customisation."] }], basis: "proto" as const },
+  { name: "Carlos Mendez", role: "ICU nurse manager", meta: "Regional hospital, 1,200 beds", figures: [{ src: "/doodles/people/forma-carlos.svg", alt: "Doodle of Carlos, tired." }], lists: [{ label: "Pain", items: ["47 EHR alerts an hour; needs a role-specific view of the critical ones only."] }], basis: "proto" as const },
+  { name: "Emily Zhao", role: "Staff engineer", meta: "Large SaaS, 5,000 people", figures: [{ src: "/doodles/people/forma-emily.svg", alt: "Doodle of Emily in a hoodie." }], lists: [{ label: "Pain", items: ["Her team maintains 12 view configurations of one data model, each a fragile fork."] }], basis: "proto" as const },
+  { name: "James Okonkwo", role: "CTO", meta: "Seed-stage start-up, 15 people", figures: [{ src: "/doodles/people/forma-james.svg", alt: "Doodle of James, explaining." }], lists: [{ label: "Pain", items: ["Three front-end engineers are the bottleneck: every feature needs a new view."] }], basis: "proto" as const },
+].map((p) => ({ ...p, basisNote: "A persona from the Forma research: an assumption until interviews confirm it." }));
 
-const userConfigCode = `{
-  "view": "pipeline", "entity": "deal",
-  "type": "kanban", "groupBy": "stage",
-  "sortBy": "value", "sortOrder": "desc",
-  "columns": ["name","value","probability","owner"],
-  "filters": [{ "field": "stage", "op": "neq", "value": "closed_lost" }],
-  "highlights": [{ "field": "closed_at", "op": "before", "value": "+7d", "style": { "dot": true } }]
-}`;
+const built = [
+  "Manifest spec v1, locked on 3 June 2026",
+  "16 packages scaffolded, 6 apps",
+  "@forma/react: 536 components in 48 categories",
+  "4 domain packs: CRM, analytics, helpdesk, charts",
+  "CLI with 7 commands; devtools extension",
+  "Testing utilities: mock data, MSW handlers, ManifestBuilder",
+  "879 deep-import paths; 100+ strategy documents",
+];
+const next = [
+  "Manifest registry API (Go)",
+  "AI compiler service (Python, FastAPI)",
+  "Version-contract dashboard",
+  "npm publishing pipeline",
+  "Third-party security audit",
+  "3 design partners; a first paying customer",
+];
 
 export default function FormaResearchPage() {
-  const [activeLayer, setActiveLayer] = useState<number | null>(null);
-  const [activeUseCase, setActiveUseCase] = useState("crm");
-  const currentUseCase = useCases.find((u) => u.id === activeUseCase) || useCases[0];
-
   return (
-    <div className="pt-24">
-      {/* ════════════════════════════════════════ */}
-      {/* 1. HERO + ARCHITECTURE OVERVIEW        */}
-      {/* ════════════════════════════════════════ */}
-      <Section>
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-10">
-            <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
-              <p className="text-accent font-mono text-xs uppercase tracking-[0.06em] mb-4">Research · Architecture · Design</p>
-              <h1 className="mb-6">
-                The <span className="text-accent">Forma</span> Project.
-              </h1>
-              <p className="text-lg text-muted leading-relaxed max-w-2xl mx-auto mb-8">
-                Infrastructure for malleable software — the full-stack platform that lets SaaS companies ship one product that feels custom-built for every user.
-              </p>
-            </motion.div>
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-px bg-border rounded-2xl overflow-hidden max-w-3xl mx-auto">
-              {[{ value: "16", label: "Packages" }, { value: "1,600+", label: "Components" }, { value: "360", label: "Domains Researched" }, { value: "5", label: "Architecture Layers" }].map((s) => (
-                <div key={s.label} className="bg-background p-6">
-                  <div className="text-2xl md:text-3xl font-display font-medium">{s.value}</div>
-                  <p className="text-xs font-mono text-muted mt-1">{s.label}</p>
-                </div>
-              ))}
-            </motion.div>
+    <article className="pt-28 md:pt-36">
+      <header className="container-premium">
+        <CaseKicker domain="Research · Architecture · Design" status="Research project, in progress" />
+        <div className="mt-3 grid items-center gap-10 lg:grid-cols-[minmax(0,6fr)_minmax(0,5fr)] [&>*]:min-w-0">
+          <div>
+            <h1 className="max-w-[16ch]">Forma: software that takes your shape.</h1>
+            <p className="mt-6 max-w-[54ch] text-lg leading-relaxed text-muted">
+              Infrastructure for malleable software. Developers declare what their app can do; each person describes how they work; an AI compiler turns that
+              into their own interface, and keeps it working when the app changes.
+            </p>
           </div>
+          <FormaScene className="w-full" />
+        </div>
+        <div className="mt-12">
+          <StatTiles items={[
+            { value: "16", label: "Packages in the monorepo" },
+            { value: "536", label: "Components, in 48 categories" },
+            { value: "5", label: "Layers, each with its own contract" },
+            { value: "6", label: "Apps: site, playground, docs, studio, Storybook, tests" },
+          ]} />
+        </div>
+      </header>
 
-          {/* 5-Layer Stack + Open-Core */}
-          <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="mb-8">
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-1 sm:gap-2 max-w-3xl mx-auto mb-4">
-              {[{ name: "Manifest", color: "#6366F1", desc: "Contract" }, { name: "Compiler", color: "#8B5CF6", desc: "Intent→Config" }, { name: "Runtime", color: "#EC4899", desc: "Sandboxed Render" }, { name: "Hooks", color: "#F59E0B", desc: "Middleware" }, { name: "Contract", color: "#10B981", desc: "Migration" }].map((layer) => (
-                <div key={layer.name} className="text-center">
-                  <div className="h-1.5 sm:h-2 rounded-full mb-1.5 sm:mb-2" style={{ backgroundColor: layer.color }} />
-                  <p className="text-xs font-medium text-foreground leading-tight">{layer.name}</p>
-                  <p className="text-xs font-mono text-muted">{layer.desc}</p>
-                </div>
-              ))}
+      <Section id="thesis" tone="tint" eyebrow="The thesis" title="Software should take your shape." intro="Every user gets the same interface today, and enterprise software pays engineers to bend it.">
+        <BeforeAfter
+          before={{ label: "Today · one size fits all", doodle: <Doodle name="system" className="h-12 w-12" />, items: ["Every B2B SaaS company builds role-based views from scratch", "“Doesn't fit our workflow” is the top churn reason, ahead of price and bugs", "30–40% of front-end sprint capacity goes to interface variants"] }}
+          after={{ label: "With Forma", doodle: <Doodle name="layers" className="h-12 w-12" />, items: ["Companies ship capabilities in a manifest, not fixed interfaces", "People describe their workflow once; the compiler makes a stable, versioned config", "App updates don't break anyone's interface: the contract migrates configs"] }}
+        />
+        <blockquote className="mt-10 max-w-[62ch] border-l-2 border-accent pl-5">
+          <p className="text-lg leading-relaxed">“In the future, software companies will ship shared primitives with the full intention that users will heavily modify the final interfaces. Coding agents have reached the quality threshold where every user can be their own forward-deployed engineer.”</p>
+          <footer className="mt-3 font-mono text-xs uppercase tracking-[0.06em] text-muted">Y Combinator research thesis, 2026</footer>
+        </blockquote>
+      </Section>
+
+      <Section id="flow" eyebrow="How it works" title="From intent to interface." intro="A developer's manifest and a person's intent go in; a secure, personal interface comes out, recompiled whenever either one changes.">
+        <Pipeline stages={flow.map((s) => ({ ...s, items: [] }))} />
+        <DrawOnView className="mt-8 flex items-center gap-3 text-compact text-muted">
+          <svg viewBox="0 0 40 40" className="h-8 w-8 text-accent" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true"><g filter="url(#sk-wobble)"><path className="sk-draw" pathLength={1} d="M30 12a13 13 0 1 0 3 10M30 4v8h-8" /></g></svg>
+          Continuous: it recompiles automatically on every manifest change.
+        </DrawOnView>
+      </Section>
+
+      <Section id="stack" tone="tint" eyebrow="Architecture" title="Five layers, each with a clear contract." intro="Each layer is versioned on its own. Open core: the schema, runtime and primitives are MIT-licensed; the compiler and flagship packs are closed.">
+        <StackDiagram layers={layers} />
+        <div className="mt-16">
+          <h3 className="text-xl">16 packages in four tiers</h3>
+          <p className="mt-2 max-w-[60ch] text-compact text-muted">Each tier depends only on the one below it.</p>
+          <div className="mt-6"><StackDiagram taper={false} layers={tiers} /></div>
+        </div>
+      </Section>
+
+      <Section id="components" eyebrow="Component catalogue" title="536 components, in 48 categories." intro="Tree-shakeable, with a deep import for every component and a bundle-size check on every pull request.">
+        <div className="grid gap-10 lg:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] lg:gap-14 [&>*]:min-w-0">
+          <div>
+            <h3 className="text-xl">Sector-specific components</h3>
+            <div className="mt-6">
+              <BarList items={sectors} highlight={[0]} caption={`${sectors.reduce((n, s) => n + s.value, 0)} components across 12 sectors, from the catalogue's sector breakdown.`} />
             </div>
-            <div className="flex items-center justify-center gap-3 sm:gap-6 text-xs font-mono">
-              <div className="flex items-center gap-1.5 sm:gap-2">
-                <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-sm bg-[#10B981]" />
-                <span className="text-muted">OSS (MIT)</span><span className="text-muted">·</span><span className="text-foreground">12 packages</span>
-              </div>
-              <div className="w-px h-4 bg-border" />
-              <div className="flex items-center gap-1.5 sm:gap-2">
-                <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-sm bg-[#F59E0B]" />
-                <span className="text-muted">Closed</span><span className="text-muted">·</span><span className="text-foreground">Compiler + Packs</span>
-              </div>
-              <div className="w-px h-4 bg-border" />
-              <div className="flex items-center gap-1.5 sm:gap-2">
-                <span className="text-accent font-medium">360</span><span className="text-muted">domains</span>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* End-to-End Flow */}
-          <div className="flex items-center justify-center gap-1 sm:gap-3 mb-6 flex-wrap text-xs font-mono">
-            {[
-              { label: "Developer", icon: ChevronLeft, color: "#6366F1" },
-              { label: "Manifest", icon: Code, color: "#8B5CF6" },
-              { label: "AI Compiler", icon: Zap, color: "#EC4899" },
-              { label: "Runtime", icon: Square, color: "#06B6D4" },
-              { label: "User", icon: ChevronRight, color: "#10B981" },
-            ].map((step, i, arr) => (
-              <div key={step.label} className="flex items-center gap-1 sm:gap-3 whitespace-nowrap">
-                <div className="flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-lg border" style={{ borderColor: step.color + "30", backgroundColor: step.color + "08" }}>
-                  <step.icon size={12} style={{ color: tintText(step.color) }} />
-                  <span className="text-foreground font-medium text-xs">{step.label}</span>
-                </div>
-                {i < arr.length - 1 && <ArrowRight size={14} className="text-muted shrink-0" />}
-              </div>
-            ))}
+          </div>
+          <div className="grid content-start gap-4 rounded-2xl bg-surface p-6">
+            <Doodle name="code" className="h-12 w-12 text-foreground" />
+            <h3 className="text-lg">A deep import for every component</h3>
+            <p className="text-compact text-muted">
+              <code className="font-mono text-[0.9em] text-foreground">@forma/react/table</code>, <code className="font-mono text-[0.9em] text-foreground">@forma/react/kanban</code> and 877 more paths. The target is under 60 KB gzipped per view, checked on every pull request.
+            </p>
           </div>
         </div>
       </Section>
 
-      {/* ════════════════════════════════════════ */}
-      {/* ARCHITECTURE FLOW — CARD STRIP        */}
-      {/* ════════════════════════════════════════ */}
-      <Section>
-        <div className="max-w-5xl mx-auto">
-          <SectionHeader eyebrow="Architecture Flow" title="From intent to interface." description="How Forma's 5-layer stack processes a developer's manifest and user intent into a secure, personalized interface — recompiled continuously as either one changes." />
-
-          <div className="flex items-center justify-between mb-4 px-1 text-xs font-mono">
-            <span className="text-foreground font-medium">User intent</span>
-            <span className="text-foreground font-medium text-right">Personalized interface</span>
-          </div>
-
-          <div className="flex flex-col lg:flex-row items-stretch gap-3 lg:gap-2">
-            {archFlowSteps.map((step, i) => (
-              <Fragment key={step.label}>
-                <motion.div
-                  initial={{ opacity: 0, y: 15 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.08 }}
-                  className="flex-1 p-5 rounded-2xl border"
-                  style={{ borderColor: step.color + "25", backgroundColor: step.color + "04" }}
-                >
-                  <div className="flex items-center gap-3 mb-3">
-                    <span
-                      className="text-xs font-mono px-1.5 py-0.5 rounded-full border shrink-0"
-                      style={{ borderColor: step.color + "30", color: tintText(step.color), backgroundColor: step.color + "10" }}
-                    >
-                      0{i + 1}
-                    </span>
-                    <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0" style={{ backgroundColor: step.color + "15" }}>
-                      <step.icon size={16} style={{ color: tintText(step.color) }} />
-                    </div>
-                  </div>
-                  <h3 className="text-sm text-foreground mb-1">{step.label}</h3>
-                  <p className="text-xs font-mono text-muted leading-relaxed">{step.tagline}</p>
-                </motion.div>
-                {i < archFlowSteps.length - 1 && (
-                  <ChevronRight size={18} className="text-muted shrink-0 self-center rotate-90 lg:rotate-0" />
-                )}
-              </Fragment>
-            ))}
-          </div>
-
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.5 }}
-            className="flex items-center justify-center gap-2 mt-6 text-xs font-mono text-muted"
-          >
-            <RefreshCw size={12} className="text-accent" />
-            <span>360° continuous — recompiles automatically on every manifest change</span>
-          </motion.div>
-        </div>
+      <Section id="decisions" tone="tint" eyebrow="Design decisions" title="The choices that shaped Forma.">
+        <FlowRows head={["Decision", "The choice", "Why"]} rows={decisions} emphasis={1} />
       </Section>
 
-      {/* ════════════════════════════════════════ */}
-      {/* 2. THE THESIS                          */}
-      {/* ════════════════════════════════════════ */}
-      <Section>
-        <div className="max-w-4xl mx-auto">
-          <SectionHeader eyebrow="The Genesis" title="Software should take your shape." description="Before AI, every user got the same interface. Enterprise software required forward-deployed engineers at enormous cost. Forma changes that." />
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
-            <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="p-6 rounded-2xl bg-surface border border-border">
-              <h3 className="text-lg mb-3 text-foreground">The One-Size-Fits-All Trap</h3>
-              <ul className="space-y-3 text-sm text-muted">
-                <li className="flex gap-3"><ArrowRight size={14} className="text-accent shrink-0 mt-0.5" /><span>Every B2B SaaS company builds role-based views from scratch, badly, forever.</span></li>
-                <li className="flex gap-3"><ArrowRight size={14} className="text-accent shrink-0 mt-0.5" /><span>#1 churn reason in B2B SaaS: &ldquo;Doesn&apos;t fit our workflow&rdquo; — not price, not bugs.</span></li>
-                <li className="flex gap-3"><ArrowRight size={14} className="text-accent shrink-0 mt-0.5" /><span>30-40% of frontend engineering sprint capacity goes to interface variation.</span></li>
-              </ul>
-            </motion.div>
-            <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="p-6 rounded-2xl bg-surface border border-border">
-              <h3 className="text-lg mb-3" style={{ color: tintText("#10B981") }}>The Forma Thesis</h3>
-              <ul className="space-y-3 text-sm text-muted">
-                <li className="flex gap-3"><Check size={14} className="text-hue-green shrink-0 mt-0.5" /><span>Software companies ship capabilities (manifests), not fixed interfaces.</span></li>
-                <li className="flex gap-3"><Check size={14} className="text-hue-green shrink-0 mt-0.5" /><span>Users describe their workflow once. The AI compiler produces a stable, versioned config.</span></li>
-                <li className="flex gap-3"><Check size={14} className="text-hue-green shrink-0 mt-0.5" /><span>App updates don&apos;t break user interfaces — version contract auto-migrates configs.</span></li>
-              </ul>
-            </motion.div>
-          </div>
-          <motion.blockquote initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mt-12 p-8 rounded-2xl border-l-4 border-accent bg-surface/50" style={{ borderLeftColor: "var(--color-accent)" }}>
-            <p className="text-lg italic text-muted leading-relaxed">&ldquo;In the future, software companies will ship shared primitives with the full intention that users will heavily modify the final interfaces. Coding agents have reached the quality threshold where every user can be their own forward-deployed engineer.&rdquo;</p>
-            <p className="mt-4 text-sm font-mono text-accent">— Y Combinator Research Thesis, 2026</p>
-          </motion.blockquote>
-        </div>
-      </Section>
-
-      {/* ════════════════════════════════════════ */}
-      {/* 3. CORE ARCHITECTURE                   */}
-      {/* ════════════════════════════════════════ */}
-      <Section>
-        <div className="max-w-5xl mx-auto">
-          <SectionHeader eyebrow="Architecture" title="The 5-Layer Stack." description="Forma is organized as five distinct layers — each independently versioned, each with a clear contract. Open-core: schema, runtime, and primitives are MIT-licensed; the compiler and flagship packs are closed-source." />
-          <div className="space-y-4">
-            {archLayers.map((layer, i) => {
-              const isActive = activeLayer === i;
-              return (
-                <motion.div key={layer.name} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.08 }} className="rounded-2xl border overflow-hidden transition-all duration-300 cursor-pointer" style={{ borderColor: isActive ? layer.color + "50" : "var(--color-border)", backgroundColor: isActive ? layer.color + "06" : "var(--color-surface)" }} onClick={() => setActiveLayer(isActive ? null : i)}>
-                  <div className="p-5 sm:p-6 flex items-center gap-4">
-                    <div className="w-10 h-10 rounded-xl flex items-center justify-center text-sm font-medium shrink-0" style={{ backgroundColor: layer.color + "20", color: tintText(layer.color) }}>{layer.level}</div>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-3">
-                        <h3 className="text-lg text-foreground">{layer.name}</h3>
-                        <span className="text-xs font-mono px-2 py-0.5 rounded-full border" style={{ borderColor: layer.color + "30", color: tintText(layer.color), backgroundColor: layer.color + "10" }}>{layer.short}</span>
-                      </div>
-                      <p className="text-sm text-muted mt-1">{layer.desc}</p>
-                    </div>
-                    <motion.div animate={{ rotate: isActive ? 180 : 0 }} transition={{ duration: 0.3 }} className="text-muted shrink-0">
-                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="6 9 12 15 18 9" /></svg>
-                    </motion.div>
-                  </div>
-                  <AnimatePresence>
-                    {isActive && (
-                      <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.3 }} className="overflow-hidden">
-                        <div className="px-5 sm:px-6 pb-5 sm:pb-6 pt-0 border-t border-border/50">
-                          <ul className="space-y-2 mt-4">
-                            {layer.details.map((d, j) => (
-                              <li key={j} className="flex gap-2 text-sm text-muted">
-                                <span className="shrink-0 mt-1 w-1.5 h-1.5 rounded-full" style={{ backgroundColor: layer.color }} />
-                                {d}
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </motion.div>
-              );
-            })}
-          </div>
-
-          {/* Package Graph — tiered dependency stack */}
-          <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mt-12">
-            <h3 className="text-2xl mb-4">Package Architecture</h3>
-            <p className="text-muted mb-6 max-w-2xl">16 packages across 4 tiers — open-core with MIT-licensed schema/runtime and closed-source compiler/flagship packs. Each tier only depends on the one below it.</p>
-            <div className="space-y-0">
-              {packageTiers.map((band, bandIndex) => {
-                const items = packages.filter((pkg) => pkg.tier === band.tier);
-                return (
-                  <Fragment key={band.tier}>
-                    <motion.div initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: bandIndex * 0.1 }} className="rounded-2xl border border-border bg-surface p-5 sm:p-6">
-                      <div className="flex items-center gap-3 mb-4">
-                        <span className="text-xs font-mono px-2 py-0.5 rounded-full border border-border text-muted shrink-0">Tier {band.tier}</span>
-                        <h4 className="text-sm text-foreground">{band.label}</h4>
-                        <span className="text-xs text-muted font-mono ml-auto shrink-0">{items.length} pkgs</span>
-                      </div>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-                        {items.map((pkg) => (
-                          <div key={pkg.name} className="p-3 rounded-xl border text-sm" style={{ borderColor: pkg.color + "25", backgroundColor: pkg.color + "06" }}>
-                            <div className="flex items-center gap-2 mb-1">
-                              <div className="w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: pkg.color }} />
-                              <span className="font-mono text-xs font-medium text-foreground">{pkg.name}</span>
-                            </div>
-                            <p className="text-sm text-muted">{pkg.desc}</p>
-                            {pkg.deps.length > 0 && <p className="text-sm text-muted mt-1 font-mono">depends on: {pkg.deps.join(", ")}</p>}
-                          </div>
-                        ))}
-                      </div>
-                      <p className="text-sm text-muted font-mono mt-4">{band.note}</p>
-                    </motion.div>
-                    {bandIndex < packageTiers.length - 1 && (
-                      <div className="flex justify-center py-1.5">
-                        <ChevronDown size={16} className="text-muted" />
-                      </div>
-                    )}
-                  </Fragment>
-                );
-              })}
-            </div>
-          </motion.div>
-        </div>
-      </Section>
-
-      {/* ════════════════════════════════════════ */}
-      {/* 4. COMPONENTS + DOMAINS                */}
-      {/* ════════════════════════════════════════ */}
-      <Section>
-        <div className="max-w-5xl mx-auto">
-          <SectionHeader eyebrow="Component Catalog" title={`${domainCategories.reduce((s, c) => s + c.count, 0)}+ Components.`} description="A curated library of 1,600+ components across 48 categories — tree-shakeable, per-component deep imports, bundle-size CI gate." />
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3">
-            {domainCategories.map((cat) => (
-              <motion.div key={cat.name} initial={{ opacity: 0, y: 10 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="p-3 rounded-xl border border-border bg-surface text-center">
-                <div className="text-lg font-medium" style={{ color: tintText(cat.color) }}>{cat.count}</div>
-                <p className="text-sm text-muted mt-1">{cat.name}</p>
-              </motion.div>
-            ))}
-          </div>
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="mt-8 p-5 rounded-2xl border border-border bg-surface">
-            <div className="flex items-start gap-4">
-              <div className="w-10 h-10 rounded-xl bg-accent/10 border border-accent/20 flex items-center justify-center text-accent shrink-0">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><polyline points="16 18 22 12 16 6" /><polyline points="8 6 2 12 8 18" /></svg>
-              </div>
+      <Section id="use-cases" eyebrow="Use cases" title="Two scenarios, before and after." intro="From the Forma research. The figures are the outcomes Forma is designed to reach, not measurements: there are no customers yet.">
+        <DrawOnView className="grid gap-5 lg:grid-cols-2 [&>*]:min-w-0">
+          {useCases.map((u, ui) => (
+            <article key={u.title} className="sk-fade flex flex-col gap-5 rounded-2xl bg-background p-6 ring-1 ring-border ring-inset" style={{ "--sk-i": ui * 3 } as React.CSSProperties}>
               <div>
-                <h3 className="text-sm text-foreground mb-1">Per-Component Deep Imports</h3>
-                <p className="text-sm text-muted leading-relaxed">
-                  Every component is individually importable via <code className="text-accent text-xs">@forma/react/table</code>, <code className="text-accent text-xs">@forma/react/kanban</code>, etc. 879 deep-import paths configured. Bundle-size CI gate on every PR — target: &lt;60KB gzipped per view.
-                </p>
+                <h3 className="text-xl">{u.title}</h3>
+                <p className="mt-2 text-compact text-muted">{u.who}</p>
               </div>
-            </div>
-          </motion.div>
-        </div>
-      </Section>
-
-      {/* ════════════════════════════════════════ */}
-      {/* 5. DESIGN DECISIONS                    */}
-      {/* ════════════════════════════════════════ */}
-      <Section>
-        <div className="max-w-4xl mx-auto">
-          <SectionHeader eyebrow="Design Decisions" title="The key choices that shaped Forma." description="Every architecture is a set of tradeoffs. Here are the most consequential decisions made during Forma's design." />
-          <div className="space-y-4">
-            {designDecisions.map((d, i) => (
-              <motion.div key={d.decision} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.05 }} className="p-5 sm:p-6 rounded-2xl border" style={{ borderColor: d.color + "20", backgroundColor: d.color + "04" }}>
-                <div className="flex items-start gap-4">
-                  <div className="w-2 h-2 rounded-full mt-2 shrink-0" style={{ backgroundColor: d.color }} />
-                  <div>
-                    <div className="flex items-center gap-3 mb-1 flex-wrap">
-                      <h3 className="text-base text-foreground">{d.decision}</h3>
-                      <span className="text-xs font-mono px-2 py-0.5 rounded" style={{ backgroundColor: d.color + "15", color: tintText(d.color) }}>{d.choice}</span>
+              <ul className="grid gap-3">
+                {u.pairs.map(([before, after], i) => (
+                  <li key={i} className="grid gap-2 sm:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] sm:items-center">
+                    <p className="rounded-xl bg-surface p-3 text-compact text-muted">{before}</p>
+                    <SketchArrow className="mx-auto h-4 w-7 rotate-90 text-accent sm:rotate-0" i={ui * 3 + i} />
+                    <p className="flex gap-2 rounded-xl bg-accent-light/40 p-3 text-compact"><Tick className="h-5 w-5 shrink-0 text-accent" i={ui * 3 + i} />{after}</p>
+                  </li>
+                ))}
+              </ul>
+              <div className="mt-auto">
+                <p className={caseLabel}>Targets</p>
+                <dl className="mt-3 grid grid-cols-3 gap-3">
+                  {u.targets.map((t) => (
+                    <div key={t.label} className="border-t border-border pt-3">
+                      <dd className="text-[1.6rem] font-medium leading-none tracking-[-0.02em] tabular-nums">{t.value}</dd>
+                      <dt className="mt-2 text-caption text-muted">{t.label}</dt>
                     </div>
-                    <p className="text-sm text-muted leading-relaxed">{d.why}</p>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
+                  ))}
+                </dl>
+              </div>
+            </article>
+          ))}
+        </DrawOnView>
       </Section>
 
-      {/* ════════════════════════════════════════ */}
-      {/* 6. USE CASES + MARKET                  */}
-      {/* ════════════════════════════════════════ */}
-      <Section>
-        <div className="max-w-5xl mx-auto">
-          <SectionHeader eyebrow="Use Cases" title="Real scenarios. Real transformation." description="In-depth use cases showing how Forma transforms software across CRM and Healthcare — with concrete before/after comparisons and measurable outcomes." />
-          <div className="flex flex-wrap gap-2 mb-8">
-            {useCases.map((uc) => (
-              <motion.button key={uc.id} onClick={() => setActiveUseCase(uc.id)} whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} className="px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200" style={{ backgroundColor: activeUseCase === uc.id ? uc.color + "15" : "var(--color-surface)", borderColor: activeUseCase === uc.id ? uc.color + "35" : "var(--color-border)", color: activeUseCase === uc.id ? tintText(uc.color) : "var(--color-muted)", borderWidth: 1, borderStyle: "solid" }}>
-                {uc.title.split(" —")[0]}
-              </motion.button>
-            ))}
-          </div>
-          <AnimatePresence mode="wait">
-            <motion.div key={currentUseCase.id} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.3 }}>
-              <div className="p-6 sm:p-8 rounded-2xl border mb-6" style={{ borderColor: currentUseCase.color + "25", backgroundColor: currentUseCase.color + "04" }}>
-                <h3 className="text-xl mb-3" style={{ color: tintText(currentUseCase.color) }}>{currentUseCase.title}</h3>
-                <p className="text-sm text-muted leading-relaxed max-w-3xl">{currentUseCase.summary}</p>
-              </div>
-              <div className="space-y-2 mb-6">
-                {currentUseCase.transformation.map((t, i) => (
-                  <div key={i} className="flex items-start gap-3 p-3 rounded-xl border border-border bg-surface">
-                    <span className="shrink-0 mt-0.5" style={{ color: tintText(currentUseCase.color) }}>
-                      {t.startsWith("Before") ? <ChevronLeft size={14} /> : t.startsWith("After") ? <ChevronRight size={14} /> : <Dot size={14} />}
-                    </span>
-                    <span className="text-sm text-muted">{t}</span>
-                  </div>
-                ))}
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                {currentUseCase.metrics.map((m) => (
-                  <div key={m.label} className="p-4 rounded-xl text-center border" style={{ borderColor: currentUseCase.color + "20", backgroundColor: currentUseCase.color + "06" }}>
-                    <div className="text-xl font-display font-medium" style={{ color: tintText(currentUseCase.color) }}>{m.value}</div>
-                    <p className="text-sm text-muted mt-1">{m.label}</p>
-                  </div>
-                ))}
-              </div>
-            </motion.div>
-          </AnimatePresence>
-
-          {/* Market + Pricing */}
-          <div className="mt-16">
-            <SectionHeader eyebrow="Market Analysis" title="Cost, pricing & market size." description="Forma's GTM is developer-led, bottoms-up — the same motion as Stripe, Vercel, and Twilio. Pricing is tiered for land-and-expand." />
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-              {tamCircles.map((circle, i) => (
-                <motion.div key={circle.name} initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }} className="relative p-6 rounded-2xl border border-border bg-surface text-center overflow-hidden">
-                  <div className="absolute -top-10 -right-10 w-32 h-32 rounded-full opacity-10" style={{ backgroundColor: i === 0 ? "#6366F1" : i === 1 ? "#8B5CF6" : "#EC4899" }} />
-                  <div className="relative">
-                    <p className="text-xs font-mono uppercase tracking-[0.06em] mb-1" style={{ color: tintText(i === 0 ? "#6366F1" : i === 1 ? "#8B5CF6" : "#EC4899") }}>{circle.name}</p>
-                    <div className="text-xl font-medium text-foreground">{circle.value}</div>
-                    <div className="text-2xl font-display font-medium mt-1" style={{ color: tintText(i === 0 ? "#6366F1" : i === 1 ? "#8B5CF6" : "#EC4899") }}>{circle.arr}</div>
-                    <p className="text-sm text-muted mt-2">{circle.desc}</p>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-            <h3 className="text-2xl mb-4">Pricing Model</h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-              {pricingTiers.map((tier) => (
-                <motion.div key={tier.name} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="p-5 rounded-2xl border bg-surface" style={{ borderColor: tier.color + "25" }}>
-                  <h4 className="text-sm text-foreground">{tier.name}</h4>
-                  <div className="text-2xl font-display font-medium my-2" style={{ color: tintText(tier.color) }}>{tier.price}</div>
-                  <p className="text-xs font-mono text-muted mb-3">/month · {tier.users}</p>
-                  <ul className="space-y-1.5">
-                    {tier.features.map((f) => (
-                      <li key={f} className="flex items-center gap-1.5 text-xs text-muted">
-                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="shrink-0" style={{ color: tintText(tier.color) }}><polyline points="20 6 9 17 4 12" /></svg>
-                        {f}
-                      </li>
-                    ))}
-                  </ul>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </Section>
-
-      {/* ════════════════════════════════════════ */}
-      {/* 7. CURRENT STATUS + LINKS              */}
-      {/* ════════════════════════════════════════ */}
-      <Section>
-        <div className="max-w-5xl mx-auto">
-          <SectionHeader eyebrow="Current Status" title="Where Forma is today." description="June 2026 snapshot: the monorepo is scaffolded with 16 packages, 6 apps, and a locked manifest v1 spec. Component library, domain packs, CLI, and devtools are live." />
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-12">
-            <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="p-5 rounded-2xl border border-[#10B981]/30 bg-[#10B981]/05">
-              <h3 className="text-sm text-hue-green mb-3 flex items-center gap-1.5"><Check size={14} /> Built</h3>
-              <ul className="space-y-2">
-                {["Manifest spec v1 LOCKED (June 3, 2026)", "16 packages scaffolded", "@forma/react: 536 components across 48 categories", "4 domain packs: CRM, Analytics, Helpdesk, Charts-D3", "6 apps: Website, Playground, Docs, Studio, Storybook, E2E", "CLI with 7 commands", "Devtools browser extension + React component", "Testing utilities: mock data, MSW handlers, ManifestBuilder", "879 deep-import paths configured", "100+ strategy documents"].map((item) => (
-                  <li key={item} className="flex gap-2 text-sm text-muted"><Check size={12} className="text-hue-green shrink-0 mt-0.5" />{item}</li>
-                ))}
+      <Section id="market" tone="tint" eyebrow="Market and pricing" title="Developer-led, bottom-up." intro="The same go-to-market motion as Stripe, Vercel and Twilio, priced for land and expand.">
+        <MarketCircles
+          rings={[
+            { name: "SAM", size: "$134M", value: "28K companies", desc: "B2B SaaS with 5–500 engineers, serving several segments" },
+            { name: "TAM", size: "$2.1B", value: "180K organisations", desc: "Plus vertical SaaS and enterprise internal tools" },
+            { name: "Long tail", size: "$14B", value: "1.2M apps", desc: "Plus every React app with user roles" },
+          ]}
+          note="Market sizing from the Forma research, not yet tested with customers."
+        />
+        <h3 className="mt-16 text-xl">Pricing</h3>
+        <DrawOnView className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4 [&>*]:min-w-0">
+          {[
+            { name: "Free", price: "$0", unit: "500 configs", features: ["1 manifest", "Community support"] },
+            { name: "Builder", price: "$99", unit: "5K configs", features: ["3 manifests", "Email support", "Basic analytics"] },
+            { name: "Growth", price: "$399", unit: "50K configs", features: ["10 manifests", "Webhooks", "Priority support"] },
+            { name: "Enterprise", price: "$1,500–5,000", unit: "Unlimited", features: ["SLA", "HIPAA BAA", "Dedicated success", "Self-hosted option"] },
+          ].map((t, i) => (
+            <div key={t.name} className="sk-fade flex flex-col gap-3 rounded-2xl bg-background p-5 ring-1 ring-border ring-inset" style={{ "--sk-i": i } as React.CSSProperties}>
+              <p className={caseLabel}>{t.name}</p>
+              <p className="text-[1.6rem] font-medium leading-none tracking-[-0.02em] tabular-nums">{t.price}</p>
+              <p className="text-caption text-muted">a month · {t.unit}</p>
+              <ul className="mt-1 grid gap-1.5">
+                {t.features.map((f) => <li key={f} className="flex gap-2 text-compact"><Tick className="h-4 w-4 shrink-0 text-accent" />{f}</li>)}
               </ul>
-            </motion.div>
-            <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }} className="p-5 rounded-2xl border border-[#F59E0B]/30 bg-[#F59E0B]/05">
-              <h3 className="text-sm text-hue-amber mb-3 flex items-center gap-1.5"><Circle size={14} /> In Progress / Next</h3>
-              <ul className="space-y-2">
-                {["Manifest registry API (Go service)", "AI compiler service (Python/FastAPI)", "Version contract management dashboard", "Changesets + npm publishing pipeline", "Per-component build output", "Third-party security audit (NCC Group / Trail of Bits)", "E2E test suite completion", "3 design partner commitments", "First paying customer ($500/mo target)", "@forma/scientific package family"].map((item) => (
-                  <li key={item} className="flex gap-2 text-sm text-muted"><Circle size={12} className="text-hue-amber shrink-0 mt-0.5" />{item}</li>
-                ))}
-              </ul>
-            </motion.div>
-          </div>
-
-          {/* Personas Grid */}
-          <SectionHeader eyebrow="Personas" title="Who Forma serves." description="Six distinct user personas — each represents a different buying center, a different pain, and a different Forma entry point." />
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-12">
-            {personas.map((p, i) => (
-              <motion.div key={p.title} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.06 }} className="p-5 rounded-2xl border border-border bg-surface">
-                <div className="flex items-center gap-3 mb-3">
-                  <div className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-medium" style={{ backgroundColor: p.color + "20", color: tintText(p.color) }}>{p.title.split(" ").map((w) => w[0]).join("").slice(0, 2)}</div>
-                  <div>
-                    <h3 className="text-sm text-foreground">{p.title}</h3>
-                    <p className="text-xs font-mono" style={{ color: tintText(p.color) }}>{p.role}</p>
-                  </div>
-                </div>
-                <p className="text-xs font-mono text-muted mb-2">{p.company}</p>
-                <p className="text-sm text-muted leading-relaxed">{p.pain}</p>
-              </motion.div>
-            ))}
-          </div>
-
-          {/* Links */}
-          <div className="text-center">
-            <h2 className="mb-6">Dive into the <span className="text-accent">Forma ecosystem.</span></h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-3xl mx-auto">
-              {[
-                { label: "Live Website", href: "https://forma.dev", desc: "Marketing site with interactive demo", color: "#06B6D4" },
-                { label: "Playground", href: "https://forma.dev/playground", desc: "Live manifest editor + preview", color: "#8B5CF6" },
-                { label: "GitHub", href: "https://github.com/vivekanand/forma-design-system", desc: "Monorepo with 16 packages", color: "#64748B" },
-                { label: "Storybook", href: "https://forma.dev/storybook", desc: "1,100+ component stories", color: "#F43F5E" },
-                { label: "Manifest Spec", href: "https://forma.dev/docs/manifest-spec", desc: "Full v1 specification", color: "#F97316" },
-                { label: "CLI Docs", href: "https://forma.dev/docs/cli", desc: "npx @forma/cli init", color: "#10B981" },
-              ].map((link, i) => (
-                <motion.a key={link.label} href={link.href} target="_blank" rel="noopener noreferrer" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.06 }} className="group p-5 rounded-2xl border border-border bg-surface hover:border-accent/20 transition-all duration-300 text-left">
-                  <div className="flex items-center gap-2 mb-2">
-                    <div className="w-2 h-2 rounded-full" style={{ backgroundColor: link.color }} />
-                    <span className="text-sm font-medium text-foreground group-hover:text-accent transition-colors">{link.label}</span>
-                  </div>
-                  <p className="text-sm text-muted">{link.desc}</p>
-                </motion.a>
-              ))}
             </div>
-            
-            {/* CTA to research + work */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.3 }}
-              className="mt-10 rounded-2xl border border-border bg-surface p-8 text-center"
-            >
-              <p className="text-sm text-muted mb-4">
-                Interested in multi-platform design systems?
-              </p>
-              <div className="flex flex-wrap items-center justify-center gap-3">
-                <Link
-                  href="/work"
-                  className="px-5 py-2.5 rounded-xl bg-accent text-accent-foreground text-sm font-medium hover:bg-accent/90 transition-colors"
-                >
-                  View Case Studies
-                </Link>
-                <Link
-                  href="/research/lokul"
-                  className="px-5 py-2.5 rounded-xl bg-surface-hover border border-border text-sm font-medium text-foreground hover:border-accent/30 transition-colors"
-                >
-                  Lokul.club Research
-                </Link>
-              </div>
-            </motion.div>
-
-            <motion.p initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} className="mt-10 text-xs font-mono text-muted">Forma — Software that takes your shape.</motion.p>
-          </div>
-        </div>
+          ))}
+        </DrawOnView>
       </Section>
-    </div>
+
+      <Section id="status" eyebrow="Status" title="Where Forma is today." intro="A June 2026 snapshot: the manifest spec is locked and the monorepo is scaffolded. The compiler service and the first customers are next.">
+        <StatusLists built={built} next={next} builtLabel="Built" nextLabel="In progress or next" />
+      </Section>
+
+      <Section id="people" tone="tint" eyebrow="People" title="Who Forma serves." intro="Six personas, each a different buyer, a different pain and a different way in.">
+        <DrawOnView className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 [&>*]:min-w-0">
+          {personas.map((p, i) => <PersonaCard key={p.name} persona={p} i={i * 2} />)}
+        </DrawOnView>
+        <p className="mt-10 text-compact text-muted">
+          The repository and docs aren&apos;t public yet. Related: <Link href="/research/lokul" className="text-foreground underline decoration-border-strong underline-offset-4 hover:text-accent">Lokul, a hyperlocal platform</Link> · <Link href="/work/design-systems-scale" className="text-foreground underline decoration-border-strong underline-offset-4 hover:text-accent">design systems at scale</Link>
+        </p>
+      </Section>
+
+      <CaseCta title="Building software people can shape themselves?" />
+    </article>
   );
 }

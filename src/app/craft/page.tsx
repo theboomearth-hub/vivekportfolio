@@ -4,6 +4,8 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useCallback, useRef } from "react";
 import { Section, SectionHeader } from "@/components/Section";
+import Doodle from "@/components/sketch/Doodle";
+import DrawOnView from "@/components/sketch/DrawOnView";
 import Magnetic from "@/components/Magnetic";
 import FluidText from "@/components/FluidText";
 
@@ -217,6 +219,9 @@ export default function CraftPage() {
   return (
     <div className="pt-24">
       <Section>
+        <DrawOnView className="mb-5">
+          <Doodle name="cursor" className="h-14 w-14 text-foreground" />
+        </DrawOnView>
         <SectionHeader
           as="h1"
           eyebrow="Craft"

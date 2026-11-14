@@ -1,5 +1,6 @@
 import DrawOnView from "@/components/sketch/DrawOnView";
 import { Cross, Half, SketchArrow, Tick } from "@/components/sketch/glyphs";
+// (BeforeAfter, below, uses Tick and Cross too.)
 
 const sk = (i: number) => ({ "--sk-i": i }) as React.CSSProperties;
 
@@ -39,16 +40,56 @@ export function StepStrip({ steps }: { steps: { label: string; title: string; te
       <ol className="grid gap-4 md:flex md:items-stretch md:gap-0">
         {steps.map((s, i) => (
           <li key={s.label} className="flex flex-col md:flex-1 md:flex-row md:items-center">
-            <div className="sk-fade flex h-full flex-1 flex-col gap-3 rounded-2xl bg-background p-5 ring-1 ring-border ring-inset" style={sk(i * 2)}>
-              {s.doodle && <div className="h-12 w-12 text-foreground">{s.doodle}</div>}
-              <p className="font-mono text-xs uppercase tracking-[0.06em] text-accent">{s.label}</p>
-              <p className="text-lg leading-snug">{s.href ? <a href={s.href} className="underline decoration-border-strong underline-offset-4 hover:text-accent">{s.title}</a> : s.title}</p>
-              {s.text && <p className="text-compact text-muted">{s.text}</p>}
-            </div>
+            {(() => {
+              const body = (
+                <>
+                  {s.doodle && <div className="h-12 w-12 text-foreground">{s.doodle}</div>}
+                  <p className="font-mono text-xs uppercase tracking-[0.06em] text-accent">{s.label}</p>
+                  <p className={`text-lg leading-snug ${s.href ? "underline decoration-border-strong underline-offset-4 group-hover:text-accent" : ""}`}>{s.title}</p>
+                  {s.text && <p className="text-compact text-muted">{s.text}</p>}
+                </>
+              );
+              const card = "flex h-full flex-1 flex-col gap-3 rounded-2xl bg-background p-5 ring-1 ring-border ring-inset";
+              // A step with a destination is one big link that lifts on hover; plain steps stay still. The fade sits
+              // on a wrapper, because a finished animation would otherwise hold the card's transform and block the lift.
+              return s.href ? (
+                <div className="sk-fade flex h-full flex-1" style={sk(i * 2)}><a href={s.href} className={`group sk-lift ${card}`}>{body}</a></div>
+              ) : (
+                <div className={`sk-fade ${card}`} style={sk(i * 2)}>{body}</div>
+              );
+            })()}
             {i < steps.length - 1 && <SketchArrow className="mx-auto my-1 h-5 w-8 shrink-0 rotate-90 text-muted md:mx-2 md:my-0 md:rotate-0" i={i * 2 + 1} />}
           </li>
         ))}
       </ol>
+    </DrawOnView>
+  );
+}
+
+/** Two panels and a sketched arrow: how it is today, and how it works with the design. */
+export function BeforeAfter({ before, after }: { before: { label: string; title?: string; items: string[]; doodle?: React.ReactNode }; after: { label: string; title?: string; items: string[]; doodle?: React.ReactNode } }) {
+  const panel = (p: typeof before, isAfter: boolean, i: number) => (
+    <div className={`sk-fade flex flex-col gap-4 rounded-2xl p-6 ${isAfter ? "bg-accent-light/40" : "bg-surface"}`} style={sk(i)}>
+      <div className="flex items-center gap-3">
+        {p.doodle && <span className="h-12 w-12 shrink-0 text-foreground">{p.doodle}</span>}
+        <p className={`font-mono text-xs uppercase tracking-[0.06em] ${isAfter ? "text-accent" : "text-muted"}`}>{p.label}</p>
+      </div>
+      {p.title && <p className="text-[clamp(1.15rem,1.8vw,1.35rem)] leading-snug tracking-[-0.015em]">{p.title}</p>}
+      <ul className="grid gap-2.5">
+        {p.items.map((it, n) => (
+          <li key={n} className="flex gap-3 text-compact">
+            {isAfter ? <Tick className="h-5 w-5 shrink-0 text-accent" i={i + n} /> : <Cross className="h-5 w-5 shrink-0 text-muted" i={i + n} />}
+            <span className={isAfter ? "" : "text-muted"}>{it}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+  return (
+    <DrawOnView className="grid items-stretch gap-4 md:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)]">
+      {panel(before, false, 0)}
+      <SketchArrow className="mx-auto h-6 w-10 rotate-90 self-center text-accent md:rotate-0" i={2} />
+      {panel(after, true, 3)}
     </DrawOnView>
   );
 }

@@ -86,6 +86,80 @@ const PARTS: Record<string, Part[]> = {
     { d: "M24 11a2.5 2.5 0 1 0 0.1 0" },
     { d: "M13 18c7 2 15 2 22 0M24 20v9M24 29l-6 10M24 29l6 10", accent: true },
   ],
+  // Home cooking: a pot with steam
+  cook: [
+    { d: "M8 24h32v6c0 7-6 12-13 12h-6C14 42 8 37 8 30z" },
+    { d: "M4 24h40" },
+    { d: "M18 18c0-4 4-4 4-8M26 18c0-4 4-4 4-8", accent: true },
+  ],
+  // A rider: a scooter
+  rider: [
+    { d: "M10 38a5 5 0 1 0 0.1 0M38 38a5 5 0 1 0 0.1 0" },
+    { d: "M15 38h18l5-14h-8M30 24l-4-10h-6" },
+    { d: "M8 30h12", accent: true },
+  ],
+  // A coach: a dumbbell
+  coach: [
+    { d: "M6 18v12M12 14v20M36 14v20M42 18v12" },
+    { d: "M12 24h24", accent: true },
+  ],
+  // A reseller: a price tag
+  tag: [
+    { d: "M6 24L24 6h16v16L22 40z" },
+    { d: "M33 13a2 2 0 1 0 0.1 0", accent: true },
+  ],
+  // Safety: a shield with a tick
+  shield: [
+    { d: "M24 4l16 6v12c0 10-7 17-16 22C15 39 8 32 8 22V10z" },
+    { d: "M17 24l5 5 9-10", accent: true },
+  ],
+  // A place on the map
+  pin: [
+    { d: "M24 6c-8 0-13 6-13 13 0 11 13 23 13 23s13-12 13-23c0-7-5-13-13-13z" },
+    { d: "M24 14a5 5 0 1 0 0.1 0", accent: true },
+  ],
+  // A shop front
+  store: [
+    { d: "M8 20h32v22H8zM6 20l4-12h28l4 12" },
+    { d: "M20 42V30h8v12", accent: true },
+  ],
+  // A layered manifest: stacked sheets
+  layers: [
+    { d: "M24 6l18 9-18 9-18-9z" },
+    { d: "M6 24l18 9 18-9", accent: true },
+    { d: "M6 33l18 9 18-9" },
+  ],
+  // Domains, for project cards
+  billboard: [
+    { d: "M6 8h36v22H6zM24 30v12M16 42h16" },
+    { d: "M12 22l7-7 6 5 6-8 7 9", accent: true },
+  ],
+  home: [
+    { d: "M6 22L24 8l18 14v20H6z" },
+    { d: "M19 42V30h10v12", accent: true },
+  ],
+  health: [
+    { d: "M14 8v12a8 8 0 0 0 16 0V8" },
+    { d: "M22 28v6a8 8 0 0 0 16 0v-4" },
+    { d: "M38 26a4 4 0 1 0 0.1 0", accent: true },
+  ],
+  factory: [
+    { d: "M6 42V24l10 6v-6l10 6v-6l10 6V8h6v34z" },
+    { d: "M12 36h4M22 36h4M32 36h4", accent: true },
+  ],
+  play: [
+    { d: "M4 10h40v26H4zM16 42h16" },
+    { d: "M20 17v12l10-6z", accent: true },
+  ],
+  crane: [
+    { d: "M12 42V8M6 8h34M12 14l8-6" },
+    { d: "M34 8v10M30 18h8v6h-8z", accent: true },
+    { d: "M6 42h14" },
+  ],
+  data: [
+    { d: "M10 10c0-3 6-5 14-5s14 2 14 5-6 5-14 5-14-2-14-5z" },
+    { d: "M10 10v26c0 3 6 5 14 5s14-2 14-5V10M10 23c0 3 6 5 14 5s14-2 14-5", accent: true },
+  ],
   // A hard no: a ring with a bar through it
   ban: [
     { d: "M24 6a18 18 0 1 0 0.1 0" },
@@ -95,6 +169,16 @@ const PARTS: Record<string, Part[]> = {
   clock: [
     { d: "M24 6a18 18 0 1 0 0.1 0" },
     { d: "M24 14v10l7 5", accent: true },
+  ],
+  // Trying things: a lab flask with a line of liquid and two bubbles
+  flask: [
+    { d: "M18 6h12M21 6v12L10.5 37.5A3 3 0 0 0 13 42h22a3 3 0 0 0 2.5-4.5L27 18V6" },
+    { d: "M15 30h18M21 36h.1M27 34h.1", accent: true },
+  ],
+  // Interaction craft: a pointer with click marks
+  cursor: [
+    { d: "M15 12l1 28 7-7 5 10 5-2.5-5-10 10-1z" },
+    { d: "M31 6l-1.5 5M38 10l-5 2.5M24 5l1 5", accent: true },
   ],
 };
 

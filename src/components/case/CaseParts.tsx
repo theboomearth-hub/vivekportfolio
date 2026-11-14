@@ -4,6 +4,7 @@
  */
 import Image from "next/image";
 import Link from "next/link";
+import DrawOnView from "@/components/sketch/DrawOnView";
 
 export interface CaseImage {
   src: string;
@@ -76,9 +77,12 @@ export function Shot({
 }) {
   return (
     <figure className="m-0">
-      <div className={`overflow-hidden bg-surface ring-1 ring-border ${rounded}`}>
-        <Image src={image.src} alt={image.alt} width={image.width} height={image.height} sizes={sizes} priority={priority} className="h-auto w-full" />
-      </div>
+      {/* Unmasks softly the first time it scrolls into view (DrawOnView, .sk-reveal in globals.css). */}
+      <DrawOnView className={`overflow-hidden bg-surface ring-1 ring-border ${rounded}`}>
+        <div className="sk-reveal">
+          <Image src={image.src} alt={image.alt} width={image.width} height={image.height} sizes={sizes} priority={priority} className="h-auto w-full" />
+        </div>
+      </DrawOnView>
       {caption && <figcaption className="mt-2 text-caption text-muted">{caption}</figcaption>}
     </figure>
   );
@@ -103,11 +107,14 @@ export function Section({
   return (
     <section id={id} aria-labelledby={`${id}-title`} className={`scroll-mt-24 py-24 md:py-28 ${tone === "tint" ? "bg-surface" : "border-t border-border"}`}>
       <div className="container-premium">
-        <p className={caseLabel}>{eyebrow}</p>
-        <h2 id={`${id}-title`} className="mt-2.5 max-w-[24ch]">
-          {title}
-        </h2>
-        {intro && <div className="mt-4 max-w-[62ch] text-lg leading-relaxed text-muted">{intro}</div>}
+        {/* The heading block rises in once, eyebrow first. */}
+        <DrawOnView>
+          <p className={`sk-fade ${caseLabel}`}>{eyebrow}</p>
+          <h2 id={`${id}-title`} className="sk-fade mt-2.5 max-w-[24ch]" style={{ "--sk-i": 1 } as React.CSSProperties}>
+            {title}
+          </h2>
+          {intro && <div className="sk-fade mt-4 max-w-[62ch] text-lg leading-relaxed text-muted" style={{ "--sk-i": 2 } as React.CSSProperties}>{intro}</div>}
+        </DrawOnView>
         <div className="mt-12">{children}</div>
       </div>
     </section>

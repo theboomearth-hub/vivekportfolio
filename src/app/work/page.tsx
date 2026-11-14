@@ -5,6 +5,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { Section, SectionHeader } from "@/components/Section";
 import ProjectCard from "@/components/ProjectCard";
+import Doodle from "@/components/sketch/Doodle";
 import { tintText } from "@/lib/tint";
 
 /*
@@ -25,18 +26,39 @@ type Domain =
   | "BigData"
   | "EV";
 
-/* Domain hues double as filter-pill colors and per-card accent chips. */
+/* Filter pills and card chips use the site's one accent; each domain is told apart by its doodle. */
+const ACCENT = "#2F48C2";
 const domainColors: Record<Domain, string> = {
-  AdTech: "#6366F1",
-  PropTech: "#0F766E",
-  "Design Systems": "#8B5CF6",
-  Construction: "#EAB308",
-  Healthcare: "#10B981",
-  GovTech: "#0EA5E9",
-  Entertainment: "#EC4899",
-  IIoT: "#F97316",
-  BigData: "#14B8A6",
-  EV: "#84CC16",
+  AdTech: ACCENT,
+  PropTech: ACCENT,
+  "Design Systems": ACCENT,
+  Construction: ACCENT,
+  Healthcare: ACCENT,
+  GovTech: ACCENT,
+  Entertainment: ACCENT,
+  IIoT: ACCENT,
+  BigData: ACCENT,
+  EV: ACCENT,
+};
+
+const domainDoodle: Record<Domain, string> = {
+  AdTech: "billboard",
+  PropTech: "home",
+  "Design Systems": "system",
+  Construction: "crane",
+  Healthcare: "health",
+  GovTech: "shield",
+  Entertainment: "play",
+  IIoT: "factory",
+  BigData: "data",
+  EV: "rider",
+};
+
+/* Real screenshots for the case studies that have them (the heroes in src/lib/work/*.ts). Decorative here: the card's title says what it is. */
+const covers: Record<string, { src: string; width: number; height: number; alt: string }> = {
+  hosamane: { src: "/work/hosamane/hero.jpg", width: 2000, height: 1250, alt: "" },
+  healthai: { src: "/work/healthai/hero.jpg", width: 2000, height: 1250, alt: "" },
+  "agentic-inventory": { src: "/work/agentic-inventory/product-frame.jpg", width: 2000, height: 1250, alt: "" },
 };
 
 const domainList = Object.keys(domainColors) as Domain[];
@@ -524,6 +546,8 @@ export default function WorkIndexPage() {
                   domainColor={domainColors[cs.domain]}
                   featured
                   metrics={cs.metrics}
+                  cover={covers[cs.slug]}
+                  doodle={<Doodle name={domainDoodle[cs.domain]} className="h-9 w-9 text-foreground" />}
                 />
                 <div className="mt-3 flex items-center gap-3 text-xs text-muted font-mono px-1">
                   <span>{cs.role}</span>
@@ -554,6 +578,8 @@ export default function WorkIndexPage() {
                 index={i}
                 domain={cs.domain}
                 domainColor={domainColors[cs.domain]}
+                cover={covers[cs.slug]}
+                doodle={<Doodle name={domainDoodle[cs.domain]} className="h-9 w-9 text-foreground" />}
               />
               <div className="mt-3 flex items-center gap-3 text-xs text-muted font-mono px-1">
                 <span>{cs.role}</span>

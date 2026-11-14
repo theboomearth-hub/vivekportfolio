@@ -2,6 +2,7 @@
 
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ReactNode, useRef } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import TiltCard from "./TiltCard";
 import { tintText } from "@/lib/tint";
@@ -19,6 +20,10 @@ interface ProjectCardProps {
   domainColor?: string;
   featured?: boolean;
   metrics?: { label: string; value: string }[];
+  /** A real product screenshot; when set, it replaces the stylised mock-up. */
+  cover?: { src: string; width: number; height: number; alt: string };
+  /** A hand-drawn doodle for the domain, shown as a badge on the mock-up. */
+  doodle?: ReactNode;
 }
 
 /* Wireframe-style UI mockup, keyed by domain so related case studies share a visual language */
@@ -225,6 +230,8 @@ export default function ProjectCard({
   domainColor,
   featured = false,
   metrics,
+  cover,
+  doodle,
 }: ProjectCardProps) {
   const cardRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
@@ -282,17 +289,33 @@ export default function ProjectCard({
                   {domain}
                 </span>
               )}
-              {/* Parallax mock UI — a decorative wireframe picture, so it is hidden
-                  from assistive tech (its tiny labels are part of the drawing). */}
-              <motion.div
-                aria-hidden="true"
-                style={{ y: parallaxY }}
-                className="absolute inset-0 flex items-center justify-center p-6 sm:p-10"
-              >
-                <div className="relative w-full h-full max-w-90 mx-auto rounded-xl bg-surface/80 border border-border/60 shadow-2xl shadow-black/20 backdrop-blur-sm overflow-hidden">
-                  <MockUI domain={domain} icon={image} />
-                </div>
-              </motion.div>
+              {cover ? (
+                /* A real screenshot of the product, scaling gently on hover. */
+                <Image
+                  src={cover.src}
+                  alt={cover.alt}
+                  fill
+                  sizes={featured ? "(min-width: 1024px) 480px, 100vw" : "(min-width: 768px) 50vw, 100vw"}
+                  className="object-cover object-top transition-transform duration-700 ease-[cubic-bezier(.22,.61,.36,1)] group-hover:scale-[1.03]"
+                />
+              ) : (
+                /* Parallax mock UI — a decorative wireframe picture, so it is hidden
+                   from assistive tech (its tiny labels are part of the drawing). */
+                <motion.div
+                  aria-hidden="true"
+                  style={{ y: parallaxY }}
+                  className="absolute inset-0 flex items-center justify-center p-6 sm:p-10"
+                >
+                  <div className="relative w-full h-full max-w-90 mx-auto rounded-xl bg-surface/80 border border-border/60 shadow-2xl shadow-black/20 backdrop-blur-sm overflow-hidden">
+                    <MockUI domain={domain} icon={image} />
+                  </div>
+                </motion.div>
+              )}
+              {!cover && doodle && (
+                <span aria-hidden="true" className="absolute bottom-3 left-3 z-10 grid h-14 w-14 place-items-center rounded-full bg-background shadow-[0_0_0_1px_var(--color-border)] transition-transform duration-500 group-hover:-rotate-6">
+                  {doodle}
+                </span>
+              )}
               {/* Hover gradient overlay */}
               <div className="absolute inset-0 bg-surface/80 opacity-0 group-hover:opacity-80 transition-opacity duration-500" />
             </div>

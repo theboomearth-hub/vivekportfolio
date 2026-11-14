@@ -2,6 +2,17 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
+import Doodle from "@/components/sketch/Doodle";
+
+/** A doodle for each writing category, from the site's sketch library. */
+export const categoryDoodle: Record<string, string> = {
+  "Design Systems": "system",
+  "AI × Design": "ai",
+  "System Design": "flows",
+  "Industry Insights": "billboard",
+  "Case Study": "approach",
+  "Frontend Engineering": "code",
+};
 
 interface BlogCardProps {
   title: string;
@@ -34,7 +45,7 @@ export default function BlogCard({
       >
         <Link href={`/blog/${slug}`} className="group block">
           <div className="relative overflow-hidden rounded-2xl bg-surface border border-border p-6 sm:p-8 lg:p-12 transition-all duration-500 group-hover:border-accent/30">
-            <div className="absolute top-0 right-0 w-48 sm:w-64 h-48 sm:h-64 bg-accent/5 rounded-full blur-3xl" />
+            <Doodle name={categoryDoodle[category] ?? "prd"} className="absolute top-6 right-6 hidden h-24 w-24 text-foreground transition-transform duration-500 [stroke-width:1.2] group-hover:-rotate-6 sm:block lg:top-10 lg:right-10 lg:h-28 lg:w-28" />
             <p className="text-accent font-mono text-xs uppercase tracking-[0.06em] mb-4">
               Featured &middot; {category}
             </p>
@@ -64,9 +75,12 @@ export default function BlogCard({
     >
       <Link href={`/blog/${slug}`} className="group block h-full">
         <div className="h-full rounded-2xl bg-surface border border-border p-6 lg:p-8 transition-all duration-500 group-hover:border-accent/30 group-hover:bg-surface-hover flex flex-col">
-          <p className="text-accent font-mono text-xs uppercase tracking-[0.06em] mb-3">
-            {category}
-          </p>
+          <div className="mb-3 flex items-start justify-between gap-4">
+            <p className="text-accent font-mono text-xs uppercase tracking-[0.06em]">
+              {category}
+            </p>
+            <Doodle name={categoryDoodle[category] ?? "prd"} className="h-10 w-10 shrink-0 text-foreground transition-transform duration-500 group-hover:-rotate-6" />
+          </div>
           <h3 className="text-xl lg:text-2xl mb-3 group-hover:text-accent transition-colors leading-tight grow">
             {title}
           </h3>

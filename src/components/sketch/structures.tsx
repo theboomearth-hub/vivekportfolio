@@ -1,5 +1,5 @@
 import DrawOnView from "@/components/sketch/DrawOnView";
-import { Frown, SketchArrow, Spark } from "@/components/sketch/glyphs";
+import { Frown, SketchArrow, Spark, Tick } from "@/components/sketch/glyphs";
 
 const sk = (i: number) => ({ "--sk-i": i }) as React.CSSProperties;
 
@@ -92,18 +92,48 @@ export function JourneyMap({ stages }: { stages: { stage: string; today: string;
 }
 
 /** Layers stacked bottom-up, each with a doodle and a line; the highlighted layer is the focus. */
-export function StackDiagram({ layers }: { layers: { name: string; text: string; doodle?: React.ReactNode; accent?: boolean }[] }) {
+export function StackDiagram({ layers, taper = true }: { layers: { name: string; text: string; doodle?: React.ReactNode; accent?: boolean; tag?: string; items?: string[] }[]; taper?: boolean }) {
   return (
     <DrawOnView>
       <ol className="grid gap-2">
         {layers.map((l, i) => (
-          <li key={l.name} className={`sk-fade grid grid-cols-[40px_minmax(0,1fr)] items-center gap-4 rounded-2xl px-5 py-4 ring-1 ring-inset sm:grid-cols-[40px_minmax(0,14rem)_minmax(0,1fr)] ${l.accent ? "bg-accent-light/45 ring-accent/30" : "bg-background ring-border"}`} style={{ ...sk(layers.length - i), marginInline: `${(layers.length - 1 - i) * 0.6}rem` }}>
+          <li key={l.name} className={`sk-fade grid grid-cols-[40px_minmax(0,1fr)] items-start gap-x-4 gap-y-2 rounded-2xl px-5 py-4 ring-1 ring-inset sm:grid-cols-[40px_minmax(0,14rem)_minmax(0,1fr)] ${l.accent ? "bg-accent-light/45 ring-accent/30" : "bg-background ring-border"}`} style={{ ...sk(layers.length - i), marginInline: taper ? `${(layers.length - 1 - i) * 0.6}rem` : undefined }}>
             <span className="h-10 w-10 text-foreground">{l.doodle}</span>
-            <p className="text-lg leading-snug">{l.name}</p>
-            <p className="col-span-2 text-compact text-muted sm:col-span-1">{l.text}</p>
+            <div className="self-center">
+              <p className="text-lg leading-snug">{l.name}</p>
+              {l.tag && <p className="mt-0.5 font-mono text-[11px] uppercase tracking-[0.06em] text-muted">{l.tag}</p>}
+            </div>
+            <div className="col-span-2 self-center sm:col-span-1">
+              <p className="text-compact text-muted">{l.text}</p>
+              {l.items && l.items.length > 0 && (
+                <ul className="mt-2 flex flex-wrap gap-1.5">
+                  {l.items.map((t) => <li key={t} className="rounded-md bg-surface px-2 py-1 font-mono text-[11px] ring-1 ring-border ring-inset">{t}</li>)}
+                </ul>
+              )}
+            </div>
           </li>
         ))}
       </ol>
+    </DrawOnView>
+  );
+}
+
+/** What exists and what's next, side by side: hand ticks for built, dashed rings for next. */
+export function StatusLists({ built, next, builtLabel = "Built", nextLabel = "Next" }: { built: string[]; next: string[]; builtLabel?: string; nextLabel?: string }) {
+  return (
+    <DrawOnView className="grid gap-4 md:grid-cols-2 [&>*]:min-w-0">
+      <div className="rounded-2xl bg-background p-6 ring-1 ring-border ring-inset">
+        <p className="font-mono text-xs uppercase tracking-[0.06em] text-accent">{builtLabel} · {built.length}</p>
+        <ul className="mt-4 grid gap-2.5">
+          {built.map((b, i) => <li key={b} className="flex gap-3 text-compact"><Tick className="h-5 w-5 shrink-0 text-accent" i={Math.min(i, 8)} />{b}</li>)}
+        </ul>
+      </div>
+      <div className="rounded-2xl border border-dashed border-border-strong p-6">
+        <p className="font-mono text-xs uppercase tracking-[0.06em] text-muted">{nextLabel} · {next.length}</p>
+        <ul className="mt-4 grid gap-2.5">
+          {next.map((n) => <li key={n} className="flex gap-3 text-compact text-muted"><span aria-hidden="true" className="mt-1 h-3.5 w-3.5 shrink-0 rounded-full border-[1.5px] border-dashed border-muted" />{n}</li>)}
+        </ul>
+      </div>
     </DrawOnView>
   );
 }
