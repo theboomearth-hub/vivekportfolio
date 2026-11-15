@@ -119,6 +119,8 @@ export interface PlotProps {
   hlines?: { y: number; label: string }[];
   /** A shaded reference range. */
   bands?: { y0: number; y1: number; label: string }[];
+  /** Vertical event markers, labelled at the top (labels alternate height so neighbours don't collide). */
+  vlines?: { x: number; label: string }[];
   legend?: { name: string; tone: Tone; kind: "dot" | "hollow" | "line" | "dash" }[];
   table?: { caption: string; head: string[]; rows: (string | number)[][] };
   empty?: string;
@@ -126,7 +128,7 @@ export interface PlotProps {
 
 const fmt = (v: number) => (Math.abs(v) >= 1000 ? `${Math.round(v / 100) / 10}K` : Number(v.toFixed(2)).toString());
 
-export function Plot({ label, xLabel, yLabel, x, y, xTicks, yTicks, xFormat = fmt, yFormat = fmt, logY = false, height = 260, dots = [], lines = [], hlines = [], bands = [], legend, table, empty }: PlotProps) {
+export function Plot({ label, xLabel, yLabel, x, y, xTicks, yTicks, xFormat = fmt, yFormat = fmt, logY = false, height = 260, dots = [], lines = [], hlines = [], bands = [], vlines = [], legend, table, empty }: PlotProps) {
   const [ref, width] = useWidth<HTMLDivElement>();
   const m = { l: 48, r: 18, t: 14, b: 36 };
   const iw = width - m.l - m.r;
@@ -182,6 +184,12 @@ export function Plot({ label, xLabel, yLabel, x, y, xTicks, yTicks, xFormat = fm
             <g key={h.label}>
               <line x1={m.l} x2={m.l + iw} y1={sy(h.y)} y2={sy(h.y)} stroke="var(--color-foreground)" strokeWidth="1" strokeDasharray="2 3" opacity="0.5" />
               <text x={m.l + iw - 4} y={sy(h.y) - 5} textAnchor="end" fontSize="11" className="fill-muted">{h.label}</text>
+            </g>
+          ))}
+          {vlines.map((v, i) => (
+            <g key={v.label}>
+              <line x1={sx(v.x)} x2={sx(v.x)} y1={m.t + (i % 2 ? 16 : 2)} y2={m.t + ih} stroke="var(--color-foreground)" strokeWidth="1" strokeDasharray="3 3" opacity="0.45" />
+              <text x={sx(v.x) + 4} y={m.t + (i % 2 ? 26 : 12)} fontSize="11" className="fill-muted">{v.label}</text>
             </g>
           ))}
           {lines.map((l) =>

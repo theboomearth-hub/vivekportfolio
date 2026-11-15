@@ -12,6 +12,7 @@ import { projectData } from "@/lib/work/project-data";
 import { facts as inventoryFacts } from "@/lib/work/agentic-inventory";
 import { facts as hosamaneFacts } from "@/lib/work/hosamane";
 import { facts as healthFacts } from "@/lib/work/healthai";
+import { facts as taktFacts } from "@/lib/work/takt";
 
 export type Page = { href: string; label: string };
 
@@ -36,6 +37,7 @@ const CUSTOM_FACTS: Record<string, { term: string; detail: string }[]> = {
   "agentic-inventory": inventoryFacts,
   hosamane: hosamaneFacts,
   healthai: healthFacts,
+  takt: taktFacts,
 };
 
 const CRAFT_LABS = [

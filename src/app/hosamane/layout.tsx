@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Poppins } from "next/font/google";
 import "./hosamane.css";
 import { pageMeta } from "@/lib/seo";
 
@@ -8,8 +7,7 @@ import { pageMeta } from "@/lib/seo";
  * The site's navbar, footer, smooth scrolling and page transitions are switched off on these routes
  * (src/components/SiteChrome.tsx), so the app gets the whole screen.
  */
-// Poppins (Indian Type Foundry): Latin and Devanagari, so Hindi replies can share the family later.
-const poppins = Poppins({ subsets: ["latin"], weight: ["400", "500", "600"], variable: "--font-poppins", display: "swap" });
+// Poppins comes from the root layout now: the whole site uses it.
 
 const description = "Try Hosamane, an agentic home search for Bengaluru: describe your move and the agent searches, checks listings and works out the real cost.";
 
@@ -18,7 +16,7 @@ export const metadata: Metadata = pageMeta({ title: "Hosamane: try the home-sear
 
 export default function HosamaneLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className={`${poppins.variable} hm-app`}>
+    <div className="hm-app">
       {/* For crawlers and answer engines that don't run JavaScript: what this app is, and where the write-up lives. */}
       <noscript>
         <p style={{ padding: 24, maxWidth: 640 }}>

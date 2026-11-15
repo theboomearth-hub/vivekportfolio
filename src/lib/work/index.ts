@@ -17,6 +17,13 @@ const SHORT: Record<string, string> = {
 
 const custom: CaseStudyEntry[] = [
   {
+    slug: "takt",
+    title: "Takt: one picture of four factories",
+    seoTitle: "Takt: an Industry 4.0 data platform",
+    description: "An Industry 4.0 data platform for a multi-plant auto-parts maker, end to end as product manager and designer: business case, research, information architecture with a live tree test, metrics and roadmap.",
+    about: ["Industry 4.0", "IIoT", "Information architecture", "Product management", "ISA-95"],
+  },
+  {
     slug: "agentic-inventory",
     title: "MW-Inventory: an agent from search to debrief",
     seoTitle: "MW-Inventory: a DOOH planning agent",

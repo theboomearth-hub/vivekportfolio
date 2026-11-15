@@ -604,7 +604,7 @@ export default function CaseStudyClient({ slug }: { slug: string }) {
           viewport={{ once: true }}
         >
           <h2 className="text-xs font-mono text-accent uppercase tracking-[0.06em] mb-8">Key Features</h2>
-          <div className="grid sm:grid-cols-2 gap-4">
+          <div className="grid sm:grid-cols-2 gap-4 [&>*]:min-w-0">
             {project.features.map((feat, i) => (
               <motion.div
                 key={feat.title}

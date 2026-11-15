@@ -12,7 +12,7 @@
 
 /* In the base layer, so the app's own utility classes still win. */
 @layer base {
-  /* The portfolio sets Inter, tracking and balanced wrapping on headings; the app uses Poppins. */
+  /* The portfolio sets tracking and balanced wrapping on headings; the app resets them to its own scale. */
   .hm-app :where(h1, h2, h3, h4, h5, h6) {
     font-family: inherit;
     letter-spacing: normal;

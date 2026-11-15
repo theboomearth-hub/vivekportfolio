@@ -78,6 +78,29 @@ const caseStudies: Array<{
   image: React.ReactNode;
 }> = [
   {
+    slug: "takt",
+    title: "Takt: one picture of four factories",
+    category: "Industry 4.0 · Product and information architecture",
+    domain: "IIoT",
+    description:
+      "An Industry 4.0 data platform for a four-plant auto-parts maker, end to end as product manager and designer: the business case, an object model for 328 machines, a plant explorer, a live tree test, metrics and a gated roadmap.",
+    tags: ["Information Architecture", "Product Management", "IIoT", "ISA-95"],
+    timeline: "Design concept",
+    role: "Product manager and designer",
+    featured: true,
+    metrics: [
+      { label: "Machines modelled", value: "328" },
+      { label: "Hierarchies per machine", value: "3" },
+      { label: "Live tree test", value: "5 tasks" },
+    ],
+    image: (
+      <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M3 21V9l6 4V9l6 4V5l6 4v12z" />
+        <path d="M7 17h2M12 17h2M17 17h2" />
+      </svg>
+    ),
+  },
+  {
     slug: "agentic-inventory",
     title: "MW-Inventory: an agent from search to debrief",
     category: "Agentic AI · Design and build",

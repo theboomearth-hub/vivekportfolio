@@ -22,7 +22,7 @@ export function FlowRows({ head, rows, emphasis = -1 }: { head: string[]; rows: 
             {r.map((c, j) => (
               <div key={j} className="relative grid gap-1">
                 <span className="font-mono text-[11px] uppercase tracking-[0.06em] text-muted md:hidden">{head[j]}</span>
-                <p className={`text-compact md:flex md:h-full md:items-center md:rounded-xl md:px-4 md:py-3.5 md:ring-1 md:ring-inset ${j === emphasis ? "font-medium md:bg-accent-light/50 md:ring-accent/25" : j === 0 ? "md:bg-background md:ring-border" : "text-muted md:bg-background md:ring-border"}`}>{c}</p>
+                <p className={`text-compact break-words md:flex md:h-full md:items-center md:rounded-xl md:px-4 md:py-3.5 md:ring-1 md:ring-inset ${j === emphasis ? "font-medium md:bg-accent-light/50 md:ring-accent/25" : j === 0 ? "md:bg-background md:ring-border" : "text-muted md:bg-background md:ring-border"}`}>{c}</p>
                 {j < r.length - 1 && <SketchArrow className="absolute top-1/2 -right-8 hidden h-4 w-7 -translate-y-1/2 text-muted md:block" i={i} />}
               </div>
             ))}

@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, JetBrains_Mono } from "next/font/google";
+import { JetBrains_Mono, Poppins } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -14,13 +14,13 @@ import { SITE_URL } from "@/lib/site";
 import JsonLd from "@/components/JsonLd";
 import { graph, ogImage, PERSON_ID, SITE_NAME, WEBSITE_ID } from "@/lib/seo";
 
-// Two families total (Nov 2026 "Calm" redesign): Inter for everything, with its
-// optical-size axis so display headings tighten automatically, and JetBrains Mono
-// for small labels and metadata. Fraunces (serif headings) and Syne were dropped.
-const inter = Inter({
-  variable: "--font-inter",
+// Two families: Poppins for every page and case study (one typeface across the site and the Hosamane app), and
+// JetBrains Mono only where text must line up as code: tag names, code samples and small labels.
+const poppins = Poppins({
+  variable: "--font-poppins",
   subsets: ["latin"],
-  axes: ["opsz"],
+  weight: ["300", "400", "500", "600", "700"],
+  display: "swap",
 });
 
 const jetbrainsMono = JetBrains_Mono({
@@ -253,7 +253,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${jetbrainsMono.variable} h-full antialiased`}
+      className={`${poppins.variable} ${jetbrainsMono.variable} h-full antialiased`}
       // Browser extensions (e.g. Scribe's data-scribe-recorder-ready) write attributes
       // onto <html> before React hydrates. This only silences mismatches in <html>'s
       // own attributes — real mismatches in the page below are still reported.

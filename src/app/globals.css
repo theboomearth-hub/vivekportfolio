@@ -73,16 +73,16 @@
 }
 
 /* Fonts stay `inline` — they reference other custom properties, which `inline` resolves.
-   One family for everything (Inter, with optical sizing), mono for small labels.
-   --font-display is kept as an alias so existing `font-display` classes render Inter. */
+   One family for everything (Poppins), mono for code and small labels.
+   --font-display is kept as an alias so existing `font-display` classes render Poppins. */
 @theme inline {
-  --font-sans: var(--font-inter);
-  --font-display: var(--font-inter);
+  --font-sans: var(--font-poppins);
+  --font-display: var(--font-poppins);
   --font-mono: var(--font-jetbrains-mono);
 }
 
 /* ── Type scale ──
-   One family (Inter) at two weights: 400 for text, 500 for headings and emphasis.
+   One family (Poppins) at two weights: 400 for text, 500 for headings and emphasis.
    JetBrains Mono only for labels, codes and numbers in tables. Use these roles, not
    pixel values; 12px is the floor, and sentences are never smaller than 14px.
 
@@ -99,7 +99,7 @@
 @theme {
   --text-display: clamp(2rem, 4.2vw, 3rem);
   --text-display--line-height: 1.1;
-  --text-display--letter-spacing: -0.03em;
+  --text-display--letter-spacing: -0.022em;
   --text-compact: 0.9375rem;
   --text-compact--line-height: 1.6;
   --text-caption: 0.8125rem;
@@ -206,6 +206,12 @@ html.lenis body {
     -webkit-font-smoothing: antialiased;
   }
 
+  /* A word that can't fit its box (a slash-joined list, a long code or path) breaks instead of spilling out.
+     Only kicks in when a word would otherwise overflow; normal text wraps exactly as before. */
+  p, li, dd, dt, td, th, h1, h2, h3, h4, h5, h6, blockquote, figcaption, label, summary {
+    overflow-wrap: break-word;
+  }
+
   /* Links and buttons ease their colour changes instead of snapping. Opacity and transform are left out on purpose:
      Framer Motion animates those inline every frame, and a CSS transition would drag behind it. Utilities that set
      their own transition still win, since this sits in the base layer. */
@@ -222,7 +228,7 @@ html.lenis body {
     font-size: clamp(2.25rem, 5vw, 3.75rem);
     font-weight: 500;
     line-height: 1.08;
-    letter-spacing: -0.035em;
+    letter-spacing: -0.025em; /* Poppins is geometric: less negative tracking than Inter needed */
   }
 
   h2 {
@@ -249,11 +255,11 @@ html.lenis body {
     font-family: var(--font-display), system-ui, sans-serif;
     font-weight: 500;
     line-height: 1.2;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.012em;
   }
 
   h2 {
-    letter-spacing: -0.025em;
+    letter-spacing: -0.018em;
   }
 
   h1, h2, h3 {
@@ -635,3 +641,7 @@ html.lenis body {
 .craft-ribs-fwd { animation: craft-ribs-fwd 0.6s linear infinite; }
 @keyframes craft-ribs-back { from { background-position: 0 0; } to { background-position: -40px 0; } }
 @keyframes craft-ribs-fwd { from { background-position: 0 0; } to { background-position: 40px 0; } }
+
+/* ── TAKT ── The vibrating motor's ring on the Line 3 drawing. Stilled by the global reduced-motion rule. */
+.takt-pulse { transform-box: fill-box; transform-origin: center; animation: takt-pulse 1.6s ease-out infinite; }
+@keyframes takt-pulse { from { opacity: 0.9; transform: scale(0.7); } to { opacity: 0; transform: scale(1.7); } }
