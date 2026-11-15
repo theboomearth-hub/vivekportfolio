@@ -291,7 +291,7 @@ export function ApprovalCard({ event, state, onApprove, onDismiss }: { event: Ex
       <Label className="mb-2">Review before {event.action === "send_owner_message" ? "sending" : event.action === "share_shortlist" ? "sharing" : event.action === "report_listing" ? "reporting" : "requesting"}</Label>
       {event.action === "send_owner_message" && (
         <div className="grid gap-2">
-          <p className="text-hm-caption text-hm-muted">Each owner gets this from a masked number. Your name and number aren't shared.</p>
+          <p className="text-hm-caption text-hm-muted">Each owner gets this from a masked number. Your name and number aren&apos;t shared.</p>
           {drafts.map((d, i) => (
             <div key={d.listingId} className="rounded-hm-control bg-hm-surface p-3">
               <p className="text-hm-label text-hm-muted">To {d.to} · {localityById(listingById(d.listingId)!.localityId).name}</p>

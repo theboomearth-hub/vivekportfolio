@@ -100,7 +100,7 @@ export default function AlarmFlood() {
               <li key={i} className={`grid grid-cols-[4.8rem_auto_minmax(0,1fr)] items-center gap-2.5 rounded-md px-2 py-1.5 text-sm ${a.group === "cause" ? "bg-background/15" : "bg-background/5"}`}>
                 <span className="font-mono text-[12px] tabular-nums opacity-70">{clock(a.t)}</span>
                 <span className="rounded-full bg-background p-[3px]"><Prio p={a.prio} /></span>
-                <span className="min-w-0 truncate">{a.text} <span className="font-mono text-[12px] opacity-60">{a.tag}</span></span>
+                <span className="min-w-0 sm:truncate">{a.text} <span className="font-mono text-[12px] opacity-60">{a.tag}</span></span>
               </li>
             ))}
           </ol>

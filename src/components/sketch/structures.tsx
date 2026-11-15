@@ -34,23 +34,32 @@ export function Ladder({ rungs }: { rungs: { level: string; note: string; items?
 }
 
 /** Stages left to right on one hand-drawn line, with what happens in each listed underneath. */
+/** Breakpoint at which a pipeline turns horizontal: wide rows need room, so more stages wait for a wider screen. */
+const PIPE: Record<"md" | "lg" | "xl", { ol: string; li: string; dot: string; line: string }> = {
+  md: { ol: "md:grid-cols-[repeat(var(--n),minmax(0,1fr))] md:gap-4", li: "md:border-0 md:pl-0", dot: "md:static md:mb-2", line: "md:block" },
+  lg: { ol: "sm:grid-cols-2 sm:gap-x-8 lg:grid-cols-[repeat(var(--n),minmax(0,1fr))] lg:gap-4", li: "lg:border-0 lg:pl-0", dot: "lg:static lg:mb-2", line: "lg:block" },
+  xl: { ol: "sm:grid-cols-2 sm:gap-x-8 lg:grid-cols-4 xl:grid-cols-[repeat(var(--n),minmax(0,1fr))] xl:gap-4", li: "xl:border-0 xl:pl-0", dot: "xl:static xl:mb-2", line: "xl:block" },
+};
+
 export function Pipeline({ stages }: { stages: { name: string; text?: string; items: string[] }[] }) {
+  const bp = PIPE[stages.length <= 4 ? "md" : stages.length <= 6 ? "lg" : "xl"];
   return (
     <DrawOnView>
-      <ol className="relative grid gap-6 md:grid-cols-[repeat(var(--n),minmax(0,1fr))] md:gap-4" style={{ "--n": stages.length } as React.CSSProperties}>
+      <ol className={`relative grid gap-6 ${bp.ol}`} style={{ "--n": stages.length } as React.CSSProperties}>
         {/* Stretched to the row's width, so it gets a gentle hand-drawn curve rather than the wobble filter. */}
-        <svg className="pointer-events-none absolute top-px left-0 hidden h-3 w-full text-foreground md:block" viewBox="0 0 1000 12" preserveAspectRatio="none" aria-hidden="true">
+        <svg className={`pointer-events-none absolute top-px left-0 hidden h-3 w-full text-foreground ${bp.line}`} viewBox="0 0 1000 12" preserveAspectRatio="none" aria-hidden="true">
           <path className="sk-draw" pathLength={1} d="M4 6C200 4.5 420 7.5 640 5.5S900 6.5 996 6" fill="none" stroke="currentColor" strokeWidth="1.6" vectorEffect="non-scaling-stroke" />
         </svg>
         {stages.map((s, i) => (
-          <li key={s.name} className="sk-fade relative grid content-start gap-2 border-l border-border-strong pl-5 md:border-0 md:pl-0" style={sk(i)}>
-            <span className="absolute top-1 -left-[7px] h-3.5 w-3.5 rounded-full border-2 border-foreground bg-background md:static md:mb-2" aria-hidden="true" />
+          // minmax(0,1fr) keeps a long chip from widening the column; chips and names may break inside a word.
+          <li key={s.name} className={`sk-fade relative grid min-w-0 grid-cols-[minmax(0,1fr)] content-start gap-2 border-l border-border-strong pl-5 ${bp.li}`} style={sk(i)}>
+            <span className={`absolute top-1 -left-[7px] h-3.5 w-3.5 rounded-full border-2 border-foreground bg-background ${bp.dot}`} aria-hidden="true" />
             <p className="font-mono text-xs tracking-[0.06em] text-accent">{String(i + 1).padStart(2, "0")}</p>
-            <p className="text-lg leading-snug">{s.name}</p>
+            <p className="text-lg leading-snug hyphens-auto">{s.name}</p>
             {s.text && <p className="text-compact text-muted">{s.text}</p>}
             {s.items.length > 0 && (
               <ul className="mt-1 flex flex-wrap gap-1.5">
-                {s.items.map((t) => <li key={t} className="rounded-md bg-surface px-2 py-1 font-mono text-[11px] ring-1 ring-border ring-inset">{t}</li>)}
+                {s.items.map((t) => <li key={t} className="max-w-full rounded-md bg-surface px-2 py-1 font-mono text-[11px] ring-1 ring-border ring-inset [overflow-wrap:anywhere]">{t}</li>)}
               </ul>
             )}
           </li>
@@ -69,7 +78,7 @@ export function JourneyMap({ stages }: { stages: { stage: string; today: string;
     <DrawOnView className="-mx-4 overflow-x-auto px-4 pb-2 sm:mx-0 sm:px-0" tabIndex={0} role="region" aria-label="Journey map, scrolls sideways">
       <ol className="grid min-w-[880px] grid-cols-[repeat(var(--n),minmax(0,1fr))] gap-3" style={{ "--n": stages.length } as React.CSSProperties}>
         {stages.map((s, i) => (
-          <li key={s.stage} className="sk-fade grid grid-rows-[auto_auto_1fr_auto] gap-3" style={sk(i)}>
+          <li key={s.stage} className="sk-fade grid min-w-0 grid-cols-[minmax(0,1fr)] grid-rows-[auto_auto_1fr_auto] gap-3" style={sk(i)}>
             <div className="flex items-center gap-2">
               <span className="font-mono text-xs text-accent">{String(i + 1).padStart(2, "0")}</span>
               <span className="text-lg">{s.stage}</span>
@@ -78,11 +87,11 @@ export function JourneyMap({ stages }: { stages: { stage: string; today: string;
             <p className="text-compact text-muted">{s.today}</p>
             <div className="flex gap-2 rounded-xl bg-surface p-3">
               <Frown className="h-5 w-5 shrink-0 text-foreground" i={i} />
-              <p className="text-compact">{s.pain}</p>
+              <p className="min-w-0 text-compact">{s.pain}</p>
             </div>
             <div className="flex gap-2 rounded-xl bg-accent-light/45 p-3">
               <Spark className="h-5 w-5 shrink-0 text-accent" i={i} />
-              <p className="text-compact">{s.opportunity}</p>
+              <p className="min-w-0 text-compact">{s.opportunity}</p>
             </div>
           </li>
         ))}

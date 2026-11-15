@@ -38,8 +38,8 @@ export default function CountUp({ value, duration = 1100 }: { value: string; dur
       return dec ? `${withCommas}.${dec}` : withCommas;
     };
 
-    setShown(`${pre}${format(0)}${post}`);
-    let raf = 0;
+    // Reset to zero on the next frame (off-screen, so nobody sees it), then count up when it scrolls into view.
+    let raf = requestAnimationFrame(() => setShown(`${pre}${format(0)}${post}`));
     const io = new IntersectionObserver(
       ([entry]) => {
         if (!entry.isIntersecting) return;

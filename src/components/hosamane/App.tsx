@@ -296,7 +296,7 @@ function You({ memory, onRemove, onReset }: { memory: Memory; onRemove: (f: stri
             <Link href="/" className="inline-flex min-h-11 items-center gap-1.5 rounded-hm-control px-3 text-hm-compact font-medium text-hm-primary hover:bg-hm-primary-soft">Portfolio<ArrowUpRight size={16} aria-hidden="true" /></Link>
           </div>
         </section>
-        <p className="text-hm-label text-hm-muted">Photos: Unsplash licence, credits in /hosamane/photos/credits.json. All listings, owners and builders are fictional; prices follow Anarock's Q2 2026 ranges where published.</p>
+        <p className="text-hm-label text-hm-muted">Photos: Unsplash licence, credits in /hosamane/photos/credits.json. All listings, owners and builders are fictional; prices follow Anarock&apos;s Q2 2026 ranges where published.</p>
       </div>
     </div>
   );

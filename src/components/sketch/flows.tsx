@@ -34,12 +34,18 @@ export function FlowRows({ head, rows, emphasis = -1 }: { head: string[]; rows: 
 }
 
 /** One horizontal strip of steps with doodles above, joined by sketched arrows. */
+const STRIP = {
+  md: { ol: "md:flex md:items-stretch md:gap-0", li: "md:flex-1 md:flex-row md:items-center", arrow: "md:mx-2 md:my-0 md:rotate-0" },
+  lg: { ol: "lg:flex lg:items-stretch lg:gap-0", li: "lg:flex-1 lg:flex-row lg:items-center", arrow: "lg:mx-2 lg:my-0 lg:rotate-0" },
+};
+
 export function StepStrip({ steps }: { steps: { label: string; title: string; text?: string; doodle?: React.ReactNode; href?: string }[] }) {
+  const bp = STRIP[steps.length <= 3 ? "md" : "lg"]; // four or more cards need a laptop-wide row
   return (
     <DrawOnView>
-      <ol className="grid gap-4 md:flex md:items-stretch md:gap-0">
+      <ol className={`grid gap-4 ${bp.ol}`}>
         {steps.map((s, i) => (
-          <li key={s.label} className="flex flex-col md:flex-1 md:flex-row md:items-center">
+          <li key={s.label} className={`flex min-w-0 flex-col ${bp.li}`}>
             {(() => {
               const body = (
                 <>
@@ -49,16 +55,16 @@ export function StepStrip({ steps }: { steps: { label: string; title: string; te
                   {s.text && <p className="text-compact text-muted">{s.text}</p>}
                 </>
               );
-              const card = "flex h-full flex-1 flex-col gap-3 rounded-2xl bg-background p-5 ring-1 ring-border ring-inset";
+              const card = "flex h-full min-w-0 flex-1 flex-col gap-3 rounded-2xl bg-background p-5 ring-1 ring-border ring-inset";
               // A step with a destination is one big link that lifts on hover; plain steps stay still. The fade sits
               // on a wrapper, because a finished animation would otherwise hold the card's transform and block the lift.
               return s.href ? (
-                <div className="sk-fade flex h-full flex-1" style={sk(i * 2)}><a href={s.href} className={`group sk-lift ${card}`}>{body}</a></div>
+                <div className="sk-fade flex h-full min-w-0 flex-1" style={sk(i * 2)}><a href={s.href} className={`group sk-lift ${card}`}>{body}</a></div>
               ) : (
                 <div className={`sk-fade ${card}`} style={sk(i * 2)}>{body}</div>
               );
             })()}
-            {i < steps.length - 1 && <SketchArrow className="mx-auto my-1 h-5 w-8 shrink-0 rotate-90 text-muted md:mx-2 md:my-0 md:rotate-0" i={i * 2 + 1} />}
+            {i < steps.length - 1 && <SketchArrow className={`mx-auto my-1 h-5 w-8 shrink-0 rotate-90 text-muted ${bp.arrow}`} i={i * 2 + 1} />}
           </li>
         ))}
       </ol>
