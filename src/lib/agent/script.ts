@@ -36,6 +36,10 @@ export interface Reply {
   options?: { label: string; action: AgentAction }[];
   /** Page change the agent makes once its steps finish. */
   act?: { type: "applyRole"; role: RoleKey };
+  /** Answered by Claude from the site's content (the panel says so); scripted replies leave this unset. */
+  by?: "claude";
+  /** Placeholder while the model is answering: shows the working state, never finishes on its own. */
+  pending?: boolean;
 }
 
 export const GREETING =
@@ -104,10 +108,12 @@ export function slotEmailReply(role: RoleKey | null, mine: string, ist: string):
 interface Intent {
   match: RegExp;
   reply: (text: string, role: RoleKey | null) => Reply;
+  /** Does something on the page (tour, tailoring, a draft, time slots), so it always stays scripted. */
+  act?: true;
 }
 
 const INTENTS: Intent[] = [
-  { match: /tailor|personali[sz]e|for me\b|i'?m a |recruiter|founder|hiring manager/, reply: tailorQuestion },
+  { match: /tailor|personali[sz]e|for me\b|i'?m a |recruiter|founder|hiring manager/, reply: tailorQuestion, act: true },
   {
     match: /gallery|screens?\b|screenshots?|visual|ui samples|designs? (?:samples|examples)|show me (?:the )?designs/,
     reply: () => ({
@@ -125,6 +131,7 @@ const INTENTS: Intent[] = [
   },
   {
     match: /tour|walk me|show me around|2[- ]?min|overview/,
+    act: true,
     reply: () => ({
       steps: ["Reading the page structure", "Picking the strongest proof points", "Planning a 4-stop route"],
       text: "Here’s a 4-stop route that takes about two minutes:",
@@ -134,6 +141,7 @@ const INTENTS: Intent[] = [
   },
   {
     match: /email|intro|draft|write to|message/,
+    act: true,
     reply: (_t, role) => ({
       steps: ["Reading contact preferences", "Drafting a short intro"],
       text: "Here’s a draft. Edit anything you like. Nothing is sent until you approve it in your mail app.",
@@ -142,6 +150,7 @@ const INTENTS: Intent[] = [
   },
   {
     match: /call|meet|schedule|book|time to talk|find a time|availab/,
+    act: true,
     reply: (t) => ({
       steps: ["Checking working hours (10:00–18:00 IST)", "Converting to your time zone"],
       text: `${/availab|free|open to/.test(t) ? "Yes, he’s open to full-time roles and consulting. " : ""}Here are three open slots, shown in your time zone. Pick one and I’ll draft the email.`,
@@ -225,6 +234,19 @@ const INTENTS: Intent[] = [
     }),
   },
 ];
+
+/** The scripted intent a message matches, if any, and whether it acts on the page. */
+export function routeIntent(text: string, role: RoleKey | null): { reply: Reply; act: boolean } | null {
+  const t = text.toLowerCase();
+  const intent = INTENTS.find((i) => i.match.test(t));
+  return intent ? { reply: intent.reply(t, role), act: Boolean(intent.act) } : null;
+}
+
+/** Follow-up buttons the model may suggest; each runs the scripted flow. */
+export function nextOptions(next: string[]) {
+  const map: Record<string, ReturnType<typeof ask>> = { tour: askTour, tailor: askTailor, find_time: askTime, email: askEmail };
+  return next.map((n) => map[n]).filter(Boolean);
+}
 
 export function replyFor(text: string, role: RoleKey | null): Reply {
   const t = text.toLowerCase();

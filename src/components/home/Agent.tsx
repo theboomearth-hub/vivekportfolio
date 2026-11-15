@@ -20,7 +20,9 @@ import { CONTACT_EMAIL } from "@/lib/site";
 import {
   GREETING,
   SUGGESTIONS,
+  nextOptions,
   replyFor,
+  routeIntent,
   slotEmailReply,
   tailorReply,
   type AgentAction,
@@ -102,6 +104,11 @@ export function AgentProvider({ children }: { children: ReactNode }) {
   const noticeTimer = useRef<ReturnType<typeof setTimeout> | undefined>(
     undefined,
   );
+  // A copy of the conversation for building the model's history; read in handlers, never during render.
+  const messagesRef = useRef<Message[]>([]);
+  useEffect(() => {
+    messagesRef.current = messages;
+  }, [messages]);
 
   const notify = useCallback((msg: string) => {
     setNotice(msg);
@@ -141,21 +148,67 @@ export function AgentProvider({ children }: { children: ReactNode }) {
     [busy],
   );
 
+  // Questions go to Claude (/api/agent), grounded in this site, with the script as the fallback: no key, a limit,
+  // an error or a refusal all end in the scripted reply. Anything that acts on the page (tour, tailoring, drafts,
+  // time slots) stays scripted, so the model never drives the page.
+  const respond = useCallback(
+    async (userText: string) => {
+      if (busy) return;
+      const routed = routeIntent(userText, role);
+      if (routed?.act) {
+        converse(userText, routed.reply);
+        return;
+      }
+      setBusy(true);
+      const pendingId = ++nextId.current;
+      const history = messagesRef.current
+        .filter((m) => m.from === "user" || (!m.settled && !m.reply.pending))
+        .slice(-6)
+        .map((m) =>
+          m.from === "user"
+            ? { role: "user", text: m.text }
+            : { role: "agent", text: [m.reply.text, ...(m.reply.list ?? [])].filter(Boolean).join("\n") },
+        );
+      setMessages((ms) => {
+        const out = ms.length ? [...ms] : [greeting(++nextId.current)];
+        out.push({ id: ++nextId.current, from: "user", text: userText });
+        out.push({ id: pendingId, from: "agent", reply: { steps: ["Reading this site"], pending: true } });
+        return out;
+      });
+      let reply: Reply | null = null;
+      try {
+        const res = await fetch("/api/agent", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ text: userText, history, role }),
+        });
+        if (res.ok) {
+          const data = (await res.json()) as { reply?: Reply; next?: string[] };
+          if (data.reply) reply = { ...data.reply, ...(data.next?.length ? { options: nextOptions(data.next) } : {}) };
+        }
+      } catch {
+        // Network trouble: the script answers below.
+      }
+      const final = reply ?? routed?.reply ?? replyFor(userText, role);
+      setMessages((ms) => ms.map((m) => (m.id === pendingId ? { id: ++nextId.current, from: "agent", reply: final } : m)));
+    },
+    [busy, role, converse],
+  );
+
   const ask = useCallback(
     (text: string) => {
       openAgent();
-      converse(text, replyFor(text, role));
+      respond(text);
     },
-    [openAgent, converse, role],
+    [openAgent, respond],
   );
 
   const runAction = useCallback(
     (action: AgentAction) => {
-      if (action.type === "ask")
-        converse(action.text, replyFor(action.text, role));
+      if (action.type === "ask") respond(action.text);
       else converse(roles[action.role].who, tailorReply(action.role));
     },
-    [converse, role],
+    [converse, respond],
   );
 
   const clearRole = useCallback(() => {
@@ -351,7 +404,7 @@ export function AgentProvider({ children }: { children: ReactNode }) {
               onClose={() => closeAgent()}
               messages={messages}
               busy={busy}
-              onSend={(text) => converse(text, replyFor(text, role))}
+              onSend={(text) => respond(text)}
               onTurnDone={() => setBusy(false)}
               onAct={(r) => setRole(r)}
               onAction={runAction}
@@ -576,6 +629,8 @@ function AgentTurn({
   const router = useRouter();
   const total = reply.steps.length;
   const text = reply.text ?? "";
+  const pending = Boolean(reply.pending);
+  const stepMs = reply.by === "claude" ? 140 : 480;
   const [stepsDone, setStepsDone] = useState(settled ? total : 0);
   const [chars, setChars] = useState(settled ? text.length : 0);
   const [done, setDone] = useState(settled);
@@ -588,13 +643,13 @@ function AgentTurn({
 
   // Tick the steps, make the page change (if any), stream the answer, then finish.
   useEffect(() => {
-    if (settled) return;
+    if (settled || pending) return;
     let cancelled = false;
     const wait = (ms: number) =>
       new Promise((r) => setTimeout(r, reduce ? 0 : ms));
     (async () => {
       for (let i = 0; i < total; i++) {
-        await wait(480);
+        await wait(stepMs);
         if (cancelled) return;
         setStepsDone(i + 1);
       }
@@ -615,7 +670,7 @@ function AgentTurn({
     return () => {
       cancelled = true;
     };
-  }, [settled, reduce, total, text]);
+  }, [settled, pending, stepMs, reduce, total, text]);
 
   const running = stepsDone < total;
   const goTo = (src: Source) => {
@@ -721,6 +776,9 @@ function AgentTurn({
                 </button>
               ))}
             </div>
+          )}
+          {reply.by === "claude" && (
+            <p className="text-caption text-muted">Answered by Claude from this site&apos;s pages. Check the sources for the details.</p>
           )}
           {reply.card && (
             <TurnCard
