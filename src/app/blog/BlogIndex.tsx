@@ -1,0 +1,127 @@
+"use client";
+
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { Section, SectionHeader } from "@/components/Section";
+import BlogCard from "@/components/BlogCard";
+import { getAllPosts, getAllCategories } from "@/lib/blog";
+
+export default function BlogPage() {
+  const posts = getAllPosts();
+  const categories = getAllCategories();
+  const [activeCategory, setActiveCategory] = useState("All");
+
+  const featuredPost = posts.find((p) => p.featured);
+
+  const filteredPosts =
+    activeCategory === "All"
+      ? posts
+      : posts.filter((p) => p.category === activeCategory);
+
+  const formatDate = (date: string) =>
+    new Date(date).toLocaleDateString("en-US", {
+      month: "short",
+      year: "numeric",
+    });
+
+  return (
+    <div className="pt-24">
+      <Section>
+        <SectionHeader
+          as="h1"
+          eyebrow="Blog"
+          title="Insights & Ideas."
+          description="Writing about design systems, AdTech, AI-powered workflows, system design, and the future of digital experiences."
+        />
+
+        {/* Category Filter */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          className="flex flex-wrap gap-2 mb-12"
+        >
+          {["All", ...categories].map((cat) => (
+            <button
+              key={cat}
+              onClick={() => setActiveCategory(cat)}
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                activeCategory === cat
+                  ? "bg-accent text-accent-foreground"
+                  : "bg-surface border border-border text-muted hover:text-foreground hover:border-accent/20"
+              }`}
+            >
+              {cat}
+            </button>
+          ))}
+        </motion.div>
+
+        {/* Featured Post */}
+        {activeCategory === "All" && featuredPost && (
+          <div className="mb-12">
+            <h2 className="sr-only">Featured post</h2>
+            <BlogCard
+              title={featuredPost.title}
+              excerpt={featuredPost.excerpt}
+              date={formatDate(featuredPost.date)}
+              readTime={featuredPost.readTime}
+              category={featuredPost.category}
+              slug={featuredPost.slug}
+              index={0}
+              featured
+            />
+          </div>
+        )}
+
+        {/* Posts Grid */}
+        <h2 className="sr-only">{activeCategory === "All" ? "All posts" : `${activeCategory} posts`}</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-8">
+          {filteredPosts
+            .filter((p) => !(activeCategory === "All" && p.featured))
+            .map((post, i) => (
+              <BlogCard
+                key={post.slug}
+                title={post.title}
+                excerpt={post.excerpt}
+                date={formatDate(post.date)}
+                readTime={post.readTime}
+                category={post.category}
+                slug={post.slug}
+                index={i}
+              />
+            ))}
+        </div>
+
+        {filteredPosts.length === 0 && (
+          <div className="text-center py-20">
+            <p className="text-muted text-lg">
+              No posts in this category yet. Check back soon!
+            </p>
+          </div>
+        )}
+      </Section>
+
+      {/* Newsletter CTA */}
+      <Section>
+        <div className="relative overflow-hidden rounded-2xl bg-surface border border-border p-6 sm:p-10 md:p-16 text-center">
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-100 h-50 bg-accent/10 rounded-full blur-3xl" />
+          <div className="relative z-10">
+            <h2 className="mb-4">
+              Stay in the loop.
+            </h2>
+            <p className="text-muted text-lg max-w-md mx-auto mb-8">
+              Get new posts delivered to your inbox. No spam, unsubscribe
+              anytime.
+            </p>
+            <a
+              href="mailto:vivekanand.design@gmail.com?subject=Newsletter%20Subscription"
+              className="inline-block px-8 py-4 bg-accent text-accent-foreground font-medium rounded-xl hover:bg-accent/90 transition-all hover:shadow-lg hover:shadow-accent/20"
+            >
+              Subscribe via Email
+            </a>
+          </div>
+        </div>
+      </Section>
+    </div>
+  );
+}

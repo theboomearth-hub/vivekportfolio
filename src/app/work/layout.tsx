@@ -1,41 +1,13 @@
-import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  // A plain-string title here would clear the root layout's template for every
-  // descendant, leaving case studies with a bare, suffix-less <title>. Restating
-  // the template keeps /work/[slug] consistent with the rest of the site.
-  title: {
-    default: "Work",
-    template: "%s | Vivekanand Choudhari",
-  },
-  description: "Case studies and detailed project breakdowns across AdTech, Healthcare, IoT, and OTT.",
-  alternates: {
-    canonical: "/work",
-  },
-  openGraph: {
-    title: "Work — Selected Case Studies",
-    description: "Case studies and detailed project breakdowns across AdTech, Healthcare, IoT, and OTT.",
-    url: "/work",
-    images: [
-      {
-        url: "/api/og?title=Selected%20Work%20%26%20Case%20Studies&category=Portfolio",
-        width: 1200,
-        height: 630,
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Work — Selected Case Studies",
-    description: "Case studies and detailed project breakdowns across AdTech, Healthcare, IoT, and OTT.",
-    images: ["/api/og?title=Selected%20Work%20%26%20Case%20Studies&category=Portfolio"],
-  },
+const description = "Case studies in AI and agentic products, programmatic DOOH, healthcare, construction cloud, IoT and design systems, each with role, decisions and results.";
+
+export const metadata = {
+  ...pageMeta({ title: "Work and case studies", ogTitle: "Selected work and case studies", description, path: "/work" }),
+  // The template is restated so /work/[slug] pages keep the "· Vivekanand Choudhari" suffix.
+  title: { default: "Work and case studies", template: "%s · Vivekanand Choudhari" },
 };
 
-export default function WorkLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function WorkLayout({ children }: { children: React.ReactNode }) {
   return children;
 }

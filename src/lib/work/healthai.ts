@@ -138,7 +138,7 @@ export const facts = [
   { term: "Role", detail: "Designer, end to end (self-initiated)" },
   { term: "Scope", detail: "Flows, information architecture, AI conversation and assessment, interface" },
   { term: "Screens", detail: `${screenCount} across phone, tablet (portrait and landscape) and web` },
-  { term: "Status", detail: "Use case · design concept" },
+  { term: "Status", detail: "Design concept" },
 ];
 
 export const goals = [

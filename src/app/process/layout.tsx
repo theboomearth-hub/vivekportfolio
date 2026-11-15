@@ -1,25 +1,22 @@
-import type { Metadata } from "next";
+import JsonLd from "@/components/JsonLd";
+import { breadcrumbs, creativeWork, graph, pageMeta, webPage } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Process — From Idea to Shipped",
-  description:
-    "The full method: signal & framing → design brief → research → psychology mapping → architecture & flows → UI & system → validate, ship, loop. Every stage links to real shipped work.",
-  openGraph: {
-    title: "Process — From Idea to Shipped",
-    description:
-      "A 7-stage product design method — every stage gated, every stage demonstrated in real shipped work.",
-    images: [
-      {
-        url: "/api/og?title=From%20Idea%20to%20Shipped&category=The%20Process",
-        width: 1200,
-        height: 630,
-        alt: "Process — From Idea to Shipped",
-      },
-    ],
-  },
-  alternates: { canonical: "/process" },
-};
+const description = "A product design method from signal and design brief through research, psychology mapping, flows and UI to validation and launch, with a gate at every stage.";
+const trail = [{ name: "Process", path: "/process" }];
+
+export const metadata = pageMeta({ title: "Process: from idea to shipped", ogTitle: "From Idea to Shipped", category: "The Process", description, path: "/process", type: "article" });
 
 export default function ProcessLayout({ children }: { children: React.ReactNode }) {
-  return children;
+  return (
+    <>
+      <JsonLd
+        data={graph(
+          webPage({ path: "/process", name: "Process: from idea to shipped", description, trail }),
+          creativeWork({ path: "/process", headline: "From idea to shipped: a gated product design method", description, about: ["Product design process", "UX research", "Behavioral psychology", "Agentic UI"] }),
+          breadcrumbs(trail),
+        )}
+      />
+      {children}
+    </>
+  );
 }

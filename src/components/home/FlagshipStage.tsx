@@ -73,7 +73,7 @@ export default function FlagshipStage() {
               <span className="h-2.5 w-2.5 rounded-full bg-border-strong" />
               <span className="ml-3 truncate font-mono text-[11px] tracking-[0.04em] text-muted">MW-Inventory · Plan</span>
             </div>
-            <Crop src="/work/agentic-inventory/plan.jpg" w={1510} h={1652} box={{ x0: 0, x1: 1510, y0: 0, y1: 1400 }} sizes="(min-width: 1440px) 700px, (min-width: 768px) 58vw, 100vw" priority />
+            <Crop src="/work/agentic-inventory/plan.jpg" w={1510} h={1652} box={{ x0: 0, x1: 1510, y0: 0, y1: 1400 }} sizes="(min-width: 1440px) 700px, (min-width: 768px) 58vw, 100vw" />
           </div>
         </div>
 

@@ -170,9 +170,9 @@ const INTENTS: Intent[] = [
   {
     match: /propert|real estate|\brent\w*\b|\bflat\b|apartment|home search|broker|hosamane/,
     reply: () => ({
-      steps: ["Reading the Hosamane use case"],
+      steps: ["Reading the Hosamane case study"],
       text: "Hosamane is his agentic-first home search for Bengaluru. He took it from desk research (300 coded reviews, 8 competitors, sourced market facts) to an agent with 19 typed tools and server-checked approvals, and a working prototype at four screen sizes. It passes 30 of 30 agent tests, including refusing to filter by religion, caste, diet or marital status.",
-      sources: [{ label: "Hosamane use case", href: "/work/hosamane" }],
+      sources: [{ label: "Hosamane case study", href: "/work/hosamane" }],
       options: [askTour],
     }),
   },
@@ -180,10 +180,10 @@ const INTENTS: Intent[] = [
     match: /health|medical|patient|clinic|doctor|hospital|\behr\b/,
     reply: () => ({
       steps: ["Reading the healthcare work"],
-      text: "Healthcare runs through his work from both sides. For clinicians: EHR workflows for daycare surgery that cut clicks to patient data from 7 to 2 and save 2+ hours a shift. For patients: HealthAI, a use case he designed end to end, where an AI symptom check recommends a level of care, then hands off to booking, a video consultation and records, across 50 screens.",
+      text: "Healthcare runs through his work from both sides. For clinicians: EHR workflows for daycare surgery that cut clicks to patient data from 7 to 2 and save 2+ hours a shift. For patients: HealthAI, a patient app he designed end to end, where an AI symptom check recommends a level of care, then hands off to booking, a video consultation and records, across 50 screens.",
       sources: [
         { label: "EHR case study", target: anchors.card("ehr") },
-        { label: "HealthAI use case", href: "/work/healthai" },
+        { label: "HealthAI case study", href: "/work/healthai" },
       ],
       options: [askTour],
     }),
@@ -218,8 +218,8 @@ const INTENTS: Intent[] = [
       steps: ["Reading the flagship case study", "Checking the writing"],
       text: "He designs and builds agentic products. MW-Inventory is the clearest example: 18 typed tools behind one conversation, where every answer is an interactive view and booking stays a step the planner takes. At Moving Walls he also wrote the hybrid and agentic UI roadmap for a 7-product portfolio through 2027, and he uses 20+ AI tools day to day. I follow the same rules: I cite my sources and ask before I act.",
       sources: [
-        { label: "MW-Inventory use case", href: "/work/agentic-inventory" },
-        { label: "HealthAI use case", href: "/work/healthai" },
+        { label: "MW-Inventory case study", href: "/work/agentic-inventory" },
+        { label: "HealthAI case study", href: "/work/healthai" },
         { label: "AI tools post", href: "/blog/ai-changing-design" },
       ],
     }),

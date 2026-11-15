@@ -1,38 +1,24 @@
-import type { Metadata } from "next";
+import JsonLd from "@/components/JsonLd";
+import { faqJsonLd } from "@/lib/faq";
+import { abs, breadcrumbs, graph, pageMeta, PERSON_ID, webPage } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "About",
-  description:
-    "Designer. Builder. Product Scaler. 9+ years of experience crafting products across AdTech, Healthcare, IoT, and OTT platforms.",
-  alternates: {
-    canonical: "/about",
-  },
-  openGraph: {
-    title: "About — Designer. Builder. Product Scaler.",
-    description:
-      "9+ years of experience crafting products across AdTech, Healthcare, IoT, and OTT platforms.",
-    url: "/about",
-    images: [
-      {
-        url: "/api/og?title=About%20Me&category=Portfolio",
-        width: 1200,
-        height: 630,
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "About — Designer. Builder. Product Scaler.",
-    description:
-      "9+ years of experience crafting products across AdTech, Healthcare, IoT, and OTT platforms.",
-    images: ["/api/og?title=About%20Me&category=Portfolio"],
-  },
-};
+const description =
+  "Vivekanand Choudhari is a senior UI/UX and AI product designer in Bengaluru with 9+ years across AdTech, healthcare, construction cloud, AIOps and IoT.";
+const trail = [{ name: "About", path: "/about" }];
 
-export default function AboutLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  return children;
+export const metadata = pageMeta({ title: "About", ogTitle: "About Vivekanand Choudhari", description, path: "/about", type: "profile" });
+
+export default function AboutLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <>
+      <JsonLd
+        data={graph(
+          webPage({ path: "/about", name: "About Vivekanand Choudhari", description, type: "ProfilePage", trail, extra: { mainEntity: { "@id": PERSON_ID }, hasPart: { "@id": `${abs("/about")}#faq` } } }),
+          breadcrumbs(trail),
+          faqJsonLd(abs("/about")),
+        )}
+      />
+      {children}
+    </>
+  );
 }

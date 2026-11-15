@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
+import { caseStudy } from "@/lib/work/index";
 import Image from "next/image";
 import Link from "next/link";
 import { BackLink, CaseCta, CaseIndex, CaseKicker, FactList, Section, caseLabel } from "@/components/case/CaseParts";
@@ -17,17 +19,15 @@ import {
   paradigmScores, personas, psychology, reviewThemes, systemSteps, validation, verdicts, wireCompare,
 } from "@/lib/work/hosamane";
 
-export const metadata: Metadata = {
-  title: "Hosamane: an agent that does a good broker's legwork",
-  description:
-    "End-to-end use case: an agentic-first home search for Bengaluru, for renting and buying. Desk research with 300 coded reviews, an agent with 19 typed tools and server-checked approvals, a working prototype at four screen sizes, and agent and accessibility tests.",
-  openGraph: {
-    title: "Hosamane: an agent that does a good broker's legwork — Vivekanand Choudhari",
-    description: "Agentic-first home search for Bengaluru: research, agent architecture and a working prototype.",
-    images: [{ url: hero.src, width: hero.width, height: hero.height, alt: hero.alt }],
-  },
-  alternates: { canonical: "/work/hosamane" },
-};
+const entry = caseStudy("hosamane")!;
+export const metadata: Metadata = pageMeta({
+  title: entry.seoTitle,
+  ogTitle: entry.title,
+  description: entry.description,
+  path: "/work/hosamane",
+  type: "article",
+  image: { url: hero.src, width: hero.width, height: hero.height, alt: hero.alt },
+});
 
 const index = [
   { id: "signal", label: "Signal" },
@@ -55,7 +55,7 @@ export default function HosamaneCase() {
     <article className="pt-28 md:pt-36">
       <header className="container-premium">
         <BackLink />
-        <CaseKicker domain="Agentic AI · Research to working prototype" status="Use case, design concept" />
+        <CaseKicker domain="Agentic AI · Research to working prototype" status="Design concept" />
         <h1 className="mt-3 max-w-[20ch]">Hosamane: an agent that does a good broker&apos;s legwork.</h1>
         <p className="mt-6 max-w-[58ch] text-lg leading-relaxed text-muted">
           <strong className="font-medium text-foreground">Hosamane</strong> (Kannada for “new home”) is an agentic-first home search for Bengaluru. Describe your life

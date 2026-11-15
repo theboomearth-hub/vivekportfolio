@@ -97,7 +97,16 @@ export default function BlogPostClient({ slug }: { slug: string }) {
   };
 
   // Process content with heading IDs for TOC linking
+  // Code is lifted out first and escaped, so JSX in a sample stays text (not tags) and no other rule touches it;
+  // otherwise the browser "repairs" the markup differently from the server and hydration fails.
+  const escapeHtml = (t: string) => t.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+  const held: string[] = [];
+  const hold = (html: string) => `\u0000${held.push(html) - 1}\u0000`;
   const processedContent = post.content
+    .replaceAll(/```(\w*)\n([\s\S]*?)```/g, (_, _lang, code: string) =>
+      hold(`<pre class="bg-surface border border-border rounded-xl p-6 overflow-x-auto my-6"><code>${escapeHtml(code)}</code></pre>`),
+    )
+    .replaceAll(/`([^`\n]+)`/g, (_, code: string) => hold(`<code class="text-accent bg-surface px-1.5 py-0.5 rounded text-sm">${escapeHtml(code)}</code>`))
     .replace(/^# .+$/m, "")
     .replaceAll(
       /^## (.+)$/gm,
@@ -112,10 +121,6 @@ export default function BlogPostClient({ slug }: { slug: string }) {
     )
     .replaceAll(/^### (.+)$/gm, '<h3 class="mt-8 mb-3">$1</h3>')
     .replaceAll(/^\*\*(.+?)\*\*/gm, "<strong>$1</strong>")
-    .replaceAll(
-      /```(\w*)\n([\s\S]*?)```/g,
-      '<pre class="bg-surface border border-border rounded-xl p-6 overflow-x-auto my-6"><code>$2</code></pre>'
-    )
     .replaceAll(/^- (.+)$/gm, '<li class="text-foreground/70 ml-4">• $1</li>')
     .replaceAll(
       /^\d+\. \*\*(.+?)\*\* — (.+)$/gm,
@@ -125,13 +130,11 @@ export default function BlogPostClient({ slug }: { slug: string }) {
       /^\d+\. \*\*(.+?)\*\*(.*)$/gm,
       '<li class="text-foreground/70 ml-4 mb-2"><strong class="text-foreground">$1</strong>$2</li>'
     )
-    .replaceAll(/^([^<\n].+)$/gm, '<p class="text-foreground/70 leading-relaxed my-4">$1</p>')
+    // A line that is only a held code block stays as it is; other text lines become paragraphs.
+    .replaceAll(/^(?!\u0000\d+\u0000$)([^<\n].+)$/gm, '<p class="text-foreground/70 leading-relaxed my-4">$1</p>')
     .replaceAll(/\*(.+?)\*/g, "<em>$1</em>")
     .replaceAll("---", '<hr class="border-border my-8" />')
-    .replaceAll(
-      /`([^`]+)`/g,
-      '<code class="text-accent bg-surface px-1.5 py-0.5 rounded text-sm">$1</code>'
-    );
+    .replaceAll(/\u0000(\d+)\u0000/g, (_, n: string) => held[Number(n)]);
 
   return (
     <div className="pt-24" ref={articleRef}>

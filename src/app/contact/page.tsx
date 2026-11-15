@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Section } from "@/components/Section";
+import { RESUME_HREF } from "@/lib/site";
 import Doodle from "@/components/sketch/Doodle";
 import { StepStrip } from "@/components/sketch/flows";
 
@@ -184,7 +185,7 @@ export default function ContactPage() {
             <div className="mt-8">
               <p className="text-muted text-sm mb-3">Resume</p>
               <a
-                href="/VIVEKANAND_CHOUDHARI_2026_New.pdf"
+                href={RESUME_HREF}
                 download="Vivekanand_Choudhari_Resume.pdf"
                 className="inline-flex items-center gap-2.5 px-5 py-3 rounded-xl bg-surface border border-border text-sm font-medium text-foreground hover:border-accent/40 hover:text-accent transition-all duration-200 group"
               >

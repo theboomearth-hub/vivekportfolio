@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./hosamane.css";
+import { pageMeta } from "@/lib/seo";
 
 /**
  * Hosamane, the working agent from the case study (/work/hosamane), running inside the portfolio.
@@ -10,12 +11,21 @@ import "./hosamane.css";
 // Poppins (Indian Type Foundry): Latin and Devanagari, so Hindi replies can share the family later.
 const poppins = Poppins({ subsets: ["latin"], weight: ["400", "500", "600"], variable: "--font-poppins", display: "swap" });
 
-export const metadata: Metadata = {
-  title: "Hosamane: try the agent",
-  description: "Use Hosamane, an agentic-first home search for Bengaluru: describe your move and the agent searches, checks listings, works out the real cost and asks before it acts. A design prototype with fictional listings.",
-  alternates: { canonical: "/hosamane" },
-};
+const description = "Try Hosamane, an agentic home search for Bengaluru: describe your move and the agent searches, checks listings and works out the real cost.";
+
+export const metadata: Metadata = pageMeta({ title: "Hosamane: try the home-search agent", ogTitle: "Hosamane: try the agent", category: "Live prototype", description, path: "/hosamane" });
+
 
 export default function HosamaneLayout({ children }: { children: React.ReactNode }) {
-  return <div className={`${poppins.variable} hm-app`}>{children}</div>;
+  return (
+    <div className={`${poppins.variable} hm-app`}>
+      {/* For crawlers and answer engines that don't run JavaScript: what this app is, and where the write-up lives. */}
+      <noscript>
+        <p style={{ padding: 24, maxWidth: 640 }}>
+          Hosamane is an agentic home search for Bengaluru, for renting and buying. You describe your move; the agent searches listings, checks them, works out the real monthly cost and asks before it acts. It is a design prototype with fictional listings and needs JavaScript to run. The design and research behind it are in the case study at /work/hosamane.
+        </p>
+      </noscript>
+      {children}
+    </div>
+  );
 }

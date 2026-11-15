@@ -1,17 +1,16 @@
-import type { Metadata } from "next";
+import JsonLd from "@/components/JsonLd";
+import { breadcrumbs, graph, pageMeta, PERSON_ID, webPage } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Design gallery",
-  description:
-    "Real screens and case-study boards from shipped products and concept work: Quinnox’s AIOps platform, FlexEHR, SaaSworld.club, ShemarooMe streaming apps and two UX case studies, each with the thinking behind it.",
-  openGraph: {
-    title: "Design gallery — Vivekanand Choudhari",
-    description: "Real screens and case-study boards, each with the thinking behind it.",
-    images: [{ url: "/work/gallery/aiops/knowledge-graph.jpg", width: 1800, height: 2022, alt: "Enterprise Knowledge Graph screen from Quinnox’s AIOps platform" }],
-  },
-  alternates: { canonical: "/portfolio" },
-};
+const description = "Real screens from shipped products and concepts, including Quinnox's AIOps platform, FlexEHR and ShemarooMe, each with the thinking behind it.";
+const trail = [{ name: "Design gallery", path: "/portfolio" }];
+
+export const metadata = pageMeta({ title: "Design gallery", ogTitle: "Design gallery", category: "Gallery", description, path: "/portfolio" });
 
 export default function PortfolioLayout({ children }: { children: React.ReactNode }) {
-  return children;
+  return (
+    <>
+      <JsonLd data={graph(webPage({ path: "/portfolio", name: "Design gallery", description, type: "CollectionPage", trail, extra: { author: { "@id": PERSON_ID } } }), breadcrumbs(trail))} />
+      {children}
+    </>
+  );
 }

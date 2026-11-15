@@ -1,38 +1,22 @@
-import type { Metadata } from "next";
+import JsonLd from "@/components/JsonLd";
+import { breadcrumbs, creativeWork, graph, pageMeta, webPage } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Forma Research — Manifest-Driven UI Infrastructure",
-  description:
-    "A comprehensive deep-dive into Forma — the open-core infrastructure platform that lets SaaS companies ship one product that feels custom-built for every user. Architecture, research methodology, design decisions, personas, market analysis, and real-world use cases across CRM, Healthcare, Science, and Big SaaS.",
-  alternates: {
-    canonical: "/research/forma",
-  },
-  openGraph: {
-    title: "Forma — The Infrastructure for Malleable Software",
-    description:
-      "Full research document: architecture, 360-domain taxonomy, component catalog, personas, market study, and real use cases.",
-    url: "/research/forma",
-    images: [
-      {
-        url: "/api/og?title=Forma%20%E2%80%94%20Infrastructure%20for%20Malleable%20Software&category=Research",
-        width: 1200,
-        height: 630,
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Forma — The Infrastructure for Malleable Software",
-    description:
-      "Full research document: architecture, 360-domain taxonomy, component catalog, personas, market study, and real use cases.",
-    images: ["/api/og?title=Forma%20%E2%80%94%20Infrastructure%20for%20Malleable%20Software&category=Research"],
-  },
-};
+const description = "Research on Forma, an open-core platform that lets one SaaS product adapt to every user: architecture, 536 components, personas, market and status.";
+const trail = [{ name: "Forma research", path: "/research/forma" }];
 
-export default function FormaResearchLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  return children;
+export const metadata = pageMeta({ title: "Forma: manifest-driven UI research", ogTitle: "Forma: infrastructure for malleable software", category: "Research", description, path: "/research/forma", type: "article" });
+
+export default function FormaResearchLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <>
+      <JsonLd
+        data={graph(
+          webPage({ path: "/research/forma", name: "Forma research", description, trail }),
+          creativeWork({ path: "/research/forma", headline: "Forma: infrastructure for malleable software", description, about: ["Malleable software", "Design systems", "Server-driven UI", "B2B SaaS"] }),
+          breadcrumbs(trail),
+        )}
+      />
+      {children}
+    </>
+  );
 }

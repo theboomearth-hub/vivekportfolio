@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
+import { caseStudy } from "@/lib/work/index";
 import Image from "next/image";
 import { Arrow, BackLink, BulletList, CaseCta, CaseKicker, FactList, NumberedGrid, Section, Shot } from "@/components/case/CaseParts";
 import Doodle from "@/components/sketch/Doodle";
@@ -7,17 +9,15 @@ import { SketchArrow } from "@/components/sketch/glyphs";
 import { Pipeline } from "@/components/sketch/structures";
 import { facts, hero, journey, LIVE_URL, nextSteps, phone, principles, stages, toolCount } from "@/lib/work/agentic-inventory";
 
-export const metadata: Metadata = {
-  title: "MW-Inventory: an agent from search to debrief",
-  description:
-    "End-to-end use case: designing and building a conversational agent that takes a DOOH campaign from search to plan, proposal, booking, pacing and debrief in one conversation.",
-  openGraph: {
-    title: "MW-Inventory: an agent from search to debrief — Vivekanand Choudhari",
-    description: "Designing and building an agent that runs a DOOH campaign end to end in one conversation.",
-    images: [{ url: hero.src, width: hero.width, height: hero.height, alt: hero.alt }],
-  },
-  alternates: { canonical: "/work/agentic-inventory" },
-};
+const entry = caseStudy("agentic-inventory")!;
+export const metadata: Metadata = pageMeta({
+  title: entry.seoTitle,
+  ogTitle: entry.title,
+  description: entry.description,
+  path: "/work/agentic-inventory",
+  type: "article",
+  image: { url: hero.src, width: hero.width, height: hero.height, alt: hero.alt },
+});
 
 const viewLabels: Record<string, string[]> = {
   "01": ["Cards", "Cost against reach", "Table"],
@@ -31,7 +31,7 @@ export default function AgenticInventoryCase() {
       {/* ── HEADER ───────────────────────────────────── */}
       <header className="container-premium">
         <BackLink />
-        <CaseKicker domain="Agentic AI · Design and build" status="Use case, live prototype" />
+        <CaseKicker domain="Agentic AI · Design and build" status="Live prototype" />
         <h1 className="mt-3 max-w-[20ch]">An agent that takes a DOOH campaign from search to debrief.</h1>
         <p className="mt-6 max-w-[60ch] text-lg leading-relaxed text-muted">
           I designed and built <strong className="font-medium text-foreground">MW-Inventory</strong> end to end: a conversational agent for Moving Walls’ live

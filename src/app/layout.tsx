@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
@@ -11,6 +11,8 @@ import MotionProvider from "@/components/MotionProvider";
 import { SiteOnly } from "@/components/SiteChrome";
 import SketchDefs from "@/components/sketch/SketchDefs";
 import { SITE_URL } from "@/lib/site";
+import JsonLd from "@/components/JsonLd";
+import { graph, ogImage, PERSON_ID, SITE_NAME, WEBSITE_ID } from "@/lib/seo";
 
 // Two families total (Nov 2026 "Calm" redesign): Inter for everything, with its
 // optical-size axis so display headings tighten automatically, and JetBrains Mono
@@ -29,11 +31,11 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Vivekanand Choudhari — Senior UI/UX Designer & AI Product Designer | Portfolio",
-    template: "%s | Vivekanand Choudhari",
+    default: "Vivekanand Choudhari · Senior UI/UX & AI Product Designer",
+    template: "%s · Vivekanand Choudhari",
   },
   description:
-    "Vivekanand Choudhari: Senior UI/UX Designer & AI Product Designer in Bengaluru, India. 9+ years designing AI-powered products, agentic interfaces, and programmatic DOOH platforms for 1M+ users. Expert in UX research, design systems, OpenRTB, and design engineering. Portfolio of B2B SaaS, AdTech, Healthcare, Construction, and IoT solutions.",
+    "Senior UI/UX and AI product designer in Bengaluru with 9+ years in B2B SaaS, AdTech and AI. Case studies, agentic interfaces, design systems and live labs.",
   keywords: [
     // Name variations for search
     "Vivekanand Choudhari",
@@ -109,42 +111,31 @@ export const metadata: Metadata = {
   creator: "Vivekanand Choudhari",
   publisher: "Vivekanand Choudhari",
   category: "Design & Technology",
+  // Defaults only: every page sets its own full set through pageMeta() (src/lib/seo.ts), because Next merges
+  // metadata shallowly and a page's openGraph replaces this one entirely.
   openGraph: {
-    title: "Vivekanand Choudhari — Senior UI/UX Designer & AI Product Designer | Portfolio",
-    description:
-      "9+ years designing AI-powered products, agentic interfaces, and programmatic DOOH platforms for 1M+ users. Expert in UX research, design systems, OpenRTB, and design engineering. Portfolio featuring B2B SaaS, AdTech, Healthcare, Construction, and IoT solutions.",
-    url: SITE_URL,
-    images: [
-      {
-        url: "/api/og?title=Senior%20UI%2FUX%20Designer%20%26%20AI%20Product%20Designer&category=Portfolio",
-        width: 1200,
-        height: 630,
-        alt: "Vivekanand Choudhari — Senior UI/UX Designer & AI Product Designer in Bengaluru, India",
-      },
-    ],
-    siteName: "Vivekanand Choudhari Portfolio",
+    title: "Vivekanand Choudhari · Senior UI/UX & AI Product Designer",
+    description: "Senior UI/UX and AI product designer in Bengaluru with 9+ years in B2B SaaS, AdTech and AI.",
+    url: "/",
+    images: [{ url: ogImage("Senior UI/UX Designer & AI Product Designer"), width: 1200, height: 630, alt: "Vivekanand Choudhari, Senior UI/UX and AI Product Designer" }],
+    siteName: SITE_NAME,
     locale: "en_US",
     type: "profile",
   },
   twitter: {
     card: "summary_large_image",
-    site: "@vivekanand",
-    creator: "@vivekanand",
-    title: "Vivekanand Choudhari — Senior UI/UX Designer & AI Product Designer",
-    description:
-      "9+ years designing AI-powered products, agentic interfaces, and programmatic DOOH platforms for 1M+ users. Portfolio of B2B SaaS, AdTech, Healthcare, and IoT solutions.",
-    images: [
-      "/api/og?title=Senior%20UI%2FUX%20Designer%20%26%20AI%20Product%20Designer&category=Portfolio",
-    ],
+    title: "Vivekanand Choudhari · Senior UI/UX & AI Product Designer",
+    description: "Senior UI/UX and AI product designer in Bengaluru with 9+ years in B2B SaaS, AdTech and AI.",
+    images: [ogImage("Senior UI/UX Designer & AI Product Designer")],
   },
   robots: {
     index: true,
     follow: true,
   },
-  alternates: {
-    canonical: "/",
-  },
 };
+
+// Browser chrome (Safari's toolbar, Android's address bar) takes the page's background colour.
+export const viewport: Viewport = { themeColor: "#FFFFFF" };
 
 export default function RootLayout({
   children,
@@ -153,8 +144,8 @@ export default function RootLayout({
 }>) {
   // Enhanced Person schema for Google and AI search engines
   const personJsonLd = {
-    "@context": "https://schema.org",
     "@type": "Person",
+    "@id": PERSON_ID,
     name: "Vivekanand Choudhari",
     alternateName: ["Vivekanand", "Vivek Choudhari"],
     url: SITE_URL,
@@ -248,76 +239,15 @@ export default function RootLayout({
     ],
   };
 
-  // Professional Service schema
-  const professionalServiceJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "ProfessionalService",
-    name: "Vivekanand Choudhari - UI/UX & AI Product Design Consulting",
-    description:
-      "Expert UI/UX and AI product design services for B2B SaaS, AdTech, Healthcare, and Enterprise platforms. Specializing in agentic interfaces, design systems, and 0-to-1 product design.",
-    provider: {
-      "@type": "Person",
-      name: "Vivekanand Choudhari",
-    },
-    areaServed: ["IN", "US", "SG", "Global"],
-    serviceType: [
-      "UX Design",
-      "UI Design",
-      "AI Product Design",
-      "Design Systems",
-      "User Research",
-      "Interaction Design",
-      "Design Engineering",
-    ],
+  const websiteJsonLd = {
+    "@type": "WebSite",
+    "@id": WEBSITE_ID,
     url: SITE_URL,
-  };
-
-  // FAQ schema for common queries
-  const faqJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: [
-      {
-        "@type": "Question",
-        name: "What does Vivekanand Choudhari do?",
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: "Vivekanand Choudhari is a Senior UI/UX Designer and AI Product Designer with 9+ years of experience designing AI-powered products, agentic interfaces, and programmatic DOOH platforms for over 1 million users. He specializes in UX strategy, design systems, and user research.",
-        },
-      },
-      {
-        "@type": "Question",
-        name: "What is Vivekanand Choudhari's expertise?",
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: "Vivekanand specializes in AI product design, agentic UI, programmatic DOOH (Digital Out-of-Home advertising), OpenRTB 2.6, design systems, user research, interaction design, and design engineering. He has expertise across AdTech, Healthcare, Construction, IoT, and B2B SaaS industries.",
-        },
-      },
-      {
-        "@type": "Question",
-        name: "Where is Vivekanand Choudhari located?",
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: "Vivekanand Choudhari is based in Bengaluru (Bangalore), Karnataka, India, and works with clients globally.",
-        },
-      },
-      {
-        "@type": "Question",
-        name: "What industries has Vivekanand Choudhari worked in?",
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: "Vivekanand has worked across multiple industries including AdTech/DOOH, Healthcare (EHR platforms), Construction Tech (Cloud-based construction management), IoT & Big Data (industrial monitoring), AIOps, and Entertainment (OTT streaming platforms).",
-        },
-      },
-      {
-        "@type": "Question",
-        name: "How can I contact Vivekanand Choudhari?",
-        acceptedAnswer: {
-          "@type": "Answer",
-          text: "You can reach Vivekanand Choudhari via email at vivekanand.design@gmail.com, phone/WhatsApp at +919071933517, or through his website contact form at " + SITE_URL + "/contact",
-        },
-      },
-    ],
+    name: SITE_NAME,
+    description: "Portfolio, case studies, research and interaction labs by Vivekanand Choudhari, a senior UI/UX and AI product designer.",
+    inLanguage: "en",
+    publisher: { "@id": PERSON_ID },
+    author: { "@id": PERSON_ID },
   };
 
   return (
@@ -340,19 +270,8 @@ export default function RootLayout({
         <meta name="ICBM" content="12.9716, 77.5946" />
       </head>
       <body className="min-h-full flex flex-col">
-        {/* Multiple JSON-LD schemas for comprehensive SEO */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
-        />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(professionalServiceJsonLd) }}
-        />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
-        />
+        {/* The site and the person, once, with stable ids that every page's own graph points to. */}
+        <JsonLd data={graph(websiteJsonLd, personJsonLd)} />
         <a href="#main-content" className="skip-link">
           Skip to content
         </a>

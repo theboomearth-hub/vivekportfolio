@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { Section, SectionHeader } from "@/components/Section";
+import { faqs } from "@/lib/faq";
 import Doodle from "@/components/sketch/Doodle";
 import { Ladder, StackDiagram } from "@/components/sketch/structures";
 import { tintText } from "@/lib/tint";
@@ -572,6 +573,21 @@ export default function AboutPage() {
           <h3 className="text-xl">How much I let an agent do on its own</h3>
           <p className="mt-2 max-w-[60ch] text-compact text-muted">The same ladder runs through both agents I&apos;ve built: each step up needs more from the person, and the top step never happens.</p>
           <div className="mt-6"><Ladder rungs={agentLadder} /></div>
+        </div>
+      </Section>
+
+      {/* Questions people ask. The same answers are marked up as FAQPage in about/layout.tsx, from src/lib/faq.ts. */}
+      <Section>
+        <div className="mx-auto max-w-5xl">
+          <SectionHeader eyebrow="FAQ" title="Questions people ask." />
+          <div className="grid gap-x-12 gap-y-8 md:grid-cols-2">
+            {faqs.map((f) => (
+              <div key={f.q} className="border-t border-border pt-5">
+                <h3 className="text-lg">{f.q}</h3>
+                <p className="mt-2 text-compact leading-relaxed text-muted">{f.a}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </Section>
 

@@ -455,10 +455,10 @@ const ehrStory: StoryChapter[] = [
 export const projectData: Record<string, ProjectDetail> = {
   "mw-activate": {
     title: "Agentic Layer for a pDOOH DSP",
-    category: "AI / AdTech (NDA)",
+    category: "AI / AdTech",
     heroDesc:
       "Designed the agentic UI for a programmatic Out-of-Home demand-side platform used by media planners across 30+ countries — turning a 40-tab workflow into a conversation the planner can trust, reject, or edit line-by-line.",
-    timeline: "2025 — present (in flight)",
+    timeline: "2025 — present",
     tags: ["Agentic UI", "AdTech / pDOOH", "AI Product Design", "NDA", "React", "LLM Tooling"],
     challenge:
       "Programmatic OOH is a spreadsheet problem dressed as a media problem. To ship a $200K campaign a planner has to reconcile inventory availability across markets, audience movement data, brand-safety rules, budget flighting, creative sizes, and market-level pricing — currently across a dozen tools and hundreds of manual clicks. LLMs are obvious help; the risk is the classic one — an agent that confidently spends money on the wrong screens. The design job was to make the agent useful without letting it become the decision-maker.",
@@ -535,10 +535,10 @@ export const projectData: Record<string, ProjectDetail> = {
   },
   "mw-cinema": {
     title: "MW Cinema — Cinema as a Programmatic Asset Class",
-    category: "AdTech / IMS (NDA)",
+    category: "AdTech / IMS",
     heroDesc:
       "Designed the inventory experience that onboards cinema onto a programmatic Out-of-Home stack — a Media Owner → Cinema → Screen → Showtime → Slot entity model, dynamic slot generation from showtimes, and DSP programmatic-eligibility rules that make cinema a first-class asset class alongside DOOH.",
-    timeline: "2025 — present (in flight)",
+    timeline: "2025 — present",
     tags: [
       "AdTech / pDOOH",
       "Cinema Advertising",
@@ -580,10 +580,10 @@ export const projectData: Record<string, ProjectDetail> = {
   },
   "mw-posterops": {
     title: "MW PosterOps — Closed-Loop OOH Execution Platform",
-    category: "AdTech / OOH Ops (NDA)",
+    category: "AdTech / OOH Ops",
     heroDesc:
       "Defined the closed-loop execution system for static Out-of-Home — pre-production creative validation through Proof-of-Play — with no-login Magic Link portals for vendors, field installers, and clients. Every step is geo-tagged, timestamped, offline-capable, and gated by payment validation.",
-    timeline: "2025 — present (in flight)",
+    timeline: "2025 — present",
     tags: [
       "AdTech / OOH",
       "Closed-Loop Execution",
@@ -625,10 +625,10 @@ export const projectData: Record<string, ProjectDetail> = {
   },
   "ai-strategy": {
     title: "Platform AI Strategy — Hybrid UI / Agentic UI Roadmap through 2027",
-    category: "Design Strategy (NDA)",
+    category: "Design Strategy",
     heroDesc:
       "Authored the platform-wide Hybrid UI / Agentic UI strategy and phased roadmap through 2027 across a 7-product DOOH portfolio — presented to product leadership, engineering, and external clients. A shared paradigm framework, per-product paradigm choice, and a maturity model that keeps every product on the same trajectory without forcing every product into the same paradigm.",
-    timeline: "2025 — 2027 (roadmap in flight)",
+    timeline: "2025 — 2027",
     tags: [
       "Design Strategy",
       "Agentic UI",
@@ -665,7 +665,7 @@ export const projectData: Record<string, ProjectDetail> = {
       title: "Senior UI/UX Designer & AI Product Designer (Author)",
       scope: "Portfolio-wide AI paradigm framework, per-product paradigm decisions, shared spine spec, three-horizon roadmap, executive + engineering + client communication",
       team: "Solo author; presented to product leadership, engineering leadership, and external clients; coordinated 7 product designers and 7 PMs on adoption",
-      duration: "2025 — 2027 (roadmap in flight)",
+      duration: "2025 — 2027",
     },
   },
   "nocode-platform": {
@@ -833,10 +833,10 @@ export const projectData: Record<string, ProjectDetail> = {
   },
   "ev-bike-platform": {
     title: "EV Bike OEM & Sales Platform",
-    category: "EV / OEM Platform (NDA)",
+    category: "EV / OEM Platform",
     heroDesc:
       "Foundation persona and use-case mapping for a low-speed EV bike OEM — a single platform spanning multi-plant factory MES, dealer + D2C sales, in-house EMI financing, and field service dispatch.",
-    timeline: "Feb 2026 — present (in flight)",
+    timeline: "Feb 2026 — present",
     tags: ["EV", "OEM", "MES", "Field Dispatch", "EMI", "NDA"],
     challenge:
       "The OEM needed one platform to run a low-speed EV bike business end to end — multi-plant assembly and QC, a dealer network alongside direct-to-consumer sales, an in-house EMI scheme with no bank or NBFC involved, and a field-service model that could dispatch roaming technicians instead of relying on fixed workshops. No off-the-shelf category playbook covers all four at once: automotive MES, fintech-style installment lending, and gig-style field dispatch each carry their own conventions, and getting the seams wrong (e.g. an EMI customer who becomes eligible with no delivery trigger, or a service ticket nobody accepts) breaks trust at the exact moments that matter most.",
@@ -929,7 +929,7 @@ export const projectData: Record<string, ProjectDetail> = {
   },
   "ott-platform": {
     title: "OTT Streaming Platform",
-    category: "Entertainment / BigData (Use case)",
+    category: "Entertainment / BigData",
     heroDesc:
       "Scaled UI for millions of data points in a video-on-demand platform, balancing content discovery with performance.",
     tags: ["OTT", "BigData", "Content Strategy", "Performance"],

@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { pageMeta } from "@/lib/seo";
+import { caseStudy } from "@/lib/work/index";
 import Image from "next/image";
 import { BackLink, BulletList, CaseCta, CaseIndex, CaseKicker, FactList, NumberedGrid, Section, caseLabel } from "@/components/case/CaseParts";
 import CardSort from "@/components/case/CardSort";
@@ -33,17 +35,15 @@ import {
   type AiRole,
 } from "@/lib/work/healthai";
 
-export const metadata: Metadata = {
-  title: "HealthAI: from symptoms to a doctor’s plan",
-  description:
-    "End-to-end use case: an AI-first patient app for India. Symptom check, triage, booking, UPI payment, video consultation and records, with the user flow, service blueprint, card sort, information architecture and 50 screens across phone, tablet and web.",
-  openGraph: {
-    title: "HealthAI: from symptoms to a doctor’s plan — Vivekanand Choudhari",
-    description: "An AI-first patient app, designed end to end across phone, tablet and web.",
-    images: [{ url: hero.src, width: hero.width, height: hero.height, alt: hero.alt }],
-  },
-  alternates: { canonical: "/work/healthai" },
-};
+const entry = caseStudy("healthai")!;
+export const metadata: Metadata = pageMeta({
+  title: entry.seoTitle,
+  ogTitle: entry.title,
+  description: entry.description,
+  path: "/work/healthai",
+  type: "article",
+  image: { url: hero.src, width: hero.width, height: hero.height, alt: hero.alt },
+});
 
 const index = [
   { id: "problem", label: "Problem" },
@@ -113,7 +113,7 @@ export default function HealthAICase() {
       {/* ── HEADER ───────────────────────────────────── */}
       <header className="container-premium">
         <BackLink />
-        <CaseKicker domain="Healthcare · AI product design" status="Use case, design concept" />
+        <CaseKicker domain="Healthcare · AI product design" status="Design concept" />
         <h1 className="mt-3 max-w-[20ch]">HealthAI: from “I don’t feel well” to a doctor’s plan.</h1>
         <p className="mt-6 max-w-[62ch] text-lg leading-relaxed text-muted">
           <strong className="font-medium text-foreground">HealthAI</strong> is a patient app I designed end to end for India. Describe your symptoms to an AI, learn

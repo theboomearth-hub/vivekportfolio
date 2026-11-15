@@ -79,7 +79,7 @@ export const facts = [
   { term: "Role", detail: "Designer and builder, end to end (self-initiated)" },
   { term: "Scope", detail: "Desk research, agent architecture, interface for four sizes, working prototype" },
   { term: "Built with", detail: "Next.js, Claude Opus 5.5 as the planner (scripted fallback), 19 typed tools, server-signed approvals" },
-  { term: "Status", detail: "Use case · design concept with a working prototype" },
+  { term: "Status", detail: "Design concept with a working prototype" },
 ];
 
 // Proto-personas from docs/property-discovery/03-define.md §1 (public evidence and assumptions, not interviews).

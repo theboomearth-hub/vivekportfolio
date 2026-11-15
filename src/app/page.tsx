@@ -30,6 +30,20 @@ import DrawOnView from "@/components/sketch/DrawOnView";
 import { StepStrip } from "@/components/sketch/flows";
 import HeroScribble from "@/components/sketch/HeroScribble";
 import s from "@/components/home/home.module.css";
+import JsonLd from "@/components/JsonLd";
+import { graph, pageMeta, PERSON_ID, webPage } from "@/lib/seo";
+
+const HOME_DESCRIPTION =
+  "Senior UI/UX and AI product designer in Bengaluru with 9+ years in B2B SaaS, AdTech and AI. Case studies, agentic interfaces, design systems and live labs.";
+
+export const metadata = pageMeta({
+  title: "Vivekanand Choudhari · Senior UI/UX & AI Product Designer",
+  absoluteTitle: true,
+  ogTitle: "Senior UI/UX Designer & AI Product Designer",
+  description: HOME_DESCRIPTION,
+  path: "/",
+  type: "profile",
+});
 
 /** Staggered CSS entrance for the hero (see .rise in home.module.css). */
 const rise = (ms: number) => ({ "--d": `${ms}ms` }) as CSSProperties;
@@ -122,6 +136,7 @@ export default function HomePage() {
 
   return (
     <AgentProvider>
+      <JsonLd data={graph(webPage({ path: "/", name: "Vivekanand Choudhari, Senior UI/UX & AI Product Designer", description: HOME_DESCRIPTION, type: "ProfilePage", extra: { mainEntity: { "@id": PERSON_ID }, about: { "@id": PERSON_ID } } }))} />
       {/* ── HERO ─────────────────────────────────────────── */}
       <section aria-labelledby={anchors.heroTitle} className="pb-24 pt-36 md:pb-28 md:pt-48">
         <div className="container-premium relative">

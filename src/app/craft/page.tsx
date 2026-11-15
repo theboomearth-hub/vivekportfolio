@@ -14,6 +14,8 @@ import { ScrambleDemo, WeightDemo } from "@/components/craft/Warmups";
 import Doodle from "@/components/sketch/Doodle";
 import DrawOnView from "@/components/sketch/DrawOnView";
 import { StepStrip } from "@/components/sketch/flows";
+import JsonLd from "@/components/JsonLd";
+import { abs, breadcrumbs, graph, PERSON_ID, webPage } from "@/lib/seo";
 
 type Entry = Omit<StudyProps, "children" | "n" | "tint"> & { lab: React.ReactNode; minutes: string };
 
@@ -324,8 +326,23 @@ const c = -(z(H) + z(F)) / 2;                 // below 0: leans to approve`,
 const label = "font-mono text-xs uppercase tracking-[0.06em] text-muted";
 
 export default function CraftPage() {
+  const trail = [{ name: "Craft", path: "/craft" }];
+  const jsonLd = graph(
+    webPage({ path: "/craft", name: "Interaction studies, run as experiments", description: "Ten interactive labs that measure you, put your result next to the published research, and say what it changes in an interface.", type: "CollectionPage", trail, extra: { mainEntity: { "@id": `${abs("/craft")}#labs` } } }),
+    breadcrumbs(trail),
+    {
+      "@type": "ItemList",
+      "@id": `${abs("/craft")}#labs`,
+      itemListElement: STUDIES.map((s, i) => ({
+        "@type": "ListItem",
+        position: i + 1,
+        item: { "@type": "LearningResource", name: s.title, url: abs(`/craft#${s.id}`), description: s.question, about: s.principles.map((p) => ({ "@type": "Thing", name: p })), learningResourceType: "Interactive experiment", timeRequired: `PT${parseInt(s.minutes, 10)}M`, author: { "@id": PERSON_ID }, citation: s.sources },
+      })),
+    },
+  );
   return (
     <>
+      <JsonLd data={jsonLd} />
       {/* ── Hero ── */}
       <section aria-labelledby="craft-title" className="pt-36 pb-16 md:pt-44 md:pb-20">
         <div className="container-premium">

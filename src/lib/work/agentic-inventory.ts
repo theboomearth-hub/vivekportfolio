@@ -29,7 +29,7 @@ export const facts = [
   { term: "Role", detail: "Sole designer and engineer" },
   { term: "Scope", detail: "Product, conversation and interface design; front end; agent tooling" },
   { term: "Built with", detail: "Next.js, React, Vercel AI SDK streaming, Recharts, Excel and PowerPoint export" },
-  { term: "Status", detail: "Use case · live prototype" },
+  { term: "Status", detail: "Live prototype" },
 ];
 
 /** The agent's user-facing tools, grouped by campaign stage (18, plus one context tool). */

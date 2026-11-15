@@ -61,7 +61,7 @@ export const gallerySets: GallerySet[] = [
     slug: "hosamane",
     title: "Hosamane, an agentic home search",
     kind: "PropTech · Agentic AI",
-    when: "Use case",
+    when: "Design concept",
     platforms: "Phone, tablet and desktop (working prototype)",
     summary:
       "An agent for finding a home to rent or buy in Bengaluru. It ranks homes against your brief with reasons, shows what it checked and when, works out the real move-in or all-in cost, and asks before it contacts anyone. These are phone captures of the working prototype; all listings are fictional.",
@@ -89,7 +89,7 @@ export const gallerySets: GallerySet[] = [
     slug: "healthai",
     title: "HealthAI, an AI-first patient app",
     kind: "Healthcare · AI product design",
-    when: "Use case",
+    when: "Design concept",
     platforms: "Phone, tablet and web",
     summary:
       "A patient app for India that starts with the question most apps skip: do I need a doctor? Health AI asks three short questions, recommends a level of care and how soon, then hands off to booking, UPI payment, a video consultation, and a plan with reminders and records. These are the 17 phone screens; the case study has all 50, across four screen sizes.",

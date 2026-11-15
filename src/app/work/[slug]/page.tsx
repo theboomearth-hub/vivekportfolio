@@ -1,4 +1,7 @@
 import type { Metadata } from "next";
+import CaseStudyJsonLd from "@/components/CaseStudyJsonLd";
+import { pageMeta } from "@/lib/seo";
+import { caseStudy } from "@/lib/work/index";
 import { notFound } from "next/navigation";
 import { projectData } from "@/lib/work/project-data";
 import CaseStudyClient from "./CaseStudyClient";
@@ -21,34 +24,9 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const project = projectData[slug];
-  if (!project) {
-    return { title: "Case Study" };
-  }
-  return {
-    title: project.title,
-    description: project.heroDesc,
-    alternates: { canonical: `/work/${slug}` },
-    openGraph: {
-      title: project.title,
-      description: project.heroDesc,
-      url: `/work/${slug}`,
-      images: [
-        {
-          url: `/api/og?title=${encodeURIComponent(project.title)}&category=${encodeURIComponent(project.category)}`,
-          width: 1200,
-          height: 630,
-        },
-      ],
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: project.title,
-      description: project.heroDesc,
-      images: [
-        `/api/og?title=${encodeURIComponent(project.title)}&category=${encodeURIComponent(project.category)}`,
-      ],
-    },
-  };
+  const entry = caseStudy(slug);
+  if (!project || !entry) return { title: "Case study", robots: { index: false } };
+  return pageMeta({ title: entry.seoTitle, ogTitle: project.title, category: project.category, description: project.heroDesc, path: `/work/${slug}`, type: "article" });
 }
 
 export default async function CaseStudyPage({
@@ -60,5 +38,10 @@ export default async function CaseStudyPage({
   // Unknown slugs must be a real 404 (status + noindex), not a 200 page that
   // says "Project not found" — search engines index those as soft 404s.
   if (!projectData[slug]) notFound();
-  return <CaseStudyClient slug={slug} />;
+  return (
+    <>
+      <CaseStudyJsonLd slug={slug} />
+      <CaseStudyClient slug={slug} />
+    </>
+  );
 }
