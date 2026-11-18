@@ -15,7 +15,6 @@ import {
 import { AgentProvider } from "@/components/home/Agent";
 import {
   ContactActions,
-  ContactTimes,
   Facts,
   ForYouNote,
   HeroAsk,
@@ -370,9 +369,6 @@ export default function HomePage() {
             <h2 id={anchors.contactTitle} className="mt-4 max-w-[18ch] text-display">
               Have a complex product that should feel simple?
             </h2>
-            <p className="mt-5 text-lg text-muted">
-              I reply within 24 hours. <ContactTimes />
-            </p>
             <ContactActions />
           </Reveal>
         </div>
