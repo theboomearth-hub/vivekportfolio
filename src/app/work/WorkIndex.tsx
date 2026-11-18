@@ -15,6 +15,7 @@ import { tintText } from "@/lib/tint";
  */
 
 type Domain =
+  | "AI"
   | "AdTech"
   | "PropTech"
   | "Design Systems"
@@ -29,6 +30,7 @@ type Domain =
 /* Filter pills and card chips use the site's one accent; each domain is told apart by its doodle. */
 const ACCENT = "#2F48C2";
 const domainColors: Record<Domain, string> = {
+  AI: ACCENT,
   AdTech: ACCENT,
   PropTech: ACCENT,
   "Design Systems": ACCENT,
@@ -42,6 +44,7 @@ const domainColors: Record<Domain, string> = {
 };
 
 const domainDoodle: Record<Domain, string> = {
+  AI: "ai",
   AdTech: "billboard",
   PropTech: "home",
   "Design Systems": "system",
@@ -56,6 +59,7 @@ const domainDoodle: Record<Domain, string> = {
 
 /* Real screenshots for the case studies that have them (the heroes in src/lib/work/*.ts). Decorative here: the card's title says what it is. */
 const covers: Record<string, { src: string; width: number; height: number; alt: string }> = {
+  "ambient-memory": { src: "/work/ambient-memory/cover.jpg", width: 2000, height: 1250, alt: "" },
   hosamane: { src: "/work/hosamane/hero.jpg", width: 2000, height: 1250, alt: "" },
   healthai: { src: "/work/healthai/hero.jpg", width: 2000, height: 1250, alt: "" },
   "agentic-inventory": { src: "/work/agentic-inventory/product-frame.jpg", width: 2000, height: 1250, alt: "" },
@@ -77,6 +81,29 @@ const caseStudies: Array<{
   metrics?: { label: string; value: string }[];
   image: React.ReactNode;
 }> = [
+  {
+    slug: "ambient-memory",
+    title: "Ambient Memory: from cluttered to calm",
+    category: "AI product design · Concept, end to end",
+    domain: "AI",
+    description:
+      "An always-available AI memory layer, designed end to end: research plan, personas, a 48-card sort kit, information architecture, 35 screens in light and dark from one token set, a 261-link prototype, an accessibility audit, privacy by design and a launch plan.",
+    tags: ["AI Product Design", "Design Systems", "Information Architecture", "Privacy by Design"],
+    timeline: "Design concept",
+    role: "Product designer and strategist",
+    featured: true,
+    metrics: [
+      { label: "Screens, light and dark", value: "35 × 2" },
+      { label: "Components, one token set", value: "59" },
+      { label: "Prototype links", value: "261" },
+    ],
+    image: (
+      <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="12" cy="12" r="8" />
+        <circle cx="12" cy="12" r="2.5" fill="currentColor" stroke="none" />
+      </svg>
+    ),
+  },
   {
     slug: "takt",
     title: "Takt: one picture of four factories",

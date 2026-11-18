@@ -7,7 +7,7 @@ import { useState } from "react";
  * Works with a pointer or a keyboard (every card and group is a button). "Check" compares
  * the visitor's sort with HealthAI's navigation; nothing is stored or sent anywhere.
  */
-export default function CardSort<G extends string>({ cards, groups }: { cards: { card: string; group: G }[]; groups: readonly G[] }) {
+export default function CardSort<G extends string>({ cards, groups, name = "HealthAI" }: { cards: { card: string; group: G }[]; groups: readonly G[]; /** The product whose sort is the answer key. */ name?: string }) {
   // Interleave the groups so the pool doesn't hand out the answer in order.
   const [order] = useState(() =>
     cards
@@ -40,7 +40,7 @@ export default function CardSort<G extends string>({ cards, groups }: { cards: {
     setPlaced({ ...answer });
     setSelected(null);
     setChecked(true);
-    setMessage("Showing HealthAI’s sort.");
+    setMessage(`Showing ${name}’s sort.`);
   }
   function reset() {
     setPlaced({});
@@ -71,14 +71,14 @@ export default function CardSort<G extends string>({ cards, groups }: { cards: {
         <span className="flex items-start justify-between gap-2">
           <span>{card}</span>
           {right && (
-            <span className="text-success" aria-label="matches HealthAI">
+            <span className="text-success" aria-label={`matches ${name}`}>
               <svg viewBox="0 0 24 24" className="mt-0.5 h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                 <path d="M20 6L9 17l-5-5" />
               </svg>
             </span>
           )}
         </span>
-        {wrong && <span className="mt-1 block text-xs text-muted">HealthAI: {answer[card]}</span>}
+        {wrong && <span className="mt-1 block text-xs text-muted">{name}: {answer[card]}</span>}
       </button>
     );
   };
@@ -107,7 +107,7 @@ export default function CardSort<G extends string>({ cards, groups }: { cards: {
         )}
       </div>
 
-      <ul className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+      <ul className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-[repeat(var(--g),minmax(0,1fr))]" style={{ "--g": groups.length } as React.CSSProperties}>
         {groups.map((g) => {
           const inGroup = order.filter((c) => placed[c] === g);
           return (
@@ -140,15 +140,15 @@ export default function CardSort<G extends string>({ cards, groups }: { cards: {
           onClick={() => {
             if (placedCount === 0) return;
             setChecked(true);
-            setMessage(`${matches} of ${placedCount} placed cards match HealthAI’s navigation.`);
+            setMessage(`${matches} of ${placedCount} placed cards match ${name}’s navigation.`);
           }}
           aria-disabled={placedCount === 0}
           className={`inline-flex min-h-11 items-center rounded-lg px-4 text-sm font-medium ${placedCount ? "bg-foreground text-background hover:bg-accent" : "bg-border text-muted"}`}
         >
-          Check against HealthAI
+          Check against {name}
         </button>
         <button type="button" onClick={showAnswer} className="inline-flex min-h-11 items-center rounded-lg px-4 text-sm font-medium ring-1 ring-border-strong ring-inset hover:bg-background">
-          Show HealthAI’s sort
+          Show {name}’s sort
         </button>
         <button type="button" onClick={reset} className="inline-flex min-h-11 items-center px-2 text-sm text-muted underline decoration-border-strong underline-offset-4 hover:text-foreground">
           Start over

@@ -17,6 +17,14 @@ const SHORT: Record<string, string> = {
 
 const custom: CaseStudyEntry[] = [
   {
+    slug: "ambient-memory",
+    title: "Ambient Memory: from cluttered to calm",
+    seoTitle: "Ambient Memory: an AI memory app people trust",
+    description: "An always-available AI memory layer, designed end to end as a concept: research plan, personas, card-sort kit, information architecture, 35 screens in light and dark from one token set, a prototype, an accessibility audit, privacy by design and a launch plan.",
+    about: ["AI product design", "Design systems", "Information architecture", "Privacy by design", "Accessibility"],
+    image: "/work/ambient-memory/cover.jpg",
+  },
+  {
     slug: "takt",
     title: "Takt: one picture of four factories",
     seoTitle: "Takt: an Industry 4.0 data platform",

@@ -1,0 +1,362 @@
+{
+ "cover.jpg": [
+  2000,
+  1250
+ ],
+ "desktop-memory.jpg": [
+  1800,
+  1263
+ ],
+ "desktop-today.jpg": [
+  1800,
+  1263
+ ],
+ "extension-capturing.jpg": [
+  1200,
+  2020
+ ],
+ "extension-idle.jpg": [
+  1200,
+  2020
+ ],
+ "hero-dark.jpg": [
+  2400,
+  833
+ ],
+ "hero-light.jpg": [
+  2400,
+  832
+ ],
+ "landscape-capture.jpg": [
+  1400,
+  738
+ ],
+ "large-text-today.jpg": [
+  1600,
+  3283
+ ],
+ "phone-01-dark.jpg": [
+  780,
+  1687
+ ],
+ "phone-01-light.jpg": [
+  780,
+  1687
+ ],
+ "phone-02-dark.jpg": [
+  780,
+  1687
+ ],
+ "phone-02-light.jpg": [
+  780,
+  1688
+ ],
+ "phone-03-dark.jpg": [
+  780,
+  1687
+ ],
+ "phone-03-light.jpg": [
+  780,
+  1688
+ ],
+ "phone-04-dark.jpg": [
+  780,
+  1687
+ ],
+ "phone-04-light.jpg": [
+  780,
+  1688
+ ],
+ "phone-05-dark.jpg": [
+  780,
+  1687
+ ],
+ "phone-05-light.jpg": [
+  780,
+  1687
+ ],
+ "phone-06-dark.jpg": [
+  780,
+  1687
+ ],
+ "phone-06-light.jpg": [
+  780,
+  1688
+ ],
+ "phone-07-dark.jpg": [
+  780,
+  1687
+ ],
+ "phone-07-light.jpg": [
+  780,
+  1687
+ ],
+ "phone-08-dark.jpg": [
+  780,
+  1687
+ ],
+ "phone-08-light.jpg": [
+  780,
+  1688
+ ],
+ "phone-09-dark.jpg": [
+  780,
+  1687
+ ],
+ "phone-09-light.jpg": [
+  780,
+  1687
+ ],
+ "phone-10-dark.jpg": [
+  780,
+  1687
+ ],
+ "phone-10-light.jpg": [
+  780,
+  1687
+ ],
+ "phone-11-dark.jpg": [
+  780,
+  1687
+ ],
+ "phone-11-light.jpg": [
+  780,
+  1688
+ ],
+ "phone-12-dark.jpg": [
+  780,
+  1687
+ ],
+ "phone-12-light.jpg": [
+  780,
+  1688
+ ],
+ "phone-13-dark.jpg": [
+  780,
+  1687
+ ],
+ "phone-13-light.jpg": [
+  780,
+  1688
+ ],
+ "phone-14-dark.jpg": [
+  780,
+  1687
+ ],
+ "phone-14-light.jpg": [
+  780,
+  1688
+ ],
+ "phone-15-dark.jpg": [
+  780,
+  1687
+ ],
+ "phone-15-light.jpg": [
+  780,
+  1688
+ ],
+ "phone-16-dark.jpg": [
+  780,
+  1687
+ ],
+ "phone-16-light.jpg": [
+  780,
+  1688
+ ],
+ "phone-17-dark.jpg": [
+  780,
+  1687
+ ],
+ "phone-17-light.jpg": [
+  780,
+  1688
+ ],
+ "phone-18-dark.jpg": [
+  780,
+  1687
+ ],
+ "phone-18-light.jpg": [
+  780,
+  1688
+ ],
+ "phone-19-dark.jpg": [
+  780,
+  1687
+ ],
+ "phone-19-light.jpg": [
+  780,
+  1688
+ ],
+ "phone-20-dark.jpg": [
+  780,
+  1687
+ ],
+ "phone-20-light.jpg": [
+  780,
+  1688
+ ],
+ "phone-21-dark.jpg": [
+  780,
+  1687
+ ],
+ "phone-21-light.jpg": [
+  780,
+  1687
+ ],
+ "phone-22-dark.jpg": [
+  780,
+  1687
+ ],
+ "phone-22-light.jpg": [
+  780,
+  1687
+ ],
+ "phone-23-dark.jpg": [
+  780,
+  1687
+ ],
+ "phone-23-light.jpg": [
+  780,
+  1687
+ ],
+ "phone-24-dark.jpg": [
+  780,
+  1687
+ ],
+ "phone-24-light.jpg": [
+  780,
+  1688
+ ],
+ "phone-25-dark.jpg": [
+  780,
+  1687
+ ],
+ "phone-25-light.jpg": [
+  780,
+  1688
+ ],
+ "phone-26-dark.jpg": [
+  780,
+  1687
+ ],
+ "phone-26-light.jpg": [
+  780,
+  1687
+ ],
+ "phone-27-dark.jpg": [
+  780,
+  1687
+ ],
+ "phone-27-light.jpg": [
+  780,
+  1688
+ ],
+ "phone-28-dark.jpg": [
+  780,
+  1687
+ ],
+ "phone-28-light.jpg": [
+  780,
+  1688
+ ],
+ "phone-29-dark.jpg": [
+  780,
+  1687
+ ],
+ "phone-29-light.jpg": [
+  780,
+  1688
+ ],
+ "phone-30-dark.jpg": [
+  780,
+  1687
+ ],
+ "phone-30-light.jpg": [
+  780,
+  1688
+ ],
+ "phone-31-dark.jpg": [
+  780,
+  1687
+ ],
+ "phone-31-light.jpg": [
+  780,
+  1688
+ ],
+ "phone-32-dark.jpg": [
+  780,
+  1687
+ ],
+ "phone-32-light.jpg": [
+  780,
+  1688
+ ],
+ "phone-33-dark.jpg": [
+  780,
+  1687
+ ],
+ "phone-33-light.jpg": [
+  780,
+  1688
+ ],
+ "phone-34-dark.jpg": [
+  780,
+  1931
+ ],
+ "phone-34-light.jpg": [
+  780,
+  1932
+ ],
+ "phone-35-dark.jpg": [
+  780,
+  1687
+ ],
+ "phone-35-light.jpg": [
+  780,
+  1688
+ ],
+ "rtl-01-03.jpg": [
+  1600,
+  1226
+ ],
+ "tablet-memory.jpg": [
+  1600,
+  2291
+ ],
+ "tablet-today.jpg": [
+  1600,
+  2291
+ ],
+ "v1-capture.jpg": [
+  780,
+  1688
+ ],
+ "v1-today.jpg": [
+  780,
+  1680
+ ],
+ "watch.jpg": [
+  1600,
+  648
+ ],
+ "wire-01.jpg": [
+  780,
+  1689
+ ],
+ "wire-02.jpg": [
+  780,
+  1689
+ ],
+ "wire-03.jpg": [
+  780,
+  1689
+ ],
+ "wire-04.jpg": [
+  780,
+  1689
+ ],
+ "wire-06.jpg": [
+  780,
+  1689
+ ]
+}

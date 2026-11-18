@@ -103,6 +103,7 @@ export const projectCards: ProjectCardData[] = [
 export const DEFAULT_ORDER: CardId[] = ["nocode", "ehr", "civ", "ds"];
 
 export const alsoProjects = [
+  { slug: "ambient-memory", label: "Ambient Memory" },
   { slug: "hosamane", label: "Hosamane" },
   { slug: "healthai", label: "HealthAI" },
   { slug: "mw-activate", label: "Agentic DSP" },
